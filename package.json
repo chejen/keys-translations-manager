@@ -1,0 +1,66 @@
+{
+	"name": "keys-translations-manager",
+	"version": "0.0.1",
+	"description": "A web application for internalization keys and translations management.",
+	"keywords": [
+		"i18n",
+		"internationalization",
+		"lang",
+		"language",
+		"l10n",
+		"locale",
+		"localization",
+		"multilingual",
+		"translation"
+	],
+	"author": "chejen",
+	"main": "src/ui/index.js",
+	"scripts": {
+		"start:dev": "cross-env NODE_ENV=development nodemon --ignore \"src/ui/\" ./Server.js",
+		"start:app": "cross-env NODE_ENV=production node ./Server.js",
+		"build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/chejen/keys-translations-manager"
+	},
+	"dependencies": {
+		"archiver": "0.21.0",
+		"body-parser": "1.15.0",
+		"bootstrap": "3.3.6",
+		"express": "4.13.4",
+		"mongoose": "4.4.4",
+		"react": "0.14.7",
+		"react-addons-pure-render-mixin": "0.14.7",
+		"react-bootstrap": "0.28.3",
+		"react-bootstrap-table": "1.5.2",
+		"react-dom": "0.14.7",
+		"reflux": "0.3.0"
+	},
+	"devDependencies": {
+		"babel-core": "6.5.2",
+		"babel-eslint": "5.0.0",
+		"babel-loader": "6.2.3",
+		"babel-preset-es2015": "6.5.0",
+		"babel-preset-react": "6.5.0",
+		"babel-preset-react-hmre": "1.1.0",
+		"cross-env": "1.0.7",
+		"css-loader": "0.23.1",
+		"eslint": "2.2.0",
+		"eslint-loader": "1.3.0",
+		"eslint-plugin-babel": "3.1.0",
+		"eslint-plugin-i18n": "1.0.0",
+		"eslint-plugin-react": "4.0.0",
+		"eventsource-polyfill": "0.9.6",
+		"less": "2.6.0",
+		"less-loader": "2.2.2",
+		"nodemon": "1.9.0",
+		"rename": "1.0.3",
+		"style-loader": "0.13.0",
+		"webpack": "1.12.13",
+		"webpack-dev-middleware": "1.5.1",
+		"webpack-hot-middleware": "2.7.1",
+		"webpack-strip": "0.1.0"
+	},
+	"license": "MIT"
+}

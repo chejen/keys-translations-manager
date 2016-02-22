@@ -1,0 +1,5 @@
+coverage
+logs
+node_modules
+*.bat
+*.log

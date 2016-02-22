@@ -1,0 +1,11 @@
+root = true
+
+[*]
+charset = utf-8
+trim_trailing_whitespace = true
+
+[*.{js,json,css,less}]
+indent_style = tab
+indent_size = 4
+tab_width = 4
+insert_final_newline = true

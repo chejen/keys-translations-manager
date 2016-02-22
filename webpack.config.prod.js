@@ -1,0 +1,47 @@
+var path = require('path');
+var webpack = require('webpack');
+var WebpackStrip = require('webpack-strip');
+var dir = {
+	src: path.join(__dirname, 'src', 'ui'),
+	dist: path.join(__dirname, 'public', 'js')
+};
+
+var config = {
+	entry: {
+		bundle: dir.src + '/index'
+	},
+	output: {
+		path: dir.dist,
+		filename: "[name].js",
+		publicPath: '/public/js/'
+	},
+	plugins: [
+		new webpack.optimize.DedupePlugin(),
+		new webpack.optimize.UglifyJsPlugin({
+			compressor: {
+				warnings: false,
+			}
+		}),
+		new webpack.DefinePlugin({
+			'process.env': {
+				'NODE_ENV': JSON.stringify('production'),
+				'CODE_SPLITTING': true
+			}
+		})
+	],
+	devtool: 'source-map',
+	module: {
+		loaders: [{
+			test: /\.jsx?$/,
+			loaders: ['babel', WebpackStrip.loader('console.log', 'console.warn')]
+		}, {
+			test: /\.(css|less)$/,
+			loader: 'style!css!less'
+		}/*, {
+			test: /\.(png|jpg|gif|ttf|woff|woff2)$/,
+			loader: 'url?limit=25000'
+		}*/]
+	}
+};
+
+module.exports = config;
