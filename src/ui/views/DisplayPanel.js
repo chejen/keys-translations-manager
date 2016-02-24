@@ -2,7 +2,7 @@ import '../app.less';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Counter from './Counter'
-import TranslationTable from './TranslationTable'
+import GridPanel from './grid/GridPanel'
 
 const DisplayPanel = React.createClass({
 	mixins: [PureRenderMixin],
@@ -60,7 +60,7 @@ const DisplayPanel = React.createClass({
 						onChange={this.setFileType.bind(this, "p")}/> Properties
 				</div>
 
-				<TranslationTable {...this.props} config={config}/>
+				<GridPanel {...this.props} config={config}/>
 			</div>
 		);
 	}

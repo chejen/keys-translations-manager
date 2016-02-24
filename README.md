@@ -10,14 +10,14 @@ This project is a SPA (single page application) which aims to provide an interfa
 
 ## Getting Started
 
-Checkout this repo, install dependencies, then start the web application:
+Checkout this repo, install dependencies, then start the server:
 ```
 > git clone https://github.com/chejen/keys-translations-manager
 > cd keys-translations-manager
 > npm install
-> npm run start:app
+> npm run start
 ```
-Now you can run the application at http://localhost:3000/
+Now you can run the web application at http://localhost:3000/
 
 
 ## Custom
