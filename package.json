@@ -1,7 +1,7 @@
 {
 	"name": "keys-translations-manager",
 	"version": "0.0.1",
-	"description": "A web application for internalization keys and translations management.",
+	"description": "A web application for locale's keys and translations management.",
 	"keywords": [
 		"i18n",
 		"internationalization",
@@ -26,12 +26,12 @@
 	},
 	"dependencies": {
 		"ag-grid": "3.3.3",
-	    "ag-grid-react": "3.3.0",
+		"ag-grid-react": "3.3.1",
 		"archiver": "0.21.0",
 		"body-parser": "1.15.0",
 		"bootstrap": "3.3.6",
 		"express": "4.13.4",
-		"mongoose": "4.4.4",
+		"mongoose": "4.4.5",
 		"react": "0.14.7",
 		"react-addons-pure-render-mixin": "0.14.7",
 		"react-bootstrap": "0.28.3",
@@ -55,7 +55,7 @@
 		"eventsource-polyfill": "0.9.6",
 		"less": "2.6.0",
 		"less-loader": "2.2.2",
-		"nodemon": "1.9.0",
+		"nodemon": "1.9.1",
 		"rename": "1.0.3",
 		"style-loader": "0.13.0",
 		"webpack": "1.12.14",
