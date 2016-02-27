@@ -77,13 +77,13 @@ const InputPanel = React.createClass({
 		const err = this.props.error
 		let errMsg
 		let locale
-		let inputLocale = [getLabel("key"), <Input key="key" type="text" name="key" />]
+		let inputLocale = [getLabel("key"), <Input key="key" type="text" bsSize="small" name="key" />]
 		let inputProject = []
 		let i
 
 		for (i=0; i<lenLocales; i++) {
 			locale = locales[i]
-			inputLocale.push(getLabel(locale), <Input key={locale} type="text" name={locale} />)
+			inputLocale.push(getLabel(locale), <Input key={locale} type="text" bsSize="small" name={locale} />)
 		}
 		for (i=0; i<lenProjects; i++) {
 			inputProject.push(<Input key={i} type="checkbox" label={projects[i].name} value={projects[i].id} name="project[]"/>)
@@ -109,7 +109,7 @@ const InputPanel = React.createClass({
 
 				{inputLocale}
 
-				<span className="app-input-asterisk">*</span> apply to:
+				<div className="app-input-label"><span className="app-input-asterisk">*</span> apply to:</div>
 				<div className="app-checkbox-options">
 					{inputProject}
 				</div>

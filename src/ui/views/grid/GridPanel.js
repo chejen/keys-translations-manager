@@ -30,7 +30,7 @@ export default class GridPanel extends React.Component {
 				headerName: "actions",
 				field: '_id',
 				pinned: true,
-				width: 70,
+				width: 60,
 				suppressSorting: true,
 				cellRenderer: reactCellRendererFactory(ActionCellRenderer)
 			}, {

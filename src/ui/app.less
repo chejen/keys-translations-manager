@@ -6,7 +6,7 @@
 @dark-color: #444;
 @light-color: #fff;
 @highlight-color: lightyellow;
-@download-panel-color: #E9FFC1;
+@download-panel-color: #ddd;
 @default-space: 10px;
 @default-font-size: 14px;
 
@@ -44,6 +44,7 @@
 }
 .app-input-label {
 	margin-bottom: 7px;
+	font-weight: bold;
 }
 .app-checkbox-options {
 	color: @light-color;
@@ -65,7 +66,7 @@
 	padding: 0 @default-space @default-space 0;
 }
 .app-project-name {
-	.func-get-gradient(@counter-color, @label-color);
+	background-color: @counter-color;
 	color: @light-color;
 	width: @counter-width;
 	font-size: @default-font-size;
