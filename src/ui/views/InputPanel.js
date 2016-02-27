@@ -12,6 +12,19 @@ import TranslationActions from '../actions/TranslationActions'
 const InputPanel = React.createClass({
 	mixins: [PureRenderMixin],
 
+	getInitialState() {
+		const config = this.props.config
+		const projects = config.projects
+		let lenProjects = projects.length
+		let project
+		let o = {}
+		while (lenProjects--) {
+			project = projects[lenProjects]
+			o[project.id] = true
+		}
+		return o
+	},
+
 	addTranslation() {
 		const config = this.props.config
 		const form = ReactDOM.findDOMNode(this.refs.form)
@@ -66,6 +79,12 @@ const InputPanel = React.createClass({
 		}
 	},
 
+	onCheckboxChange(id) {
+		let o = {};
+		o[id] = !this.state[id];
+		this.setState(o);
+	},
+
 	render() {
 		const me = this;
 		const config = this.props.config
@@ -80,13 +99,18 @@ const InputPanel = React.createClass({
 		let inputLocale = [getLabel("key"), <Input key="key" type="text" bsSize="small" name="key" />]
 		let inputProject = []
 		let i
+		let p
 
 		for (i=0; i<lenLocales; i++) {
 			locale = locales[i]
 			inputLocale.push(getLabel(locale), <Input key={locale} type="text" bsSize="small" name={locale} />)
 		}
 		for (i=0; i<lenProjects; i++) {
-			inputProject.push(<Input key={i} type="checkbox" label={projects[i].name} value={projects[i].id} name="project[]"/>)
+			p = projects[i];
+			inputProject.push(
+				<Input key={i} type="checkbox" label={p.name} 
+				name="project[]" value={p.id} checked={this.state[p.id]}
+				onChange={this.onCheckboxChange.bind(this, p.id)}/>)
 		}
 
 		if (err) {

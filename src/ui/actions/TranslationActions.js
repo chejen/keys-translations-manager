@@ -13,7 +13,7 @@ var TranslationActions = Reflux.createActions({
 
 TranslationActions.addTranslation.listen(function(data) {
 	$.ajax({
-		url: host + '/api/translations',
+		url: host + '/api/translation',
 		contentType: "application/json; charset=utf-8",
 		type: "POST",
 		data: JSON.stringify(data),
@@ -25,7 +25,7 @@ TranslationActions.addTranslation.listen(function(data) {
 
 TranslationActions.loadTranslations.listen(function() {
 	$.ajax({
-		url: host + '/api/translations',
+		url: host + '/api/translation',
 		type: "GET",
 		dataType: "json"
 	})
@@ -35,7 +35,7 @@ TranslationActions.loadTranslations.listen(function() {
 
 TranslationActions.removeTranslation.listen(function(id) {
 	$.ajax({
-		url: host + '/api/translations/' + id,
+		url: host + '/api/translation/' + id,
 		type: "DELETE",
 		dataType: "json"
 	})
@@ -46,7 +46,7 @@ TranslationActions.removeTranslation.listen(function(id) {
 TranslationActions.updateTranslation.listen(function(data) {
 	console.log("TranslationActions.updateTranslation", data, data._id, data.id);
 	$.ajax({
-		url: host + '/api/translations/' + data._id,
+		url: host + '/api/translation/' + data._id,
 		contentType: "application/json; charset=utf-8",
 		type: "PUT",
 		data: JSON.stringify(data),

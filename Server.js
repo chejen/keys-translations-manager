@@ -4,7 +4,9 @@ var mongoose = require('mongoose');
 var path = require('path');
 var webpack = require('webpack');
 var config = require('./src/config');
-var TranslationController = require('./src/api/TranslationController');
+var TranslationController = require('./src/api/controllers/TranslationController');
+var CountController = require('./src/api/controllers/CountController');
+var DownloadController = require('./src/api/controllers/DownloadController');
 var app = express(),
 	config,
 	compiler;
@@ -47,7 +49,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/api", TranslationController);
+app.use("/api/translation", TranslationController);
+app.use("/api/count", CountController);
+app.use("/api/download", DownloadController);
 app.get('/', function(req, res) {
 	res.sendFile(path.join(__dirname, 'index.html'));
 });

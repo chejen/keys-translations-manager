@@ -21,6 +21,7 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin()
 	],
+	devtool: 'cheap-module-eval-source-map',
 	module: {
 		preLoaders: [{
 			test: /\.jsx?$/,

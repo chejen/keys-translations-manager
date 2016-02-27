@@ -39,7 +39,6 @@ const EditModal = React.createClass({
 			project = projects[lenProjects]
 			o[project.id] = (project.id.indexOf(data.project) >= 0)
 		}
-		console.log("[ o ]", o);
 		return o
 	},
 
@@ -93,13 +92,11 @@ const EditModal = React.createClass({
 			});
 		} else {
 			ErrorActions.clear();
-			console.log("data", data);
 			TranslationActions.updateTranslation(data);
 		}
 	},
 
 	onErrorChange(error) {
-		console.log("error", error);
 		this.setState({
 			error: error
 		});
@@ -121,11 +118,17 @@ const EditModal = React.createClass({
 	},
 
 	close() {
-		this.setState({ showModal: false });
+		this.setState({
+			showModal: false,
+			error: null
+		});
 	},
 
 	open() {
-		this.setState({ showModal: true });
+		this.setState({
+			showModal: true,
+			error: null
+		});
 	},
 
 	render() {
@@ -158,7 +161,7 @@ const EditModal = React.createClass({
 			)
 		}
 
-		if (err) {
+		if (this.state.showModal && err) {
 			switch (err.type) {
 				case 'duplicated':
 					errMsg = "The key already exists in the following project(s): " + err.match.map(function(e){ return me.props.projectMapping[e] }).join(", ");
