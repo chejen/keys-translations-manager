@@ -4,7 +4,7 @@ This project offers a web application which aims to facilitate locale management
 
 ## Prerequisites
 
-* Download [Node.js](https://nodejs.org/en/) and [MongoDB](https://www.mongodb.org/), and then get them installed.
+* Download [Node.js](https://nodejs.org/en/) (suggestion: v5+) and [MongoDB](https://www.mongodb.org/), and then get them installed.
 * Start [mongod](https://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/) process and make sure it's running normally.
 
 
@@ -21,21 +21,16 @@ Now you can run the application at http://localhost:3000/
 
 
 ## Custom
-There are some settings (at [src/config.js](src/config.js)) you can configure. The table below lists the available settings:
-| **Setting** | **Web server's hostname and port** |**Default**|
-|----------|-------|---|
-|  server  |   test    | ```{
-		hostname: 'localhost',
-		port: 3000
-	}```  |
-|  database  |   MongoDB connection URI    | ```'mongodb://localhost:27017/translationdb'```  |
-|  locales  |   The locales need to be managed    | ```['en-US', 'zh-TW']```  |
-|  projects  |   The projects need to be managed    | ```[
-		{id:'p1', name:'project A'},
-		{id:'p2', name:'project B'}
-	]```  |
+There are some settings (at [src/config.js](src/config.js)) you can configure. The table below lists the available ones:
 
-* Rebuild the code (```npm run build```) if you change the settings of 'locales' or 'projects'.
+| **Setting** | **Description** |**Default**|
+|----------|-------|---|
+|  server  |   Web server's hostname and port    | ```{ hostname: 'localhost', port: 3000 }```  |
+|  database  |   MongoDB connection URI    | ```'mongodb://localhost:27017/translationdb'```  |
+|  locales  |   The locales need to be managed. (You can add or remove locales arbitrarily.)    | ```['en-US', 'zh-TW']```  |
+|  projects  |   The projects need to be managed. (You can add or remove projects arbitrarily.)    | ```[ {id:'p1', name:'project A'}, {id:'p2', name:'project B'} ]```  |
+
+* Rebuild the code (```npm run build```) if you change the settings of **locales** or **projects**.
 * Restart the server (```npm run start```) if you change any of these configurations.
 
 
