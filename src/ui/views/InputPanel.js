@@ -2,10 +2,10 @@ import '../app.less';
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import Alert from 'react-bootstrap/lib/Alert'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import Input from 'react-bootstrap/lib/Input'
+import AlertPanel from './AlertPanel'
 import ErrorActions from '../actions/ErrorActions'
 import TranslationActions from '../actions/TranslationActions'
 
@@ -68,11 +68,11 @@ const InputPanel = React.createClass({
 		}
 
 		if ( emptyFields.length > 0 ) {
-			ErrorActions.alert({
+			ErrorActions.alert([{
 				type: 'emptyfield',
 				raw: data,
 				match: emptyFields
-			});
+			}]);
 		} else {
 			ErrorActions.clear();
 			TranslationActions.addTranslation(data);
@@ -86,15 +86,12 @@ const InputPanel = React.createClass({
 	},
 
 	render() {
-		const me = this;
 		const config = this.props.config
 		const locales = config.locales
 		const projects = config.projects
 		const lenLocales = locales.length
 		const lenProjects = projects.length
 		const getLabel = (text) => <div key={"label-" + text} className="app-input-label"><span className="app-input-asterisk">*</span> {text}:</div>
-		const err = this.props.error
-		let errMsg
 		let locale
 		let inputLocale = [getLabel("key"), <Input key="key" type="text" bsSize="small" name="key" />]
 		let inputProject = []
@@ -113,23 +110,9 @@ const InputPanel = React.createClass({
 				onChange={this.onCheckboxChange.bind(this, p.id)}/>)
 		}
 
-		if (err) {
-			switch (err.type) {
-				case 'duplicated':
-					errMsg = "The key already exists in the following project(s): " + err.match.map(function(e){ return me.props.projectMapping[e] }).join(", ");
-					break;
-				case 'emptyfield':
-					errMsg = "The following field(s) are required: " + err.match.join(", ");
-					break;
-				default:
-					errMsg = err.type;
-					break;
-			}
-		}
-
 		return(
 			<form ref="form">
-				{errMsg ? <Alert bsStyle="danger">{errMsg}</Alert> : null}
+				<AlertPanel errors={this.props.errors}/>
 
 				{inputLocale}
 

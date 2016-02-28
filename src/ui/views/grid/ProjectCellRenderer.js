@@ -13,7 +13,7 @@ export default class ProjectCellRenderer extends React.Component {
 
     render() {
         const projectList = this.props.params.value,
-            l = projectList.length;
+            l = projectList ? projectList.length : 0;
 		let i,
 			project = [];
 		for (i = 0; i < l; i++) {

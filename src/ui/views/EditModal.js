@@ -3,10 +3,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Reflux from 'reflux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import Alert from 'react-bootstrap/lib/Alert'
 import Button from 'react-bootstrap/lib/Button'
 import Input from 'react-bootstrap/lib/Input'
 import Modal from 'react-bootstrap/lib/Modal'
+import AlertPanel from './AlertPanel'
 import ErrorActions from '../actions/ErrorActions'
 import ErrorStore from '../stores/ErrorStore'
 import TranslationActions from '../actions/TranslationActions'
@@ -28,7 +28,7 @@ const EditModal = React.createClass({
 		let project
 		let o = {
 			showModal: false,
-			error: null,
+			errors: [],
 			key: data.key
 		}
 		while (lenLocales--) {
@@ -37,13 +37,12 @@ const EditModal = React.createClass({
 		}
 		while (lenProjects--) {
 			project = projects[lenProjects]
-			o[project.id] = (project.id.indexOf(data.project) >= 0)
+			o[project.id] = (data.project.indexOf(project.id) >= 0)
 		}
 		return o
 	},
 
 	updateTranslation() {
-		//const config = this.props.config
 		const form = ReactDOM.findDOMNode(this.refs.form)
 		const el = form.elements
 		const projects = el["project[]"]
@@ -56,12 +55,6 @@ const EditModal = React.createClass({
 		let project = []
 		let emptyFields = []
 		let data = this.props.data
-
-		/*if ( el.key.value.trim() ) {
-			data.key = el.key.value.trim()
-		} else {
-			emptyFields.push("key")
-		}*/
 
 		for (i = 0; i < lenLocales; i++) {
 			locale = locales[i]
@@ -85,20 +78,20 @@ const EditModal = React.createClass({
 		}
 
 		if ( emptyFields.length > 0 ) {
-			ErrorActions.alert({
+			ErrorActions.alert([{
 				type: 'emptyfield',
 				raw: data,
 				match: emptyFields
-			});
+			}]);
 		} else {
 			ErrorActions.clear();
 			TranslationActions.updateTranslation(data);
 		}
 	},
 
-	onErrorChange(error) {
+	onErrorChange(errors) {
 		this.setState({
-			error: error
+			errors: errors
 		});
 	},
 
@@ -120,33 +113,30 @@ const EditModal = React.createClass({
 	close() {
 		this.setState({
 			showModal: false,
-			error: null
+			errors: []
 		});
 	},
 
 	open() {
 		this.setState({
 			showModal: true,
-			error: null
+			errors: []
 		});
 	},
 
 	render() {
-		const me = this;
-		//const config = this.props.config
 		const data = this.props.data;
 		const locales = config.locales
 		const projects = config.projects
 		const lenLocales = locales.length
 		const lenProjects = projects.length
 		const getLabel = (text) => <div key={"label-" + text} className="app-input-label"><span className="app-input-asterisk">*</span> {text}:</div>
-		const err = this.state.error
-		let errMsg
 		let locale
 		let inputLocale = [getLabel("key"), <Input key="key" type="text" bsSize="small" name="key" value={data.key} onChange={this.onInputChange} style={{backgroundColor: "#e7e7e7"}}/>]
 		let inputProject = []
 		let i
 		let p
+		
 
 		for (i=0; i<lenLocales; i++) {
 			locale = locales[i]
@@ -161,33 +151,14 @@ const EditModal = React.createClass({
 			)
 		}
 
-		if (this.state.showModal && err) {
-			switch (err.type) {
-				case 'duplicated':
-					errMsg = "The key already exists in the following project(s): " + err.match.map(function(e){ return me.props.projectMapping[e] }).join(", ");
-					break;
-				case 'emptyfield':
-					errMsg = "The following field(s) are required: " + err.match.join(", ");
-					break;
-				default:
-					errMsg = err.type;
-					break;
-			}
-		}
-
 		return (
 			<Modal show={this.state.showModal} onHide={this.close}>
 				<Modal.Body>
 					<form ref="form">
-						{errMsg ? <Alert bsStyle="danger">{errMsg}</Alert> : null}
-
+						<AlertPanel errors={this.state.errors}/>
 						{inputLocale}
-
 						<div className="app-input-label"><span className="app-input-asterisk">*</span> apply to:</div>
-						{/*<div className="app-checkbox-options">*/}
-							{inputProject}
-						{/*</div>*/}
-
+						{inputProject}
 					</form>
 				</Modal.Body>
 				<Modal.Footer>

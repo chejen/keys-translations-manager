@@ -34,8 +34,7 @@ var TranslationStore = Reflux.createStore({
 			translations = [result.data, ...this.translations];
 			this.updateTranslations(translations);
 		} else {
-			//console.error("onAddTranslationCompleted", result);
-			ErrorActions.alert(result.err);
+			ErrorActions.alert(result.errors);
 		}
 	},
 	onAddTranslationFailed: function(err) {
@@ -81,12 +80,21 @@ var TranslationStore = Reflux.createStore({
 	 * ==========
 	*/
 	onUpdateTranslationCompleted: function(result) {
-		var index = this.getIndex(result._id),
+		var index, translations, data;
+		if (result.success) {
+			data = result.data;
+			index = this.getIndex(data._id);
 			translations = [...this.translations.slice(0, index),
-							result,
+							data,
 							...this.translations.slice(index + 1)];
 
-		this.updateTranslations(translations);
+			this.updateTranslations(translations);
+		} else {
+			ErrorActions.alert(result.errors);
+		}
+		
+
+
 	},
 	onUpdateTranslationFailed: function(err) {
 		console.error("onUpdateTranslationFailed", err);

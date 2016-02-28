@@ -32,7 +32,7 @@ const App = React.createClass({
 		return {
 			config: config,
 			count: {},
-			error: null,
+			errors: [],
 			projectMapping: projectMapping,
 			selectedRecord: null,
 			translations: []
@@ -49,9 +49,9 @@ const App = React.createClass({
 		});
 	},
 
-	onErrorChange(error) {
+	onErrorChange(errors) {
 		this.setState({
-			error: error
+			errors: errors
 		});
 	},
 
@@ -63,7 +63,7 @@ const App = React.createClass({
 
 	onTranslationsChange(translations) {
 		this.setState({
-			error: null,
+			errors: [],
 			translations: translations
 		}, function() {
 			CountActions.countByProject();

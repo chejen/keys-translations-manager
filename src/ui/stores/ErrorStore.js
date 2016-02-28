@@ -3,7 +3,7 @@ var ErrorActions = require('../actions/ErrorActions');
 
 var ErrorStore = Reflux.createStore({
 	listenables: [ErrorActions],
-	error: null,
+	error: [],
 
 	onAlert: function(error) {
 		this.error = error;
@@ -11,7 +11,7 @@ var ErrorStore = Reflux.createStore({
 	},
 	
 	onClear: function() {
-		this.error = null;
+		this.error = [];
 		this.trigger(this.error);
 	}
 });
