@@ -70,6 +70,7 @@ var getUniqueElements = function(ary) {
 					errors.push({
 						key: tester.replace( /\\\./gm , "."),
 						type: type,
+						action: "c",
 						origin: origin,
 						params: data,
 						match: match
@@ -128,6 +129,7 @@ var getUniqueElements = function(ary) {
 
 						errors.push({
 							key: tester,
+							action: "u",
 							type: type,
 							origin: origin,
 							params: data,

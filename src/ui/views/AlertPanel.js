@@ -24,6 +24,9 @@ const AlertPanel = React.createClass({
 
 		for (i=0; i<len; i++) {
 			err = errors[i];
+			if (err.action !== this.props.action) {
+				break;
+			}
 			switch (err.type) {
 				case 'equals':
 					errMsg.push("The key already exists in the following project(s): " + 
@@ -55,7 +58,7 @@ const AlertPanel = React.createClass({
 			}
 		}
 
-		cmp = len ? (<Alert bsStyle="danger">
+		cmp = (errMsg.length > 0) ? (<Alert bsStyle="danger">
 				{errMsg.map(function(e){
 					return <p key={counter++}><Glyphicon glyph="alert"/> {e}</p>
 				})}

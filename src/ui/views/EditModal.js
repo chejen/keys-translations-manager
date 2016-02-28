@@ -80,7 +80,8 @@ const EditModal = React.createClass({
 		if ( emptyFields.length > 0 ) {
 			ErrorActions.alert([{
 				type: 'emptyfield',
-				raw: data,
+				action: "u",
+				params: data,
 				match: emptyFields
 			}]);
 		} else {
@@ -155,7 +156,7 @@ const EditModal = React.createClass({
 			<Modal show={this.state.showModal} onHide={this.close}>
 				<Modal.Body>
 					<form ref="form">
-						<AlertPanel errors={this.state.errors}/>
+						<AlertPanel errors={this.state.errors} action="u"/>
 						{inputLocale}
 						<div className="app-input-label"><span className="app-input-asterisk">*</span> apply to:</div>
 						{inputProject}

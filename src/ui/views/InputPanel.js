@@ -70,7 +70,8 @@ const InputPanel = React.createClass({
 		if ( emptyFields.length > 0 ) {
 			ErrorActions.alert([{
 				type: 'emptyfield',
-				raw: data,
+				action: "c",
+				params: data,
 				match: emptyFields
 			}]);
 		} else {
@@ -112,7 +113,7 @@ const InputPanel = React.createClass({
 
 		return(
 			<form ref="form">
-				<AlertPanel errors={this.props.errors}/>
+				<AlertPanel errors={this.props.errors} action="c"/>
 
 				{inputLocale}
 
