@@ -1,7 +1,7 @@
 import React from 'react'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import ConfirmModal from '../ConfirmModal'
-import EditModal from '../EditModal'
+import ConfirmModal from '../input/ConfirmModal'
+import EditModal from '../input/EditModal'
 import TranslationActions from '../../actions/TranslationActions'
 export default class ActionCellRenderer extends React.Component {
 	showEditModal() {

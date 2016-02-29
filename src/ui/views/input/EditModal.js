@@ -1,16 +1,17 @@
-import '../app.less';
+//import '../app.less';
 import React from 'react'
-import ReactDOM from 'react-dom'
+//import ReactDOM from 'react-dom'
 import Reflux from 'reflux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
-import Input from 'react-bootstrap/lib/Input'
+//import Input from 'react-bootstrap/lib/Input'
 import Modal from 'react-bootstrap/lib/Modal'
-import AlertPanel from './AlertPanel'
-import ErrorActions from '../actions/ErrorActions'
-import ErrorStore from '../stores/ErrorStore'
-import TranslationActions from '../actions/TranslationActions'
-import config from '../../config'
+import FormPanel from './FormPanel'
+import AlertPanel from '../AlertPanel'
+import ErrorActions from '../../actions/ErrorActions'
+import ErrorStore from '../../stores/ErrorStore'
+import TranslationActions from '../../actions/TranslationActions'
+import config from '../../../config'
 
 const EditModal = React.createClass({
 	mixins: [
@@ -19,6 +20,11 @@ const EditModal = React.createClass({
 	],
 
 	getInitialState() {
+		return {
+			showModal: false
+		}
+	},
+	/*getInitialState() {
 		const data = this.props.data
 		const locales = config.locales
 		const projects = config.projects
@@ -40,11 +46,12 @@ const EditModal = React.createClass({
 			o[project.id] = (data.project.indexOf(project.id) >= 0)
 		}
 		return o
-	},
+	},*/
 
 	updateTranslation() {
-		const form = ReactDOM.findDOMNode(this.refs.form)
-		const el = form.elements
+		//const form = ReactDOM.findDOMNode(this.refs.form)
+		//const el = form.elements
+		const el = this.refs.formPanel.getFormElements()
 		const projects = el["project[]"]
 		const lenProjects = projects.length
 		const locales = config.locales
@@ -96,7 +103,7 @@ const EditModal = React.createClass({
 		});
 	},
 
-	onCheckboxChange(id) {
+	/*onCheckboxChange(id) {
 		let o = {};
 		o[id] = !this.state[id];
 		this.setState(o);
@@ -109,7 +116,7 @@ const EditModal = React.createClass({
 		let o = {};
 		o[e.target.name] = e.target.value
 		this.setState(o);
-	},
+	},*/
 
 	close() {
 		this.setState({
@@ -127,7 +134,7 @@ const EditModal = React.createClass({
 
 	render() {
 		const data = this.props.data;
-		const locales = config.locales
+		/*const locales = config.locales
 		const projects = config.projects
 		const lenLocales = locales.length
 		const lenProjects = projects.length
@@ -150,17 +157,13 @@ const EditModal = React.createClass({
 					name="project[]" value={p.id} checked={this.state[p.id]}
 					onChange={this.onCheckboxChange.bind(this, p.id)} />
 			)
-		}
+		}*/
 
 		return (
 			<Modal show={this.state.showModal} onHide={this.close}>
 				<Modal.Body>
-					<form ref="form">
-						<AlertPanel errors={this.state.errors} action="u"/>
-						{inputLocale}
-						<div className="app-input-label"><span className="app-input-asterisk">*</span> apply to:</div>
-						{inputProject}
-					</form>
+					<AlertPanel errors={this.state.errors} action="u"/>
+					<FormPanel ref="formPanel" action="u" data={data}/>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation}>Update</Button>

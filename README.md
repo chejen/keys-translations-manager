@@ -1,6 +1,7 @@
 # Keys-Translations Manager
 This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their related translations. Also, you can download final locale files (either *.json or *.properties) through this application.
 
+![demo](https://cloud.githubusercontent.com/assets/14872888/13387201/39e7d288-deef-11e5-9d31-fe0a2459dfac.gif)
 
 ## Prerequisites
 
@@ -11,13 +12,13 @@ This project offers a web application which aims to facilitate locale management
 ## Getting Started
 
 Checkout this repo, install dependencies, then start the web server:
-```
+```bash
 > git clone https://github.com/chejen/keys-translations-manager
 > cd keys-translations-manager
 > npm install
-> npm run start
+> npm start
 ```
-Now you can run the application at http://localhost:3000/
+Open http://localhost:3000/ and enjoy it.
 
 
 ## Custom
@@ -28,10 +29,10 @@ There are some settings (at [src/config.js](src/config.js)) you can configure. T
 |  server  |   Web server's hostname and port    | ```{ hostname: 'localhost', port: 3000 }```  |
 |  database  |   MongoDB connection URI    | ```'mongodb://localhost:27017/translationdb'```  |
 |  locales  |   The locales need to be managed. (You can add or remove locales arbitrarily.)    | ```['en-US', 'zh-TW']```  |
-|  projects  |   The projects need to be managed. (You can add or remove projects arbitrarily.)    | ```[ {id:'p1', name:'project A'}, {id:'p2', name:'project B'} ]```  |
+|  projects  |   The projects need to be localized. (You can add or remove projects arbitrarily.)    | ```[ {id:'p1', name:'project A'}, {id:'p2', name:'project B'} ]```  |
 
 * Rebuild the code (```npm run build```) if you change the settings of **locales** or **projects**.
-* Restart the server (```npm run start```) if you change any of these configurations.
+* Restart the server if you change any of these configurations.
 
 
 ## CLI
