@@ -7,13 +7,14 @@ import Input from 'react-bootstrap/lib/Input'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
 import TranslationActions from '../../actions/TranslationActions'
-import config from '../../../config'
 
 export default class GridPanel extends React.Component {
+	constructor(props, context) {
+		super(props, context);
 
-	constructor() {
-		super();
-		const locales = config.locales;
+		const config = context.config,
+				locales = config.locales;
+
 		let localeCols = locales.map(function(locale){
 			return {
 				headerName: locale,
@@ -101,5 +102,8 @@ export default class GridPanel extends React.Component {
 			</div>
 		);
 	}
-
 }
+
+GridPanel.contextTypes = {
+    config: React.PropTypes.object
+};

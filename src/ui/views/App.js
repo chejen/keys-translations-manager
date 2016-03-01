@@ -10,17 +10,21 @@ import DisplayPanel from './DisplayPanel'
 import CountActions from '../actions/CountActions'
 import CountStore from '../stores/CountStore'
 import ErrorStore from '../stores/ErrorStore'
-import RecordStore from '../stores/RecordStore'
+//import RecordStore from '../stores/RecordStore'
 import TranslationActions from '../actions/TranslationActions'
 import TranslationStore from '../stores/TranslationStore'
 import config from '../../config'
 
 const App = React.createClass({
+	childContextTypes: {
+		config: React.PropTypes.object
+	},
+
 	mixins: [
 		PureRenderMixin,
 		Reflux.listenTo(CountStore, "onCountChange"),
 		Reflux.listenTo(ErrorStore, "onErrorChange"),
-		Reflux.listenTo(RecordStore, "onSelectedRecordChange"),
+	//	Reflux.listenTo(RecordStore, "onSelectedRecordChange"),
 		Reflux.listenTo(TranslationStore, "onTranslationsChange")
 	],
 
@@ -30,13 +34,19 @@ const App = React.createClass({
 			projectMapping[e.id] = e.name;
 		});
 		return {
-			config: config,
+		//	config: config,
 			count: {},
 			errors: [],
 			projectMapping: projectMapping,
-			selectedRecord: null,
+		//	selectedRecord: null,
 			translations: []
 		}
+	},
+
+	getChildContext() {
+		return {
+			config: config
+		};
 	},
 
 	componentDidMount() {
@@ -55,11 +65,11 @@ const App = React.createClass({
 		});
 	},
 
-	onSelectedRecordChange(selectedRecord) {
+	/*onSelectedRecordChange(selectedRecord) {
 		this.setState({
 			selectedRecord: selectedRecord
 		});
-	},
+	},*/
 
 	onTranslationsChange(translations) {
 		this.setState({

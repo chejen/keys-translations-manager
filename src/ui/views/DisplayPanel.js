@@ -5,6 +5,10 @@ import Counter from './Counter'
 import GridPanel from './grid/GridPanel'
 
 const DisplayPanel = React.createClass({
+	contextTypes: {
+		config: React.PropTypes.object
+	},
+
 	mixins: [PureRenderMixin],
 
 	getInitialState() {
@@ -14,7 +18,7 @@ const DisplayPanel = React.createClass({
 	},
 
 	download(project) {
-		const config = this.props.config
+		const config = this.context.config
 		let url = "http://" + config.server.hostname + ":" + config.server.port + "/api/download/"
 
 		if (this.state.fileType === 'jf') {
@@ -39,7 +43,7 @@ const DisplayPanel = React.createClass({
 
 	render() {
 		const me = this
-		const config = this.props.config
+		const config = this.context.config
 		const projectCount = this.props.count.projects
 
 		return(
@@ -60,7 +64,7 @@ const DisplayPanel = React.createClass({
 						onChange={this.setFileType.bind(this, "p")}/> Properties
 				</div>
 
-				<GridPanel {...this.props} config={config}/>
+				<GridPanel {...this.props}/>
 			</div>
 		);
 	}

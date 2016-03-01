@@ -10,35 +10,34 @@ import ErrorActions from '../../actions/ErrorActions'
 import TranslationActions from '../../actions/TranslationActions'
 
 const InputPanel = React.createClass({
+	contextTypes: {
+		config: React.PropTypes.object
+	},
+
 	mixins: [PureRenderMixin],
 
 	addTranslation() {
-		const config = this.props.config
-		//const form = ReactDOM.findDOMNode(this.refs.form)
-		//const el = form.elements
-		const el = this.refs.formPanel.getFormElements()
-		const projects = el["project[]"]
-		const lenProjects = projects.length
-		const locales = config.locales
-		const lenLocales = locales.length
-		let i
-		let v
-		let locale
-		let project = []
-		let emptyFields = []
-		let data = {}
+		const config = this.context.config,
+				el = this.refs.formPanel.getFormElements(),
+				projects = el["project[]"],
+				lenProjects = projects.length,
+				locales = config.locales,
+				lenLocales = locales.length;
 
-		if ( el.key.value.trim() ) {
-			data.key = el.key.value.trim()
+		let i, vk, vl, locale, project = [], emptyFields = [], data = {};
+
+		vk = el.key.value.trim()
+		if (vk) {
+			data.key = vk
 		} else {
 			emptyFields.push("key")
 		}
 
 		for (i = 0; i < lenLocales; i++) {
 			locale = locales[i]
-			v = el[locale].value.trim()
-			if (v) {
-				data[locale] = v
+			vl = el[locale].value.trim()
+			if (vl) {
+				data[locale] = vl
 			} else {
 				emptyFields.push(locale)
 			}
