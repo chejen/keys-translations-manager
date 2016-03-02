@@ -1,5 +1,6 @@
 import '../app.less'
 import React from 'react'
+import {IntlProvider} from 'react-intl'
 import Reflux from 'reflux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Grid from 'react-bootstrap/lib/Grid'
@@ -10,7 +11,6 @@ import DisplayPanel from './DisplayPanel'
 import CountActions from '../actions/CountActions'
 import CountStore from '../stores/CountStore'
 import ErrorStore from '../stores/ErrorStore'
-//import RecordStore from '../stores/RecordStore'
 import TranslationActions from '../actions/TranslationActions'
 import TranslationStore from '../stores/TranslationStore'
 import config from '../../config'
@@ -22,9 +22,9 @@ const App = React.createClass({
 
 	mixins: [
 		PureRenderMixin,
+		//IntlMixin,
 		Reflux.listenTo(CountStore, "onCountChange"),
 		Reflux.listenTo(ErrorStore, "onErrorChange"),
-	//	Reflux.listenTo(RecordStore, "onSelectedRecordChange"),
 		Reflux.listenTo(TranslationStore, "onTranslationsChange")
 	],
 
@@ -34,11 +34,12 @@ const App = React.createClass({
 			projectMapping[e.id] = e.name;
 		});
 		return {
-		//	config: config,
 			count: {},
 			errors: [],
+			messages: {
+				test: "testStr"
+			},
 			projectMapping: projectMapping,
-		//	selectedRecord: null,
 			translations: []
 		}
 	},
@@ -82,6 +83,7 @@ const App = React.createClass({
 
 	render() {
 		return(
+			<IntlProvider locale="en" messages={this.state.messages}>
 			<Grid className="app-grid">
 				<Row className="app-row">
 					<Col xs={12} md={2} className="app-col-left">
@@ -92,6 +94,7 @@ const App = React.createClass({
 					</Col>
 				</Row>
 			</Grid>
+			</IntlProvider>
 		);
 	}
 })

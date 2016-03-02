@@ -1,0 +1,21 @@
+{
+  "ui": {
+    "common": {
+      "action": "動作",
+      "add": "新增",
+      "applyto": "套用至",
+      "delete": "刪除",
+      "edit": "編輯",
+      "language": "語言",
+      "locale": "語系"
+    },
+    "grid": {
+      "empty": "無資料",
+      "search": "關鍵字搜尋"
+    },
+    "json": {
+      "format": "格式化",
+      "mini": "最小化"
+    }
+  }
+}

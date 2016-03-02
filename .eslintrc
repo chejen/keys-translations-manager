@@ -1,6 +1,6 @@
 {
 	parser: "babel-eslint",
-	plugins: ["babel", "react"],
+	plugins: ["babel", "react", "i18n"],
 	extends: "eslint:recommended",
 	rules: {
 		"accessor-pairs": 2,
@@ -71,9 +71,9 @@
 			"exceptRange": true
 		}],
 
-
 		"no-console": 0,
 
+        "i18n/no-chinese-character": 2,
 
 		"react/jsx-no-duplicate-props": 2,
 		"react/jsx-no-undef": 2,
