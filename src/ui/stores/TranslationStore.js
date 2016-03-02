@@ -1,7 +1,6 @@
 var Reflux = require('reflux');
 var ErrorActions = require('../actions/ErrorActions');
 var TranslationActions = require('../actions/TranslationActions');
-var RecordActions = require('../actions/RecordActions');
 
 var TranslationStore = Reflux.createStore({
 	listenables: [TranslationActions],
@@ -12,13 +11,13 @@ var TranslationStore = Reflux.createStore({
 			return e._id;
 		}).indexOf(id);
 	},
-	
+
 	updateTranslations: function(translations) {
 		this.translations = translations;
 		this.trigger(this.translations);
 	},
 
-	
+
 	/**
 	 * ==========
 	 *  Create
@@ -41,7 +40,7 @@ var TranslationStore = Reflux.createStore({
 		console.error("onAddTranslationFailed", err);
 	},
 
-	
+
 	/**
 	 * ==========
 	 *  Read
@@ -54,7 +53,7 @@ var TranslationStore = Reflux.createStore({
 		console.error("onLoadTranslationsFailed", err);
 	},
 
-	
+
 	/**
 	 * ==========
 	 *  Delete
@@ -66,14 +65,13 @@ var TranslationStore = Reflux.createStore({
 							...this.translations.slice(index + 1)];
 			//translations = this.translations.slice(0, index).concat(this.translations.slice(index + 1));
 
-		RecordActions.setSelectedRecord(null);
 		this.updateTranslations(translations);
 	},
 	onRemoveTranslationFailed: function(err) {
 		console.error("onRemoveTranslationFailed", err);
 	},
-	
-	
+
+
 	/**
 	 * ==========
 	 *  Update
@@ -92,7 +90,7 @@ var TranslationStore = Reflux.createStore({
 		} else {
 			ErrorActions.alert(result.errors);
 		}
-		
+
 
 
 	},

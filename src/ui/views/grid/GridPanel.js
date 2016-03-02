@@ -38,7 +38,7 @@ export default class GridPanel extends React.Component {
 				headerName: "apply to",
 				field: 'project',
 				pinned: true,
-				cellRenderer: reactCellRendererFactory(ProjectCellRenderer)
+				cellRenderer: reactCellRendererFactory(ProjectCellRenderer, props)
 			}, {
 				headerName: "key",
 				field: "key",

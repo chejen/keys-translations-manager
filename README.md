@@ -42,7 +42,7 @@ to be continued
 ## Technologies
 * Scaffolded with [MongoDb] [1], [Express] [2], [React] [3], and [Node.js] [4]
 * Styled with [Bootstrap] [5] and [Less] [6]
-* RWD support: [Bootstrap] [5] and [SB Admin 2] [7]
+* (TODO) RWD support: [Bootstrap] [5] and [SB Admin 2] [7]
 * (TODO) Internalization support: [React Intl] [8]
 * Module Bundler: [webpack] [9]
 * (TODO)Testing:

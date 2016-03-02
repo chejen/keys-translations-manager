@@ -1,8 +1,8 @@
 import React from 'react'
 import config from '../../../config'
 export default class ProjectCellRenderer extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         let projectMapping = {};
         config.projects.map(function(e){
