@@ -46,6 +46,7 @@ if (process.env.NODE_ENV === 'production') {
 		noInfo: true,
 		publicPath: config.output.publicPath
 	})).use(require('webpack-hot-middleware')(compiler));
+	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
 }
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

@@ -36,7 +36,6 @@
 		"react-addons-pure-render-mixin": "0.14.7",
 		"react-bootstrap": "0.28.3",
 		"react-dom": "0.14.7",
-		"react-intl": "1.2.2",
 		"reflux": "0.3.0"
 	},
 	"devDependencies": {
