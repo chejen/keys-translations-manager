@@ -3,6 +3,7 @@ import 'ag-grid/dist/styles/theme-fresh.css'
 import React from 'react'
 import {AgGridReact} from 'ag-grid-react/lib/agGridReact'
 import {reactCellRendererFactory} from 'ag-grid-react/lib/reactCellRendererFactory';
+import Button from 'react-bootstrap/lib/Button'
 import Input from 'react-bootstrap/lib/Input'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
@@ -82,9 +83,16 @@ export default class GridPanel extends React.Component {
         const offset = $(".ag-fresh").offset();
 
 		return (
-			<div style={{width: '100%'}}>
-				<Input type="text" onChange={this.onQuickFilterText.bind(this)}
-					placeholder="Filter" style={{width:"200px"}}/>
+			<div>
+				<div className="input-group custom-search-form">
+					<span className="input-group-btn">
+						<Button bsStyle="default">
+							<i className="fa fa-search"/>
+						</Button>
+					</span>
+					<Input type="text" className="form-control" placeholder="Search..."
+						onChange={this.onQuickFilterText.bind(this)}/>
+				</div>
 
 				<div style={{height: (offset ? (h - offset.top - 20) : 430) + 'px'}} className="ag-fresh">
 					<AgGridReact

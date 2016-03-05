@@ -72,7 +72,7 @@ const InputPanel = React.createClass({
 			<div>
 				<FormPanel ref="formPanel" action="c"/>
 				<br/>
-				<div className="app-submit-button">
+				<div className="pull-right">
 					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation}>
 						<Glyphicon glyph="plus"/> Add
 					</Button>

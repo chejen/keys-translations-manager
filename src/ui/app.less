@@ -1,43 +1,13 @@
 /* variables */
-@counter-width: 140px;
-@counter-color: #73AD21;
 @warning-color: #F92672;
-@label-color: #A6E22E;
-@dark-color: #444;
+@dark-color: #000;
+@middle-color: #444;
 @light-color: #fff;
-@highlight-color: lightyellow;
-@download-panel-color: #ddd;
 @default-space: 10px;
-@default-font-size: 14px;
-
-
-/* functions */
-.func-get-gradient(@startColor: #e7e7e7, @endColor: @light-color){
-	background: @startColor; /* Old browsers */
-	background: -moz-linear-gradient(top, @startColor 0%, @endColor 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, @startColor 0%, @endColor 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, @startColor 0%, @endColor 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=%("%s", @startColor),endColorstr=%("%s", @endColor),GradientType=0 ); /* IE6-9 */
-}
-
+@dark-yellow: #EDB220;
+@light-yellow: #FDD11A;
 
 /* styles */
-.app-grid, .app-row, .app-col-left {
-	height: 100%;
-}
-.app-grid, .app-submit-button {
-	width: 100%;
-}
-.app-grid {
-	margin: 0;
-}
-.app-col-left {
-	.func-get-gradient(@dark-color, (@dark-color + @light-color) * 1/3);
-	color: @label-color;
-	padding-top: @default-space;
-	font-weight: bold;
-	overflow-y: auto;
-}
 .app-input-asterisk {
 	color: @warning-color;
 	font-size: 18px;
@@ -49,56 +19,6 @@
 .app-checkbox-options {
 	color: @light-color;
 }
-.app-submit-button {
-	text-align: right;
-	margin-bottom: @default-space;
-}
-.app-download-panel {
-	background-color: @download-panel-color;
-	padding: @default-space;
-	margin: @default-space 0;
-	border-top: 1px solid green;
-	border-bottom: 1px solid green;
-	border-radius: 10px;
-}
-.app-project-wrapper {
-	display: table-cell;
-	padding: 0 @default-space @default-space 0;
-}
-.app-project-name {
-	background-color: @counter-color;
-	color: @light-color;
-	width: @counter-width;
-	font-size: @default-font-size;
-	font-weight: bold;
-	text-align: center;
-	padding-top: 8px;
-	border-radius: 8px 8px 0 0;
-	height: 35px;
-}
-.app-project-count:hover {
-    background-color: @highlight-color;
-}
-.app-project-count {
-	color: @dark-color;
-	background-color: @light-color;
-	width: @counter-width;
-	border: 1px solid (@dark-color + @light-color) * 0.6;
-	border-top: 0;
-	height: 78px;
-	border-radius: 0 0 10px 10px;
-	padding: 3px;
-	font-family: Arial, "Courier New";
-	font-size: 36px;
-	font-weight: bold;
-	cursor: pointer;
-	text-align: center;
-}
-.app-project-unit {
-	margin-top: -5px;
-	font-size: @default-font-size;
-	color: @counter-color;
-}
 .app-action-icon {
 	margin: 0 5px;
 	cursor: pointer;
@@ -109,29 +29,33 @@
     padding-top: 3px !important;
 }
 
+body {
+    background-color: @middle-color;
+}
 .navbar-default {
-	background-color: #111;
+	background-color: @dark-color;
+	border-color: @dark-yellow;
 }
-.navbar-default .navbar-brand {
-	color: #fff;
-}
-.navbar-right a {
-	color: #fff;
+.navbar-default .navbar-brand, .navbar-right a {
+	color: @light-color;
 }
 .sidebar {
-	background-color: #4D4D4D;
-	color: #FDD11A;
+	background-color: @middle-color;
+	color: @light-yellow;
+}
+.sidebar ul li {
+    border-bottom: 0;
 }
 .panel-count {
-	border-color: #FBBD08;
-	color: #4D4D4D;
+	border-color: @dark-yellow;
+	color: @middle-color;
 }
 .panel-count .panel-heading {
-	background-color: #FDD11A;
-	border-color: #FDD11A;
-	color: #000;
+	background-color: @light-yellow;
+	border-color: @light-yellow;
+	color: @dark-color;
 }
 .panel-desc {
-	color: #EDB220;
+	color: @dark-yellow;
 	font-weight: bold;
 }
