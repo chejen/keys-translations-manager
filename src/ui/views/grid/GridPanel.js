@@ -28,19 +28,19 @@ export default class GridPanel extends React.Component {
 		});
 
 		let columnDefs = [{
-				headerName: "actions",
+				headerName: "Actions",
 				field: '_id',
 				pinned: true,
 				width: 60,
 				suppressSorting: true,
 				cellRenderer: reactCellRendererFactory(ActionCellRenderer)
 			}, {
-				headerName: "apply to",
+				headerName: "Apply to",
 				field: 'project',
 				pinned: true,
 				cellRenderer: reactCellRendererFactory(ProjectCellRenderer, props)
 			}, {
-				headerName: "key",
+				headerName: "Key",
 				field: "key",
 				pinned: true
 			}, {

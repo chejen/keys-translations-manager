@@ -78,7 +78,7 @@ const FormPanel = React.createClass({
 		const lenProjects = projects.length
 		const getLabel = (key, text) => <div key={"label-" + key} className="app-input-label"><span className="app-input-asterisk">*</span> {text}:</div>
 		let locale
-		let localeGroup = [getLabel("key", "key"), (this.state.action === "u")
+		let localeGroup = [getLabel("key", "Key"), (this.state.action === "u")
 							? <Input key="key" type="text" bsSize="small" name="key" value={data.key} onChange={this.onInputChange} style={{backgroundColor: "#e7e7e7"}}/>
 							: <Input key="key" type="text" bsSize="small" name="key" />];
 		let projectGroup = []
@@ -87,12 +87,12 @@ const FormPanel = React.createClass({
 
 		for (i=0; i<lenLocales; i++) {
 			locale = locales[i]
-			localeGroup.push(getLabel(locale, locale), <Input key={locale} type="text" bsSize="small" name={locale} defaultValue={this.state[locale]} />)
+			localeGroup.push(getLabel(locale, "Locale / " + locale), <Input key={locale} type="text" bsSize="small" name={locale} defaultValue={this.state[locale]} />)
 		}
 		for (i=0; i<lenProjects; i++) {
 			p = projects[i];
 			projectGroup.push(
-				<Input key={i} type="checkbox" label={p.name} 
+				<Input key={i} type="checkbox" label={p.name}
 				name="project[]" value={p.id} checked={this.state[p.id]}
 				onChange={this.onCheckboxChange.bind(this, p.id)}/>)
 		}
@@ -102,7 +102,7 @@ const FormPanel = React.createClass({
 				{localeGroup}
 
 				<div className="app-input-label">
-					{getLabel("applyTo", "apply to")}
+					{getLabel("applyTo", "Apply to")}
 				</div>
 				<div className={this.state.action === "u" ? "" : "app-checkbox-options"}>
 					{projectGroup}

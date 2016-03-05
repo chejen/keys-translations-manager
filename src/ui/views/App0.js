@@ -2,14 +2,11 @@ import '../app.less'
 import React from 'react'
 import Reflux from 'reflux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import AlertPanel from './AlertPanel'
-import GridPanel from './grid/GridPanel'
+import Grid from 'react-bootstrap/lib/Grid'
+import Row from 'react-bootstrap/lib/Row'
+import Col from 'react-bootstrap/lib/Col'
 import InputPanel from './input/InputPanel'
-import DropdownMenu from './layout/DropdownMenu'
-import Header from './layout/Header'
-import MainPanel from './layout/MainPanel'
-import SideBar from './layout/SideBar'
-import OutputPanel from './output/OutputPanel'
+import DisplayPanel from './DisplayPanel'
 import CountActions from '../actions/CountActions'
 import CountStore from '../stores/CountStore'
 import ErrorStore from '../stores/ErrorStore'
@@ -75,22 +72,16 @@ const App = React.createClass({
 
 	render() {
 		return(
-			<div id="wrapper">
-				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
-					<Header/>
-					<DropdownMenu/>
-					<SideBar>
-						<InputPanel/>
-					</SideBar>
-				</nav>
-				<div id="page-wrapper">
-					<AlertPanel errors={this.state.errors} action="c"/>
-					<OutputPanel count={this.state.count}/>
-					<MainPanel>
-						<GridPanel translations={this.state.translations}/>
-					</MainPanel>
-				</div>
-			</div>
+			<Grid className="app-grid">
+				<Row className="app-row">
+					<Col xs={12} md={2} className="app-col-left">
+						<InputPanel {...this.state} />
+					</Col>
+					<Col xs={12} md={10}>
+						<DisplayPanel {...this.state} />
+					</Col>
+				</Row>
+			</Grid>
 		);
 	}
 })

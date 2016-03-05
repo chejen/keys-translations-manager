@@ -10,7 +10,7 @@ module.exports = {
 	database: 'mongodb://localhost:27017/translationdb',
 	locales: ['en-US', 'zh-TW'],
 	projects: [ // make sure the ids are 'String' type
-		{id:'p1', name:'project A'},
-		{id:'p2', name:'project B'}
+		{id:'p1', name:'Project A'},
+		{id:'p2', name:'Project B'}
 	]
 };

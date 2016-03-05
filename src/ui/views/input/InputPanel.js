@@ -5,7 +5,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import FormPanel from './FormPanel'
-import AlertPanel from '../AlertPanel'
+//import AlertPanel from '../AlertPanel'
 import ErrorActions from '../../actions/ErrorActions'
 import TranslationActions from '../../actions/TranslationActions'
 
@@ -30,7 +30,7 @@ const InputPanel = React.createClass({
 		if (vk) {
 			data.key = vk
 		} else {
-			emptyFields.push("key")
+			emptyFields.push("Key")
 		}
 
 		for (i = 0; i < lenLocales; i++) {
@@ -51,7 +51,7 @@ const InputPanel = React.createClass({
 		if ( project.length > 0 ) {
 			data.project = project
 		} else {
-			emptyFields.push("apply to")
+			emptyFields.push("Apply to")
 		}
 
 		if ( emptyFields.length > 0 ) {
@@ -70,7 +70,6 @@ const InputPanel = React.createClass({
 	render() {
 		return(
 			<div>
-				<AlertPanel errors={this.props.errors} action="c"/>
 				<FormPanel ref="formPanel" action="c"/>
 				<br/>
 				<div className="app-submit-button">

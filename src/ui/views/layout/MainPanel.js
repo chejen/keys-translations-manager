@@ -10,9 +10,10 @@ const UpperPanel = React.createClass({
 		return(
 			<Row>
 				<Col lg={12}>
-					<div className="panel panel-default">
+					{/*<div className="panel panel-default">
 						<div className="panel-body"></div>
-					</div>
+					</div>*/}
+					{this.props.children}
 				</Col>
 			</Row>
 		);
