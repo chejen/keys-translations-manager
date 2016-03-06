@@ -1,13 +1,11 @@
-import '../../app.less';
 import React from 'react'
-//import ReactDOM from 'react-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import FormPanel from './FormPanel'
-//import AlertPanel from '../AlertPanel'
 import ErrorActions from '../../actions/ErrorActions'
 import TranslationActions from '../../actions/TranslationActions'
+import LocaleUtil from '../../../util/LocaleUtil'
 
 const InputPanel = React.createClass({
 	contextTypes: {
@@ -74,7 +72,7 @@ const InputPanel = React.createClass({
 				<br/>
 				<div className="pull-right">
 					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation}>
-						<Glyphicon glyph="plus"/> Add
+						<Glyphicon glyph="plus"/> {LocaleUtil.getMsg("ui.common.add")}
 					</Button>
 				</div>
 			</div>

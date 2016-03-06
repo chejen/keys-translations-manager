@@ -13,8 +13,11 @@ import OutputPanel from './output/OutputPanel'
 import CountActions from '../actions/CountActions'
 import CountStore from '../stores/CountStore'
 import ErrorStore from '../stores/ErrorStore'
+import MessageActions from '../actions/MessageActions'
+import MessageStore from '../stores/MessageStore'
 import TranslationActions from '../actions/TranslationActions'
 import TranslationStore from '../stores/TranslationStore'
+import LocaleUtil from '../../util/LocaleUtil'
 import config from '../../config'
 
 const App = React.createClass({
@@ -26,6 +29,7 @@ const App = React.createClass({
 		PureRenderMixin,
 		Reflux.listenTo(CountStore, "onCountChange"),
 		Reflux.listenTo(ErrorStore, "onErrorChange"),
+		Reflux.listenTo(MessageStore, "onMessagesChange"),
 		Reflux.listenTo(TranslationStore, "onTranslationsChange")
 	],
 
@@ -37,6 +41,7 @@ const App = React.createClass({
 		return {
 			count: {},
 			errors: [],
+			messages: null,
 			projectMapping: projectMapping,
 			translations: []
 		}
@@ -46,6 +51,10 @@ const App = React.createClass({
 		return {
 			config: config
 		};
+	},
+
+	componentWillMount() {
+		MessageActions.load("zh-TW");
 	},
 
 	componentDidMount() {
@@ -64,6 +73,13 @@ const App = React.createClass({
 		});
 	},
 
+	onMessagesChange(messages) {
+		LocaleUtil.setMessages(messages);
+		this.setState({
+			messages: messages
+		});
+	},
+
 	onTranslationsChange(translations) {
 		this.setState({
 			errors: [],
@@ -74,7 +90,7 @@ const App = React.createClass({
 	},
 
 	render() {
-		return(
+		return this.state.messages ? (
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
@@ -91,7 +107,7 @@ const App = React.createClass({
 					</MainPanel>
 				</div>
 			</div>
-		);
+		) : <div style={{color:"orange"}}>Loading, please wait...</div>;
 	}
 })
 
