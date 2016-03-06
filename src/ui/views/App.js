@@ -84,7 +84,7 @@ const App = React.createClass({
 					</SideBar>
 				</nav>
 				<div id="page-wrapper">
-					<AlertPanel errors={this.state.errors} action="c"/>
+					{this.state.errors.length > 0 ? <AlertPanel errors={this.state.errors} action="c"/> : <br/>}
 					<OutputPanel count={this.state.count}/>
 					<MainPanel>
 						<GridPanel translations={this.state.translations}/>
