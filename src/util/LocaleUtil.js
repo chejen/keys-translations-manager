@@ -3,15 +3,24 @@ module.exports = {
 		this.messages = messages
 	},
 	getMsg(path) {
-		const pathParts = path.split('.');
-		let message;
+		const pathParts = path ? path.split('.') : [""],
+			len = arguments.length,
+			re = /\{\d+\}/gm
+		let message, i;
 
 		try {
 			message = pathParts.reduce(function (obj, pathPart) {
 				return obj[pathPart];
 			}, this.messages);
 		} finally {
-			if (!message) {
+			if (message) {
+				for (i = 1; i < len; i++){
+					message = message.replace(
+						new RegExp("\\{" + i + "\\}", "gm"),
+						arguments[i]
+					);
+				}
+			} else {
 				return path + ".undefined";
 			}
 		}
