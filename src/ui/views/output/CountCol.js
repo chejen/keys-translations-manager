@@ -2,6 +2,7 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Col from 'react-bootstrap/lib/Col'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import LocaleUtil from '../../../util/LocaleUtil'
 
 const CountCol = React.createClass({
 	mixins: [PureRenderMixin],
@@ -15,6 +16,7 @@ const CountCol = React.createClass({
 						<span className="pull-left">{this.props.header}</span>
 						<span className="pull-right">
 							<Glyphicon glyph="download-alt"
+								title={LocaleUtil.getMsg("ui.common.download")}
 								style={{cursor:"pointer"}}
 								onClick={this.props.onClick}/>
 						</span>

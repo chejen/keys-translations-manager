@@ -4,6 +4,7 @@ import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import CountCol from './CountCol'
+import LocaleUtil from '../../../util/LocaleUtil'
 
 const OutputPanel = React.createClass({
 	contextTypes: {
@@ -61,10 +62,10 @@ const OutputPanel = React.createClass({
 					<Col>
 						&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="fileType" value="j" checked={this.state.fileType==="j"}
-							onChange={this.setFileType.bind(this, "j")}/> JSON (minimized)
+							onChange={this.setFileType.bind(this, "j")}/> JSON ({LocaleUtil.getMsg("ui.json.mini")})
 						&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="fileType" value="jf" checked={this.state.fileType==="jf"}
-							onChange={this.setFileType.bind(this, "jf")}/> JSON (formatted)
+							onChange={this.setFileType.bind(this, "jf")}/> JSON ({LocaleUtil.getMsg("ui.json.format")})
 						&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="fileType" value="p" checked={this.state.fileType==="p"}
 							onChange={this.setFileType.bind(this, "p")}/> Properties

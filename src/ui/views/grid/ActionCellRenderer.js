@@ -3,13 +3,17 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ConfirmModal from './ConfirmModal'
 import EditModal from '../input/EditModal'
 import TranslationActions from '../../actions/TranslationActions'
+import LocaleUtil from '../../../util/LocaleUtil'
 export default class ActionCellRenderer extends React.Component {
 	showEditModal() {
 		this.refs.editModal.open();
 	}
 	showConfirmModal(value) {
 		const data = this.props.params.data;
-		this.refs.confirmModal.open("Are you sure you want to delete \"" + data.key + "\" ?", this.removeTranslation.bind(this, value));
+		this.refs.confirmModal.open(
+			"Are you sure you want to delete \"" + data.key + "\" ?",
+			this.removeTranslation.bind(this, value)
+		);
 	}
 	removeTranslation(value) {
 		TranslationActions.removeTranslation(value); // cell equals _id
@@ -21,9 +25,9 @@ export default class ActionCellRenderer extends React.Component {
 			<div>
 				<ConfirmModal ref="confirmModal"/>
 				<EditModal ref="editModal" data={this.props.params.data} />
-				<Glyphicon glyph="edit" className="app-action-icon" title="Edit"
+				<Glyphicon glyph="edit" className="app-action-icon" title={LocaleUtil.getMsg("ui.common.edit")}
 					onClick={this.showEditModal.bind(this)}/>
-				<Glyphicon glyph="trash" className="app-action-icon" title="Delete"
+				<Glyphicon glyph="trash" className="app-action-icon" title={LocaleUtil.getMsg("ui.common.delete")}
 					onClick={this.showConfirmModal.bind(this, value)}/>
 			</div>
 		);

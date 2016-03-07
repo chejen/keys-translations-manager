@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Input from 'react-bootstrap/lib/Input'
 import config from '../../../config'
+import LocaleUtil from '../../../util/LocaleUtil'
 
 const FormPanel = React.createClass({
 	mixins: [PureRenderMixin],
@@ -71,23 +72,27 @@ const FormPanel = React.createClass({
 	},
 
 	render() {
-		const data = this.props.data;
-		const locales = config.locales
-		const projects = config.projects
-		const lenLocales = locales.length
-		const lenProjects = projects.length
-		const getLabel = (key, text) => <div key={"label-" + key} className="app-input-label"><span className="app-input-asterisk">*</span> {text}:</div>
-		let locale
-		let localeGroup = [getLabel("key", "Key"), (this.state.action === "u")
+		const data = this.props.data,
+			locales = config.locales,
+			projects = config.projects,
+			lenLocales = locales.length,
+			lenProjects = projects.length,
+			getLabel = (key, text) => <div key={"label-" + key} className="app-input-label"><span className="app-input-asterisk">*</span> {text}:</div>
+		let i, p, locale,
+			projectGroup = [],
+			localeGroup = [getLabel("key", "Key"), (this.state.action === "u")
 							? <Input key="key" type="text" bsSize="small" name="key" value={data.key} onChange={this.onInputChange} style={{backgroundColor: "#e7e7e7"}}/>
 							: <Input key="key" type="text" bsSize="small" name="key" />];
-		let projectGroup = []
-		let i
-		let p
 
 		for (i=0; i<lenLocales; i++) {
 			locale = locales[i]
-			localeGroup.push(getLabel(locale, "Locale / " + locale), <Input key={locale} type="text" bsSize="small" name={locale} defaultValue={this.state[locale]} />)
+			localeGroup.push(
+				getLabel(
+					locale,
+					LocaleUtil.getMsg("ui.common.locale") + " / " + locale
+				),
+				<Input key={locale} type="text" bsSize="small" name={locale} defaultValue={this.state[locale]} />
+			)
 		}
 		for (i=0; i<lenProjects; i++) {
 			p = projects[i];
@@ -102,7 +107,7 @@ const FormPanel = React.createClass({
 				{localeGroup}
 
 				<div className="app-input-label">
-					{getLabel("applyTo", "Apply to")}
+					{getLabel("applyTo", LocaleUtil.getMsg("ui.common.applyto"))}
 				</div>
 				<div className={this.state.action === "u" ? "" : "app-checkbox-options"}>
 					{projectGroup}

@@ -8,6 +8,7 @@ import Input from 'react-bootstrap/lib/Input'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
 import TranslationActions from '../../actions/TranslationActions'
+import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class GridPanel extends React.Component {
 	constructor(props, context) {
@@ -29,14 +30,14 @@ export default class GridPanel extends React.Component {
 		});
 
 		let columnDefs = [{
-				headerName: "Actions",
+				headerName: LocaleUtil.getMsg("ui.common.action"),
 				field: '_id',
 				pinned: true,
 				width: 60,
 				suppressSorting: true,
 				cellRenderer: reactCellRendererFactory(ActionCellRenderer)
 			}, {
-				headerName: "Apply to",
+				headerName: LocaleUtil.getMsg("ui.common.applyto"),
 				field: 'project',
 				pinned: true,
 				cellRenderer: reactCellRendererFactory(ProjectCellRenderer, props)
@@ -45,7 +46,7 @@ export default class GridPanel extends React.Component {
 				field: "key",
 				pinned: true
 			}, {
-				headerName: 'Locales',
+				headerName: LocaleUtil.getMsg("ui.common.locales"),
 				children: localeCols
 			}
 		];
@@ -69,7 +70,7 @@ export default class GridPanel extends React.Component {
 		this.gridOptions = {
 			rowBuffer: 10,
 			localeText: {
-				noRowsToShow: "No data to display"
+				noRowsToShow: LocaleUtil.getMsg("ui.common.empty")
 			}
 		};
 	}
@@ -90,7 +91,8 @@ export default class GridPanel extends React.Component {
 							<i className="fa fa-search"/>
 						</Button>
 					</span>
-					<Input type="text" className="form-control" placeholder="Search..."
+					<Input type="text" className="form-control"
+						placeholder={LocaleUtil.getMsg("ui.grid.search")}
 						onChange={this.onQuickFilterText.bind(this)}/>
 				</div>
 

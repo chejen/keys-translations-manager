@@ -29,28 +29,32 @@ const AlertPanel = React.createClass({
 			}
 			switch (err.type) {
 				case 'equals':
-					errMsg.push("The key already exists in the following project(s): " + 
+					errMsg.push("The key already exists in the following project(s): " +
 						err.match.map(function(e){
 							return projectMapping[e]
 						}).join(", ")
 					);
 					break;
 				case 'contains':
-					errMsg.push("The key conflicts with '" + err.key + "' in the following project(s): " + 
+					errMsg.push("The key conflicts with '" + err.key + "' in the following project(s): " +
 						err.match.map(function(e){
 							return projectMapping[e]
 						}).join(", ")
 					);
 					break;
 				case 'belongsTo':
-					errMsg.push("The key conflicts with " + err.key + "* in the following project(s): " + 
+					errMsg.push("The key conflicts with " + err.key + "* in the following project(s): " +
 						err.match.map(function(e){
 							return projectMapping[e]
 						}).join(", ")
 					);
 					break;
 				case 'emptyfield':
-					errMsg.push("The following field(s) are required: " + err.match.join(", "));
+					errMsg.push("The following field(s) are required: " +
+						err.match.map(function(e){
+							return '"' + e + '"'
+						}).join(", ")
+					);
 					break;
 				default:
 					errMsg.push(err.type);
