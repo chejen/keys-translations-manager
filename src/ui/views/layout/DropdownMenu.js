@@ -1,6 +1,7 @@
 /*eslint i18n/no-chinese-character: 0*/
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import LangActions from '../../actions/LangActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 const Header = React.createClass({
@@ -15,10 +16,16 @@ const Header = React.createClass({
 						<i className="fa fa-caret-down"/>
 					</a>
 					<ul className="dropdown-menu dropdown-user">
-						<li><a href="#">
+						<li><a href="#" onClick={function(event){
+								event.preventDefault();
+								LangActions.switch("en-US");
+							}}>
 							<i className="fa fa-language fa-fw"/> English (en-US)
 						</a></li>
-						<li><a href="#">
+						<li><a href="#" onClick={function(event){
+								event.preventDefault();
+								LangActions.switch("zh-TW");
+							}}>
 							<i className="fa fa-language fa-fw"/> 繁體中文 (zh-TW)
 						</a></li>
 					</ul>

@@ -4,8 +4,7 @@ module.exports = {
 	},
 	getMsg(path) {
 		const pathParts = path ? path.split('.') : [""],
-			len = arguments.length,
-			re = /\{\d+\}/gm
+			len = arguments.length;
 		let message, i;
 
 		try {

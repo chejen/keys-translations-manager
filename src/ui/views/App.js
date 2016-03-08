@@ -13,6 +13,7 @@ import OutputPanel from './output/OutputPanel'
 import CountActions from '../actions/CountActions'
 import CountStore from '../stores/CountStore'
 import ErrorStore from '../stores/ErrorStore'
+import LangStore from '../stores/LangStore'
 import MessageActions from '../actions/MessageActions'
 import MessageStore from '../stores/MessageStore'
 import TranslationActions from '../actions/TranslationActions'
@@ -29,6 +30,7 @@ const App = React.createClass({
 		PureRenderMixin,
 		Reflux.listenTo(CountStore, "onCountChange"),
 		Reflux.listenTo(ErrorStore, "onErrorChange"),
+		Reflux.listenTo(LangStore, "onLangChange"),
 		Reflux.listenTo(MessageStore, "onMessagesChange"),
 		Reflux.listenTo(TranslationStore, "onTranslationsChange")
 	],
@@ -39,6 +41,7 @@ const App = React.createClass({
 			projectMapping[e.id] = e.name;
 		});
 		return {
+			lang: null,
 			count: {},
 			errors: [],
 			messages: null,
@@ -54,7 +57,7 @@ const App = React.createClass({
 	},
 
 	componentWillMount() {
-		MessageActions.load("zh-TW");
+		this.loadMessages();
 	},
 
 	componentDidMount() {
@@ -73,6 +76,14 @@ const App = React.createClass({
 		});
 	},
 
+	onLangChange(lang) {
+		this.setState({
+			lang: lang
+		}, function(){
+			this.loadMessages();
+		}.bind(this));
+	},
+
 	onMessagesChange(messages) {
 		LocaleUtil.setMessages(messages);
 		this.setState({
@@ -87,6 +98,10 @@ const App = React.createClass({
 		}, function() {
 			CountActions.countByProject();
 		});
+	},
+
+	loadMessages() {
+		MessageActions.load(this.state.lang || navigator.language || navigator.browserLanguage);
 	},
 
 	render() {
@@ -107,7 +122,9 @@ const App = React.createClass({
 					</MainPanel>
 				</div>
 			</div>
-		) : <div style={{color:"orange"}}>Loading, please wait...</div>;
+		) : (<div className="app-default">
+			<i className="fa fa-spinner fa-pulse"/>
+		</div>);
 	}
 })
 
