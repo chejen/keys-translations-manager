@@ -14,6 +14,63 @@ export default class GridPanel extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 
+
+
+		/*let columnDefs = [{
+				headerName: LocaleUtil.getMsg("ui.common.action"),
+				field: '_id',
+				pinned: true,
+				width: 60,
+				suppressSorting: true,
+				cellRenderer: reactCellRendererFactory(ActionCellRenderer)
+			}, {
+				headerName: LocaleUtil.getMsg("ui.common.applyto"),
+				field: 'project',
+				pinned: true,
+				cellRenderer: reactCellRendererFactory(ProjectCellRenderer, props)
+			}, {
+				headerName: "Key",
+				field: "key",
+				pinned: true
+			}, {
+				headerName: LocaleUtil.getMsg("ui.common.locales"),
+				children: localeCols
+			}
+		];*/
+
+		this.state = {
+			quickFilterText: null,
+			columnDefs: this.getColumnDefs(props, context),
+			rowData: [],
+			icons: {
+				columnRemoveFromGroup: '<i class="fa fa-remove"/>',
+				filter: '<i class="fa fa-filter"/>',
+				sortAscending: '<i class="fa fa-long-arrow-down"/>',
+				sortDescending: '<i class="fa fa-long-arrow-up"/>',
+				groupExpanded: '<i class="fa fa-minus-square-o"/>',
+				groupContracted: '<i class="fa fa-plus-square-o"/>',
+				columnGroupOpened: '<i class="fa fa-minus-square-o"/>',
+				columnGroupClosed: '<i class="fa fa-plus-square-o"/>'
+			}
+		};
+
+		this.gridOptions = {
+			rowBuffer: 10,
+			localeText: {
+				noRowsToShow: LocaleUtil.getMsg("ui.common.empty")
+			}
+		};
+	}
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.messages !== this.props.messages) {
+			this.setState({
+				columnDefs: this.getColumnDefs(this.props, this.context)
+			});
+		}
+	}
+
+	getColumnDefs(props, context) {
 		const config = context.config,
 				locales = config.locales;
 
@@ -29,7 +86,7 @@ export default class GridPanel extends React.Component {
 			};
 		});
 
-		let columnDefs = [{
+		const columnDefs = [{
 				headerName: LocaleUtil.getMsg("ui.common.action"),
 				field: '_id',
 				pinned: true,
@@ -50,29 +107,7 @@ export default class GridPanel extends React.Component {
 				children: localeCols
 			}
 		];
-
-		this.state = {
-			quickFilterText: null,
-			columnDefs: columnDefs,
-			rowData: [],
-			icons: {
-				columnRemoveFromGroup: '<i class="fa fa-remove"/>',
-				filter: '<i class="fa fa-filter"/>',
-				sortAscending: '<i class="fa fa-long-arrow-down"/>',
-				sortDescending: '<i class="fa fa-long-arrow-up"/>',
-				groupExpanded: '<i class="fa fa-minus-square-o"/>',
-				groupContracted: '<i class="fa fa-plus-square-o"/>',
-				columnGroupOpened: '<i class="fa fa-minus-square-o"/>',
-				columnGroupClosed: '<i class="fa fa-plus-square-o"/>'
-			}
-		};
-
-		this.gridOptions = {
-			rowBuffer: 10,
-			localeText: {
-				noRowsToShow: LocaleUtil.getMsg("ui.common.empty")
-			}
-		};
+		return columnDefs;
 	}
 
 	onQuickFilterText(event) {

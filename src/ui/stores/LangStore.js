@@ -6,7 +6,6 @@ var LangStore = Reflux.createStore({
 	lang: null,
 
 	onSwitch: function(lang) {
-		console.log("onSwitch", lang);
 		this.lang = lang;
 		this.trigger(this.lang);
 	}

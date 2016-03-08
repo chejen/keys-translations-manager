@@ -109,21 +109,21 @@ const App = React.createClass({
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
-					<DropdownMenu/>
+					<DropdownMenu messages={this.state.messages}/>
 					<SideBar>
-						<InputPanel/>
+						<InputPanel messages={this.state.messages}/>
 					</SideBar>
 				</nav>
 				<div id="page-wrapper">
 					{this.state.errors.length > 0 ? <AlertPanel errors={this.state.errors} action="c"/> : <br/>}
-					<OutputPanel count={this.state.count}/>
+					<OutputPanel count={this.state.count} messages={this.state.messages}/>
 					<MainPanel>
-						<GridPanel translations={this.state.translations}/>
+						<GridPanel translations={this.state.translations} messages={this.state.messages}/>
 					</MainPanel>
 				</div>
 			</div>
 		) : (<div className="app-default">
-			<i className="fa fa-spinner fa-pulse"/>
+			<i className="fa fa-spinner fa-pulse fa-2x"/>
 		</div>);
 	}
 })

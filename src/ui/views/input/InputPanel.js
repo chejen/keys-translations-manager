@@ -68,7 +68,7 @@ const InputPanel = React.createClass({
 	render() {
 		return(
 			<div>
-				<FormPanel ref="formPanel" action="c"/>
+				<FormPanel ref="formPanel" action="c" messages={this.props.messages}/>
 				<br/>
 				<div className="pull-right">
 					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation}>
