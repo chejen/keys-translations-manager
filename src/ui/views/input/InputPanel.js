@@ -37,7 +37,7 @@ const InputPanel = React.createClass({
 			if (vl) {
 				data[locale] = vl
 			} else {
-				emptyFields.push(locale)
+				emptyFields.push(LocaleUtil.getMsg("ui.common.locale") + " / " + locale)
 			}
 		}
 
@@ -49,7 +49,7 @@ const InputPanel = React.createClass({
 		if ( project.length > 0 ) {
 			data.project = project
 		} else {
-			emptyFields.push("Apply to")
+			emptyFields.push(LocaleUtil.getMsg("ui.common.applyto"))
 		}
 
 		if ( emptyFields.length > 0 ) {

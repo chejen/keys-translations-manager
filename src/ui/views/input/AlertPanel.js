@@ -1,12 +1,17 @@
-import '../app.less';
+import '../../app.less';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import config from '../../config'
+import ErrorActions from '../../actions/ErrorActions'
+import config from '../../../config'
 
 const AlertPanel = React.createClass({
 	mixins: [PureRenderMixin],
+
+	handleDismiss(){
+		ErrorActions.clear();
+	},
 
 	render() {
 		const errors = this.props.errors
@@ -62,7 +67,7 @@ const AlertPanel = React.createClass({
 			}
 		}
 
-		cmp = (errMsg.length > 0) ? (<Alert bsStyle="danger">
+		cmp = (errMsg.length > 0) ? (<Alert bsStyle="danger" onDismiss={this.handleDismiss}>
 				{errMsg.map(function(e){
 					return <p key={counter++}><Glyphicon glyph="alert"/> {e}</p>
 				})}

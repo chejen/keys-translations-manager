@@ -4,7 +4,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import FormPanel from './FormPanel'
-import AlertPanel from '../AlertPanel'
+import AlertPanel from '../input/AlertPanel'
 import ErrorActions from '../../actions/ErrorActions'
 import ErrorStore from '../../stores/ErrorStore'
 import TranslationActions from '../../actions/TranslationActions'
@@ -40,7 +40,7 @@ const EditModal = React.createClass({
 			if (v) {
 				data[locale] = v
 			} else {
-				emptyFields.push(locale)
+				emptyFields.push(LocaleUtil.getMsg("ui.common.locale") + " / " + locale)
 			}
 		}
 

@@ -2,8 +2,8 @@ import '../app.less'
 import React from 'react'
 import Reflux from 'reflux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import AlertPanel from './AlertPanel'
 import GridPanel from './grid/GridPanel'
+import AlertPanel from './input/AlertPanel'
 import InputPanel from './input/InputPanel'
 import DropdownMenu from './layout/DropdownMenu'
 import Header from './layout/Header'
@@ -12,6 +12,7 @@ import SideBar from './layout/SideBar'
 import OutputPanel from './output/OutputPanel'
 import CountActions from '../actions/CountActions'
 import CountStore from '../stores/CountStore'
+import ErrorActions from '../actions/ErrorActions'
 import ErrorStore from '../stores/ErrorStore'
 import LangStore from '../stores/LangStore'
 import MessageActions from '../actions/MessageActions'
@@ -86,6 +87,7 @@ const App = React.createClass({
 
 	onMessagesChange(messages) {
 		LocaleUtil.setMessages(messages);
+		ErrorActions.clear();
 		this.setState({
 			messages: messages
 		});
