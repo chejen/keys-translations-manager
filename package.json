@@ -16,7 +16,7 @@
 	"author": "chejen",
 	"main": "src/ui/index.js",
 	"scripts": {
-		"dev": "cross-env NODE_ENV=development nodemon --ignore \"src/ui/\" ./Server.js",
+		"dev": "cross-env NODE_ENV=development nodemon --ignore public/ --ignore src/ui/ ./Server.js",
 		"start": "cross-env NODE_ENV=production node ./Server.js",
 		"build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
 	},

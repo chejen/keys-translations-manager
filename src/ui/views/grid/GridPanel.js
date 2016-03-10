@@ -57,7 +57,7 @@ export default class GridPanel extends React.Component {
 		this.gridOptions = {
 			rowBuffer: 10,
 			localeText: {
-				noRowsToShow: LocaleUtil.getMsg("ui.common.empty")
+				noRowsToShow: LocaleUtil.getMsg("ui.grid.empty")
 			}
 		};
 	}

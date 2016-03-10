@@ -4,7 +4,7 @@ module.exports = {
 	},
 	getMsg(path) {
 		const pathParts = path ? path.split('.') : [""],
-			len = arguments.length;
+			len = arguments.length - 1;
 		let message, i;
 
 		try {
@@ -13,10 +13,10 @@ module.exports = {
 			}, this.messages);
 		} finally {
 			if (message) {
-				for (i = 1; i < len; i++){
+				for (i = 0; i < len;){
 					message = message.replace(
 						new RegExp("\\{" + i + "\\}", "gm"),
-						arguments[i]
+						arguments[++i]
 					);
 				}
 			} else {

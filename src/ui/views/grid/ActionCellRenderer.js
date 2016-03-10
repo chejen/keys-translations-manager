@@ -11,7 +11,8 @@ export default class ActionCellRenderer extends React.Component {
 	showConfirmModal(value) {
 		const data = this.props.params.data;
 		this.refs.confirmModal.open(
-			"Are you sure you want to delete \"" + data.key + "\" ?",
+			LocaleUtil.getMsg("ui.common.delete"),
+			LocaleUtil.getMsg("ui.confirm.delete", data.key),
 			this.removeTranslation.bind(this, value)
 		);
 	}

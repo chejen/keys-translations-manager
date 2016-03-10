@@ -13,9 +13,10 @@ const ConfirmModal = React.createClass({
 			show: false
 		};
 	},
-	open(confirmMsg, confirmFunc) {
+	open(confirmTitle, confirmMsg, confirmFunc) {
 		this.setState({
 			show: true,
+			confirmTitle: confirmTitle,
 			confirmMsg: confirmMsg,
 			confirmFunc: confirmFunc
 		});
@@ -34,7 +35,7 @@ const ConfirmModal = React.createClass({
 			<Modal backdrop='static' show={this.state.show} onHide={this.close}>
 				<Modal.Header>
 					<Modal.Title>
-						{LocaleUtil.getMsg("ui.common.delete")}
+						{this.state.confirmTitle}
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>

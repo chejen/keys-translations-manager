@@ -5,6 +5,7 @@ import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ErrorActions from '../../actions/ErrorActions'
 import config from '../../../config'
+import LocaleUtil from '../../../util/LocaleUtil'
 
 const AlertPanel = React.createClass({
 	mixins: [PureRenderMixin],
@@ -32,34 +33,35 @@ const AlertPanel = React.createClass({
 			if (err.action !== this.props.action) {
 				break;
 			}
+			console.log("err", err);
 			switch (err.type) {
 				case 'equals':
-					errMsg.push("The key already exists in the following project(s): " +
+					errMsg.push(LocaleUtil.getMsg("ui.err.equals", err.params.key,
 						err.match.map(function(e){
-							return projectMapping[e]
+							return '"' + projectMapping[e] + '"'
 						}).join(", ")
-					);
+					));
 					break;
 				case 'contains':
-					errMsg.push("The key conflicts with '" + err.key + "' in the following project(s): " +
+					errMsg.push(LocaleUtil.getMsg("ui.err.contains", err.params.key, err.key,
 						err.match.map(function(e){
-							return projectMapping[e]
+							return '"' + projectMapping[e] + '"'
 						}).join(", ")
-					);
+					));
 					break;
 				case 'belongsTo':
-					errMsg.push("The key conflicts with " + err.key + "* in the following project(s): " +
+					errMsg.push(LocaleUtil.getMsg("ui.err.belongsTo", err.params.key, err.key,
 						err.match.map(function(e){
-							return projectMapping[e]
+							return '"' + projectMapping[e] + '"'
 						}).join(", ")
-					);
+					));
 					break;
 				case 'emptyfield':
-					errMsg.push("The following field(s) are required: " +
+					errMsg.push(LocaleUtil.getMsg("ui.err.emptyfield",
 						err.match.map(function(e){
 							return '"' + e + '"'
 						}).join(", ")
-					);
+					));
 					break;
 				default:
 					errMsg.push(err.type);
