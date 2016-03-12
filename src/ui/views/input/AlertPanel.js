@@ -4,7 +4,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ErrorActions from '../../actions/ErrorActions'
-import config from '../../../config'
+import ConfigUtil from '../../../util/ConfigUtil'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 const AlertPanel = React.createClass({
@@ -15,44 +15,40 @@ const AlertPanel = React.createClass({
 	},
 
 	render() {
-		const errors = this.props.errors
-		const len = errors.length
-		let err
-		let errMsg = []
-		let cmp
-		let i
-		let counter = 0
-		let projectMapping = {}
-
-		config.projects.map(function(e){
-			projectMapping[e.id] = e.name;
-		});
+		const getProjectName = ConfigUtil.getProjectName,
+			errors = this.props.errors,
+			len = errors.length;
+		let err,
+			errMsg = [],
+			cmp,
+			i,
+			counter = 0;
 
 		for (i=0; i<len; i++) {
 			err = errors[i];
 			if (err.action !== this.props.action) {
 				break;
 			}
-			console.log("err", err);
+
 			switch (err.type) {
 				case 'equals':
 					errMsg.push(LocaleUtil.getMsg("ui.err.equals", err.params.key,
 						err.match.map(function(e){
-							return '"' + projectMapping[e] + '"'
+							return '"' + getProjectName(e) + '"'
 						}).join(", ")
 					));
 					break;
 				case 'contains':
 					errMsg.push(LocaleUtil.getMsg("ui.err.contains", err.params.key, err.key,
 						err.match.map(function(e){
-							return '"' + projectMapping[e] + '"'
+							return '"' + getProjectName(e) + '"'
 						}).join(", ")
 					));
 					break;
 				case 'belongsTo':
 					errMsg.push(LocaleUtil.getMsg("ui.err.belongsTo", err.params.key, err.key,
 						err.match.map(function(e){
-							return '"' + projectMapping[e] + '"'
+							return '"' + getProjectName(e) + '"'
 						}).join(", ")
 					));
 					break;

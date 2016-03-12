@@ -8,10 +8,13 @@ import AlertPanel from '../input/AlertPanel'
 import ErrorActions from '../../actions/ErrorActions'
 import ErrorStore from '../../stores/ErrorStore'
 import TranslationActions from '../../actions/TranslationActions'
-import config from '../../../config'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 const EditModal = React.createClass({
+	contextTypes: {
+		config: React.PropTypes.object
+	},
+
 	mixins: [
 		PureRenderMixin,
 		Reflux.listenTo(ErrorStore, "onErrorChange")
@@ -24,7 +27,8 @@ const EditModal = React.createClass({
 	},
 
 	updateTranslation() {
-		const el = this.refs.formPanel.getFormElements(),
+		const config = this.context.config,
+			el = this.refs.formPanel.getFormElements(),
 			projects = el["project[]"],
 			lenProjects = projects.length,
 			locales = config.locales,

@@ -1,4 +1,7 @@
 import '../app.less'
+import ES6Promise from 'es6-promise'
+ES6Promise.polyfill();
+import 'isomorphic-fetch'
 import React from 'react'
 import Reflux from 'reflux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
@@ -37,16 +40,11 @@ const App = React.createClass({
 	],
 
 	getInitialState() {
-		let projectMapping = {};
-		config.projects.map(function(e){
-			projectMapping[e.id] = e.name;
-		});
 		return {
 			lang: null,
 			count: {},
 			errors: [],
 			messages: null,
-			projectMapping: projectMapping,
 			translations: []
 		}
 	},

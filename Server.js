@@ -8,7 +8,7 @@ var TranslationController = require('./src/api/controllers/TranslationController
 var CountController = require('./src/api/controllers/CountController');
 var DownloadController = require('./src/api/controllers/DownloadController');
 var app = express(),
-	config,
+	webpackConfig,
 	compiler;
 
 mongoose.connect(config.database, function(err) {
@@ -37,14 +37,14 @@ app.listen(config.server.port, config.server.hostname, function(err) {
 if (process.env.NODE_ENV === 'production') {
 	app.use('/public', express.static(path.join(__dirname, 'public')));
 } else {
-	config = require('./webpack.config.dev');
-	compiler = webpack(config);
+	webpackConfig = require('./webpack.config.dev');
+	compiler = webpack(webpackConfig);
 	app.use(require('webpack-dev-middleware')(compiler, {
 		/*stats: {
 			colors: true
 		},*/
 		noInfo: true,
-		publicPath: config.output.publicPath
+		publicPath: webpackConfig.output.publicPath
 	})).use(require('webpack-hot-middleware')(compiler));
 	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
 }

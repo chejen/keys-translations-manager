@@ -11,32 +11,12 @@ import TranslationActions from '../../actions/TranslationActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class GridPanel extends React.Component {
+	static contextTypes = {
+		config: React.PropTypes.object
+	};
+
 	constructor(props, context) {
 		super(props, context);
-
-
-
-		/*let columnDefs = [{
-				headerName: LocaleUtil.getMsg("ui.common.action"),
-				field: '_id',
-				pinned: true,
-				width: 60,
-				suppressSorting: true,
-				cellRenderer: reactCellRendererFactory(ActionCellRenderer)
-			}, {
-				headerName: LocaleUtil.getMsg("ui.common.applyto"),
-				field: 'project',
-				pinned: true,
-				cellRenderer: reactCellRendererFactory(ProjectCellRenderer, props)
-			}, {
-				headerName: "Key",
-				field: "key",
-				pinned: true
-			}, {
-				headerName: LocaleUtil.getMsg("ui.common.locales"),
-				children: localeCols
-			}
-		];*/
 
 		this.state = {
 			quickFilterText: null,
@@ -133,6 +113,7 @@ export default class GridPanel extends React.Component {
 
 				<div style={{height: (offset ? (h - offset.top - 20) : 430) + 'px'}} className="ag-fresh">
 					<AgGridReact
+						context={{config: this.context.config}}
 						gridOptions={this.gridOptions}
 						quickFilterText={this.state.quickFilterText}
 						icons={this.state.icons}
@@ -148,7 +129,3 @@ export default class GridPanel extends React.Component {
 		);
 	}
 }
-
-GridPanel.contextTypes = {
-    config: React.PropTypes.object
-};

@@ -4,7 +4,17 @@ import ConfirmModal from './ConfirmModal'
 import EditModal from '../input/EditModal'
 import TranslationActions from '../../actions/TranslationActions'
 import LocaleUtil from '../../../util/LocaleUtil'
+
 export default class ActionCellRenderer extends React.Component {
+	static propTypes = {
+		params: React.PropTypes.object
+	}
+	static childContextTypes = {
+		config: React.PropTypes.object
+	}
+	getChildContext() {
+		return { config: this.props.params.context.config }
+	}
 	showEditModal() {
 		this.refs.editModal.open();
 	}
@@ -21,7 +31,6 @@ export default class ActionCellRenderer extends React.Component {
 	}
 	render() {
 		const value = this.props.params.value
-
 		return (
 			<div>
 				<ConfirmModal ref="confirmModal"/>
@@ -34,7 +43,3 @@ export default class ActionCellRenderer extends React.Component {
 		);
 	}
 }
-
-ActionCellRenderer.propTypes = {
-	params: React.PropTypes.object
-};

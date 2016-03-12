@@ -3,21 +3,25 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Input from 'react-bootstrap/lib/Input'
-import config from '../../../config'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 const FormPanel = React.createClass({
+	contextTypes: {
+		config: React.PropTypes.object
+	},
+
 	mixins: [PureRenderMixin],
 
 	getInitialState() {
-		const data = this.props.data
-		const locales = config.locales
-		const projects = config.projects
-		let lenLocales = locales.length
-		let lenProjects = projects.length
-		let locale
-		let project
-		let o
+		const config = this.context.config,
+			data = this.props.data,
+			locales = config.locales,
+			projects = config.projects;
+		let lenLocales = locales.length,
+			lenProjects = projects.length,
+			locale,
+			project,
+			o;
 
 		if (data) { //update
 			o = {
@@ -72,7 +76,8 @@ const FormPanel = React.createClass({
 	},
 
 	render() {
-		const data = this.props.data,
+		const config = this.context.config,
+			data = this.props.data,
 			locales = config.locales,
 			projects = config.projects,
 			lenLocales = locales.length,

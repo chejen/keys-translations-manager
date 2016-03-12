@@ -4,6 +4,7 @@ import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import CountCol from './CountCol'
+import ConfigUtil from '../../../util/ConfigUtil'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 const OutputPanel = React.createClass({
@@ -26,8 +27,7 @@ const OutputPanel = React.createClass({
 	},
 
 	download(project) {
-		const config = this.context.config
-		let url = "http://" + config.server.hostname + ":" + config.server.port + "/api/download/"
+		let url = ConfigUtil.getHost() + "/api/download/"
 
 		if (this.state.fileType === 'jf') {
 			url += "f/";

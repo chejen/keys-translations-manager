@@ -1,21 +1,22 @@
 /*eslint no-invalid-this: 0*/
 'use strict';
-var Reflux = require('reflux');
-var config = require('../../config');
-var host = "http://" + config.server.hostname + ":" + config.server.port;
+import Reflux from 'reflux'
+import ConfigUtil from '../../util/ConfigUtil'
 
-var MessageActions = Reflux.createActions({
+const MessageActions = Reflux.createActions({
 	'load': { children: ['completed', 'failed'] }
 });
 
 MessageActions.load.listen(function(lang) {
-	$.ajax({
-		url: host + '/public/locale/' + lang + '/translation.json',
-		type: "GET",
-		dataType: "json"
-	})
-	.done(this.completed)
-	.fail(this.failed);
+	fetch(ConfigUtil.getHost() + '/public/locale/' + lang + '/translation.json')
+		.then(res => {
+			if (res.status >= 400) {
+				throw new Error(res.status + ", " + res.statusText);
+			}
+			return res.json();
+		})
+		.then(this.completed)
+		.catch(this.failed)
 });
 
 module.exports = MessageActions;

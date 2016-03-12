@@ -1,29 +1,22 @@
 import React from 'react'
-import config from '../../../config'
+import ConfigUtil from '../../../util/ConfigUtil'
 export default class ProjectCellRenderer extends React.Component {
-    constructor(props) {
-        super(props);
+	static propTypes = {
+		params: React.PropTypes.object
+	}
 
-        let projectMapping = {};
-        config.projects.map(function(e){
-            projectMapping[e.id] = e.name;
-        });
-        this.projectMapping = projectMapping;
-    }
+	constructor(props) {
+		super(props);
+	}
 
-    render() {
-        const projectList = this.props.params.value,
-            l = projectList ? projectList.length : 0;
-		let i,
-			project = [];
+	render() {
+		const projectList = this.props.params.value,
+				l = projectList ? projectList.length : 0,
+				getProjectName = ConfigUtil.getProjectName;
+		let i, project = [];
 		for (i = 0; i < l; i++) {
-			project.push( this.projectMapping[projectList[i]] );
+			project.push( getProjectName(projectList[i]) );
 		}
-
-        return <div>{project.join(", ")}</div>
-    }
+		return <div>{project.join(", ")}</div>
+	}
 }
-
-ProjectCellRenderer.propTypes = {
-    params: React.PropTypes.object
-};

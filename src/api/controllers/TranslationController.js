@@ -1,6 +1,5 @@
 var router = require("express").Router();
 var Translations = require('../models/TranslationModel');
-var config = require('../../config');
 
 var getUniqueElements = function(ary) {
 		var o = {};

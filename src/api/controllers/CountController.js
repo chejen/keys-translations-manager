@@ -1,14 +1,7 @@
 var router = require("express").Router();
 var Translations = require('../models/TranslationModel');
-var config = require('../../config');
-
-var projects = config.projects,
-	lenProjects = projects.length,
-	projectIdList = [];
-
-while(lenProjects--){
-	projectIdList.push(projects[lenProjects].id)
-}
+var ConfigUtil = require('../../util/ConfigUtil');
+var projectIdList = ConfigUtil.getProjectIdList();
 
 router.route('/projects')
 		.get(function(req, res) {
