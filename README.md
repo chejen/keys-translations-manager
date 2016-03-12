@@ -1,16 +1,17 @@
 # Keys-Translations Manager
 This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their related translations. Also, you can download final locale files (either *.json or *.properties) through this application.
 
-![demo](https://cloud.githubusercontent.com/assets/14872888/13387201/39e7d288-deef-11e5-9d31-fe0a2459dfac.gif)
+
+## Demo
+![demo](https://cloud.githubusercontent.com/assets/14872888/13722929/33d4bd16-e890-11e5-87ea-8809f7a9f81d.gif)
+
 
 ## Prerequisites
-
-* Download [Node.js](https://nodejs.org/en/) (suggestion: v5+) and [MongoDB](https://www.mongodb.org/), and then get them installed.
+* Download [Node.js](https://nodejs.org/en/) (suggestion: v4+) and [MongoDB](https://www.mongodb.org/), and then get them installed.
 * Start [mongod](https://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/) process and make sure it's running normally.
 
 
 ## Getting Started
-
 Checkout this repo, install dependencies, then start the web server:
 ```bash
 > git clone https://github.com/chejen/keys-translations-manager
@@ -41,10 +42,8 @@ to be continued
 
 ## Technologies
 * Scaffolded with [MongoDb] [1], [Express] [2], [React] [3], and [Node.js] [4]
-* Styled with [Bootstrap] [5] and [Less] [6]
-* (TODO) RWD support: [Bootstrap] [5] and [SB Admin 2] [7]
+* Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
 * Module Bundler: [webpack] [9]
-* (TODO)Testing:
 * Miscellaneous: [Babel] [10], [ESLint] [11]
 
 
