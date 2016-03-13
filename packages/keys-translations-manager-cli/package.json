@@ -1,0 +1,14 @@
+{
+  "name": "keys-translations-manager-cli",
+  "version": "0.1.0",
+  "description": "Keys-Translations manager's command line.",
+  "license": "MIT",
+  "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
+  "dependencies": {
+    "chalk": "1.1.1",
+    "yargs": "4.2.0"
+  },
+  "bin": {
+    "ktm": "./bin/ktm.js"
+  }
+}
