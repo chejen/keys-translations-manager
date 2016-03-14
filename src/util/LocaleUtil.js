@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
 	setMessages(messages) {
 		this.messages = messages

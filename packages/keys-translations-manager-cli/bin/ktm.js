@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var argv = require('yargs').argv;
 var chalk = require('chalk');
 

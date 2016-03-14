@@ -1,7 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var dir = {
-	src: path.join(__dirname, 'src', 'ui'),
+	src: path.join(__dirname, 'src'),
 	dist: path.join(__dirname, 'public', 'js')
 };
 
@@ -10,7 +10,7 @@ module.exports = {
 	entry: [
 		'eventsource-polyfill', // necessary for hot reloading with IE
 		'webpack-hot-middleware/client',
-		dir.src + '/index'
+		path.join(dir.src, 'ui', 'index')
 	],
 	output: {
 		path: dir.dist,
@@ -25,10 +25,6 @@ module.exports = {
 	module: {
 		preLoaders: [{
 			test: /\.jsx?$/,
-			/*include: [
-				path.resolve(__dirname, dir.app),
-				path.resolve(__dirname, dir.common, "modules")
-			],*/
 			exclude: path.resolve(__dirname, 'node_modules'),
 			loaders: ['eslint-loader']
 		}],

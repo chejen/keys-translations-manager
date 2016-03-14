@@ -2,13 +2,13 @@ var path = require('path');
 var webpack = require('webpack');
 var WebpackStrip = require('webpack-strip');
 var dir = {
-	src: path.join(__dirname, 'src', 'ui'),
+	src: path.join(__dirname, 'src'),
 	dist: path.join(__dirname, 'public', 'js')
 };
 
 var config = {
 	entry: {
-		bundle: dir.src + '/index'
+		bundle: path.join(dir.src, 'ui', 'index')
 	},
 	output: {
 		path: dir.dist,

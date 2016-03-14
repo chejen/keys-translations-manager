@@ -1,10 +1,12 @@
+'use strict';
 module.exports = function(jsonObj, propertyKey, propertyValue) {
-	var childObj = {},
+	let childObj = {},
 		keyPart,
-		keyParts = propertyKey.split("."),
+		i;
+	const keyParts = propertyKey.split("."),
 		lenParts = keyParts.length;
 
-	for (var i = 0; i < lenParts; i++) {
+	for (i = 0; i < lenParts; i++) {
 		keyPart = keyParts[i];
 
 		if (i === lenParts - 1) {
