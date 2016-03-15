@@ -1,4 +1,5 @@
 import React from 'react'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ConfirmModal from './ConfirmModal'
 import EditModal from '../input/EditModal'
@@ -11,6 +12,10 @@ export default class ActionCellRenderer extends React.Component {
 	}
 	static childContextTypes = {
 		config: React.PropTypes.object
+	}
+	constructor(props) {
+		super(props);
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 	getChildContext() {
 		return { config: this.props.params.context.config }

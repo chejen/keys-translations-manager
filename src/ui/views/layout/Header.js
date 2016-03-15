@@ -1,8 +1,11 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-const Header = React.createClass({
-	mixins: [PureRenderMixin],
+export default class Header extends React.Component {
+	constructor() {
+		super();
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	render() {
 		return(
@@ -17,6 +20,4 @@ const Header = React.createClass({
 			</div>
 		);
 	}
-})
-
-module.exports = Header
+}

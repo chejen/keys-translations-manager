@@ -1,8 +1,11 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-const SideBar = React.createClass({
-	mixins: [PureRenderMixin],
+export default class SideBar extends React.Component {
+	constructor() {
+		super();
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	render() {
 		return(
@@ -23,6 +26,4 @@ const SideBar = React.createClass({
 			</div>
 		);
 	}
-})
-
-module.exports = SideBar
+}

@@ -3,8 +3,11 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 
-const UpperPanel = React.createClass({
-	mixins: [PureRenderMixin],
+export default class UpperPanel extends React.Component {
+	constructor() {
+		super();
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	render() {
 		return(
@@ -18,6 +21,4 @@ const UpperPanel = React.createClass({
 			</Row>
 		);
 	}
-})
-
-module.exports = UpperPanel
+}

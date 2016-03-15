@@ -4,8 +4,11 @@ import Col from 'react-bootstrap/lib/Col'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import LocaleUtil from '../../../util/LocaleUtil'
 
-const CountCol = React.createClass({
-	mixins: [PureRenderMixin],
+export default class CountCol extends React.Component {
+	constructor() {
+		super();
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	render() {
 		return(
@@ -34,6 +37,4 @@ const CountCol = React.createClass({
 			</Col>
 		);
 	}
-})
-
-module.exports = CountCol
+}

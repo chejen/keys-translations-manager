@@ -7,12 +7,15 @@ import ErrorActions from '../../actions/ErrorActions'
 import ConfigUtil from '../../../util/ConfigUtil'
 import LocaleUtil from '../../../util/LocaleUtil'
 
-const AlertPanel = React.createClass({
-	mixins: [PureRenderMixin],
+export default class AlertPanel extends React.Component {
+	constructor() {
+		super();
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	handleDismiss(){
 		ErrorActions.clear();
-	},
+	}
 
 	render() {
 		const getProjectName = ConfigUtil.getProjectName,
@@ -69,10 +72,8 @@ const AlertPanel = React.createClass({
 				{errMsg.map(function(e){
 					return <p key={counter++}><Glyphicon glyph="alert"/> {e}</p>
 				})}
-			</Alert>) : null;
+			</Alert>) : (this.props.action === "c" ? <br/> : null);
 
 		return cmp;
 	}
-})
-
-module.exports = AlertPanel
+}

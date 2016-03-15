@@ -1,5 +1,4 @@
 import React from 'react'
-import Reflux from 'reflux'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
@@ -10,21 +9,26 @@ import ErrorStore from '../../stores/ErrorStore'
 import TranslationActions from '../../actions/TranslationActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
-const EditModal = React.createClass({
-	contextTypes: {
+export default class EditModal extends React.Component {
+	static contextTypes = {
 		config: React.PropTypes.object
-	},
+	};
 
-	mixins: [
-		PureRenderMixin,
-		Reflux.listenTo(ErrorStore, "onErrorChange")
-	],
-
-	getInitialState() {
-		return {
+	constructor(props, context) {
+		super(props, context);
+		this.state = {
 			showModal: false
-		}
-	},
+		};
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
+
+	componentDidMount() {
+		this.unsubscribe = ErrorStore.listen(this.onErrorChange.bind(this));
+	}
+
+	componentWillUnmount() {
+		this.unsubscribe();
+	}
 
 	updateTranslation() {
 		const config = this.context.config,
@@ -70,32 +74,32 @@ const EditModal = React.createClass({
 			ErrorActions.clear();
 			TranslationActions.updateTranslation(data);
 		}
-	},
+	}
 
 	onErrorChange(errors) {
 		this.setState({
 			errors: errors
 		});
-	},
+	}
 
 	close() {
 		this.setState({
 			showModal: false,
 			errors: []
 		});
-	},
+	}
 
 	open() {
 		this.setState({
 			showModal: true,
 			errors: []
 		});
-	},
+	}
 
 	render() {
 		const data = this.props.data;
 		return (
-			<Modal show={this.state.showModal} onHide={this.close}>
+			<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
 				<Modal.Header>
 					<Modal.Title>
 						{LocaleUtil.getMsg("ui.common.edit")}
@@ -106,16 +110,14 @@ const EditModal = React.createClass({
 					<FormPanel ref="formPanel" action="u" data={data}/>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation}>
+					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation.bind(this)}>
 						{LocaleUtil.getMsg("ui.common.update")}
 					</Button>
-					<Button bsSize="small" onClick={this.close}>
+					<Button bsSize="small" onClick={this.close.bind(this)}>
 						{LocaleUtil.getMsg("ui.common.cancel")}
 					</Button>
 				</Modal.Footer>
 			</Modal>
 		);
 	}
-});
-
-module.exports = EditModal
+}

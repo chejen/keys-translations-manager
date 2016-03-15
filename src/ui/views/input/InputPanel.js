@@ -7,12 +7,15 @@ import ErrorActions from '../../actions/ErrorActions'
 import TranslationActions from '../../actions/TranslationActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
-const InputPanel = React.createClass({
-	contextTypes: {
+export default class InputPanel extends React.Component {
+	static contextTypes = {
 		config: React.PropTypes.object
-	},
+	};
 
-	mixins: [PureRenderMixin],
+	constructor() {
+		super();
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	addTranslation() {
 		const config = this.context.config,
@@ -63,7 +66,7 @@ const InputPanel = React.createClass({
 			ErrorActions.clear();
 			TranslationActions.addTranslation(data);
 		}
-	},
+	}
 
 	render() {
 		return(
@@ -71,13 +74,11 @@ const InputPanel = React.createClass({
 				<FormPanel ref="formPanel" action="c" messages={this.props.messages}/>
 				<br/>
 				<div className="pull-right">
-					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation}>
+					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation.bind(this)}>
 						<Glyphicon glyph="plus"/> {LocaleUtil.getMsg("ui.common.add")}
 					</Button>
 				</div>
 			</div>
 		);
 	}
-})
-
-module.exports = InputPanel
+}

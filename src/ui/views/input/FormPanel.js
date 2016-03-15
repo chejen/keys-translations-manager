@@ -5,16 +5,16 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Input from 'react-bootstrap/lib/Input'
 import LocaleUtil from '../../../util/LocaleUtil'
 
-const FormPanel = React.createClass({
-	contextTypes: {
+export default class FormPanel extends React.Component {
+	static contextTypes = {
 		config: React.PropTypes.object
-	},
+	};
 
-	mixins: [PureRenderMixin],
+	constructor(props, context) {
+		super(props, context);
 
-	getInitialState() {
-		const config = this.context.config,
-			data = this.props.data,
+		const config = context.config,
+			data = props.data,
 			locales = config.locales,
 			projects = config.projects;
 		let lenLocales = locales.length,
@@ -52,13 +52,14 @@ const FormPanel = React.createClass({
 			}
 		}
 
-		return o
-	},
+		this.state = o;
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	getFormElements() {
 		const form = ReactDOM.findDOMNode(this.refs.form)
 		return form.elements
-	},
+	}
 
 	onInputChange(e) {
 		let o = {};
@@ -67,13 +68,13 @@ const FormPanel = React.createClass({
 		}
 		o[e.target.name] = e.target.value
 		this.setState(o);
-	},
+	}
 
 	onCheckboxChange(id) {
 		let o = {};
 		o[id] = !this.state[id];
 		this.setState(o);
-	},
+	}
 
 	render() {
 		const config = this.context.config,
@@ -86,7 +87,7 @@ const FormPanel = React.createClass({
 		let i, p, locale,
 			projectGroup = [],
 			localeGroup = [getLabel("key", "Key"), (this.state.action === "u")
-							? <Input key="key" type="text" bsSize="small" name="key" value={data.key} onChange={this.onInputChange} style={{backgroundColor: "#e7e7e7"}}/>
+							? <Input key="key" type="text" bsSize="small" name="key" value={data.key} onChange={this.onInputChange.bind(this)} style={{backgroundColor: "#e7e7e7"}}/>
 							: <Input key="key" type="text" bsSize="small" name="key" />];
 
 		for (i=0; i<lenLocales; i++) {
@@ -120,6 +121,4 @@ const FormPanel = React.createClass({
 			</form>
 		);
 	}
-})
-
-module.exports = FormPanel
+}

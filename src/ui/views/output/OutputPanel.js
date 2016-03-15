@@ -7,24 +7,24 @@ import CountCol from './CountCol'
 import ConfigUtil from '../../../util/ConfigUtil'
 import LocaleUtil from '../../../util/LocaleUtil'
 
-const OutputPanel = React.createClass({
-	contextTypes: {
+export default class OutputPanel extends React.Component {
+	static contextTypes = {
 		config: React.PropTypes.object
-	},
+	};
 
-	mixins: [PureRenderMixin],
-
-	getInitialState() {
-		return {
+	constructor() {
+		super();
+		this.state = {
 			fileType: "j"
 		};
-	},
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	setFileType(fileType) {
 		this.setState({
 			fileType: fileType
 		});
-	},
+	}
 
 	download(project) {
 		let url = ConfigUtil.getHost() + "/api/download/"
@@ -41,7 +41,7 @@ const OutputPanel = React.createClass({
 		}
 
 		location.href = url + project.id;
-	},
+	}
 
 	render() {
 		const me = this
@@ -74,6 +74,4 @@ const OutputPanel = React.createClass({
 			</Well>
 		);
 	}
-})
-
-module.exports = OutputPanel
+}

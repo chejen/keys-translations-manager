@@ -1,4 +1,5 @@
 import React from 'react'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 import ConfigUtil from '../../../util/ConfigUtil'
 export default class ProjectCellRenderer extends React.Component {
 	static propTypes = {
@@ -7,6 +8,7 @@ export default class ProjectCellRenderer extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
 	render() {

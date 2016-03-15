@@ -4,8 +4,11 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import LangActions from '../../actions/LangActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
-const Header = React.createClass({
-	mixins: [PureRenderMixin],
+export default class DropdownMenu extends React.Component {
+	constructor() {
+		super();
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+	}
 
 	render() {
 		return(
@@ -16,13 +19,13 @@ const Header = React.createClass({
 						<i className="fa fa-caret-down"/>
 					</a>
 					<ul className="dropdown-menu dropdown-user">
-						<li><a href="#" onClick={function(event){
+						<li><a href="#" onClick={(event) => {
 								event.preventDefault();
 								LangActions.switch("en-US");
 							}}>
 							<i className="fa fa-language fa-fw"/> English (en-US)
 						</a></li>
-						<li><a href="#" onClick={function(event){
+						<li><a href="#" onClick={(event) => {
 								event.preventDefault();
 								LangActions.switch("zh-TW");
 							}}>
@@ -33,6 +36,4 @@ const Header = React.createClass({
 			</ul>
 		);
 	}
-})
-
-module.exports = Header
+}

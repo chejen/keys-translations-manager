@@ -1,6 +1,7 @@
 import 'ag-grid/dist/styles/ag-grid.css'
 import 'ag-grid/dist/styles/theme-fresh.css'
 import React from 'react'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {AgGridReact} from 'ag-grid-react/lib/agGridReact'
 import {reactCellRendererFactory} from 'ag-grid-react/lib/reactCellRendererFactory';
 import Button from 'react-bootstrap/lib/Button'
@@ -40,6 +41,8 @@ export default class GridPanel extends React.Component {
 				noRowsToShow: LocaleUtil.getMsg("ui.grid.empty")
 			}
 		};
+
+		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
 	componentWillReceiveProps(nextProps) {
