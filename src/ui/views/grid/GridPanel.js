@@ -12,6 +12,10 @@ import TranslationActions from '../../actions/TranslationActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class GridPanel extends React.Component {
+	static propTypes = {
+		messages: React.PropTypes.object,
+		translations: React.PropTypes.array.isRequired
+	};
 	static contextTypes = {
 		config: React.PropTypes.object
 	};
@@ -80,7 +84,7 @@ export default class GridPanel extends React.Component {
 				headerName: LocaleUtil.getMsg("ui.common.applyto"),
 				field: 'project',
 				pinned: true,
-				cellRenderer: reactCellRendererFactory(ProjectCellRenderer, props)
+				cellRenderer: reactCellRendererFactory(ProjectCellRenderer)
 			}, {
 				headerName: "Key",
 				field: "key",

@@ -5,6 +5,13 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class CountCol extends React.Component {
+	static propTypes = {
+		header: React.PropTypes.string.isRequired,
+		onClick: React.PropTypes.func.isRequired,
+		count: React.PropTypes.number.isRequired,
+		desc: React.PropTypes.string.isRequired
+	};
+
 	constructor() {
 		super();
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);

@@ -10,6 +10,9 @@ import TranslationActions from '../../actions/TranslationActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class EditModal extends React.Component {
+	static propTypes = {
+		data: React.PropTypes.object.isRequired
+	};
 	static contextTypes = {
 		config: React.PropTypes.object
 	};

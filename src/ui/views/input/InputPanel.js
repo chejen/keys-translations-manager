@@ -8,6 +8,9 @@ import TranslationActions from '../../actions/TranslationActions'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class InputPanel extends React.Component {
+	static propTypes = {
+		messages: React.PropTypes.object.isRequired
+	};
 	static contextTypes = {
 		config: React.PropTypes.object
 	};

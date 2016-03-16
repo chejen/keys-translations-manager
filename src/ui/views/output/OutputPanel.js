@@ -8,6 +8,9 @@ import ConfigUtil from '../../../util/ConfigUtil'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class OutputPanel extends React.Component {
+	static propTypes = {
+		count: React.PropTypes.object.isRequired
+	};
 	static contextTypes = {
 		config: React.PropTypes.object
 	};

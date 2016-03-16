@@ -6,6 +6,9 @@ import Input from 'react-bootstrap/lib/Input'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class FormPanel extends React.Component {
+	static propTypes = {
+		data: React.PropTypes.object
+	};
 	static contextTypes = {
 		config: React.PropTypes.object
 	};

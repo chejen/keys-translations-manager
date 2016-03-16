@@ -8,6 +8,11 @@ import ConfigUtil from '../../../util/ConfigUtil'
 import LocaleUtil from '../../../util/LocaleUtil'
 
 export default class AlertPanel extends React.Component {
+	static propTypes = {
+		errors: React.PropTypes.array,
+		action: React.PropTypes.string.isRequired
+	};
+
 	constructor() {
 		super();
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);

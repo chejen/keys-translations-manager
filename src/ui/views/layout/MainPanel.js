@@ -4,6 +4,10 @@ import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 
 export default class UpperPanel extends React.Component {
+	static propTypes = {
+		children: React.PropTypes.node
+	};
+	
 	constructor() {
 		super();
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);

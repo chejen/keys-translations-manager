@@ -2,6 +2,10 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 export default class SideBar extends React.Component {
+	static propTypes = {
+		children: React.PropTypes.node
+	};
+
 	constructor() {
 		super();
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
