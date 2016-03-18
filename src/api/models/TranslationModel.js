@@ -2,14 +2,14 @@ var mongoose = require('mongoose');
 var config = require('../../config');
 
 var locales = config.locales,
-	len = locales.length,
+	lenLocales = locales.length,
 	schema = {
 		'key': String,
 		'project': [String]
 	},
 	TranslationSchema;
 
-while(len--) schema[locales[len]] = String;
+while(lenLocales--) schema[locales[lenLocales]] = String;
 TranslationSchema = new mongoose.Schema(schema);
 
 module.exports = mongoose.model('Translation', TranslationSchema);

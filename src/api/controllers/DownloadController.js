@@ -9,8 +9,12 @@ router.route('/:outputType/:fileType/:project/:locale')
 		.get(function(req, res) {
 			var outputType = req.params.outputType, //f: format, n: none
 				fileType = req.params.fileType, //json, properties
+				project = req.params.project,
 				locale = req.params.locale,
-				criteria = {},
+				query,
+				criteria = {
+					"project": project
+				},
 				select = {
 					"_id": 0,
 					"key": 1
@@ -18,7 +22,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 
 			criteria[locale] = {$exists: true};
 			select[locale] = 1;
-			var query = Translations.find(criteria).select(select);
+			query = Translations.find(criteria).select(select);
 			if (outputType === "f") query.sort({'key':-1});
 			query.exec(function(err, translations) {
 				var len,
@@ -66,6 +70,7 @@ router.route('/:outputType/:fileType/:project')
 			var outputType = req.params.outputType, //f: format, n: none
 				fileType = req.params.fileType, //json, properties
 				project = req.params.project,
+				query,
 				criteria = {},
 				select = {
 					"_id": 0,
@@ -91,7 +96,7 @@ router.route('/:outputType/:fileType/:project')
 
 				criteria["project"] = project;
 				select[locale] = 1;
-				var query = Translations.find(criteria).select(select);
+				query = Translations.find(criteria).select(select);
 				if (outputType === "f") query.sort({'key':-1});
 				query.exec(function(err, translations) {
 					var len,
