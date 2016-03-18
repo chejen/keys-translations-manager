@@ -18,7 +18,8 @@
   "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
   "dependencies": {
     "chalk": "1.1.1",
-    "yargs": "4.2.0",
+    "yargs": "4.3.1",
+    "node-fs": "0.1.7",
     "mongoose": "4.4.7"
   },
   "bin": {
