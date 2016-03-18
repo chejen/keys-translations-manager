@@ -10,13 +10,31 @@ var chalk = require('chalk'),
 	mongoose = require('mongoose'),
 	Properties2Json = require('../lib/Properties2Json.js'),
 	runcom = ".ktmrc",
+	log = function(level, msg){
+		var tag;
+		switch (level) {
+			case 'info':
+				tag = chalk.bold.green(" [INFO] ");
+				break;
+			case 'warn':
+				tag = chalk.bold.yellow(" [WARN] ");
+				break;
+			case 'error':
+				tag = chalk.bold.red(" [ERROR] ");
+				break;
+			default:
+				tag = " ";
+				bradk;
+		}
+		console.log("  ktm" + tag + msg);
+	},
 	loc, f, content, cfg;
 
 while(parts.length) {
 	loc = parts.join(path.sep);
 	f = path.join(loc, runcom);
 	if (fs.existsSync(f)) {
-		console.log(chalk.green(`Found config at ${f}`));
+		log('info', `Found config at ${f}`);
 		content = fs.readFileSync(f, "utf8");
 		cfg = JSON.parse(content);
 		break;
@@ -25,7 +43,7 @@ while(parts.length) {
 	parts.pop();
 };
 if (!cfg) {
-	console.log(chalk.red(`[Error] Found no ${runcom} config`));
+	log('error', `Found no ${runcom} config`);
 	return;
 }
 
@@ -50,8 +68,9 @@ yargs
 
 mongoose.connect(cfg.database, function(err) {
 	if (err) {
-		console.log(chalk.red('Failed to connect database !'));
-		console.log(chalk.red(err));
+		log('error', 'Failed to connect database !');
+		log('error', err);
+		process.exit(1);
 	} else {
 		var locales = argv._,
 			lenLocales = locales.length,
@@ -95,8 +114,8 @@ mongoose.connect(cfg.database, function(err) {
 
 				if (err) {
 					mongoose.connection.close();
-					console.log(chalk.red(err));
-					return;
+					log('error', err);
+					process.exit(1);
 				}
 
 				len = translations.length;
@@ -126,25 +145,28 @@ mongoose.connect(cfg.database, function(err) {
 							fs.mkdir(filePath, 0777, true, function (err) {
 								if (err) {
 									mongoose.connection.close();
-									console.log(chalk.red(err));
+									log('error', err);
+									process.exit(1);
 								} else {
-									console.log(chalk.green(filePath + ' created.'));
+									log('info', 'Created dir: ' + filePath);
 									fs.writeFile(file, str, function (err) {
 										if (err) {
 											mongoose.connection.close();
-											console.log(chalk.red(err));
+											log('error', err);
+											process.exit(1);
 										} else {
-											console.log(chalk.green('Successfully output to: ' + file));
+											log('info', 'Successfully output to: ' + file);
 										}
 									});
 								}
 							});
 						} else {
 							mongoose.connection.close();
-							console.log(chalk.red(err));
+							log('error', err);
+							process.exit(1);
 						}
 					} else {
-						console.log(chalk.green('Successfully output to: ' + file));
+						log('info', 'Successfully output to: ' + file);
 					}
 				});
 
