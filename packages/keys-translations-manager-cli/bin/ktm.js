@@ -26,7 +26,7 @@ var chalk = require('chalk'),
 				tag = " ";
 				bradk;
 		}
-		console.log("  ktm" + tag + msg);
+		console.log(chalk.grey("  ktm") + tag + msg + "\n");
 	},
 	loc, f, content, cfg;
 
@@ -80,7 +80,20 @@ mongoose.connect(cfg.database, function(err) {
 			},
 			TranslationSchema,
 			Translations,
-			count = 0;
+			count = 0,
+			afterWriteFile = function(file){
+				log('info', 'Successfully output to ' + file);
+				if (++count === locales.length) {
+					log('info', 'Finished!');
+					mongoose.connection.close();
+					process.exit(0);
+				}
+			},
+			afterFail = function(err){
+				log('error', err);
+				mongoose.connection.close();
+				process.exit(1);
+			};
 
 		while(lenLocales--) schema[locales[lenLocales]] = String;
 		TranslationSchema = new mongoose.Schema(schema);
@@ -112,11 +125,7 @@ mongoose.connect(cfg.database, function(err) {
 					rootObj = {},
 					str = "";
 
-				if (err) {
-					mongoose.connection.close();
-					log('error', err);
-					process.exit(1);
-				}
+				if (err) afterFail(err);
 
 				len = translations.length;
 
@@ -144,37 +153,26 @@ mongoose.connect(cfg.database, function(err) {
 						if (err.code === 'ENOENT'){
 							fs.mkdir(filePath, 0777, true, function (err) {
 								if (err) {
-									mongoose.connection.close();
-									log('error', err);
-									process.exit(1);
+									afterFail(err);
 								} else {
 									log('info', 'Created dir: ' + filePath);
 									fs.writeFile(file, str, function (err) {
 										if (err) {
-											mongoose.connection.close();
-											log('error', err);
-											process.exit(1);
+											afterFail(err);
 										} else {
-											log('info', 'Successfully output to: ' + file);
+											afterWriteFile(file);
 										}
 									});
 								}
 							});
 						} else {
-							mongoose.connection.close();
-							log('error', err);
-							process.exit(1);
+							afterFail(err);
 						}
 					} else {
-						log('info', 'Successfully output to: ' + file);
+						afterWriteFile(file);
 					}
-				});
-
-				if (++count === locales.length) {
-					mongoose.connection.close();
-				}
-			});
-		});
-
+				}); //fs.writeFile
+			}); //query.exec
+		}); //locales.forEach
 	}
-});
+}); //mongoose.connect

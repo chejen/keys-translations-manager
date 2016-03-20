@@ -1,0 +1,22 @@
+{
+  "name": "keys-translations-manager-core",
+  "version": "0.1.0",
+  "description": "keys-translations-manager's core",
+  "keywords": [
+      "i18n",
+      "internationalization",
+      "lang",
+      "language",
+      "l10n",
+      "locale",
+      "localization",
+      "multilingual",
+      "translation"
+  ],
+  "author": "chejen",
+  "license": "MIT",
+  "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-core",
+  "dependencies": {
+    "mongoose": "4.4.7"
+  }
+}
