@@ -3,7 +3,8 @@ var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
 var webpack = require('webpack');
-var config = require('./src/config');
+var log = require('keys-translations-manager-core/lib/logUtil').log;
+var config = require('./ktm.config');
 var TranslationController = require('./src/api/controllers/TranslationController');
 var CountController = require('./src/api/controllers/CountController');
 var DownloadController = require('./src/api/controllers/DownloadController');
@@ -13,8 +14,9 @@ var app = express(),
 
 mongoose.connect(config.database, function(err) {
 	if (err) {
-		console.log('Failed to connect database', err);
-		return;
+		log('error', 'Failed to connect database');
+		log('error', err);
+		process.exit(1);
 	//} else {
 	//	console.log('Connect to database successfully.');
 	}
@@ -22,14 +24,14 @@ mongoose.connect(config.database, function(err) {
 
 app.listen(config.server.port, config.server.hostname, function(err) {
 	if (err) {
-		console.log(err);
-		return;
+		log('error', err);
+		process.exit(1);
 	}
-	console.log("process.env.NODE_ENV:", process.env.NODE_ENV);
+
 	if (process.env.NODE_ENV === 'production') {
-		console.log('The server (at http://localhost:3000) has started.');
+		log('info', 'The server (at http://localhost:3000) has started.');
 	} else {
-		console.log('Dev-server (at http://localhost:3000) is starting, please wait ...');
+		log('info', 'Dev-server (at http://localhost:3000) is starting, please wait ...');
 	}
 });
 

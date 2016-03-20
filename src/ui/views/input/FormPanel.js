@@ -3,7 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Input from 'react-bootstrap/lib/Input'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class FormPanel extends React.Component {
 	static propTypes = {
@@ -98,7 +98,7 @@ export default class FormPanel extends React.Component {
 			localeGroup.push(
 				getLabel(
 					locale,
-					LocaleUtil.getMsg("ui.common.locale") + " / " + locale
+					localeUtil.getMsg("ui.common.locale") + " / " + locale
 				),
 				<Input key={locale} type="text" bsSize="small" name={locale} defaultValue={this.state[locale]} />
 			)
@@ -116,7 +116,7 @@ export default class FormPanel extends React.Component {
 				{localeGroup}
 
 				<div className="app-input-label">
-					{getLabel("applyTo", LocaleUtil.getMsg("ui.common.applyto"))}
+					{getLabel("applyTo", localeUtil.getMsg("ui.common.applyto"))}
 				</div>
 				<div className={this.state.action === "u" ? "" : "app-checkbox-options"}>
 					{projectGroup}

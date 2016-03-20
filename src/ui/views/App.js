@@ -21,8 +21,8 @@ import MessageActions from '../actions/MessageActions'
 import MessageStore from '../stores/MessageStore'
 import TranslationActions from '../actions/TranslationActions'
 import TranslationStore from '../stores/TranslationStore'
-import LocaleUtil from '../../util/LocaleUtil'
-import config from '../../config'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import config from '../../../ktm.config'
 
 export default class App extends React.Component {
 	static childContextTypes = {
@@ -88,7 +88,7 @@ export default class App extends React.Component {
 	}
 
 	onMessagesChange(messages) {
-		LocaleUtil.setMessages(messages);
+		localeUtil.setMessages(messages);
 		ErrorActions.clear();
 		this.setState({
 			messages: messages

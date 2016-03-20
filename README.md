@@ -23,7 +23,7 @@ Open http://localhost:3000/ and enjoy it.
 
 
 ## Custom
-There are some settings (at [src/config.js](src/config.js)) you can configure. The table below lists the available ones:
+There are some settings (at [ktm.config.js](./ktm.config.js)) you can configure. The table below lists the available ones:
 
 | **Setting** | **Description** |**Default**|
 |----------|-------|---|

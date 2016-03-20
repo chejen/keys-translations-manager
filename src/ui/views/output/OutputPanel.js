@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import CountCol from './CountCol'
 import ConfigUtil from '../../../util/ConfigUtil'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class OutputPanel extends React.Component {
 	static propTypes = {
@@ -65,10 +65,10 @@ export default class OutputPanel extends React.Component {
 					<Col>
 						&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="fileType" value="j" checked={this.state.fileType==="j"}
-							onChange={this.setFileType.bind(this, "j")}/> JSON ({LocaleUtil.getMsg("ui.json.mini")})
+							onChange={this.setFileType.bind(this, "j")}/> JSON ({localeUtil.getMsg("ui.json.mini")})
 						&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="fileType" value="jf" checked={this.state.fileType==="jf"}
-							onChange={this.setFileType.bind(this, "jf")}/> JSON ({LocaleUtil.getMsg("ui.json.format")})
+							onChange={this.setFileType.bind(this, "jf")}/> JSON ({localeUtil.getMsg("ui.json.format")})
 						&nbsp;&nbsp;&nbsp;
 						<input type="radio" name="fileType" value="p" checked={this.state.fileType==="p"}
 							onChange={this.setFileType.bind(this, "p")}/> Properties

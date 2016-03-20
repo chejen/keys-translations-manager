@@ -1,7 +1,7 @@
 {
     "database": "mongodb://localhost:27017/translationdb",
     "output": {
-        "filename": "${locale}",
-        "path": "./public/test/${locale}"
+        "filename": "translation",
+        "path": "./public/locale/${locale}"
     }
 }

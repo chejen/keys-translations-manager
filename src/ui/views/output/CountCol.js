@@ -2,7 +2,7 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Col from 'react-bootstrap/lib/Col'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class CountCol extends React.Component {
 	static propTypes = {
@@ -26,7 +26,7 @@ export default class CountCol extends React.Component {
 						<span className="pull-left">{this.props.header}</span>
 						<span className="pull-right">
 							<Glyphicon glyph="download-alt"
-								title={LocaleUtil.getMsg("ui.common.download")}
+								title={localeUtil.getMsg("ui.common.download")}
 								style={{cursor:"pointer"}}
 								onClick={this.props.onClick}/>
 						</span>

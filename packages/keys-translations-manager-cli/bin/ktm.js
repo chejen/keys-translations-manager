@@ -1,55 +1,21 @@
 #!/usr/bin/env node
 
-var chalk = require('chalk'),
-	yargs = require('yargs'),
+var yargs = require('yargs'),
 	argv = yargs.argv,
 	fs = require('node-fs'),
 	cwd = process.cwd(),
 	path = require('path'),
 	parts = cwd.split(path.sep),
 	mongoose = require('mongoose'),
-	Properties2Json = require('../lib/Properties2Json.js'),
+	properties2Json = require('keys-translations-manager-core/lib/transformationUtil').properties2Json,
+	log = require('keys-translations-manager-core/lib/logUtil').log,
 	runcom = ".ktmrc",
-	log = function(level, msg){
-		var tag;
-		switch (level) {
-			case 'info':
-				tag = chalk.bold.green(" [INFO] ");
-				break;
-			case 'warn':
-				tag = chalk.bold.yellow(" [WARN] ");
-				break;
-			case 'error':
-				tag = chalk.bold.red(" [ERROR] ");
-				break;
-			default:
-				tag = " ";
-				bradk;
-		}
-		console.log(chalk.grey("  ktm") + tag + msg + "\n");
-	},
 	loc, f, content, cfg;
 
-while(parts.length) {
-	loc = parts.join(path.sep);
-	f = path.join(loc, runcom);
-	if (fs.existsSync(f)) {
-		log('info', `Found config at ${f}`);
-		content = fs.readFileSync(f, "utf8");
-		cfg = JSON.parse(content);
-		break;
-	}
-
-	parts.pop();
-};
-if (!cfg) {
-	log('error', `Found no ${runcom} config`);
-	return;
-}
 
 yargs
-	.usage('Usage: ktm [locale1 (, locale2, ...)] -t [json|properties] -p [project ID] -o [output directory]')
-	.example('ktm us-US zh-TW -t json -p p1 --format')
+	.usage('Usage: ktm [locale1 (, locale2, ...)] -t [json|properties] -p [project ID]')
+	.example('ktm en-US zh-TW -t json -p p1 --format')
 	.demand(['t', 'p'])
 	.option('type', {
 		alias: 't',
@@ -65,6 +31,23 @@ yargs
 	.help('help')
 	.alias('h', 'help')
 	.argv
+
+
+while(parts.length) {
+	loc = parts.join(path.sep);
+	f = path.join(loc, runcom);
+	if (fs.existsSync(f)) {
+		log('info', `Found config at ${f}`);
+		content = fs.readFileSync(f, "utf8");
+		cfg = JSON.parse(content);
+		break;
+	}
+	parts.pop();
+};
+if (!cfg) {
+	log('error', `Found no ${runcom} config`);
+	return;
+}
 
 mongoose.connect(cfg.database, function(err) {
 	if (err) {
@@ -132,7 +115,7 @@ mongoose.connect(cfg.database, function(err) {
 				if (fileType === "json") {
 					while(len--) {
 						translation = translations[len];
-						Properties2Json(rootObj, translation.key, translation[locale]);
+						rootObj = properties2Json(rootObj, translation.key, translation[locale]);
 					}
 
 					if (outputType === "f") { //formatted

@@ -5,7 +5,7 @@ import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ErrorActions from '../../actions/ErrorActions'
 import ConfigUtil from '../../../util/ConfigUtil'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class AlertPanel extends React.Component {
 	static propTypes = {
@@ -40,28 +40,28 @@ export default class AlertPanel extends React.Component {
 
 			switch (err.type) {
 				case 'equals':
-					errMsg.push(LocaleUtil.getMsg("ui.err.equals", err.params.key,
+					errMsg.push(localeUtil.getMsg("ui.err.equals", err.params.key,
 						err.match.map(function(e){
 							return '"' + getProjectName(e) + '"'
 						}).join(", ")
 					));
 					break;
 				case 'contains':
-					errMsg.push(LocaleUtil.getMsg("ui.err.contains", err.params.key, err.key,
+					errMsg.push(localeUtil.getMsg("ui.err.contains", err.params.key, err.key,
 						err.match.map(function(e){
 							return '"' + getProjectName(e) + '"'
 						}).join(", ")
 					));
 					break;
 				case 'belongsTo':
-					errMsg.push(LocaleUtil.getMsg("ui.err.belongsTo", err.params.key, err.key,
+					errMsg.push(localeUtil.getMsg("ui.err.belongsTo", err.params.key, err.key,
 						err.match.map(function(e){
 							return '"' + getProjectName(e) + '"'
 						}).join(", ")
 					));
 					break;
 				case 'emptyfield':
-					errMsg.push(LocaleUtil.getMsg("ui.err.emptyfield",
+					errMsg.push(localeUtil.getMsg("ui.err.emptyfield",
 						err.match.map(function(e){
 							return '"' + e + '"'
 						}).join(", ")

@@ -5,7 +5,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import FormPanel from './FormPanel'
 import ErrorActions from '../../actions/ErrorActions'
 import TranslationActions from '../../actions/TranslationActions'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class InputPanel extends React.Component {
 	static propTypes = {
@@ -43,7 +43,7 @@ export default class InputPanel extends React.Component {
 			if (vl) {
 				data[locale] = vl
 			} else {
-				emptyFields.push(LocaleUtil.getMsg("ui.common.locale") + " / " + locale)
+				emptyFields.push(localeUtil.getMsg("ui.common.locale") + " / " + locale)
 			}
 		}
 
@@ -55,7 +55,7 @@ export default class InputPanel extends React.Component {
 		if ( project.length > 0 ) {
 			data.project = project
 		} else {
-			emptyFields.push(LocaleUtil.getMsg("ui.common.applyto"))
+			emptyFields.push(localeUtil.getMsg("ui.common.applyto"))
 		}
 
 		if ( emptyFields.length > 0 ) {
@@ -78,7 +78,7 @@ export default class InputPanel extends React.Component {
 				<br/>
 				<div className="pull-right">
 					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation.bind(this)}>
-						<Glyphicon glyph="plus"/> {LocaleUtil.getMsg("ui.common.add")}
+						<Glyphicon glyph="plus"/> {localeUtil.getMsg("ui.common.add")}
 					</Button>
 				</div>
 			</div>

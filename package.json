@@ -17,8 +17,7 @@
 	"author": "chejen",
 	"main": "src/ui/index.js",
 	"scripts": {
-		"ktm": "ktm en-US zh-TW -p p1 -t json --format",
-		"postktm": "mv /home/chejen/Downloads/git/keys-translations-manager/public/test/en-US/en-US.json /home/chejen/Downloads/git/keys-translations-manager/public/test/",
+		"ktm": "ktm en-US zh-TW -p p1 -t json",
 		"dev": "cross-env NODE_ENV=development nodemon --ignore public/ --ignore src/ui/ ./Server.js",
 		"start": "cross-env NODE_ENV=production node ./Server.js",
 		"build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"

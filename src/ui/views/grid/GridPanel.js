@@ -9,7 +9,7 @@ import Input from 'react-bootstrap/lib/Input'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
 import TranslationActions from '../../actions/TranslationActions'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class GridPanel extends React.Component {
 	static propTypes = {
@@ -42,7 +42,7 @@ export default class GridPanel extends React.Component {
 		this.gridOptions = {
 			rowBuffer: 10,
 			localeText: {
-				noRowsToShow: LocaleUtil.getMsg("ui.grid.empty")
+				noRowsToShow: localeUtil.getMsg("ui.grid.empty")
 			}
 		};
 
@@ -74,14 +74,14 @@ export default class GridPanel extends React.Component {
 		});
 
 		const columnDefs = [{
-				headerName: LocaleUtil.getMsg("ui.common.action"),
+				headerName: localeUtil.getMsg("ui.common.action"),
 				field: '_id',
 				pinned: true,
 				width: 60,
 				suppressSorting: true,
 				cellRenderer: reactCellRendererFactory(ActionCellRenderer)
 			}, {
-				headerName: LocaleUtil.getMsg("ui.common.applyto"),
+				headerName: localeUtil.getMsg("ui.common.applyto"),
 				field: 'project',
 				pinned: true,
 				cellRenderer: reactCellRendererFactory(ProjectCellRenderer)
@@ -90,7 +90,7 @@ export default class GridPanel extends React.Component {
 				field: "key",
 				pinned: true
 			}, {
-				headerName: LocaleUtil.getMsg("ui.common.locales"),
+				headerName: localeUtil.getMsg("ui.common.locales") + " " + localeUtil.getMsg("ui.grid.edit"),
 				children: localeCols
 			}
 		];
@@ -114,7 +114,7 @@ export default class GridPanel extends React.Component {
 						</Button>
 					</span>
 					<Input type="text" className="form-control"
-						placeholder={LocaleUtil.getMsg("ui.grid.search")}
+						placeholder={localeUtil.getMsg("ui.grid.search")}
 						onChange={this.onQuickFilterText.bind(this)}/>
 				</div>
 

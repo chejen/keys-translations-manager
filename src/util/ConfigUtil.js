@@ -1,5 +1,5 @@
 'use strict';
-const config = require('../config'),
+const config = require('../../ktm.config'),
 	host = "http://" + config.server.hostname + ":" + config.server.port;
 let projectIdList = [], projectNames = {};
 

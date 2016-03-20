@@ -1,9 +1,9 @@
 'use strict';
 module.exports = {
-	setMessages(messages) {
+	setMessages: function(messages) {
 		this.messages = messages
 	},
-	getMsg(path) {
+	getMsg: function(path) {
 		var pathParts = path ? path.split('.') : [""],
 			len = arguments.length - 1,
 			message, i;

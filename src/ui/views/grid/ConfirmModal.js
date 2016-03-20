@@ -2,7 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class ConfirmModal extends React.Component {
 	constructor() {
@@ -48,11 +48,11 @@ export default class ConfirmModal extends React.Component {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button bsSize="small" bsStyle='primary' onClick={this.confirmFunc.bind(this)}>
-						{LocaleUtil.getMsg("ui.confirm.yes")}
+						{localeUtil.getMsg("ui.confirm.yes")}
 					</Button>
 					&nbsp;&nbsp;
 					<Button bsSize="small" bsStyle='default' onClick={this.close.bind(this)}>
-						{LocaleUtil.getMsg("ui.confirm.no")}
+						{localeUtil.getMsg("ui.confirm.no")}
 					</Button>
 				</Modal.Footer>
 			</Modal>

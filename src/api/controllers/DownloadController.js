@@ -1,8 +1,8 @@
 var router = require("express").Router();
 var archiver = require('archiver');
+var properties2Json = require('keys-translations-manager-core/lib/transformationUtil').properties2Json;
 var Translations = require('../models/TranslationModel');
-var Properties2Json = require('../../util/Properties2Json');
-var config = require('../../config');
+var config = require('../../../ktm.config');
 var locales = config.locales;
 
 router.route('/:outputType/:fileType/:project/:locale')
@@ -40,7 +40,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 
 					while(len--) {
 						translation = translations[len];
-						Properties2Json(rootObj, translation.key, translation[locale]);
+						rootObj = properties2Json(rootObj, translation.key, translation[locale]);
 					}
 
 					if (outputType === "f") { //formatted
@@ -110,7 +110,7 @@ router.route('/:outputType/:fileType/:project')
 					if (fileType === "json") {
 						while(len--) {
 							translation = translations[len];
-							Properties2Json(rootObj, translation.key, translation[locale]);
+							rootObj = properties2Json(rootObj, translation.key, translation[locale]);
 						}
 
 						if (outputType === "f") { //formatted

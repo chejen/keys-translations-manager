@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var config = require('../../config');
+var config = require('../../../ktm.config');
 
 var locales = config.locales,
 	lenLocales = locales.length,

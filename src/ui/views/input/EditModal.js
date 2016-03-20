@@ -7,7 +7,7 @@ import AlertPanel from '../input/AlertPanel'
 import ErrorActions from '../../actions/ErrorActions'
 import ErrorStore from '../../stores/ErrorStore'
 import TranslationActions from '../../actions/TranslationActions'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class EditModal extends React.Component {
 	static propTypes = {
@@ -51,7 +51,7 @@ export default class EditModal extends React.Component {
 			if (v) {
 				data[locale] = v
 			} else {
-				emptyFields.push(LocaleUtil.getMsg("ui.common.locale") + " / " + locale)
+				emptyFields.push(localeUtil.getMsg("ui.common.locale") + " / " + locale)
 			}
 		}
 
@@ -63,7 +63,7 @@ export default class EditModal extends React.Component {
 		if ( project.length > 0 ) {
 			data.project = project
 		} else {
-			emptyFields.push(LocaleUtil.getMsg("ui.common.applyto"))
+			emptyFields.push(localeUtil.getMsg("ui.common.applyto"))
 		}
 
 		if ( emptyFields.length > 0 ) {
@@ -105,7 +105,7 @@ export default class EditModal extends React.Component {
 			<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
 				<Modal.Header>
 					<Modal.Title>
-						{LocaleUtil.getMsg("ui.common.edit")}
+						{localeUtil.getMsg("ui.common.edit")}
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
@@ -114,10 +114,10 @@ export default class EditModal extends React.Component {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation.bind(this)}>
-						{LocaleUtil.getMsg("ui.common.update")}
+						{localeUtil.getMsg("ui.common.update")}
 					</Button>
 					<Button bsSize="small" onClick={this.close.bind(this)}>
-						{LocaleUtil.getMsg("ui.common.cancel")}
+						{localeUtil.getMsg("ui.common.cancel")}
 					</Button>
 				</Modal.Footer>
 			</Modal>

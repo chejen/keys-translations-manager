@@ -4,7 +4,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ConfirmModal from './ConfirmModal'
 import EditModal from '../input/EditModal'
 import TranslationActions from '../../actions/TranslationActions'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class ActionCellRenderer extends React.Component {
 	static propTypes = {
@@ -26,8 +26,8 @@ export default class ActionCellRenderer extends React.Component {
 	showConfirmModal(value) {
 		const data = this.props.params.data;
 		this.refs.confirmModal.open(
-			LocaleUtil.getMsg("ui.common.delete"),
-			LocaleUtil.getMsg("ui.confirm.delete", data.key),
+			localeUtil.getMsg("ui.common.delete"),
+			localeUtil.getMsg("ui.confirm.delete", data.key),
 			this.removeTranslation.bind(this, value)
 		);
 	}
@@ -40,9 +40,9 @@ export default class ActionCellRenderer extends React.Component {
 			<div>
 				<ConfirmModal ref="confirmModal"/>
 				<EditModal ref="editModal" data={this.props.params.data} />
-				<Glyphicon glyph="edit" className="app-action-icon" title={LocaleUtil.getMsg("ui.common.edit")}
+				<Glyphicon glyph="edit" className="app-action-icon" title={localeUtil.getMsg("ui.common.edit")}
 					onClick={this.showEditModal.bind(this)}/>
-				<Glyphicon glyph="trash" className="app-action-icon" title={LocaleUtil.getMsg("ui.common.delete")}
+				<Glyphicon glyph="trash" className="app-action-icon" title={localeUtil.getMsg("ui.common.delete")}
 					onClick={this.showConfirmModal.bind(this, value)}/>
 			</div>
 		);

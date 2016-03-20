@@ -2,7 +2,7 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import LangActions from '../../actions/LangActions'
-import LocaleUtil from '../../../util/LocaleUtil'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class DropdownMenu extends React.Component {
 	constructor() {
@@ -12,7 +12,7 @@ export default class DropdownMenu extends React.Component {
 
 	render() {
 		return(
-			<ul className="nav navbar-top-links navbar-right" title={LocaleUtil.getMsg("ui.common.language")}>
+			<ul className="nav navbar-top-links navbar-right" title={localeUtil.getMsg("ui.common.language")}>
 				<li className="dropdown">
 					<a className="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i className="fa fa-language fa-fw fa-lg"/>
