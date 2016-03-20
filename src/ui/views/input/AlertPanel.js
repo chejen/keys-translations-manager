@@ -3,9 +3,9 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import ErrorActions from '../../actions/ErrorActions'
-import ConfigUtil from '../../../util/ConfigUtil'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import configUtil from '../../configUtil'
+import ErrorActions from '../../actions/ErrorActions'
 
 export default class AlertPanel extends React.Component {
 	static propTypes = {
@@ -23,7 +23,7 @@ export default class AlertPanel extends React.Component {
 	}
 
 	render() {
-		const getProjectName = ConfigUtil.getProjectName,
+		const getProjectName = configUtil.getProjectName,
 			errors = this.props.errors,
 			len = errors.length;
 		let err,

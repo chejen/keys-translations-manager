@@ -1,7 +1,7 @@
 var router = require("express").Router();
 var Translations = require('../models/TranslationModel');
-var ConfigUtil = require('../../util/ConfigUtil');
-var projectIdList = ConfigUtil.getProjectIdList();
+var configUtil = require('../../ui/configUtil');
+var projectIdList = configUtil.getProjectIdList();
 
 router.route('/projects')
 		.get(function(req, res) {

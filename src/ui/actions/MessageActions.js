@@ -1,14 +1,14 @@
 /*eslint no-invalid-this: 0*/
 'use strict';
 import Reflux from 'reflux'
-import ConfigUtil from '../../util/ConfigUtil'
+import configUtil from '../configUtil'
 
 const MessageActions = Reflux.createActions({
 	'load': { children: ['completed', 'failed'] }
 });
 
 MessageActions.load.listen(function(lang) {
-	fetch(ConfigUtil.getHost() + '/public/locale/' + lang + '/translation.json')
+	fetch(configUtil.getHost() + '/public/locale/' + lang + '/translation.json')
 		.then(res => {
 			if (res.status >= 400) {
 				throw new Error(res.status + ", " + res.statusText);

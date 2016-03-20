@@ -3,9 +3,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
-import CountCol from './CountCol'
-import ConfigUtil from '../../../util/ConfigUtil'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import configUtil from '../../configUtil'
+import CountCol from './CountCol'
 
 export default class OutputPanel extends React.Component {
 	static propTypes = {
@@ -30,7 +30,7 @@ export default class OutputPanel extends React.Component {
 	}
 
 	download(project) {
-		let url = ConfigUtil.getHost() + "/api/download/"
+		let url = configUtil.getHost() + "/api/download/"
 
 		if (this.state.fileType === 'jf') {
 			url += "f/";

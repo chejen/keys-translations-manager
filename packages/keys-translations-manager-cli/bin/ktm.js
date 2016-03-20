@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-var yargs = require('yargs'),
-	argv = yargs.argv,
+var path = require('path'),
 	fs = require('node-fs'),
-	cwd = process.cwd(),
-	path = require('path'),
-	parts = cwd.split(path.sep),
 	mongoose = require('mongoose'),
 	properties2Json = require('keys-translations-manager-core/lib/transformationUtil').properties2Json,
 	log = require('keys-translations-manager-core/lib/logUtil').log,
+	yargs = require('yargs'),
+	argv = yargs.argv,
+	cwd = process.cwd(),
+	parts = cwd.split(path.sep),
 	runcom = ".ktmrc",
 	loc, f, content, cfg;
 
@@ -46,7 +46,7 @@ while(parts.length) {
 };
 if (!cfg) {
 	log('error', `Found no ${runcom} config`);
-	return;
+	process.exit(1);
 }
 
 mongoose.connect(cfg.database, function(err) {

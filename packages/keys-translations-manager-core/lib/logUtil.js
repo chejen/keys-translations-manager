@@ -15,7 +15,7 @@ module.exports = {
 				break;
 			default:
 				tag = " ";
-				bradk;
+				break;
 		}
 		console.log(chalk.grey("  ktm") + tag + msg + "\n");
 	}

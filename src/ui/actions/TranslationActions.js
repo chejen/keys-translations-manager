@@ -1,7 +1,7 @@
 /*eslint no-invalid-this: 0*/
 'use strict';
 import Reflux from 'reflux'
-import ConfigUtil from '../../util/ConfigUtil'
+import configUtil from '../configUtil'
 const TranslationActions = Reflux.createActions({
 	'addTranslation': { children: ['completed', 'failed'] },
 	'loadTranslations': { children: ['completed', 'failed'] },
@@ -10,7 +10,7 @@ const TranslationActions = Reflux.createActions({
 });
 
 TranslationActions.addTranslation.listen(function(data) {
-	fetch(ConfigUtil.getHost() + '/api/translation', {
+	fetch(configUtil.getHost() + '/api/translation', {
 		headers: {
 			'Accept': 'application/json; charset=utf-8',
 			'Content-Type': 'application/json; charset=utf-8'
@@ -29,7 +29,7 @@ TranslationActions.addTranslation.listen(function(data) {
 });
 
 TranslationActions.loadTranslations.listen(function() {
-	fetch(ConfigUtil.getHost() + '/api/translation')
+	fetch(configUtil.getHost() + '/api/translation')
 		.then(res => {
 			if (res.status >= 400) {
 				throw new Error(res.status + ", " + res.statusText);
@@ -41,7 +41,7 @@ TranslationActions.loadTranslations.listen(function() {
 });
 
 TranslationActions.removeTranslation.listen(function(id) {
-	fetch(ConfigUtil.getHost() + '/api/translation/' + id, {
+	fetch(configUtil.getHost() + '/api/translation/' + id, {
 		method: 'DELETE'
 	})
 	.then(res => {
@@ -55,7 +55,7 @@ TranslationActions.removeTranslation.listen(function(id) {
 });
 
 TranslationActions.updateTranslation.listen(function(data) {
-	fetch(ConfigUtil.getHost() + '/api/translation/' + data._id, {
+	fetch(configUtil.getHost() + '/api/translation/' + data._id, {
 		headers: {
 			'Accept': 'application/json; charset=utf-8',
 			'Content-Type': 'application/json; charset=utf-8'

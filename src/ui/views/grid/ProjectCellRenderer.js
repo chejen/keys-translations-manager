@@ -1,6 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import ConfigUtil from '../../../util/ConfigUtil'
+import configUtil from '../../configUtil'
 export default class ProjectCellRenderer extends React.Component {
 	static propTypes = {
 		params: React.PropTypes.object
@@ -14,7 +14,7 @@ export default class ProjectCellRenderer extends React.Component {
 	render() {
 		const projectList = this.props.params.value,
 				l = projectList ? projectList.length : 0,
-				getProjectName = ConfigUtil.getProjectName;
+				getProjectName = configUtil.getProjectName;
 		let i, project = [];
 		for (i = 0; i < l; i++) {
 			project.push( getProjectName(projectList[i]) );
