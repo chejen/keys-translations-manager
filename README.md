@@ -13,17 +13,17 @@ This project offers a web application which aims to facilitate locale management
 
 ## Getting Started
 Checkout this repo, install dependencies, then start the web server:
-```bash
-> git clone https://github.com/chejen/keys-translations-manager
-> cd keys-translations-manager
-> npm install
-> npm start
+```sh
+$ git clone https://github.com/chejen/keys-translations-manager
+$ cd keys-translations-manager
+$ npm install
+$ npm start
 ```
 Open http://localhost:3000/ and enjoy it.
 
 
 ## Custom
-There are some settings (at [ktm.config.js](./ktm.config.js)) you can configure. The table below lists the available ones:
+There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure. The table below lists the available ones:
 
 | **Setting** | **Description** |**Default**|
 |----------|-------|---|
@@ -37,11 +37,12 @@ There are some settings (at [ktm.config.js](./ktm.config.js)) you can configure.
 
 
 ## CLI
-to be continued
+* Download locales without opening the web application.
+* See [keys-translations-manager-cli] [12] for more details.
 
 
 ## Technologies
-* Scaffolded with [MongoDb] [1], [Express] [2], [React] [3], and [Node.js] [4]
+* Scaffolded with [MongoDB] [1], [Express] [2], [React] [3], and [Node.js] [4]
 * Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
 * Module Bundler: [webpack] [9]
 * Miscellaneous: [Babel] [10], [ESLint] [11]
@@ -61,3 +62,4 @@ This source code is licensed under the [MIT License](http://www.opensource.org/l
 [9]: https://webpack.github.io/
 [10]: https://babeljs.io/
 [11]: http://eslint.org/
+[12]: https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli
