@@ -17,6 +17,7 @@
 	"author": "chejen",
 	"scripts": {
 		"ktm": "ktm en-US zh-TW -p p1 -t json",
+		"test": "mocha -R spec test/**/*.js",
 		"dev": "cross-env NODE_ENV=development nodemon --ignore public/ --ignore src/ui/ ./Server.js",
 		"start": "cross-env NODE_ENV=production node ./Server.js",
 		"build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
