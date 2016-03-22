@@ -15,7 +15,6 @@
 		"translation"
 	],
 	"author": "chejen",
-	"main": "src/ui/index.js",
 	"scripts": {
 		"ktm": "ktm en-US zh-TW -p p1 -t json",
 		"dev": "cross-env NODE_ENV=development nodemon --ignore public/ --ignore src/ui/ ./Server.js",
@@ -50,6 +49,7 @@
 		"babel-preset-react": "6.5.0",
 		"babel-preset-react-hmre": "1.1.1",
 		"babel-preset-stage-0": "6.5.0",
+		"chai": "3.5.0",
 		"cross-env": "1.0.7",
 		"css-loader": "0.23.1",
 		"eslint": "2.4.0",
@@ -60,6 +60,7 @@
 		"eventsource-polyfill": "0.9.6",
 		"less": "2.6.1",
 		"less-loader": "2.2.2",
+		"mocha": "2.4.5",
 		"nodemon": "1.9.1",
 		"rename": "1.0.3",
 		"style-loader": "0.13.0",

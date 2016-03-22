@@ -1,5 +1,5 @@
 # Keys-Translations Manager
-This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their related translations. Also, you can download final locale files (either *.json or *.properties) through this application.
+> This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their related translations. Also, you can download final locale files (either *.json or *.properties) through this application.
 
 
 ## Demo
@@ -37,8 +37,7 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 
 
 ## CLI
-* Download locales without opening the web application.
-* See [keys-translations-manager-cli] [12] for more details.
+* Download locales without opening the web application. (See [keys-translations-manager-cli] [12] for more details)
 
 
 ## Technologies

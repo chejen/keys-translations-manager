@@ -16,6 +16,7 @@
   "author": "chejen",
   "license": "MIT",
   "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-core",
+  "main": "./index.js",
   "dependencies": {
     "chalk": "1.1.1"
   }
