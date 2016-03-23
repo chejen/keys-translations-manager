@@ -18,17 +18,17 @@ describe('localeUtil', function() {
 			});
 		});
 
-		it('should return "Add"', function() {
+		it("should return a value if a key exists", function() {
 			expect(localeUtil.getMsg('ui.common.add'))
 				.to.be.equal('Add');
 		});
 
-		it('should return "You have 3 unread messages."', function() {
+		it("should replace replaceholder", function() {
 			expect(localeUtil.getMsg('ui.message.unread', 3))
 				.to.be.equal('You have 3 unread messages.');
 		});
 
-		it('should return "ui.common.update.undefined"', function() {
+		it("should return `key`.undefined if a key doesn't exist", function() {
 			expect(localeUtil.getMsg('ui.common.update'))
 				.to.be.equal('ui.common.update.undefined');
 		});
