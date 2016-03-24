@@ -17,10 +17,11 @@
 	"author": "chejen",
 	"scripts": {
 		"ktm": "ktm en-US zh-TW -p p1 -t json",
-		"test": "mocha -R spec test/**/*.js",
 		"dev": "cross-env NODE_ENV=development nodemon --ignore public/ --ignore src/ui/ ./Server.js",
 		"start": "cross-env NODE_ENV=production node ./Server.js",
-		"build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
+		"build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
+		"test": "mocha -R spec test/**/*.js",
+		"posttest": "istanbul cover node_modules/mocha/bin/_mocha test/**/*.js --report lcovonly -- -R spec && codecov"
 	},
 	"repository": {
 		"type": "git",
@@ -40,6 +41,9 @@
 		"react-addons-pure-render-mixin": "0.14.7",
 		"react-bootstrap": "0.28.3",
 		"react-dom": "0.14.7",
+		"react-redux": "4.4.1",
+		"redux": "3.3.1",
+		"redux-thunk": "2.0.1",
 		"reflux": "0.4.0"
 	},
 	"devDependencies": {
@@ -51,6 +55,7 @@
 		"babel-preset-react-hmre": "1.1.1",
 		"babel-preset-stage-0": "6.5.0",
 		"chai": "3.5.0",
+		"codecov": "1.0.1",
 		"cross-env": "1.0.7",
 		"css-loader": "0.23.1",
 		"eslint": "2.4.0",
@@ -59,10 +64,12 @@
 		"eslint-plugin-i18n": "1.0.0",
 		"eslint-plugin-react": "4.2.3",
 		"eventsource-polyfill": "0.9.6",
+		"istanbul": "0.4.2",
 		"less": "2.6.1",
 		"less-loader": "2.2.2",
 		"mocha": "2.4.5",
 		"nodemon": "1.9.1",
+		"redux-devtools": "3.1.1",
 		"rename": "1.0.3",
 		"sinon": "1.17.3",
 		"sinon-chai": "2.8.0",
