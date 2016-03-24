@@ -4,6 +4,8 @@ ES6Promise.polyfill();
 import 'isomorphic-fetch'
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import GridPanel from './grid/GridPanel'
 import AlertPanel from './input/AlertPanel'
 import InputPanel from './input/InputPanel'
@@ -16,15 +18,21 @@ import CountActions from '../actions/CountActions'
 import CountStore from '../stores/CountStore'
 import ErrorActions from '../actions/ErrorActions'
 import ErrorStore from '../stores/ErrorStore'
-import LangStore from '../stores/LangStore'
+//import LangStore from '../stores/LangStore'
 import MessageActions from '../actions/MessageActions'
 import MessageStore from '../stores/MessageStore'
 import TranslationActions from '../actions/TranslationActions'
 import TranslationStore from '../stores/TranslationStore'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import config from '../../../ktm.config'
+import * as LangActions from '../actions/lang'
 
-export default class App extends React.Component {
+class App extends React.Component {
+	static propTypes = {
+		lang: React.PropTypes.string.isRequired,
+		LangActions: React.PropTypes.object.isRequired
+	}
+
 	static childContextTypes = {
 		config: React.PropTypes.object
 	}
@@ -32,7 +40,7 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lang: null,
+			//lang: null,
 			count: {},
 			errors: [],
 			messages: null,
@@ -50,9 +58,10 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
+		console.log("componentDidMount");
 		this.unsubscribeCount = CountStore.listen(this.onCountChange.bind(this));
 		this.unsubscribeError = ErrorStore.listen(this.onErrorChange.bind(this));
-		this.unsubscribeLang = LangStore.listen(this.onLangChange.bind(this));
+		//this.unsubscribeLang = LangStore.listen(this.onLangChange.bind(this));
 		this.unsubscribeMessage = MessageStore.listen(this.onMessagesChange.bind(this));
 		this.unsubscribeTranslation = TranslationStore.listen(this.onTranslationsChange.bind(this));
 
@@ -62,7 +71,7 @@ export default class App extends React.Component {
 	componentWillUnmount() {
 		this.unsubscribeCount();
 		this.unsubscribeError();
-		this.unsubscribeLang();
+		//this.unsubscribeLang();
 		this.unsubscribeMessage();
 		this.unsubscribeTranslation();
 	}
@@ -79,13 +88,13 @@ export default class App extends React.Component {
 		});
 	}
 
-	onLangChange(lang) {
+	/*onLangChange(lang) {
 		this.setState({
 			lang: lang
 		}, function(){
 			this.loadMessages();
 		}.bind(this));
-	}
+	}*/
 
 	onMessagesChange(messages) {
 		localeUtil.setMessages(messages);
@@ -105,15 +114,17 @@ export default class App extends React.Component {
 	}
 
 	loadMessages() {
-		MessageActions.load(this.state.lang || navigator.language || navigator.browserLanguage);
+		//MessageActions.load(this.state.lang || navigator.language || navigator.browserLanguage);
+		MessageActions.load(this.props.lang || navigator.language || navigator.browserLanguage);
 	}
 
 	render() {
+		const { LangActions } = this.props
 		return this.state.messages ? (
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
-					<DropdownMenu messages={this.state.messages}/>
+					<DropdownMenu messages={this.state.messages} switchLang={LangActions.switchLang}/>
 					<SideBar>
 						<InputPanel messages={this.state.messages}/>
 					</SideBar>
@@ -131,3 +142,17 @@ export default class App extends React.Component {
 		</div>);
 	}
 }
+
+function mapStateToProps(state) {
+	return {
+		lang: state.lang
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	return {
+		LangActions: bindActionCreators(LangActions, dispatch)
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
