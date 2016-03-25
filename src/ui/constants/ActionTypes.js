@@ -1,1 +1,1 @@
-export const SWITCH_LANG = 'SWITCH_LANG';
+export const LOAD_MESSAGES = 'LOAD_MESSAGES';

@@ -6,7 +6,7 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class DropdownMenu extends React.Component {
 	static propTypes = {
-		switchLang: React.PropTypes.func.isRequired
+		loadMessages: React.PropTypes.func.isRequired
 	}
 
 	constructor() {
@@ -15,7 +15,7 @@ export default class DropdownMenu extends React.Component {
 	}
 
 	render() {
-		const { switchLang } = this.props;
+		const { loadMessages } = this.props;
 		return(
 			<ul className="nav navbar-top-links navbar-right" title={localeUtil.getMsg("ui.common.language")}>
 				<li className="dropdown">
@@ -27,14 +27,14 @@ export default class DropdownMenu extends React.Component {
 						<li><a href="#" onClick={(event) => {
 								event.preventDefault();
 								//LangActions.switch("en-US");
-								switchLang("en-US");
+								loadMessages("en-US");
 							}}>
 							<i className="fa fa-language fa-fw"/> English (en-US)
 						</a></li>
 						<li><a href="#" onClick={(event) => {
 								event.preventDefault();
 								//LangActions.switch("zh-TW");
-								switchLang("zh-TW");
+								loadMessages("zh-TW");
 							}}>
 							<i className="fa fa-language fa-fw"/> 繁體中文 (zh-TW)
 						</a></li>
