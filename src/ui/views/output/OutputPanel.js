@@ -9,7 +9,7 @@ import CountCol from './CountCol'
 
 export default class OutputPanel extends React.Component {
 	static propTypes = {
-		count: React.PropTypes.object.isRequired
+		projectCounts: React.PropTypes.object.isRequired
 	};
 	static contextTypes = {
 		config: React.PropTypes.object
@@ -49,7 +49,7 @@ export default class OutputPanel extends React.Component {
 	render() {
 		const me = this
 		const config = this.context.config
-		const projectCount = this.props.count.projects
+		const {projectCounts} = this.props
 
 		return(
 			<Well>
@@ -57,7 +57,7 @@ export default class OutputPanel extends React.Component {
 					{config.projects.map(function(e){
 						return (
 							<CountCol onClick={me.download.bind(me, e)} header={e.name} key={e.id}
-									count={projectCount ? (projectCount[e.id] || 0) : 0} desc="keys"/>
+									count={projectCounts ? (projectCounts[e.id] || 0) : 0} desc="keys"/>
 						);
 					})}
 				</Row>

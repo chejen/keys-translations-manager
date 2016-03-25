@@ -14,8 +14,8 @@ import Header from './layout/Header'
 import MainPanel from './layout/MainPanel'
 import SideBar from './layout/SideBar'
 import OutputPanel from './output/OutputPanel'
-import CountActions from '../actions/CountActions'
-import CountStore from '../stores/CountStore'
+//import CountActions from '../actions/CountActions'
+//import CountStore from '../stores/CountStore'
 import ErrorActions from '../actions/ErrorActions'
 import ErrorStore from '../stores/ErrorStore'
 //import LangStore from '../stores/LangStore'
@@ -27,14 +27,17 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import config from '../../../ktm.config'
 //import * as LangActions from '../actions/lang'
 import * as MessageActions from '../actions/messages'
+import * as CountActions from '../actions/counts'
 
 class App extends React.Component {
 	static propTypes = {
 		lang: React.PropTypes.string.isRequired,
 		messages: React.PropTypes.object.isRequired,
+		counts: React.PropTypes.object.isRequired,
 		
 		//LangActions: React.PropTypes.object.isRequired,
-		MessageActions: React.PropTypes.object.isRequired
+		MessageActions: React.PropTypes.object.isRequired,
+		CountActions: React.PropTypes.object.isRequired
 	}
 
 	static childContextTypes = {
@@ -45,7 +48,7 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			//lang: null,
-			count: {},
+			//count: {},
 			errors: [],
 			//messages: null,
 			translations: []
@@ -62,7 +65,7 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		this.unsubscribeCount = CountStore.listen(this.onCountChange.bind(this));
+		//this.unsubscribeCount = CountStore.listen(this.onCountChange.bind(this));
 		this.unsubscribeError = ErrorStore.listen(this.onErrorChange.bind(this));
 		//this.unsubscribeLang = LangStore.listen(this.onLangChange.bind(this));
 		//this.unsubscribeMessage = MessageStore.listen(this.onMessagesChange.bind(this));
@@ -72,10 +75,6 @@ class App extends React.Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		//if (nextProps.lang !== this.props.lang) {
-			//ErrorActions.clear();
-			//this.loadMessages(nextProps.lang);
-		//}
 		if (nextProps.lang !== this.props.lang) {
 			ErrorActions.clear();
 			localeUtil.setMessages(nextProps.messages);
@@ -83,18 +82,18 @@ class App extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this.unsubscribeCount();
+		//this.unsubscribeCount();
 		this.unsubscribeError();
 		//this.unsubscribeLang();
 		//this.unsubscribeMessage();
 		this.unsubscribeTranslation();
 	}
 
-	onCountChange(count) {
-		this.setState({
-			count: count
-		});
-	}
+	// onCountChange(count) {
+	// 	this.setState({
+	// 		count: count
+	// 	});
+	// }
 
 	onErrorChange(errors) {
 		this.setState({
@@ -119,11 +118,13 @@ class App extends React.Component {
 	}*/
 
 	onTranslationsChange(translations) {
+		const { CountActions } = this.props
 		this.setState({
 			errors: [],
 			translations: translations
 		}, function() {
-			CountActions.countByProject();
+			//CountActions.countByProject();
+			CountActions.loadCounts();
 		});
 	}
 
@@ -134,7 +135,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { MessageActions, messages } = this.props
+		const { MessageActions, messages, counts } = this.props
 		const isReady = !($.isEmptyObject(messages))
 		
 		console.log("render:", messages);
@@ -154,7 +155,7 @@ class App extends React.Component {
 				</nav>
 				<div id="page-wrapper">
 					<AlertPanel errors={this.state.errors} action="c"/>
-					<OutputPanel count={this.state.count} messages={messages}/>
+					<OutputPanel projectCounts={counts} messages={messages}/>
 					<MainPanel>
 						<GridPanel translations={this.state.translations} messages={messages}/>
 					</MainPanel>
@@ -169,14 +170,15 @@ class App extends React.Component {
 function mapStateToProps(state) {
 	return {
 		lang: state.messages.lang,
-		messages: state.messages.messages
+		messages: state.messages.messages,
+		counts: state.counts
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
-		//LangActions: bindActionCreators(LangActions, dispatch),
-		MessageActions: bindActionCreators(MessageActions, dispatch)
+		MessageActions: bindActionCreators(MessageActions, dispatch),
+		CountActions: bindActionCreators(CountActions, dispatch)
 	}
 }
 
