@@ -1,6 +1,6 @@
 import { LOAD_MESSAGES } from '../constants/ActionTypes'
 
-export default function lang(state = {lang: '', messages: {}}, action) {
+export default function messages(state = {lang: '', messages: {}}, action) {
 	switch (action.type) {
 		case LOAD_MESSAGES:
 			return {

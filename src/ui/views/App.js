@@ -21,13 +21,15 @@ import OutputPanel from './output/OutputPanel'
 //import LangStore from '../stores/LangStore'
 //import MessageActions from '../actions/MessageActions'
 //import MessageStore from '../stores/MessageStore'
-import TranslationActions from '../actions/TranslationActions'
-import TranslationStore from '../stores/TranslationStore'
+//import TranslationActions from '../actions/TranslationActions'
+//import TranslationStore from '../stores/TranslationStore'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import config from '../../../ktm.config'
 //import * as LangActions from '../actions/lang'
 import * as MessageActions from '../actions/messages'
 import * as CountActions from '../actions/counts'
+import * as TranslationActions from '../actions/translations'
+import * as ErrorActions from '../actions/errors'
 
 class App extends React.Component {
 	static propTypes = {
@@ -35,10 +37,12 @@ class App extends React.Component {
 		messages: React.PropTypes.object.isRequired,
 		counts: React.PropTypes.object.isRequired,
 		errors: React.PropTypes.array.isRequired,
-		
-		//LangActions: React.PropTypes.object.isRequired,
+		translations: React.PropTypes.array.isRequired,
+
 		MessageActions: React.PropTypes.object.isRequired,
-		CountActions: React.PropTypes.object.isRequired
+		CountActions: React.PropTypes.object.isRequired,
+		TranslationActions: React.PropTypes.object.isRequired,
+		ErrorActions: React.PropTypes.object.isRequired
 	}
 
 	static childContextTypes = {
@@ -47,13 +51,13 @@ class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {
+		/*this.state = {
 			//lang: null,
 			//count: {},
 			//errors: [],
 			//messages: null,
-			translations: []
-		};
+			//translations: []
+		};*/
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
@@ -70,15 +74,19 @@ class App extends React.Component {
 		//this.unsubscribeError = ErrorStore.listen(this.onErrorChange.bind(this));
 		//this.unsubscribeLang = LangStore.listen(this.onLangChange.bind(this));
 		//this.unsubscribeMessage = MessageStore.listen(this.onMessagesChange.bind(this));
-		this.unsubscribeTranslation = TranslationStore.listen(this.onTranslationsChange.bind(this));
+		//this.unsubscribeTranslation = TranslationStore.listen(this.onTranslationsChange.bind(this));
 
-		TranslationActions.loadTranslations();
+		//TranslationActions.loadTranslations();
+		this.props.TranslationActions.loadTranslations();
 	}
 	
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.lang !== this.props.lang) {
 			//ErrorActions.clear();
 			localeUtil.setMessages(nextProps.messages);
+		}
+		if (nextProps.translations !== this.props.translations) {
+			nextProps.CountActions.loadCounts();
 		}
 	}
 
@@ -87,7 +95,7 @@ class App extends React.Component {
 		//this.unsubscribeError();
 		//this.unsubscribeLang();
 		//this.unsubscribeMessage();
-		this.unsubscribeTranslation();
+		//this.unsubscribeTranslation();
 	}
 
 	// onCountChange(count) {
@@ -118,7 +126,7 @@ class App extends React.Component {
 		});
 	}*/
 
-	onTranslationsChange(translations) {
+	/*onTranslationsChange(translations) {
 		const { CountActions } = this.props
 		this.setState({
 			errors: [],
@@ -127,7 +135,7 @@ class App extends React.Component {
 			//CountActions.countByProject();
 			CountActions.loadCounts();
 		});
-	}
+	}*/
 
 	loadMessages(lang) {
 		console.log("loadMessages", lang);
@@ -136,7 +144,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { MessageActions, lang, messages, counts, errors } = this.props
+		const { MessageActions, TranslationActions, ErrorActions, lang, messages, counts, errors, translations } = this.props
 		const isReady = !($.isEmptyObject(messages))
 		
 		console.log("render:", messages);
@@ -151,14 +159,20 @@ class App extends React.Component {
 					<Header/>
 					<DropdownMenu lang={lang} messages={messages} loadMessages={MessageActions.loadMessages}/>
 					<SideBar>
-						<InputPanel messages={messages}/>
+						<InputPanel messages={messages} 
+							alertErrors={ErrorActions.alertErrors}
+							addTranslation={TranslationActions.addTranslation}/>
 					</SideBar>
 				</nav>
 				<div id="page-wrapper">
-					<AlertPanel errors={errors} action="c"/>
+					<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
 					<OutputPanel projectCounts={counts} messages={messages}/>
 					<MainPanel>
-						<GridPanel translations={this.state.translations} messages={messages}/>
+						<GridPanel translations={translations} messages={messages} errors={errors}
+							updateTranslation={TranslationActions.updateTranslation}
+							removeTranslation={TranslationActions.removeTranslation}
+							alertErrors={ErrorActions.alertErrors}
+							clearErrors={ErrorActions.clearErrors}/>
 					</MainPanel>
 				</div>
 			</div>
@@ -173,14 +187,17 @@ function mapStateToProps(state) {
 		lang: state.messages.lang,
 		messages: state.messages.messages,
 		counts: state.counts,
-		errors: state.errors
+		errors: state.errors,
+		translations: state.translations
 	}
 }
 
 function mapDispatchToProps(dispatch) {
 	return {
 		MessageActions: bindActionCreators(MessageActions, dispatch),
-		CountActions: bindActionCreators(CountActions, dispatch)
+		CountActions: bindActionCreators(CountActions, dispatch),
+		TranslationActions: bindActionCreators(TranslationActions, dispatch),
+		ErrorActions: bindActionCreators(ErrorActions, dispatch)
 	}
 }
 

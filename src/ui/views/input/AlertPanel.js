@@ -5,10 +5,11 @@ import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
-import ErrorActions from '../../actions/ErrorActions'
+//import ErrorActions from '../../actions/ErrorActions'
 
 export default class AlertPanel extends React.Component {
 	static propTypes = {
+		clearErrors: React.PropTypes.func.isRequired,
 		errors: React.PropTypes.array,
 		action: React.PropTypes.string.isRequired
 	};
@@ -19,7 +20,7 @@ export default class AlertPanel extends React.Component {
 	}
 
 	handleDismiss(){
-		ErrorActions.clear();
+		this.props.clearErrors();
 	}
 
 	render() {
@@ -31,7 +32,7 @@ export default class AlertPanel extends React.Component {
 			cmp,
 			i,
 			counter = 0;
-
+console.log("this.props.errors-alertpanel", this.props.errors);
 		for (i=0; i<len; i++) {
 			err = errors[i];
 			if (err.action !== this.props.action) {

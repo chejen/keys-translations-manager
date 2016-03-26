@@ -8,13 +8,18 @@ import Button from 'react-bootstrap/lib/Button'
 import Input from 'react-bootstrap/lib/Input'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
-import TranslationActions from '../../actions/TranslationActions'
+//import TranslationActions from '../../actions/TranslationActions'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class GridPanel extends React.Component {
 	static propTypes = {
 		messages: React.PropTypes.object,
-		translations: React.PropTypes.array.isRequired
+		translations: React.PropTypes.array.isRequired,
+		errors: React.PropTypes.array.isRequired,
+		updateTranslation: React.PropTypes.func.isRequired,
+		removeTranslation: React.PropTypes.func.isRequired,
+		alertErrors: React.PropTypes.func.isRequired,
+		clearErrors: React.PropTypes.func.isRequired
 	};
 	static contextTypes = {
 		config: React.PropTypes.object
@@ -58,8 +63,9 @@ export default class GridPanel extends React.Component {
 	}
 
 	getColumnDefs(props, context) {
-		const config = context.config,
-				locales = config.locales;
+		const me = this,
+			config = context.config,
+			locales = config.locales;
 
 		let localeCols = locales.map(function(locale){
 			return {
@@ -68,7 +74,7 @@ export default class GridPanel extends React.Component {
 				editable: true,
 				newValueHandler: function(params) {
 					params.data[this.field] = params.newValue;
-					TranslationActions.updateTranslation(params.data);
+					me.props.updateTranslation(params.data);
 				}
 			};
 		});
@@ -104,7 +110,7 @@ export default class GridPanel extends React.Component {
 	render() {
         const h = $(window).height();
         const offset = $(".ag-fresh").offset();
-
+console.log("this.props.errors-gridpanel", this.props.errors);
 		return (
 			<div>
 				<div className="input-group custom-search-form">
@@ -120,7 +126,15 @@ export default class GridPanel extends React.Component {
 
 				<div style={{height: (offset ? (h - offset.top - 20) : 430) + 'px'}} className="ag-fresh">
 					<AgGridReact
-						context={{config: this.context.config}}
+						context={{
+							config: this.context.config,
+							errors: this.props.errors,
+							updateTranslation: this.props.updateTranslation,
+							removeTranslation: this.props.removeTranslation,
+							alertErrors: this.props.alertErrors,
+							clearErrors: this.props.clearErrors
+						}}
+						dummy={this.props.errors}
 						gridOptions={this.gridOptions}
 						quickFilterText={this.state.quickFilterText}
 						icons={this.state.icons}
