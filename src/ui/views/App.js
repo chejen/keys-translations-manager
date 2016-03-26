@@ -16,8 +16,8 @@ import SideBar from './layout/SideBar'
 import OutputPanel from './output/OutputPanel'
 //import CountActions from '../actions/CountActions'
 //import CountStore from '../stores/CountStore'
-import ErrorActions from '../actions/ErrorActions'
-import ErrorStore from '../stores/ErrorStore'
+//import ErrorActions from '../actions/ErrorActions'
+//import ErrorStore from '../stores/ErrorStore'
 //import LangStore from '../stores/LangStore'
 //import MessageActions from '../actions/MessageActions'
 //import MessageStore from '../stores/MessageStore'
@@ -34,6 +34,7 @@ class App extends React.Component {
 		lang: React.PropTypes.string.isRequired,
 		messages: React.PropTypes.object.isRequired,
 		counts: React.PropTypes.object.isRequired,
+		errors: React.PropTypes.array.isRequired,
 		
 		//LangActions: React.PropTypes.object.isRequired,
 		MessageActions: React.PropTypes.object.isRequired,
@@ -49,7 +50,7 @@ class App extends React.Component {
 		this.state = {
 			//lang: null,
 			//count: {},
-			errors: [],
+			//errors: [],
 			//messages: null,
 			translations: []
 		};
@@ -66,7 +67,7 @@ class App extends React.Component {
 
 	componentDidMount() {
 		//this.unsubscribeCount = CountStore.listen(this.onCountChange.bind(this));
-		this.unsubscribeError = ErrorStore.listen(this.onErrorChange.bind(this));
+		//this.unsubscribeError = ErrorStore.listen(this.onErrorChange.bind(this));
 		//this.unsubscribeLang = LangStore.listen(this.onLangChange.bind(this));
 		//this.unsubscribeMessage = MessageStore.listen(this.onMessagesChange.bind(this));
 		this.unsubscribeTranslation = TranslationStore.listen(this.onTranslationsChange.bind(this));
@@ -76,14 +77,14 @@ class App extends React.Component {
 	
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.lang !== this.props.lang) {
-			ErrorActions.clear();
+			//ErrorActions.clear();
 			localeUtil.setMessages(nextProps.messages);
 		}
 	}
 
 	componentWillUnmount() {
 		//this.unsubscribeCount();
-		this.unsubscribeError();
+		//this.unsubscribeError();
 		//this.unsubscribeLang();
 		//this.unsubscribeMessage();
 		this.unsubscribeTranslation();
@@ -95,11 +96,11 @@ class App extends React.Component {
 	// 	});
 	// }
 
-	onErrorChange(errors) {
-		this.setState({
-			errors: errors
-		});
-	}
+	// onErrorChange(errors) {
+	// 	this.setState({
+	// 		errors: errors
+	// 	});
+	// }
 
 	/*onLangChange(lang) {
 		this.setState({
@@ -135,7 +136,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { MessageActions, messages, counts } = this.props
+		const { MessageActions, lang, messages, counts, errors } = this.props
 		const isReady = !($.isEmptyObject(messages))
 		
 		console.log("render:", messages);
@@ -148,13 +149,13 @@ class App extends React.Component {
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
-					<DropdownMenu messages={messages} loadMessages={MessageActions.loadMessages}/>
+					<DropdownMenu lang={lang} messages={messages} loadMessages={MessageActions.loadMessages}/>
 					<SideBar>
 						<InputPanel messages={messages}/>
 					</SideBar>
 				</nav>
 				<div id="page-wrapper">
-					<AlertPanel errors={this.state.errors} action="c"/>
+					<AlertPanel errors={errors} action="c"/>
 					<OutputPanel projectCounts={counts} messages={messages}/>
 					<MainPanel>
 						<GridPanel translations={this.state.translations} messages={messages}/>
@@ -171,7 +172,8 @@ function mapStateToProps(state) {
 	return {
 		lang: state.messages.lang,
 		messages: state.messages.messages,
-		counts: state.counts
+		counts: state.counts,
+		errors: state.errors
 	}
 }
 

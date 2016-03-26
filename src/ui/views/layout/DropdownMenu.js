@@ -1,11 +1,11 @@
 /*eslint i18n/no-chinese-character: 0*/
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-//import LangActions from '../../actions/LangActions'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class DropdownMenu extends React.Component {
 	static propTypes = {
+		lang: React.PropTypes.string.isRequired,
 		loadMessages: React.PropTypes.func.isRequired
 	}
 
@@ -14,8 +14,13 @@ export default class DropdownMenu extends React.Component {
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
+	loadMessages(lang) {
+		if (lang !== this.props.lang) {
+			this.props.loadMessages(lang);
+		}
+	}
+
 	render() {
-		const { loadMessages } = this.props;
 		return(
 			<ul className="nav navbar-top-links navbar-right" title={localeUtil.getMsg("ui.common.language")}>
 				<li className="dropdown">
@@ -26,15 +31,13 @@ export default class DropdownMenu extends React.Component {
 					<ul className="dropdown-menu dropdown-user">
 						<li><a href="#" onClick={(event) => {
 								event.preventDefault();
-								//LangActions.switch("en-US");
-								loadMessages("en-US");
+								this.loadMessages("en-US");
 							}}>
 							<i className="fa fa-language fa-fw"/> English (en-US)
 						</a></li>
 						<li><a href="#" onClick={(event) => {
 								event.preventDefault();
-								//LangActions.switch("zh-TW");
-								loadMessages("zh-TW");
+								this.loadMessages("zh-TW");
 							}}>
 							<i className="fa fa-language fa-fw"/> 繁體中文 (zh-TW)
 						</a></li>
