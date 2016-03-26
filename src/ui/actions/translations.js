@@ -56,6 +56,7 @@ export function removeTranslation(id) {
 			return res.json();
 		})
 		.then((data) => {
+			console.log("remove", data);
 			dispatch({
 				type: ActionTypes.REMOVE_TRANSLATION,
 				id: data.id
@@ -80,10 +81,10 @@ export function updateTranslation(params) {
 			}
 			return res.json();
 		})
-		.then((data) => {
+		.then((result) => {
 			dispatch({
 				type: ActionTypes.UPDATE_TRANSLATION,
-				data: data
+				data: result.data
 			})
 		})
 	}

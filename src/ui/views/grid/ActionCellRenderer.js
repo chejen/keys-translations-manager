@@ -22,7 +22,6 @@ export default class ActionCellRenderer extends React.Component {
 	}
 	showEditModal(data) {
 		//this.refs.editModal.open();
-		console.log("showEditModal", data);
 		this.props.params.context.showEditModal(data)
 	}
 	showConfirmModal(value) {

@@ -149,7 +149,11 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { MessageActions, TranslationActions, ErrorActions, ComponentActions, lang, messages, counts, errors, translations, showeditmodal, editrecord } = this.props
+		const {
+			MessageActions, TranslationActions, 
+			ErrorActions, ComponentActions, 
+			lang, messages, counts, errors, 
+			translations, showeditmodal, editrecord } = this.props
 		const isReady = !($.isEmptyObject(messages))
 		
 		console.log("render:", editrecord);
