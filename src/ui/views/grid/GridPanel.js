@@ -8,7 +8,6 @@ import Button from 'react-bootstrap/lib/Button'
 import Input from 'react-bootstrap/lib/Input'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
-//import TranslationActions from '../../actions/TranslationActions'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class GridPanel extends React.Component {

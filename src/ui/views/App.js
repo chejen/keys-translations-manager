@@ -15,18 +15,8 @@ import MainPanel from './layout/MainPanel'
 import SideBar from './layout/SideBar'
 import OutputPanel from './output/OutputPanel'
 import EditModal from './input/EditModal'
-//import CountActions from '../actions/CountActions'
-//import CountStore from '../stores/CountStore'
-//import ErrorActions from '../actions/ErrorActions'
-//import ErrorStore from '../stores/ErrorStore'
-//import LangStore from '../stores/LangStore'
-//import MessageActions from '../actions/MessageActions'
-//import MessageStore from '../stores/MessageStore'
-//import TranslationActions from '../actions/TranslationActions'
-//import TranslationStore from '../stores/TranslationStore'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import config from '../../../ktm.config'
-//import * as LangActions from '../actions/lang'
 import * as MessageActions from '../actions/messages'
 import * as CountActions from '../actions/counts'
 import * as TranslationActions from '../actions/translations'
@@ -56,13 +46,6 @@ class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		/*this.state = {
-			//lang: null,
-			//count: {},
-			//errors: [],
-			//messages: null,
-			//translations: []
-		};*/
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
@@ -75,19 +58,11 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		//this.unsubscribeCount = CountStore.listen(this.onCountChange.bind(this));
-		//this.unsubscribeError = ErrorStore.listen(this.onErrorChange.bind(this));
-		//this.unsubscribeLang = LangStore.listen(this.onLangChange.bind(this));
-		//this.unsubscribeMessage = MessageStore.listen(this.onMessagesChange.bind(this));
-		//this.unsubscribeTranslation = TranslationStore.listen(this.onTranslationsChange.bind(this));
-
-		//TranslationActions.loadTranslations();
 		this.props.TranslationActions.loadTranslations();
 	}
 	
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.lang !== this.props.lang) {
-			//ErrorActions.clear();
 			localeUtil.setMessages(nextProps.messages);
 		}
 		if (nextProps.translations !== this.props.translations) {
@@ -95,56 +70,7 @@ class App extends React.Component {
 		}
 	}
 
-	componentWillUnmount() {
-		//this.unsubscribeCount();
-		//this.unsubscribeError();
-		//this.unsubscribeLang();
-		//this.unsubscribeMessage();
-		//this.unsubscribeTranslation();
-	}
-
-	// onCountChange(count) {
-	// 	this.setState({
-	// 		count: count
-	// 	});
-	// }
-
-	// onErrorChange(errors) {
-	// 	this.setState({
-	// 		errors: errors
-	// 	});
-	// }
-
-	/*onLangChange(lang) {
-		this.setState({
-			lang: lang
-		}, function(){
-			this.loadMessages();
-		}.bind(this));
-	}*/
-
-	/*onMessagesChange(messages) {
-		localeUtil.setMessages(messages);
-		ErrorActions.clear();
-		this.setState({
-			messages: messages
-		});
-	}*/
-
-	/*onTranslationsChange(translations) {
-		const { CountActions } = this.props
-		this.setState({
-			errors: [],
-			translations: translations
-		}, function() {
-			//CountActions.countByProject();
-			CountActions.loadCounts();
-		});
-	}*/
-
 	loadMessages(lang) {
-		console.log("loadMessages", lang);
-		//MessageActions.load(this.state.lang || navigator.language || navigator.browserLanguage);
 		this.props.MessageActions.loadMessages(lang || navigator.language || navigator.browserLanguage);
 	}
 
@@ -156,11 +82,7 @@ class App extends React.Component {
 			translations, showeditmodal, editrecord } = this.props
 		const isReady = !($.isEmptyObject(messages))
 		
-		console.log("render:", editrecord);
-		
-		/*if (isReady) {
-			localeUtil.setMessages(messages);
-		}*/
+		console.log("render");
 
 		return (isReady) ? (
 			<div id="wrapper">

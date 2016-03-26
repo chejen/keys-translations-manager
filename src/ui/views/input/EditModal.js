@@ -4,9 +4,6 @@ import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import FormPanel from './FormPanel'
 import AlertPanel from '../input/AlertPanel'
-//import ErrorActions from '../../actions/ErrorActions'
-//import ErrorStore from '../../stores/ErrorStore'
-//import TranslationActions from '../../actions/TranslationActions'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class EditModal extends React.Component {
@@ -30,14 +27,6 @@ export default class EditModal extends React.Component {
 		};
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
-
-	/*componentDidMount() {
-		this.unsubscribe = ErrorStore.listen(this.onErrorChange.bind(this));
-	}
-
-	componentWillUnmount() {
-		this.unsubscribe();
-	}*/
 
 	updateTranslation() {
 		const config = this.context.config,
@@ -73,12 +62,6 @@ export default class EditModal extends React.Component {
 		}
 
 		if ( emptyFields.length > 0 ) {
-			/*ErrorActions.alert([{
-				type: 'emptyfield',
-				action: "u",
-				params: data,
-				match: emptyFields
-			}]);*/
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "u",
@@ -86,35 +69,17 @@ export default class EditModal extends React.Component {
 				match: emptyFields
 			}]);
 		} else {
-			//ErrorActions.clear();
 			this.props.updateTranslation(data);
 		}
 	}
 
-	/*onErrorChange(errors) {
-		this.setState({
-			errors: errors
-		});
-	}*/
-
 	close() {
-		/*this.setState({
-			showModal: false//,
-			//errors: []
-		});*/
 		this.props.closeEditModal()
 	}
-/*
-	open() {
-		this.setState({
-			showModal: true//,
-			//errors: []
-		});
-	}*/
 
 	render() {
 		const { data, errors, clearErrors } = this.props;
-console.log("********", data);
+
 		return (
 			<Modal show={this.props.showeditmodal} onHide={this.close.bind(this)}>
 				<Modal.Header>

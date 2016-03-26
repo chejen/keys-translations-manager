@@ -3,8 +3,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import FormPanel from './FormPanel'
-//import ErrorActions from '../../actions/ErrorActions'
-//import TranslationActions from '../../actions/TranslationActions'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class InputPanel extends React.Component {
@@ -61,12 +59,6 @@ export default class InputPanel extends React.Component {
 		}
 
 		if ( emptyFields.length > 0 ) {
-			/*ErrorActions.alert([{
-				type: 'emptyfield',
-				action: "c",
-				params: data,
-				match: emptyFields
-			}]);*/
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "c",
@@ -74,8 +66,6 @@ export default class InputPanel extends React.Component {
 				match: emptyFields
 			}]);
 		} else {
-			//ErrorActions.clear();
-			//TranslationActions.addTranslation(data);
 			this.props.addTranslation(data);
 		}
 	}

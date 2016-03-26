@@ -5,7 +5,6 @@ import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
-//import ErrorActions from '../../actions/ErrorActions'
 
 export default class AlertPanel extends React.Component {
 	static propTypes = {

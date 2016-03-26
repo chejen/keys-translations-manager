@@ -1,12 +1,13 @@
-import { LOAD_MESSAGES, ALERT_ERRORS, LOAD_COUNTS, CLEAR_ERRORS } from '../constants/ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 
 export default function errors(state = [], action) {
 	switch (action.type) {
-		case ALERT_ERRORS:
+		case ActionTypes.ALERT_ERRORS:
 			return action.errors;
-		case LOAD_MESSAGES:
-		case LOAD_COUNTS:
-		case CLEAR_ERRORS:
+		case ActionTypes.LOAD_MESSAGES:
+		case ActionTypes.LOAD_COUNTS:
+		case ActionTypes.SHOW_EDITMODAL:
+		case ActionTypes.CLEAR_ERRORS:
 			return [];
 		default:
 			return state;
