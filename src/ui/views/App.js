@@ -14,6 +14,7 @@ import Header from './layout/Header'
 import MainPanel from './layout/MainPanel'
 import SideBar from './layout/SideBar'
 import OutputPanel from './output/OutputPanel'
+import EditModal from './input/EditModal'
 //import CountActions from '../actions/CountActions'
 //import CountStore from '../stores/CountStore'
 //import ErrorActions from '../actions/ErrorActions'
@@ -30,6 +31,7 @@ import * as MessageActions from '../actions/messages'
 import * as CountActions from '../actions/counts'
 import * as TranslationActions from '../actions/translations'
 import * as ErrorActions from '../actions/errors'
+import * as ComponentActions from '../actions/components'
 
 class App extends React.Component {
 	static propTypes = {
@@ -38,11 +40,14 @@ class App extends React.Component {
 		counts: React.PropTypes.object.isRequired,
 		errors: React.PropTypes.array.isRequired,
 		translations: React.PropTypes.array.isRequired,
+		showeditmodal: React.PropTypes.bool.isRequired,
+		editrecord: React.PropTypes.object.isRequired,
 
 		MessageActions: React.PropTypes.object.isRequired,
 		CountActions: React.PropTypes.object.isRequired,
 		TranslationActions: React.PropTypes.object.isRequired,
-		ErrorActions: React.PropTypes.object.isRequired
+		ErrorActions: React.PropTypes.object.isRequired,
+		ComponentActions: React.PropTypes.object.isRequired
 	}
 
 	static childContextTypes = {
@@ -144,10 +149,10 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { MessageActions, TranslationActions, ErrorActions, lang, messages, counts, errors, translations } = this.props
+		const { MessageActions, TranslationActions, ErrorActions, ComponentActions, lang, messages, counts, errors, translations, showeditmodal, editrecord } = this.props
 		const isReady = !($.isEmptyObject(messages))
 		
-		console.log("render:", messages);
+		console.log("render:", editrecord);
 		
 		/*if (isReady) {
 			localeUtil.setMessages(messages);
@@ -168,11 +173,17 @@ class App extends React.Component {
 					<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
 					<OutputPanel projectCounts={counts} messages={messages}/>
 					<MainPanel>
-						<GridPanel translations={translations} messages={messages} errors={errors}
+						<EditModal ref="editModal" 
+							data={editrecord} errors={errors}
+							showeditmodal={showeditmodal}
+							closeEditModal={ComponentActions.closeEditModal}
 							updateTranslation={TranslationActions.updateTranslation}
-							removeTranslation={TranslationActions.removeTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
+						<GridPanel translations={translations} messages={messages} 
+							updateTranslation={TranslationActions.updateTranslation}
+							removeTranslation={TranslationActions.removeTranslation}
+							showEditModal={ComponentActions.showEditModal}/>
 					</MainPanel>
 				</div>
 			</div>
@@ -188,7 +199,9 @@ function mapStateToProps(state) {
 		messages: state.messages.messages,
 		counts: state.counts,
 		errors: state.errors,
-		translations: state.translations
+		translations: state.translations,
+		showeditmodal: state.components.showeditmodal,
+		editrecord: state.components.editrecord
 	}
 }
 
@@ -197,7 +210,8 @@ function mapDispatchToProps(dispatch) {
 		MessageActions: bindActionCreators(MessageActions, dispatch),
 		CountActions: bindActionCreators(CountActions, dispatch),
 		TranslationActions: bindActionCreators(TranslationActions, dispatch),
-		ErrorActions: bindActionCreators(ErrorActions, dispatch)
+		ErrorActions: bindActionCreators(ErrorActions, dispatch),
+		ComponentActions: bindActionCreators(ComponentActions, dispatch)
 	}
 }
 

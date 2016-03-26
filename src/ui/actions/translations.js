@@ -18,7 +18,6 @@ export function addTranslation(params) {
 			return res.json();
 		})
 		.then((result) => {
-			console.log("addTranslation-data", result.data);
 			dispatch({
 				type: ActionTypes.ADD_TRANSLATION,
 				data: result.data
@@ -37,7 +36,6 @@ export function loadTranslations() {
 			return res.json();
 		})
 		.then((result) => {
-			console.log("loadTranslations-data", result);
 			dispatch({
 				type: ActionTypes.LOAD_TRANSLATIONS,
 				data: result
@@ -58,7 +56,6 @@ export function removeTranslation(id) {
 			return res.json();
 		})
 		.then((data) => {
-			console.log("removeTranslation-data", data);
 			dispatch({
 				type: ActionTypes.REMOVE_TRANSLATION,
 				id: data.id
@@ -84,7 +81,6 @@ export function updateTranslation(params) {
 			return res.json();
 		})
 		.then((data) => {
-			console.log("updateTranslation-data", data);
 			dispatch({
 				type: ActionTypes.UPDATE_TRANSLATION,
 				data: data

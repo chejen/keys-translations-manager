@@ -15,11 +15,9 @@ export default class GridPanel extends React.Component {
 	static propTypes = {
 		messages: React.PropTypes.object,
 		translations: React.PropTypes.array.isRequired,
-		errors: React.PropTypes.array.isRequired,
 		updateTranslation: React.PropTypes.func.isRequired,
 		removeTranslation: React.PropTypes.func.isRequired,
-		alertErrors: React.PropTypes.func.isRequired,
-		clearErrors: React.PropTypes.func.isRequired
+		showEditModal: React.PropTypes.func.isRequired
 	};
 	static contextTypes = {
 		config: React.PropTypes.object
@@ -110,7 +108,7 @@ export default class GridPanel extends React.Component {
 	render() {
         const h = $(window).height();
         const offset = $(".ag-fresh").offset();
-console.log("this.props.errors-gridpanel", this.props.errors);
+
 		return (
 			<div>
 				<div className="input-group custom-search-form">
@@ -128,13 +126,9 @@ console.log("this.props.errors-gridpanel", this.props.errors);
 					<AgGridReact
 						context={{
 							config: this.context.config,
-							errors: this.props.errors,
-							updateTranslation: this.props.updateTranslation,
-							removeTranslation: this.props.removeTranslation,
-							alertErrors: this.props.alertErrors,
-							clearErrors: this.props.clearErrors
+							showEditModal: this.props.showEditModal,
+							removeTranslation: this.props.removeTranslation
 						}}
-						dummy={this.props.errors}
 						gridOptions={this.gridOptions}
 						quickFilterText={this.state.quickFilterText}
 						icons={this.state.icons}

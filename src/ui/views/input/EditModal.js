@@ -11,6 +11,8 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class EditModal extends React.Component {
 	static propTypes = {
+		showeditmodal: React.PropTypes.bool.isRequired,
+		closeEditModal: React.PropTypes.func.isRequired,
 		data: React.PropTypes.object.isRequired,
 		errors: React.PropTypes.array.isRequired,
 		updateTranslation: React.PropTypes.func.isRequired,
@@ -96,24 +98,25 @@ export default class EditModal extends React.Component {
 	}*/
 
 	close() {
-		this.setState({
+		/*this.setState({
 			showModal: false//,
 			//errors: []
-		});
+		});*/
+		this.props.closeEditModal()
 	}
-
+/*
 	open() {
 		this.setState({
 			showModal: true//,
 			//errors: []
 		});
-	}
+	}*/
 
 	render() {
 		const { data, errors, clearErrors } = this.props;
-		console.log("this.props.errors-editpanel", this.props.errors);
+console.log("********", data);
 		return (
-			<Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+			<Modal show={this.props.showeditmodal} onHide={this.close.bind(this)}>
 				<Modal.Header>
 					<Modal.Title>
 						{localeUtil.getMsg("ui.common.edit")}

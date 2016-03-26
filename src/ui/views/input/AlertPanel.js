@@ -32,7 +32,7 @@ export default class AlertPanel extends React.Component {
 			cmp,
 			i,
 			counter = 0;
-console.log("this.props.errors-alertpanel", this.props.errors);
+
 		for (i=0; i<len; i++) {
 			err = errors[i];
 			if (err.action !== this.props.action) {
