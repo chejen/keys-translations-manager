@@ -18,10 +18,17 @@ export function addTranslation(params) {
 			return res.json();
 		})
 		.then((result) => {
-			dispatch({
-				type: ActionTypes.ADD_TRANSLATION,
-				data: result.data
-			})
+			if (result.success) {
+				dispatch({
+					type: ActionTypes.ADD_TRANSLATION,
+					data: result.data
+				})
+			} else {
+				dispatch({
+					type: ActionTypes.ALERT_ERRORS,
+					errors: result.errors
+				})
+			}
 		})
 	}
 }
@@ -82,10 +89,17 @@ export function updateTranslation(params) {
 			return res.json();
 		})
 		.then((result) => {
-			dispatch({
-				type: ActionTypes.UPDATE_TRANSLATION,
-				data: result.data
-			})
+			if (result.success) {
+				dispatch({
+					type: ActionTypes.UPDATE_TRANSLATION,
+					data: result.data
+				})
+			} else {
+				dispatch({
+					type: ActionTypes.ALERT_ERRORS,
+					errors: result.errors
+				})
+			}
 		})
 	}
 }

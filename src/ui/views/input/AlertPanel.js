@@ -73,7 +73,7 @@ export default class AlertPanel extends React.Component {
 			}
 		}
 
-		cmp = (errMsg.length > 0) ? (<Alert bsStyle="danger" onDismiss={this.handleDismiss}>
+		cmp = (errMsg.length > 0) ? (<Alert bsStyle="danger" onDismiss={this.handleDismiss.bind(this)}>
 				{errMsg.map(function(e){
 					return <p key={counter++}><Glyphicon glyph="alert"/> {e}</p>
 				})}
