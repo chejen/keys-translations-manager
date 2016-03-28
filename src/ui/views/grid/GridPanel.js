@@ -70,7 +70,7 @@ export default class GridPanel extends React.Component {
 				field: locale,
 				editable: true,
 				newValueHandler: function(params) {
-					params.data[this.field] = params.newValue;
+					params.data[params.colDef.field] = params.newValue;
 					me.props.updateTranslation(params.data);
 				}
 			};

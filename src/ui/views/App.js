@@ -60,7 +60,7 @@ class App extends React.Component {
 	componentDidMount() {
 		this.props.TranslationActions.loadTranslations();
 	}
-	
+
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.lang !== this.props.lang) {
 			localeUtil.setMessages(nextProps.messages);
@@ -76,13 +76,11 @@ class App extends React.Component {
 
 	render() {
 		const {
-			MessageActions, TranslationActions, 
-			ErrorActions, ComponentActions, 
-			lang, messages, counts, errors, 
+			MessageActions, TranslationActions,
+			ErrorActions, ComponentActions,
+			lang, messages, counts, errors,
 			translations, showeditmodal, editrecord } = this.props
 		const isReady = !($.isEmptyObject(messages))
-		
-		console.log("render");
 
 		return (isReady) ? (
 			<div id="wrapper">
@@ -90,7 +88,7 @@ class App extends React.Component {
 					<Header/>
 					<DropdownMenu lang={lang} messages={messages} loadMessages={MessageActions.loadMessages}/>
 					<SideBar>
-						<InputPanel messages={messages} 
+						<InputPanel messages={messages}
 							alertErrors={ErrorActions.alertErrors}
 							addTranslation={TranslationActions.addTranslation}/>
 					</SideBar>
@@ -99,14 +97,14 @@ class App extends React.Component {
 					<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
 					<OutputPanel projectCounts={counts} messages={messages}/>
 					<MainPanel>
-						<EditModal ref="editModal" 
+						<EditModal ref="editModal"
 							data={editrecord} errors={errors}
 							showeditmodal={showeditmodal}
 							closeEditModal={ComponentActions.closeEditModal}
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						<GridPanel translations={translations} messages={messages} 
+						<GridPanel translations={translations} messages={messages}
 							updateTranslation={TranslationActions.updateTranslation}
 							removeTranslation={TranslationActions.removeTranslation}
 							showEditModal={ComponentActions.showEditModal}/>

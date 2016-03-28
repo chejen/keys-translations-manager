@@ -63,7 +63,6 @@ export function removeTranslation(id) {
 			return res.json();
 		})
 		.then((data) => {
-			console.log("remove", data);
 			dispatch({
 				type: ActionTypes.REMOVE_TRANSLATION,
 				id: data.id
