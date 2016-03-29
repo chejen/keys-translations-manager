@@ -3,7 +3,7 @@
 var expect = require('chai').expect;
 var localeUtil = require("../../../../packages/keys-translations-manager-core/lib/localeUtil");
 
-describe('localeUtil', function() {
+describe('[utility] localeUtil', function() {
 	describe('getMsg', function() {
 		before(function() {
 			localeUtil.setMessages({

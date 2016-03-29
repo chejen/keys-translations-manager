@@ -1,6 +1,7 @@
 import { SHOW_EDITMODAL, UPDATE_TRANSLATION, CLOSE_EDITMODAL } from '../constants/ActionTypes'
+import { INIT_COMPONENTS } from '../constants/InitStates'
 
-export default function components(state = {showeditmodal:false, editrecord:{}}, action) {
+export default function components(state = INIT_COMPONENTS, action) {
 	switch (action.type) {
 		case SHOW_EDITMODAL:
 			return {

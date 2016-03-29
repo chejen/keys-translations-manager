@@ -6,7 +6,7 @@ var chai = require('chai').use(sinonChai);
 var expect = chai.expect;
 var logUtil = require("../../../../packages/keys-translations-manager-core/lib/logUtil");
 
-describe('logUtil', function() {
+describe('[utility] logUtil', function() {
 	describe('log', function() {
 		beforeEach(function() {
 			sinon.spy(console, 'log');

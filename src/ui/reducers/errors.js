@@ -1,6 +1,7 @@
 import * as ActionTypes from '../constants/ActionTypes'
+import {INIT_ERRORS} from '../constants/InitStates'
 
-export default function errors(state = [], action) {
+export default function errors(state = INIT_ERRORS, action) {
 	switch (action.type) {
 		case ActionTypes.ALERT_ERRORS:
 			return action.errors;

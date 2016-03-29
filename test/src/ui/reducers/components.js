@@ -1,7 +1,8 @@
 'use strict';
 
-import {expect} from 'chai';
-import reducer from '../../../../src/ui/reducers/components';
+import {expect} from 'chai'
+import {INIT_COMPONENTS} from '../../../../src/ui/constants/InitStates'
+import reducer from '../../../../src/ui/reducers/components'
 
 const record = {
 	"_id": "56e6509a7267ce4016109550",
@@ -15,15 +16,12 @@ describe('(reducer) components', function() {
 	it('should return the initial state', () => {
 		expect(
 			reducer(undefined, {})
-		).to.deep.equal({
-			showeditmodal: false,
-			editrecord: {}
-		})
+		).to.deep.equal(INIT_COMPONENTS)
 	})
 
 	it('should handle SHOW_EDITMODAL', () => {
 		expect(
-			reducer(undefined, {
+			reducer(INIT_COMPONENTS, {
 				type: 'SHOW_EDITMODAL',
 				record: {}
 			})
@@ -40,7 +38,7 @@ describe('(reducer) components', function() {
 			.that.is.an('object')
 			.to.contain.all.keys('_id', 'key', 'project');
 	})
-	
+
 	it('should handle CLOSE_EDITMODAL', () => {
 		expect(
 			reducer({

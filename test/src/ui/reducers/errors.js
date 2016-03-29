@@ -1,11 +1,12 @@
 'use strict';
 
-import {expect} from 'chai';
-import reducer from '../../../../src/ui/reducers/errors';
+import {expect} from 'chai'
+import {INIT_ERRORS} from '../../../../src/ui/constants/InitStates'
+import reducer from '../../../../src/ui/reducers/errors'
 
 const errors = [{
 	action: "c",
-	key: "ui.grid.edit",
+	key: "ui.common.add",
 	match: ["p1"],
 	origin: null,
 	params: {
@@ -21,27 +22,31 @@ describe('(reducer) errors', function() {
 	it('should return the initial state', () => {
 		expect(
 			reducer(undefined, {})
-		)
-		.to.be.instanceof(Array)
-		.to.have.lengthOf(0);
+		).to.deep.equal(INIT_ERRORS);
 	})
 
 	it('should handle ALERT_ERRORS', () => {
 		expect(
-			reducer([], {
+			reducer(INIT_ERRORS, {
 				type: 'ALERT_ERRORS',
 				errors
 			})
-		).to.be.an('array')
+		)
+		.to.be.an('array')
+		.to.have.length.above(0)
+		.to.have.deep.property('[0].action')
+			.that.is.an('string')
+			.to.be.oneOf(['c', 'u']);
 
-		/*expect(
-			reducer(undefined, {
-				type: 'SHOW_EDITMODAL',
-				record: record
+		expect(
+			reducer(INIT_ERRORS, {
+				type: 'ALERT_ERRORS',
+				errors
 			})
-		).to.have.property('editrecord')
-			.that.is.an('object')
-			.to.contain.all.keys('_id', 'key', 'project');*/
+		)
+		.to.have.deep.property('[0].type')
+			.that.is.an('string')
+			.to.be.oneOf(["emptyfield", "equals", "belongsTo", "contains"]);
 	})
 
 	it('should handle CLEAR_ERRORS', () => {

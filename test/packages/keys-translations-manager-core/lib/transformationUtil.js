@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var transformationUtil = require("../../../../packages/keys-translations-manager-core/lib/transformationUtil");
 var data;
 
-describe('transformationUtil', function() {
+describe('[utility] transformationUtil', function() {
 	describe('properties2Json', function() {
 		before(function() {
 			data = [
