@@ -2,7 +2,6 @@
 
 import {expect} from 'chai'
 import * as ComponentActions from '../../../../src/ui/actions/components'
-import * as ActionTypes from '../../../../src/ui/constants/ActionTypes'
 
 const record = {
 	"_id": "56e6509a7267ce4016109550",
