@@ -35,19 +35,19 @@ export function addTranslation(params) {
 
 export function loadTranslations() {
 	return dispatch => {
-		fetch(configUtil.getHost() + '/api/translation')
-		.then(res => {
-			if (res.status >= 400) {
-				throw new Error(res.status + ", " + res.statusText);
-			}
-			return res.json();
-		})
-		.then((result) => {
-			dispatch({
-				type: ActionTypes.LOAD_TRANSLATIONS,
-				data: result
+		return fetch(configUtil.getHost() + '/api/translation')
+			.then(res => {
+				if (res.status >= 400) {
+					throw new Error(res.status + ", " + res.statusText);
+				}
+				return res.json();
 			})
-		})
+			.then((result) => {
+				dispatch({
+					type: ActionTypes.LOAD_TRANSLATIONS,
+					data: result
+				})
+			})
 	}
 }
 

@@ -1,6 +1,7 @@
 import * as ActionTypes from '../constants/ActionTypes'
+import { INIT_TRANSLATIONS } from '../constants/InitStates'
 
-export default function translations(state = [], action) {
+export default function translations(state = INIT_TRANSLATIONS, action) {
 	const getIndex = function(id) {
 		return state.map(function(e){
 			return e._id;
