@@ -4,3 +4,7 @@ export const INIT_COMPONENTS = {
 };
 export const INIT_COUNTS = {};
 export const INIT_ERRORS = [];
+export const INIT_MESSAGES = {
+	lang: '',
+	messages: {}
+};
