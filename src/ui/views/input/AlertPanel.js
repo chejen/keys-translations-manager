@@ -1,4 +1,4 @@
-import '../../app.less';
+//import '../../app.less';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Alert from 'react-bootstrap/lib/Alert'

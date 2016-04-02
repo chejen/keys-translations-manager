@@ -19,7 +19,9 @@
 		"ktm": "ktm en-US zh-TW -p p1 -t json",
 		"dev": "cross-env NODE_ENV=development nodemon --ignore public/ --ignore src/ui/ ./Server.js",
 		"start": "cross-env NODE_ENV=production node ./Server.js",
-		"build": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
+		"build": "npm run build:js && npm run build:css",
+		"build:js": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
+		"build:css": "lessc src/ui/app.less public/css/app.css && cleancss public/css/app.css -o public/css/app.css",
 		"test": "mocha -R spec --compilers js:babel-core/register test/**/*.js",
 		"test:watch": "npm test -- --watch",
 		"posttest": "babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha test/**/*.js --report lcovonly -- -R spec && codecov"
@@ -60,6 +62,7 @@
 		"babel-preset-react-hmre": "1.1.1",
 		"babel-preset-stage-0": "6.5.0",
 		"chai": "3.5.0",
+		"clean-css": "3.4.11",
 		"codecov": "1.0.1",
 		"cross-env": "1.0.7",
 		"css-loader": "0.23.1",

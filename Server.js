@@ -48,6 +48,7 @@ if (process.env.NODE_ENV === 'production') {
 		noInfo: true,
 		publicPath: webpackConfig.output.publicPath
 	})).use(require('webpack-hot-middleware')(compiler));
+	app.use('/public/css', express.static(path.join(__dirname, 'public/css')));
 	app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
 	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
 }

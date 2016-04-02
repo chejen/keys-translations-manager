@@ -1,4 +1,4 @@
-import '../app.less'
+//import '../app.less'
 import ES6Promise from 'es6-promise'
 ES6Promise.polyfill();
 import 'isomorphic-fetch'
