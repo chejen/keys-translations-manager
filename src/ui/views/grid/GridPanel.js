@@ -1,5 +1,5 @@
-import 'ag-grid/dist/styles/ag-grid.css'
-import 'ag-grid/dist/styles/theme-fresh.css'
+// import 'ag-grid/dist/styles/ag-grid.css'
+// import 'ag-grid/dist/styles/theme-fresh.css'
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {AgGridReact} from 'ag-grid-react/lib/agGridReact'

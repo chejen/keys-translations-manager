@@ -34,10 +34,10 @@ var config = {
 		loaders: [{
 			test: /\.jsx?$/,
 			loaders: ['babel', WebpackStrip.loader('console.log', 'console.warn')]
-		}, {
+		}/*, {
 			test: /\.(css|less)$/,
 			loader: 'style!css!less'
-		}/*, {
+		}, {
 			test: /\.(png|jpg|gif|ttf|woff|woff2)$/,
 			loader: 'url?limit=25000'
 		}*/]

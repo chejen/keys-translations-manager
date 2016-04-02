@@ -52,6 +52,7 @@ if (process.env.NODE_ENV === 'production') {
 	app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
 	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
 }
+app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api/translation", TranslationController);

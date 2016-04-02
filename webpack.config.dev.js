@@ -32,9 +32,9 @@ module.exports = {
 			test: /\.jsx?$/,
 			loaders: ['babel'],
 			include: dir.src
-		}, {
+		}/*, {
 			test: /\.(css|less)$/,
 			loader: 'style!css!less'
-		}]
+		}*/]
 	}
 };
