@@ -4,7 +4,9 @@ import rootReducer from '../reducers'
 
 const createStoreWithMiddleware = compose(
 		applyMiddleware(thunk),
-		window.devToolsExtension ? window.devToolsExtension() : f => f
+		(typeof window !== "undefined" && window.devToolsExtension)
+			? window.devToolsExtension()
+			: f => f
 )(createStore)
 
 export default function configureStore(initialState) {

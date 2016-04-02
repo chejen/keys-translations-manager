@@ -22,6 +22,7 @@ import * as CountActions from '../actions/counts'
 import * as TranslationActions from '../actions/translations'
 import * as ErrorActions from '../actions/errors'
 import * as ComponentActions from '../actions/components'
+const languages = ["en-US", "zh-TW"]
 
 class App extends React.Component {
 	static propTypes = {
@@ -71,7 +72,9 @@ class App extends React.Component {
 	}
 
 	loadMessages(lang) {
-		this.props.MessageActions.loadMessages(lang || navigator.language || navigator.browserLanguage);
+		lang = lang || navigator.language || navigator.browserLanguage;
+		lang = (languages.indexOf(lang) === -1) ? "en-US" : lang;
+		this.props.MessageActions.loadMessages(lang);
 	}
 
 	render() {
@@ -80,9 +83,8 @@ class App extends React.Component {
 			ErrorActions, ComponentActions,
 			lang, messages, counts, errors,
 			translations, showeditmodal, editrecord } = this.props
-		const isReady = !($.isEmptyObject(messages))
 
-		return (isReady) ? (
+		return (lang) ? (
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
