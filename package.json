@@ -1,6 +1,6 @@
 {
 	"name": "keys-translations-manager",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"private": true,
 	"description": "A web application for locale's keys and translations management.",
 	"keywords": [
@@ -16,7 +16,6 @@
 	],
 	"author": "chejen",
 	"scripts": {
-		"ktm": "ktm en-US zh-TW -p p1 -t json",
 		"dev": "cross-env NODE_ENV=development nodemon --ignore public/ --ignore src/ui/ ./Server.js",
 		"start": "cross-env NODE_ENV=production node ./Server.js",
 		"build": "npm run build:css && npm run build:js",
@@ -42,6 +41,7 @@
 		"es6-promise": "3.1.2",
 		"express": "4.13.4",
 		"isomorphic-fetch": "2.2.1",
+		"keys-translations-manager-core": "0.1.0",
 		"mongoose": "4.4.10",
 		"react": "0.14.8",
 		"react-addons-pure-render-mixin": "0.14.8",

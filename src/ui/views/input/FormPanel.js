@@ -1,4 +1,3 @@
-//import '../../app.less';
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'

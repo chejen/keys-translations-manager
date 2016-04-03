@@ -17,6 +17,7 @@
   "license": "MIT",
   "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
   "dependencies": {
+    "keys-translations-manager-core": "0.1.0",
     "yargs": "~4.3.2",
     "node-fs": "~0.1.7",
     "mongoose": "~4.4.10"

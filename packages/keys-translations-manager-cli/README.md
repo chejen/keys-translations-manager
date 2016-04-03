@@ -1,9 +1,17 @@
+[![NPM License][npm-license-image]][npm-license-url]
+[![NPM Version][npm-version-image]][npm-version-url]
+
+[npm-license-image]: https://img.shields.io/npm/l/keys-translations-manager-cli.svg
+[npm-license-url]: https://www.npmjs.com/package/keys-translations-manager-cli
+[npm-version-image]: https://img.shields.io/npm/v/keys-translations-manager-cli.svg
+[npm-version-url]: https://www.npmjs.com/package/keys-translations-manager-cli
+
 # keys-translations-manager-cli
 > It's a cli tool that helps you download locales managed by [keys-translations-manager](https://github.com/chejen/keys-translations-manager).
 
 
 ## Installation
-it's recommended to install cli locally by your project.
+It's recommended to install cli locally by your project.
 ```sh
 $ npm install --save-dev keys-translations-manager-cli
 ```
@@ -13,11 +21,11 @@ Add `.ktmrc` to your project:
 
 ```json
 {
-	"database": "mongodb://localhost:27017/translationdb",
-	"output": {
-		"filename": "translation",
-		"path": "./public/locale/${locale}"
-	}
+  "database": "mongodb://localhost:27017/translationdb",
+  "output": {
+    "filename": "translation",
+    "path": "./public/locale/${locale}"
+  }
 }
 ```
 * `${locale}` can be a placeholder for both **filename** and **path**.
@@ -40,14 +48,14 @@ ktm [locale1 (, locale2, ...)] -t [json | properties] -p [project ID]
 
 
 ## Example
-> Note that these instructions assume that you have cli installed locally.
+> Note that these instructions assume that you have the cli installed **locally**.
 
-1. Add `ktm` script to package.json's "scripts" property.
+Add `ktm` script to package.json's "scripts" property.
 ```js
 "scripts": {
-	"ktm": "ktm en-US zh-TW -p p1 -t json --format"
+  "ktm": "ktm en-US zh-TW -p p1 -t json --format"
 }
 ```
-2. Execute `npm run ktm`, and we will get outputs like these:
+Execute `npm run ktm`, and we will get outputs like these:
 * public/locale/en-US/translation.json
 * public/locale/zh-TW/translation.json
