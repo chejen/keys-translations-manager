@@ -1,8 +1,9 @@
-//import index from './src/ui/index.server'
 import bodyParser from 'body-parser'
 import express from 'express'
+import favicon from 'serve-favicon'
 import mongoose from 'mongoose'
 import path from 'path'
+import compression from 'compression'
 import webpack from 'webpack'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
 import config from './ktm.config'
@@ -38,6 +39,7 @@ app.listen(config.server.port, config.server.hostname, function(err) {
 });
 
 app.set('view engine', 'ejs');
+app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
 if (process.env.NODE_ENV === 'production') {
 	app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -64,7 +66,7 @@ if (process.env.NODE_ENV === 'production') {
 	app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
 	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
 	app.get('/', function(req, res) {
-		const markup = ['<div class="app-default">',
+		const markup = ['<div style="color:orange;text-align:center">',
 							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
 						'</div>'].join("")
 		const css = ''
@@ -74,12 +76,11 @@ if (process.env.NODE_ENV === 'production') {
 		})
 	});
 }
-app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
+
+app.use(compression());
+app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api/translation", TranslationController);
 app.use("/api/count", CountController);
 app.use("/api/download", DownloadController);
-// app.get('/', function(req, res) {
-// 	res.sendFile(path.join(__dirname, 'index.html'));
-// });
