@@ -19,7 +19,13 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin()
+		new webpack.NoErrorsPlugin(),
+		new webpack.DefinePlugin({
+			'process.env': {
+				'NODE_ENV': JSON.stringify('development'),
+				'CLIENT_SIDE': true
+			}
+		})
 	],
 	devtool: 'cheap-module-eval-source-map',
 	module: {
@@ -32,9 +38,9 @@ module.exports = {
 			test: /\.jsx?$/,
 			loaders: ['babel'],
 			include: dir.src
-		}/*, {
+		}, {
 			test: /\.(css|less)$/,
 			loader: 'style!css!less'
-		}*/]
+		}]
 	}
 };
