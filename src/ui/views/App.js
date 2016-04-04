@@ -5,7 +5,7 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-// import GridPanel from './grid/GridPanel'
+import GridPanel from './grid/GridPanel'
 import AlertPanel from './input/AlertPanel'
 import InputPanel from './input/InputPanel'
 import DropdownMenu from './layout/DropdownMenu'
@@ -85,7 +85,7 @@ class App extends React.Component {
 			MessageActions, TranslationActions,
 			ErrorActions, ComponentActions,
 			lang, messages, counts, errors,
-			showeditmodal, editrecord } = this.props
+			translations, showeditmodal, editrecord } = this.props
 
 		return (lang) ? (
 			<div id="wrapper">
@@ -109,6 +109,10 @@ class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
+						<GridPanel translations={translations} messages={messages}
+							updateTranslation={TranslationActions.updateTranslation}
+							removeTranslation={TranslationActions.removeTranslation}
+							showEditModal={ComponentActions.showEditModal}/>
 					</MainPanel>
 				</div>
 			</div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-import App from './views/App'
+import App from './views/App.server'
 import configureStore from './store/configureStore'
 
 global.navigator = global.navigator || {};
