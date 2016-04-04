@@ -30,7 +30,7 @@
 		"url": "https://github.com/chejen/keys-translations-manager"
 	},
 	"engines": {
-		"node": ">=4"
+		"node": ">=5"
 	},
 	"dependencies": {
 		"ag-grid": "4.0.5",
