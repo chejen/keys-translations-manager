@@ -8,7 +8,7 @@ var dir = {
 
 var config = {
 	entry: {
-		bundle: path.join(dir.src, 'ui', 'index')
+		bundle: path.join(dir.src, 'ui', 'index.client')
 	},
 	output: {
 		path: dir.dist,
