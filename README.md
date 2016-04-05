@@ -1,9 +1,12 @@
-[![NPM License][npm-license-image]][npm-license-url]
+[![MIT Licensed][license-image]][license-url]
+[![Dependency Status][dependency-image]][dependency-url]
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][codecov-image]][codecov-url]
 
-[npm-license-image]: https://img.shields.io/npm/l/keys-translations-manager.svg
-[npm-license-url]: https://www.npmjs.com/package/keys-translations-manager
+[license-image]: https://img.shields.io/badge/license-MIT-blue.svg
+[license-url]: https://github.com/chejen/keys-translations-manager/blob/master/LICENSE
+[dependency-image]: https://david-dm.org/chejen/keys-translations-manager.svg
+[dependency-url]: https://david-dm.org/yannickcr/keys-translations-manager
 [travis-image]: https://img.shields.io/travis/chejen/keys-translations-manager.svg
 [travis-url]: https://travis-ci.org/chejen/keys-translations-manager
 [codecov-image]: https://codecov.io/github/chejen/keys-translations-manager/coverage.svg?branch=master

@@ -19,7 +19,7 @@
 		"dev": "cross-env NODE_ENV=development nodemon --exec babel-node --ignore public/ --ignore src/ui/ -- ./Server.js",
 		"start": "cross-env NODE_ENV=production babel-node ./Server.js",
 		"build": "npm run build:css && npm run build:js",
-		"build:css": "lessc src/ui/app.less public/css/app.css && cleancss public/css/app.css -o public/css/app.css",
+		"build:css": "lessc less/app.less public/css/app.css && cleancss public/css/app.css -o public/css/app.css",
 		"build:js": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
 		"test": "mocha -R spec --compilers js:babel-core/register test/**/*.js",
 		"test:watch": "npm test -- --watch",
