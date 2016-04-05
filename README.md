@@ -1,3 +1,15 @@
+[![NPM License][npm-license-image]][npm-license-url]
+[![Build Status][travis-image]][travis-url]
+[![Coverage Status][codecov-image]][codecov-url]
+
+[npm-license-image]: https://img.shields.io/npm/l/keys-translations-manager.svg
+[npm-license-url]: https://www.npmjs.com/package/keys-translations-manager
+[travis-image]: https://img.shields.io/travis/chejen/keys-translations-manager.svg
+[travis-url]: https://travis-ci.org/chejen/keys-translations-manager
+[codecov-image]: https://codecov.io/github/chejen/keys-translations-manager/coverage.svg?branch=master
+[codecov-url]: https://codecov.io/github/chejen/keys-translations-manager?branch=master
+
+
 # Keys-Translations Manager
 > This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their related translations. Also, you can download final locale files (either *.json or *.properties) through this application.
 

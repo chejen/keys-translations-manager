@@ -23,9 +23,9 @@ import * as ErrorActions from '../actions/errors'
 import * as ComponentActions from '../actions/components'
 const languages = ["en-US", "zh-TW"]
 
-if (process.env.NODE_ENV === 'development') {
-	require('../app.less');
-}
+// if (process.env.NODE_ENV === 'development') {
+// 	require('../app.less');
+// }
 
 class App extends React.Component {
 	static propTypes = {

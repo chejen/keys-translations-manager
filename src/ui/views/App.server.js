@@ -5,7 +5,7 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-// import GridPanel from './grid/GridPanel'
+// import GridPanel from './grid/GridPanel' // So far, author has no intention to support SSR for ag-grid
 import AlertPanel from './input/AlertPanel'
 import InputPanel from './input/InputPanel'
 import DropdownMenu from './layout/DropdownMenu'
@@ -22,10 +22,6 @@ import * as TranslationActions from '../actions/translations'
 import * as ErrorActions from '../actions/errors'
 import * as ComponentActions from '../actions/components'
 const languages = ["en-US", "zh-TW"]
-
-// if (process.env.NODE_ENV === 'development') {
-// 	require('../app.less');
-// }
 
 class App extends React.Component {
 	static propTypes = {

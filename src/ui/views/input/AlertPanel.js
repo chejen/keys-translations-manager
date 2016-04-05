@@ -5,10 +5,6 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
 
-if (process.env.NODE_ENV === 'development') {
-	require('../../app.less');
-}
-
 export default class AlertPanel extends React.Component {
 	static propTypes = {
 		clearErrors: React.PropTypes.func.isRequired,

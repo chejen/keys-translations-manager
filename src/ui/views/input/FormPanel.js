@@ -4,9 +4,9 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Input from 'react-bootstrap/lib/Input'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-if (process.env.NODE_ENV === 'development') {
-	require('../../app.less');
-}
+// if (process.env.NODE_ENV === 'development') {
+// 	require('../../app.less');
+// }
 
 export default class FormPanel extends React.Component {
 	static propTypes = {
