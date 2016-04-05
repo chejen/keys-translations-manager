@@ -1,8 +1,7 @@
 'use strict';
+import transformationUtil from "../../../../packages/keys-translations-manager-core/lib/transformationUtil"
 
-var expect = require('chai').expect;
-var transformationUtil = require("../../../../packages/keys-translations-manager-core/lib/transformationUtil");
-var data;
+let data
 
 describe('[utility] transformationUtil', function() {
 	describe('properties2Json', function() {

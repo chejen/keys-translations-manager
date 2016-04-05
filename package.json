@@ -21,7 +21,7 @@
 		"build": "npm run build:css && npm run build:js",
 		"build:css": "lessc less/app.less public/css/app.css && cleancss public/css/app.css -o public/css/app.css",
 		"build:js": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
-		"test": "mocha -R spec --compilers js:babel-core/register test/**/*.js",
+		"test": "mocha -R spec --compilers js:babel-core/register  --require ./test/testHelper.js test/**/*.js",
 		"test:watch": "npm test -- --watch",
 		"posttest": "babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha test/**/*.js --report lcovonly -- -R spec && codecov"
 	},

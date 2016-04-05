@@ -1,6 +1,4 @@
 'use strict';
-
-import {expect} from 'chai'
 import * as actions from '../../../../src/ui/actions/components'
 
 const record = {

@@ -1,6 +1,4 @@
 'use strict';
-
-import {expect} from 'chai'
 import {INIT_COMPONENTS} from '../../../../src/ui/constants/InitStates'
 import reducer from '../../../../src/ui/reducers/components'
 

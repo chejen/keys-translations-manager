@@ -1,7 +1,5 @@
 'use strict';
-
-var expect = require('chai').expect;
-var localeUtil = require("../../../../packages/keys-translations-manager-core/lib/localeUtil");
+import localeUtil from "../../../../packages/keys-translations-manager-core/lib/localeUtil"
 
 describe('[utility] localeUtil', function() {
 	describe('getMsg', function() {

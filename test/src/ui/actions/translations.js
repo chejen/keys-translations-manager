@@ -1,18 +1,7 @@
 'use strict';
-
-import ES6Promise from 'es6-promise'
-ES6Promise.polyfill();
-import 'isomorphic-fetch'
-import {expect} from 'chai'
-import configureStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import nock from 'nock'
-import configUtil from '../../../../src/ui/configUtil'
 import * as actions from '../../../../src/ui/actions/translations'
 import { INIT_TRANSLATIONS } from '../../../../src/ui/constants/InitStates'
 
-const middlewares = [thunk]
-const mockStore = configureStore(middlewares)
 const translations = [{
 	"_id": "56d7037a0b70e760104ddf10",
 	"en-US": "Edit",
