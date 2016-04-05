@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import container from './container/container'
-import AppComponent from './views/App.client'
-import configureStore from './store/configureStore'
+import container from '../ui/container/container'
+import AppComponent from './App'
+import configureStore from '../ui/store/configureStore'
 const App = container(AppComponent)
+
 if (process.env.NODE_ENV === 'development') {
 	require('../../less/app.less');
 }

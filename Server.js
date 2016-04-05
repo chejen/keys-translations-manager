@@ -45,7 +45,7 @@ if (process.env.NODE_ENV === 'production') {
 	app.use('/public', express.static(path.join(__dirname, 'public')));
 
 	app.get('/', function(req, res) {
-		const markup = require('./src/ui/index.server').default
+		const markup = require('./src/server/index').default
 		const css = '<link rel="stylesheet" href="/public/css/app.css">'
 		res.render('index', {
 			markup: markup,
