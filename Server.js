@@ -7,9 +7,9 @@ import compression from 'compression'
 import webpack from 'webpack'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
 import config from './ktm.config'
-import TranslationController from './src/api/controllers/TranslationController'
-import CountController from './src/api/controllers/CountController'
-import DownloadController from './src/api/controllers/DownloadController'
+import TranslationController from './src/controllers/TranslationController'
+import CountController from './src/controllers/CountController'
+import DownloadController from './src/controllers/DownloadController'
 let log = logUtil.log,
 	app = express(),
 	webpackConfig,

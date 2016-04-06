@@ -16,14 +16,14 @@
 	],
 	"author": "chejen",
 	"scripts": {
-		"dev": "cross-env NODE_ENV=development nodemon --exec babel-node --ignore public/ --ignore src/ui/ -- ./Server.js",
+		"dev": "cross-env NODE_ENV=development nodemon --exec babel-node -- ./Server.js",
 		"start": "cross-env NODE_ENV=production babel-node ./Server.js",
 		"build": "npm run build:css && npm run build:js",
 		"build:css": "lessc less/app.less public/css/app.css && cleancss public/css/app.css -o public/css/app.css",
 		"build:js": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
-		"test": "mocha -R spec --compilers js:babel-core/register  --require ./test/testHelper.js test/**/*.js",
+		"test": "mocha -R spec --compilers js:babel-core/register  --require ./tests/testHelper.js tests/**/*.js",
 		"test:watch": "npm test -- --watch",
-		"posttest": "babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha test/**/*.js --report lcovonly -- -R spec && codecov"
+		"posttest": "babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha tests/**/*.js --report lcovonly -- -R spec && codecov"
 	},
 	"repository": {
 		"type": "git",

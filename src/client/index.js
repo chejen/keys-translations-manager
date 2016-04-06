@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import container from '../ui/container/container'
+import container from '../container/container'
 import AppComponent from './App'
-import configureStore from '../ui/store/configureStore'
+import configureStore from '../store/configureStore'
 const App = container(AppComponent)
 
 if (process.env.NODE_ENV === 'development') {

@@ -1,0 +1,13 @@
+{
+	"verbose": true,
+	"ignore": [
+		"public/",
+		"src/client/",
+		"src/components/",
+		"src/constants/",
+		"src/reducers/",
+		"src/server/",
+		"src/store/",
+		"tests/"
+	]
+}
