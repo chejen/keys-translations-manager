@@ -30,13 +30,17 @@ export default class DropdownMenu extends React.Component {
 					</a>
 					<ul className="dropdown-menu dropdown-user">
 						<li><a href="#" onClick={(event) => {
-								event.preventDefault();
+								if (event) {
+									event.preventDefault();
+								}
 								this.loadMessages("en-US");
 							}}>
 							<i className="fa fa-language fa-fw"/> English (en-US)
 						</a></li>
 						<li><a href="#" onClick={(event) => {
-								event.preventDefault();
+								if (event) {
+									event.preventDefault();
+								}
 								this.loadMessages("zh-TW");
 							}}>
 							<i className="fa fa-language fa-fw"/> 繁體中文 (zh-TW)
