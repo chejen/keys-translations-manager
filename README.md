@@ -6,7 +6,7 @@
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-url]: https://github.com/chejen/keys-translations-manager/blob/master/LICENSE
 [dependency-image]: https://david-dm.org/chejen/keys-translations-manager.svg
-[dependency-url]: https://david-dm.org/yannickcr/keys-translations-manager
+[dependency-url]: https://david-dm.org/chejen/keys-translations-manager
 [travis-image]: https://img.shields.io/travis/chejen/keys-translations-manager.svg
 [travis-url]: https://travis-ci.org/chejen/keys-translations-manager
 [codecov-image]: https://codecov.io/github/chejen/keys-translations-manager/coverage.svg?branch=master
