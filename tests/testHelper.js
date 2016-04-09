@@ -11,7 +11,7 @@ import nock from 'nock'
 import thunk from 'redux-thunk'
 import config from '../ktm.config'
 import configUtil from '../src/configUtil'
-import { shallow, mount } from 'enzyme'
+import { shallow, mount, render } from 'enzyme'
 
 // const doc = jsdom.jsdom('<!doctype html><html><body></body></html>')
 // const win = doc.defaultView
@@ -30,4 +30,5 @@ global.config = config
 global.configUtil = configUtil
 global.mockStore = mockStore
 global.shallow = shallow
-global.mount = mount
+// global.mount = mount
+global.render = render

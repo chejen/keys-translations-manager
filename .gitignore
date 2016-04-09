@@ -1,5 +1,8 @@
 coverage
 logs
 node_modules
+app.css
+bundle.js
+*.map
 *.bat
 *.log
