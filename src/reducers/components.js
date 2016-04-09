@@ -12,7 +12,7 @@ export default function components(state = INIT_COMPONENTS, action) {
 		case CLOSE_EDITMODAL:
 			return {
 				showeditmodal: false,
-				editrecord: {}
+				editrecord: state.editrecord
 			};
 		default:
 			return state;

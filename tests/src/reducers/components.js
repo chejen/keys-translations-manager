@@ -40,11 +40,10 @@ describe('(reducer) components', function() {
 	it('should handle CLOSE_EDITMODAL', () => {
 		expect(
 			reducer({
-				type: 'SHOW_EDITMODAL',
-				record: record
+				showeditmodal: true,
+				editrecord: record
 			}, {
-				type: 'CLOSE_EDITMODAL',
-				record: {}
+				type: 'CLOSE_EDITMODAL'
 			})
 		).to.be.an('object')
 		.to.have.property('showeditmodal')
@@ -52,14 +51,13 @@ describe('(reducer) components', function() {
 
 		expect(
 			reducer({
-				type: 'SHOW_EDITMODAL',
-				record: record
+				showeditmodal: true,
+				editrecord: record
 			}, {
-				type: 'CLOSE_EDITMODAL',
-				record: {}
+				type: 'CLOSE_EDITMODAL'
 			})
 		).to.have.property('editrecord')
 			.that.is.an('object')
-			.to.be.empty;
+			.to.deep.equal(record);
 	})
 });
