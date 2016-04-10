@@ -45,8 +45,15 @@ while(parts.length) {
 	parts.pop();
 };
 if (!cfg) {
-	log('error', `Found no ${runcom} config`);
-	process.exit(1);
+	f = path.join(process.env.HOME || process.env.USERPROFILE, runcom);
+	if (fs.existsSync(f)) {
+		log('info', `Found config at ${f}`);
+		content = fs.readFileSync(f, "utf8");
+		cfg = JSON.parse(content);
+	} else {
+		log('error', `Found no ${runcom} config`);
+		process.exit(1);
+	}
 }
 
 mongoose.connect(cfg.database, function(err) {
@@ -87,7 +94,7 @@ mongoose.connect(cfg.database, function(err) {
 			var outputType = argv.format ? 'f' : '',
 				fileType = argv.t || argv.type,
 				project = argv.p || argv.project,
-				filePath = path.join(loc, cfg.output.path.replace("${locale}", locale)),
+				filePath = cfg.output.path.replace("${locale}", locale),
 				file = path.join(filePath, cfg.output.filename.replace("${locale}", locale) + `.${fileType}`),
 				query,
 				criteria = {
