@@ -7,12 +7,12 @@ var getUniqueElements = function(ary) {
 			return o.hasOwnProperty(e) ? false : (o[e] = true);
 		});
 	},
-	getDiffElements = function(ary1, ary2) {
+	/*getDiffElements = function(ary1, ary2) {
 		return ary2.filter(function(i){
 			return ary1.indexOf(i) < 0;
 		});
-	},
-	validateCreation = function(data, origin, res, callback) {
+	},*/
+	validate = function(data, origin, res, action, callback) {
 		var key = data.key,
 			segment = key.split("."),
 			lenSegment = segment.length,
@@ -43,8 +43,16 @@ var getUniqueElements = function(ary) {
 					match = [],
 					isMatch = false;
 
-				while(len--) {
-					ary = getUniqueElements( ary.concat(translations[len].project) );
+				if (action === "c") { // create
+					while(len--) {
+						ary = getUniqueElements( ary.concat(translations[len].project) );
+					}
+				} else { // update
+					while(len--) {
+						if (data._id != translations[len]._id) {
+							ary = getUniqueElements( ary.concat(translations[len].project) );
+						}
+					}
 				}
 
 				if (ary.length > 0) {
@@ -69,7 +77,7 @@ var getUniqueElements = function(ary) {
 					errors.push({
 						key: tester.replace( /\\\./gm , "."),
 						type: type,
-						action: "c",
+						action: action,
 						origin: origin,
 						params: data,
 						match: match
@@ -86,69 +94,6 @@ var getUniqueElements = function(ary) {
 			);
 
 		}
-	},
-	validateUpdate = function(data, origin, res, callback) {
-		var key = data.key,
-			lenProject,
-			count = 0,
-			errors = [],
-			tester = "",
-			query,
-			diffProject;
-
-		diffProject = getDiffElements(origin.project, data.project);
-		lenProject = diffProject.length;
-
-		if (lenProject) {
-			for (var i=0; i<lenProject; i++) {
-				tester = key;
-				query = { 'key': tester, 'project': diffProject[i] };
-
-				Translations.find(query, function(err, translations) {
-					if (err) res.status(500).send(err);
-
-					var tester = this.tester,
-						len = translations.length,
-						ary = [], // projects where the tester already exists
-						p = data.project,
-						l,
-						idx,
-						type,
-						match = [],
-						isMatch = false;
-
-					while(len--) {
-						if (data._id != translations[len]._id) { // !== causes mismatch
-							match.push(diffProject[this.iterator]);
-						}
-					}
-
-					if (match.length > 0) {
-						type = "equals";
-
-						errors.push({
-							key: tester,
-							action: "u",
-							type: type,
-							origin: origin,
-							params: data,
-							match: match
-						});
-					}
-
-					if ( (++count === lenProject) && (typeof callback === "function") ) {
-						callback(errors);
-					}
-				}.bind({
-						iterator: i,
-						tester: tester
-					})
-				);
-			}
-
-		} else {
-			callback(errors);
-		}
 	};
 
 router.route('/')
@@ -160,12 +105,13 @@ router.route('/')
 		})
 		.post(function(req, res) {
 			var data = req.body,
+				action = "c",
 				translation = new Translations(data);
 
-			validateCreation(data, null, res, function(errors){
+			validate(data, null, res, action, function(errors){
 				if (errors.length > 0) {
 					res.json({
-						action: "c",
+						action: action,
 						success: false,
 						data: null,
 						errors: errors
@@ -177,7 +123,7 @@ router.route('/')
 							if (err) res.status(500).send(err);
 
 							res.json({
-								action: "c",
+								action: action,
 								success: true,
 								data: translation,
 								errors: []
@@ -199,11 +145,12 @@ router.route('/:id')
 			Translations.findById(req.params.id, function(err, translation) {
 				if (err) res.status(500).send(err);
 
-				var data = req.body;
-				validateUpdate(data, translation, res, function(errors) {
+				var data = req.body,
+					action = "u";
+				validate(data, translation, res, action, function(errors) {
 					if (errors.length > 0) {
 						res.json({
-							action: "u",
+							action: action,
 							success: false,
 							data: null,
 							errors: errors
@@ -213,7 +160,7 @@ router.route('/:id')
 						translation.save(function(err) {
 							if (err) res.status(500).send(err);
 							res.json({
-								action: "u",
+								action: action,
 								success: true,
 								data: translation,
 								errors: []
