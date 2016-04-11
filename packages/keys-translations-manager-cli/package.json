@@ -1,28 +1,28 @@
 {
-  "name": "keys-translations-manager-cli",
-  "version": "0.2.0",
-  "description": "keys-translations-manager's command line.",
-  "keywords": [
-    "i18n",
-    "internationalization",
-    "lang",
-    "language",
-    "l10n",
-    "locale",
-    "localization",
-    "multilingual",
-    "translation"
-  ],
-  "author": "chejen",
-  "license": "MIT",
-  "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
-  "dependencies": {
-    "keys-translations-manager-core": "0.1.0",
-    "yargs": "~4.3.2",
-    "node-fs": "~0.1.7",
-    "mongoose": "~4.4.11"
-  },
-  "bin": {
-    "ktm": "./bin/ktm.js"
-  }
+	"name": "keys-translations-manager-cli",
+	"version": "1.0.0",
+	"description": "keys-translations-manager's command line.",
+	"keywords": [
+		"i18n",
+		"internationalization",
+		"lang",
+		"language",
+		"l10n",
+		"locale",
+		"localization",
+		"multilingual",
+		"translation"
+	],
+	"author": "chejen",
+	"license": "MIT",
+	"repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
+	"dependencies": {
+		"keys-translations-manager-core": "^1.0.0",
+		"yargs": "^4.4.0",
+		"node-fs": "0.1.7",
+		"mongoose": "^4.4.12"
+	},
+	"bin": {
+		"ktm": "./bin/ktm.js"
+	}
 }
