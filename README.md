@@ -27,7 +27,7 @@
 
 
 ## Getting Started
-Checkout this repo, install dependencies, then start the web server:
+Checkout this repo (or directly download the stable release from [here](https://github.com/chejen/keys-translations-manager/releases)), install dependencies, then start the web server:
 ```sh
 $ git clone https://github.com/chejen/keys-translations-manager
 $ cd keys-translations-manager
