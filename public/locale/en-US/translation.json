@@ -1,1 +1,38 @@
-{"ui":{"grid":{"edit":"(dbclick to edit a cell)","empty":"No data","search":"Search"},"err":{"emptyfield":"The following field(s) are required: {0}","belongsTo":"\"{0}\" conflicts with {1}* in the following project(s): {2}","contains":"\"{0}\" conflicts with \"{1}\" in the following project(s): {2}","equals":"\"{0}\" already exists in the following project(s): {1}"},"confirm":{"delete":"Are you sure you want to delete \"{0}\" ?","header":"Confirm","yes":"Yes","no":"No"},"common":{"download":"Download","locales":"Locales","cancel":"Cancel","update":"Update","locale":"Locale","applyto":"Apply to","action":"Actions","language":"Language","delete":"Delete","edit":"Edit","add":"Add"},"json":{"format":"formatted","mini":"minimized"}}}
+{
+  "ui": {
+    "common": {
+      "action": "Actions",
+      "add": "Add",
+      "applyto": "Apply to",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "download": "Download",
+      "edit": "Edit",
+      "language": "Language",
+      "locale": "Locale",
+      "locales": "Locales",
+      "update": "Update"
+    },
+    "confirm": {
+      "delete": "Are you sure you want to delete \"{0}\" ?",
+      "header": "Confirm",
+      "no": "No",
+      "yes": "Yes"
+    },
+    "err": {
+      "belongsTo": "【JSON::ParserError】\"{0}\" conflicts with {1}* in the following project(s): {2}",
+      "contains": "【JSON::ParserError】\"{0}\" conflicts with \"{1}\" in the following project(s): {2}",
+      "emptyfield": "The following field(s) are required: {0}",
+      "equals": "\"{0}\" already exists in the following project(s): {1}"
+    },
+    "grid": {
+      "edit": "(dbclick to edit a cell)",
+      "empty": "No data",
+      "search": "Search"
+    },
+    "json": {
+      "format": "formatted",
+      "mini": "minimized"
+    }
+  }
+}
