@@ -1,4 +1,5 @@
-import CountCol from '../../../../src/components/output/CountCol';
+import CountCol from '../../../../src/components/output/CountCol'
+import Col from 'react-bootstrap/lib/Col'
 
 function setup() {
 	let props = {
@@ -18,7 +19,7 @@ function setup() {
 describe('(component) CountCol', () => {
 	it('should render as a <Col>', () => {
 		const { wrapper } = setup()
-		expect(wrapper.type().displayName).to.eql('Col');
+		expect(wrapper.type()).to.eql(Col);
 	});
 
 	describe('child: heading', () => {
