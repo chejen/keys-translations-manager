@@ -77,6 +77,26 @@ describe('(component) FormPanel', () => {
 		});
 	});
 
+	describe('child: textarea, key="description"', () => {
+		it('should call onInputChange() if text changed', () => {
+			FormPanel.prototype.onInputChange = sinon.spy()
+			const data = {
+				"_id": "56d7037a0b70e760104ddf10",
+				"en-US": "Edit",
+				"description": "edit",
+				"key": "ui.common.edit",
+				"project": ["p1"],
+				"zh-TW": "編輯"
+			}
+			const { context } = setup()
+			const wrapper = mount(
+				<FormPanel data={data}/>,
+				{context: context}
+			)
+			expect(wrapper.find('textarea').first().text()).to.eql('edit');
+		});
+	});
+
 	describe('child: Input[type="checkbox"]', () => {
 		it('should call onCheckboxChange() if checked/unchecked', () => {
 			FormPanel.prototype.onCheckboxChange = sinon.spy()
