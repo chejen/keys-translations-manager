@@ -93,6 +93,10 @@ export default class GridPanel extends React.Component {
 				field: "key",
 				pinned: true
 			}, {
+				headerName: "Description",
+				field: "description",
+				pinned: true
+			}, {
 				headerName: localeUtil.getMsg("ui.common.locales") + " " + localeUtil.getMsg("ui.grid.edit"),
 				children: localeCols
 			}

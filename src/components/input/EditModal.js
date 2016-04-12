@@ -38,7 +38,7 @@ export default class EditModal extends React.Component {
 		let i, v, locale,
 			project = [],
 			emptyFields = [],
-			data = Object.assign({}, this.props.data);
+			data = Object.assign({}, this.props.data, {description: el.description.value.trim()});
 
 		for (i = 0; i < lenLocales; i++) {
 			locale = locales[i]

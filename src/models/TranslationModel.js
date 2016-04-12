@@ -5,6 +5,7 @@ var locales = config.locales,
 	lenLocales = locales.length,
 	schema = {
 		'key': String,
+		'description': String,
 		'project': [String]
 	},
 	TranslationSchema;

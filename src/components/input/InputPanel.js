@@ -28,7 +28,7 @@ export default class InputPanel extends React.Component {
 				locales = config.locales,
 				lenLocales = locales.length;
 
-		let i, vk, vl, locale, project = [], emptyFields = [], data = {};
+		let i, vk, vl, locale, project = [], emptyFields = [], data = {description: el.description.value.trim()};
 
 		vk = el.key.value.trim()
 		if (vk) {
