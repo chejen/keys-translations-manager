@@ -31,6 +31,7 @@ describe('(action) translations', () => {
 				})
 				.post('/api/translation', {
 					"key": "ui.common.delete",
+					"description": "delete",
 					"en-US": "Delete",
 					"zh-TW": "刪除",
 					"project": ["p1"]
@@ -40,6 +41,7 @@ describe('(action) translations', () => {
 					"success": true,
 					"data": {
 						"key": "ui.common.delete",
+						"description": "delete",
 						"en-US": "Delete",
 						"zh-TW": "刪除",
 						"_id": "56d7038b0b70e760104ddf11",
@@ -53,6 +55,7 @@ describe('(action) translations', () => {
 
 			store.dispatch(actions.addTranslation({
 					"key": "ui.common.delete",
+					"description": "delete",
 					"en-US": "Delete",
 					"zh-TW": "刪除",
 					"project": ["p1"]
@@ -63,6 +66,7 @@ describe('(action) translations', () => {
 							type: "ADD_TRANSLATION",
 							data: {
 								"key": "ui.common.delete",
+								"description": "delete",
 								"en-US": "Delete",
 								"zh-TW": "刪除",
 								"_id": "56d7038b0b70e760104ddf11",
@@ -145,6 +149,7 @@ describe('(action) translations', () => {
 					"success": true,
 					"data": {
 						"key": "ui.common.add",
+						"description": "add",
 						"en-US": "Add",
 						"zh-TW": "增加",
 						"_id": "56d7034f0b70e760104ddf0e",
@@ -158,6 +163,7 @@ describe('(action) translations', () => {
 
 			store.dispatch(actions.updateTranslation({
 					"key": "ui.common.add",
+					"description": "add",
 					"en-US": "Add",
 					"zh-TW": "增加",
 					"_id": "56d7034f0b70e760104ddf0e",
@@ -170,6 +176,7 @@ describe('(action) translations', () => {
 							"type": "UPDATE_TRANSLATION",
 							"data": {
 								"key": "ui.common.add",
+								"description": "add",
 								"en-US": "Add",
 								"zh-TW": "增加",
 								"_id": "56d7034f0b70e760104ddf0e",
