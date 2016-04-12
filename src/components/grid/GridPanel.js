@@ -93,7 +93,7 @@ export default class GridPanel extends React.Component {
 				field: "key",
 				pinned: true
 			}, {
-				headerName: "Description",
+				headerName: localeUtil.getMsg("ui.common.desc"),
 				field: "description",
 				pinned: true
 			}, {

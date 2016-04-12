@@ -35,7 +35,7 @@ export default class FormPanel extends React.Component {
 				showModal: false,
 				errors: [],
 				key: data.key,
-        description: data.description
+				description: data.description
 			}
 			while (lenLocales--) {
 				locale = locales[lenLocales]
@@ -96,7 +96,7 @@ export default class FormPanel extends React.Component {
 			localeGroup = [getLabel("key", "Key"), (this.state.action === "u")
 							? <Input key="key" type="text" bsSize="small" name="key" value={data.key} onChange={this.onInputChange.bind(this)} style={{backgroundColor: "#e7e7e7"}}/>
 							: <Input key="key" type="text" bsSize="small" name="key" />],
-			descriptionGroup = [<div key={"label-description"} className="app-input-label">Description:</div>,
+			descriptionGroup = [<div key={"label-description"} className="app-input-label">{localeUtil.getMsg("ui.common.desc")}:</div>,
 							<Input key="description" type="textarea" bsSize="small" name="description" defaultValue={this.state.description} />];
 
 		for (i=0; i<lenLocales; i++) {
