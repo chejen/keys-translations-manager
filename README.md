@@ -55,6 +55,27 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 * Download locales without opening the web application. (See [keys-translations-manager-cli] [12] for more details)
 
 
+## REST API
+/api/download/{format}/{fileType}/{projectId}/{locale}
+
+* Method:
+  * GET
+
+* Parameters:
+  * `format`: replace it with **f** (formatted) or **n** (not formatted) 【Required】
+  * `fileType`: replace it with **json** or **properties** 【Required】
+  * `projectId`: replace it with the project ID set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js) 【Required】
+  * `locale`: replace it with the locale set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js)
+
+Example request URIs:
+
+* GET http://localhost:3000/api/download/n/properties/p1
+  * Download a ZIP file which contains all of the locales in project p1.
+
+* GET http://localhost:3000/api/download/f/json/p1/en-US
+  * Download a JSON file for en-US locale.
+
+
 ## Technologies
 * Scaffolded with [MongoDB] [1], [Express] [2], [React] [3], and [Node.js] [4]
 * Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
