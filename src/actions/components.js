@@ -1,14 +1,26 @@
-import { SHOW_EDITMODAL, CLOSE_EDITMODAL } from '../constants/ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 
 export function showEditModal(record) {
 	return {
-		type: SHOW_EDITMODAL,
+		type: ActionTypes.SHOW_EDITMODAL,
 		record: record
 	}
 }
 
 export function closeEditModal() {
 	return {
-		type: CLOSE_EDITMODAL
+		type: ActionTypes.CLOSE_EDITMODAL
+	}
+}
+
+export function showImportModal() {
+	return {
+		type: ActionTypes.SHOW_IMPORTMODAL
+	}
+}
+
+export function closeImportModal() {
+	return {
+		type: ActionTypes.CLOSE_IMPORTMODAL
 	}
 }

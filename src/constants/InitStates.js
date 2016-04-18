@@ -1,4 +1,5 @@
 export const INIT_COMPONENTS = {
+	showimportmodal: false,
 	showeditmodal: false,
 	editrecord: {}
 };
