@@ -3,7 +3,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import FormPanel from './FormPanel'
-import AlertPanel from '../input/AlertPanel'
+import AlertPanel from './AlertPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class EditModal extends React.Component {
@@ -22,9 +22,6 @@ export default class EditModal extends React.Component {
 
 	constructor(props, context) {
 		super(props, context);
-		this.state = {
-			showModal: false
-		};
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 

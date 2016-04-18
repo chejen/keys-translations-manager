@@ -32,7 +32,6 @@ export default class FormPanel extends React.Component {
 		if (data) { //update
 			o = {
 				action: "u",
-				showModal: false,
 				errors: [],
 				key: data.key,
 				description: data.description

@@ -95,8 +95,7 @@ export default class App extends React.Component {
 					<MainPanel>
 						<ImportModal showimportmodal={showimportmodal}
 							closeImportModal={ComponentActions.closeImportModal}/>
-						<EditModal ref="editModal"
-							data={editrecord} errors={errors}
+						<EditModal data={editrecord} errors={errors}
 							showeditmodal={showeditmodal}
 							closeEditModal={ComponentActions.closeEditModal}
 							updateTranslation={TranslationActions.updateTranslation}
