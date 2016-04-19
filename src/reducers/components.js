@@ -5,28 +5,25 @@ export default function components(state = INIT_COMPONENTS, action) {
 	switch (action.type) {
 		case ActionTypes.SHOW_IMPORTMODAL:
 			return {
-				showimportmodal: true,
-				editrecord: state.editrecord,
-				showeditmodal: state.showeditmodal
+				...state,
+				showimportmodal: true
 			};
 		case ActionTypes.CLOSE_IMPORTMODAL:
 			return {
-				showimportmodal: false,
-				editrecord: state.editrecord,
-				showeditmodal: state.showeditmodal
+				...state,
+				showimportmodal: false
 			};
 		case ActionTypes.SHOW_EDITMODAL:
 			return {
+				...state,
 				showeditmodal: true,
-				editrecord: action.record,
-				showimportmodal: state.showimportmodal
+				editrecord: action.record
 			};
 		case ActionTypes.UPDATE_TRANSLATION:
 		case ActionTypes.CLOSE_EDITMODAL:
 			return {
-				showeditmodal: false,
-				editrecord: state.editrecord,
-				showimportmodal: state.showimportmodal
+				...state,
+				showeditmodal: false
 			};
 		default:
 			return state;

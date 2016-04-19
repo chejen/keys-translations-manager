@@ -60,4 +60,27 @@ describe('(reducer) components', function() {
 			.that.is.an('object')
 			.to.deep.equal(record);
 	})
+
+	it('should handle SHOW_IMPORTMODAL', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'SHOW_IMPORTMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showimportmodal')
+			.that.is.true
+	})
+
+	it('should handle CLOSE_IMPORTMODAL', () => {
+		expect(
+			reducer({
+				showimportmodal: true,
+				showeditmodal: false
+			}, {
+				type: 'CLOSE_IMPORTMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showimportmodal')
+			.that.is.false
+	})
 });
