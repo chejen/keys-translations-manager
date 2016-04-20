@@ -24,12 +24,11 @@ export default class DropdownMenu extends React.Component {
 	render() {
 		return(
 			<ul className="nav navbar-top-links navbar-right">
-				<li className="dropdown" title={localeUtil.getMsg("ui.common.add")}>
+				<li className="dropdown" title={localeUtil.getMsg("ui.common.import")}>
 					<a className="dropdown-toggle" href="#" onClick={(event) => {
 								if (event) {
 									event.preventDefault();
 								}
-								console.log("test");
 								this.props.showImportModal();
 							}}>
 						<i className="fa fa-cloud-upload fa-fw fa-lg"/>
