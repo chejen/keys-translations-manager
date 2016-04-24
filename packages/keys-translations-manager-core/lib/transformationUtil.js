@@ -33,5 +33,25 @@ module.exports = {
 		}
 
 		return jsonObj;
+	},
+
+	json2Properties: function(properties, obj, keyChain){
+		var key,
+			newChain,
+			value;
+
+		if (!obj) {
+			return false;
+		}
+		for (key in obj) {
+			newChain = keyChain.concat(key);
+			value = obj[key];
+			if (typeof value === "object") {
+				this.json2Properties(properties, value, newChain);
+			} else {
+				properties.push(newChain.join(".") + "=" + value);
+			}
+		}
+		return properties;
 	}
 };
