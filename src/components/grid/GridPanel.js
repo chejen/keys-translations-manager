@@ -4,7 +4,8 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {AgGridReact} from 'ag-grid-react/lib/agGridReact'
 import {reactCellRendererFactory} from 'ag-grid-react/lib/reactCellRendererFactory';
-import Button from 'react-bootstrap/lib/Button'
+import InputGroup from 'react-bootstrap/lib/InputGroup'
+import FormControl from 'react-bootstrap/lib/FormControl'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -113,16 +114,14 @@ export default class GridPanel extends React.Component {
 
 		return (
 			<div>
-				<div className="input-group custom-search-form">
-					<span className="input-group-btn">
-						<Button bsStyle="default">
-							<i className="fa fa-search"/>
-						</Button>
-					</span>
-					<input className="form-control" type="text"
+				<InputGroup>
+					<InputGroup.Addon>
+						<i className="fa fa-search"/>
+					</InputGroup.Addon>
+					<FormControl type="text"
 						placeholder={localeUtil.getMsg("ui.grid.search")}
 						onChange={this.onQuickFilterText.bind(this)}/>
-				</div>
+				</InputGroup>
 
 				<div style={{height: (offset ? (h - offset.top - 20) : 430) + 'px'}} className="ag-fresh">
 					<AgGridReact

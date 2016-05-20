@@ -93,31 +93,18 @@ export default class FormPanel extends React.Component {
 			getLabel = (key, text) => <div key={"label-" + key} className="app-input-label"><span className="app-input-asterisk">*</span> {text}:</div>
 		let i, p, locale,
 			projectGroup = [],
-			// localeGroup = [getLabel("key", "Key"), (this.state.action === "u")
-			// 				? <Input key="key" type="text" bsSize="small" name="key" value={data.key} onChange={this.onInputChange.bind(this)} style={{backgroundColor: "#e7e7e7"}}/>
-			// 				: <Input key="key" type="text" bsSize="small" name="key" />],
 			localeGroup = [];
-			// descriptionGroup = [<div key={"label-description"} className="app-input-label">{localeUtil.getMsg("ui.common.desc")}:</div>,
-			// 				<Input key="description" type="textarea" bsSize="small" name="description" defaultValue={this.state.description} />];
 
 		for (i=0; i<lenLocales; i++) {
 			locale = locales[i]
 			localeGroup.push(
 				<TextField key={locale} label={localeUtil.getMsg("ui.common.locale") + " / " + locale}
 					name={locale} defaultValue={this.state[locale]} required/>
-				// getLabel(
-				// 	locale,
-				// 	localeUtil.getMsg("ui.common.locale") + " / " + locale
-				// ),
-				// <Input key={locale} type="text" bsSize="small" name={locale} defaultValue={this.state[locale]} />
 			)
 		}
 		for (i=0; i<lenProjects; i++) {
 			p = projects[i];
 			projectGroup.push(
-				// <Input key={i} type="checkbox" label={p.name}
-				// name="project[]" value={p.id} checked={this.state[p.id]}
-				// onChange={this.onCheckboxChange.bind(this, p.id)}/>)
 				<Checkbox key={i} name="project[]" value={p.id} checked={this.state[p.id]}
 						onChange={this.onCheckboxChange.bind(this, p.id)}>
 					{p.name}
