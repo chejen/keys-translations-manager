@@ -5,7 +5,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {AgGridReact} from 'ag-grid-react/lib/agGridReact'
 import {reactCellRendererFactory} from 'ag-grid-react/lib/reactCellRendererFactory';
 import Button from 'react-bootstrap/lib/Button'
-import Input from 'react-bootstrap/lib/Input'
 import ActionCellRenderer from './ActionCellRenderer'
 import ProjectCellRenderer from './ProjectCellRenderer'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -120,7 +119,7 @@ export default class GridPanel extends React.Component {
 							<i className="fa fa-search"/>
 						</Button>
 					</span>
-					<Input type="text" className="form-control"
+					<input className="form-control" type="text"
 						placeholder={localeUtil.getMsg("ui.grid.search")}
 						onChange={this.onQuickFilterText.bind(this)}/>
 				</div>
