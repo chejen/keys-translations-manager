@@ -7,6 +7,7 @@ import FormControl from 'react-bootstrap/lib/FormControl'
 export default class TextField extends React.Component {
 	static propTypes = {
 		required: React.PropTypes.bool,
+		readOnly: React.PropTypes.bool,
 		label: React.PropTypes.string,
 		name: React.PropTypes.string.isRequired,
 		value: React.PropTypes.string,
@@ -23,7 +24,7 @@ export default class TextField extends React.Component {
 	}
 
 	render() {
-		{/* restProps: name, defaultValue, onChange, className, placeholder */}
+		{/* restProps: name, defaultValue, onChange, readOnly, className, placeholder */}
 		const { required, label, value, ...restProps } = this.props
 		const style = value ? {backgroundColor: "#e7e7e7"} : {}
 		return(

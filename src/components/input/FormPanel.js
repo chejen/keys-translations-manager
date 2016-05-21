@@ -68,15 +68,6 @@ export default class FormPanel extends React.Component {
 		return form.elements
 	}
 
-	onInputChange(e) {
-		let o = {};
-		if (e.target.name === "key") {
-			return;
-		}
-		o[e.target.name] = e.target.value
-		this.setState(o);
-	}
-
 	onCheckboxChange(id) {
 		let o = {};
 		o[id] = !this.state[id];
@@ -115,7 +106,7 @@ export default class FormPanel extends React.Component {
 		return(
 			<form ref="form">
 				{(this.state.action === "u")
-					? <TextField name="key" label="Key" required value={data.key} onChange={this.onInputChange.bind(this)}/>
+					? <TextField name="key" label="Key" required value={data.key} readOnly/>
 					: <TextField name="key" label="Key" required/>
 				}
 
