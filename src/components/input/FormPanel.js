@@ -106,7 +106,7 @@ export default class FormPanel extends React.Component {
 		return(
 			<form ref="form">
 				{(this.state.action === "u")
-					? <TextField name="key" label="Key" required value={data.key} readOnly/>
+					? <TextField name="key" label="Key" value={data.key} readOnly required/>
 					: <TextField name="key" label="Key" required/>
 				}
 

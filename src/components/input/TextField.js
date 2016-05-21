@@ -32,9 +32,9 @@ export default class TextField extends React.Component {
 				{label
 					? (<ControlLabel>
 						{required
-							? <span className="app-input-asterisk">*</span>
+							? <span className="app-input-asterisk">* </span>
 							: null}
-						{` ${label}`}:
+						{label}:
 					</ControlLabel>)
 					: null
 				}

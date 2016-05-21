@@ -1,7 +1,9 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import Dropzone from 'react-dropzone'
 import Button from 'react-bootstrap/lib/Button'
-import Input from 'react-bootstrap/lib/Input'
+import ControlLabel from 'react-bootstrap/lib/ControlLabel'
+import Radio from 'react-bootstrap/lib/Radio'
 import Modal from 'react-bootstrap/lib/Modal'
 // import FormPanel from './FormPanel'
 // import AlertPanel from './AlertPanel'
@@ -24,6 +26,7 @@ export default class ImportModal extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
+			selectedFile: null,
 			selectedLocale: null,
 			selectedProject: null
 		}
@@ -42,8 +45,21 @@ export default class ImportModal extends React.Component {
 		})
 	}
 
+	onDrop(files) {
+		console.log(files);
+		this.setState({
+			selectedFile: files[0]
+		})
+	}
+
 	submit() {
-		console.log("submit");
+		const data = {
+			file: this.state.selectedFile,
+			locale: this.state.selectedLocale,
+			project: this.state.selectedProject
+		}
+		console.log("submit", data);
+		//this.props.importLocale(data)
 	}
 
 	close() {
@@ -65,31 +81,48 @@ export default class ImportModal extends React.Component {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
+					<ControlLabel>
+						<span className="app-input-asterisk">* </span>
+						<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.file")}:</span>
+					</ControlLabel>
+					<Dropzone accept=".json,.properties"
+							className="app-dropzone"
+							multiple={false} disablePreview
+							onDrop={this.onDrop.bind(this)}>
+						{this.state.selectedFile
+							? "The file to import: " + this.state.selectedFile.name
+							: "Drop your locale file here, or click to select a file to import."
+						}
+					</Dropzone>
 
-					<Input type="file" bsSize="small" name="file"/>
+					<div style={{marginTop: "5px 0"}}>
+						<ControlLabel>
+							<span className="app-input-asterisk">* </span>
+							<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.locale")}:</span>
+						</ControlLabel>
+						{config.locales.map(function(e){
+							return (
+								<Radio inline key={e} name="locale" value={e}
+									checked={me.state.selectedLocale===e}
+									onChange={me.setLocale.bind(me, e)}>{e}</Radio>
+							);
+						})}
+					</div>
 
-					{localeUtil.getMsg("ui.common.locale")}:
-					{config.locales.map(function(e){
-						return (
-							<span key={e}>&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="locale" value={e} checked={me.state.selectedLocale===e}
-								onChange={me.setLocale.bind(me, e)}/> {e}
-							</span>
-						);
-					})}
-
-					<br/>
-
-					{localeUtil.getMsg("ui.common.applyto")}:
-					{config.projects.map(function(e){
-						let {id, name} = e
-						return (
-							<span key={id}>&nbsp;&nbsp;&nbsp;
-							<input type="radio" name="project" value={id} checked={me.state.selectedProject===id}
-								onChange={me.setProject.bind(me, id)}/> {name}
-							</span>
-						);
-					})}
+					<div style={{margin: "5px 0"}}>
+						<ControlLabel>
+							<span className="app-input-asterisk">* </span>
+							<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.applyto")}:</span>
+						</ControlLabel>
+						{config.projects.map(function(e){
+							let {id, name} = e
+							return (
+								<Radio inline key={id} name="project" value={id}
+									checked={me.state.selectedProject===id}
+									onChange={me.setProject.bind(me, id)}>{name}</Radio>
+							);
+						})}
+					</div>
 
 				</Modal.Body>
 				<Modal.Footer>
