@@ -103,9 +103,37 @@ export function updateTranslation(params) {
 	}
 }
 
-export function importLocale() {
-	return {
-		type: ActionTypes.IMPORT_LOCALE,
-		data: []
+export function importLocale(params) {
+	let data = new FormData()
+	data.append('file', params.file)
+	data.append('locale', params.locale)
+	data.append('projectId', params.applyto)
+
+	console.log("data", data);
+
+	return dispatch => {
+		return fetch(configUtil.getHost() + '/api/import', {
+			method: 'POST',
+			body: data
+		})
+		.then(res => {
+			console.log("test-res", res);
+			dispatch({
+				type: ActionTypes.IMPORT_LOCALE,
+				data: []
+			})
+		})
+		// .then(res => {
+		// 	if (res.status >= 400) {
+		// 		throw new Error(res.status + ", " + res.statusText);
+		// 	}
+		// 	return res.json();
+		// })
+		// .then((result) => {
+		// 	dispatch({
+		// 		type: ActionTypes.LOAD_TRANSLATIONS,
+		// 		data: result
+		// 	})
+		// })
 	}
 }
