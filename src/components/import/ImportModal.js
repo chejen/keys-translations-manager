@@ -13,7 +13,7 @@ export default class ImportModal extends React.Component {
 		showimportmodal: React.PropTypes.bool.isRequired,
 		closeImportModal: React.PropTypes.func.isRequired,
 		errors: React.PropTypes.array.isRequired,
-		// updateTranslation: React.PropTypes.func.isRequired,
+		importLocale: React.PropTypes.func.isRequired,
 		alertErrors: React.PropTypes.func.isRequired,
 		clearErrors: React.PropTypes.func.isRequired
 	};
@@ -88,7 +88,7 @@ export default class ImportModal extends React.Component {
 			}]);
 		} else {
 			console.log("submit", data);
-			// this.props.importLocale(data)
+			this.props.importLocale(data)
 		}
 	}
 

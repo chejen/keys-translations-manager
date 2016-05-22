@@ -96,6 +96,7 @@ export default class App extends React.Component {
 						<ImportModal errors={errors}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}
+							importLocale={TranslationActions.importLocale}
 							showimportmodal={showimportmodal}
 							closeImportModal={ComponentActions.closeImportModal}/>
 						<EditModal data={editrecord} errors={errors}

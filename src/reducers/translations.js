@@ -14,6 +14,7 @@ export default function translations(state = INIT_TRANSLATIONS, action) {
 			return [action.data, ...state];
 
 		case ActionTypes.LOAD_TRANSLATIONS:
+		case ActionTypes.IMPORT_LOCALE:
 			return action.data;
 
 		case ActionTypes.REMOVE_TRANSLATION:

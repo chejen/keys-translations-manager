@@ -8,6 +8,7 @@ export default function components(state = INIT_COMPONENTS, action) {
 				...state,
 				showimportmodal: true
 			};
+		case ActionTypes.IMPORT_LOCALE:
 		case ActionTypes.CLOSE_IMPORTMODAL:
 			return {
 				...state,

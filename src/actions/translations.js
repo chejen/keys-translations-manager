@@ -102,3 +102,10 @@ export function updateTranslation(params) {
 		})
 	}
 }
+
+export function importLocale() {
+	return {
+		type: ActionTypes.IMPORT_LOCALE,
+		data: []
+	}
+}

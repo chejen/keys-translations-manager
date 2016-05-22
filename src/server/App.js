@@ -93,7 +93,11 @@ export default class App extends React.Component {
 					<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
 					<OutputPanel projectCounts={counts} messages={messages}/>
 					<MainPanel>
-						<ImportModal showimportmodal={showimportmodal}
+						<ImportModal errors={errors}
+							alertErrors={ErrorActions.alertErrors}
+							clearErrors={ErrorActions.clearErrors}
+							importLocale={TranslationActions.importLocale}
+							showimportmodal={showimportmodal}
 							closeImportModal={ComponentActions.closeImportModal}/>
 						<EditModal data={editrecord} errors={errors}
 							showeditmodal={showeditmodal}
