@@ -5,19 +5,17 @@ import Button from 'react-bootstrap/lib/Button'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import Radio from 'react-bootstrap/lib/Radio'
 import Modal from 'react-bootstrap/lib/Modal'
-// import FormPanel from './FormPanel'
-// import AlertPanel from './AlertPanel'
+import AlertPanel from '../input/AlertPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class ImportModal extends React.Component {
 	static propTypes = {
 		showimportmodal: React.PropTypes.bool.isRequired,
-		closeImportModal: React.PropTypes.func.isRequired
-		// data: React.PropTypes.object.isRequired,
-		// errors: React.PropTypes.array.isRequired,
+		closeImportModal: React.PropTypes.func.isRequired,
+		errors: React.PropTypes.array.isRequired,
 		// updateTranslation: React.PropTypes.func.isRequired,
-		// alertErrors: React.PropTypes.func.isRequired,
-		// clearErrors: React.PropTypes.func.isRequired
+		alertErrors: React.PropTypes.func.isRequired,
+		clearErrors: React.PropTypes.func.isRequired
 	};
 	static contextTypes = {
 		config: React.PropTypes.object
@@ -47,19 +45,51 @@ export default class ImportModal extends React.Component {
 
 	onDrop(files) {
 		console.log(files);
-		this.setState({
-			selectedFile: files[0]
-		})
+		const re = /\.(json|properties)$/,
+			file = files[0];
+		if ( re.test(file.name) ) {
+			this.setState({
+				selectedFile: file
+			})
+		} else {
+			this.props.alertErrors([{
+				type: 'accept',
+				action: "i",
+				params: file,
+				match: ["*.json", "*.properties"]
+			}]);
+		}
 	}
 
 	submit() {
 		const data = {
 			file: this.state.selectedFile,
 			locale: this.state.selectedLocale,
-			project: this.state.selectedProject
+			applyto: this.state.selectedProject
+		};
+		let key,
+			emptyFields = [];
+
+		for (key in data) {
+			if ({}.hasOwnProperty.call(data, key)) {
+				console.log(key, data[key]);
+				if ( !data[key] ) {
+					emptyFields.push(localeUtil.getMsg("ui.common." + key))
+				}
+			}
 		}
-		console.log("submit", data);
-		//this.props.importLocale(data)
+
+		if ( emptyFields.length > 0 ) {
+			this.props.alertErrors([{
+				type: 'emptyfield',
+				action: "i",
+				params: data,
+				match: emptyFields
+			}]);
+		} else {
+			console.log("submit", data);
+			// this.props.importLocale(data)
+		}
 	}
 
 	close() {
@@ -67,11 +97,9 @@ export default class ImportModal extends React.Component {
 	}
 
 	render() {
-		//const { data, errors, clearErrors } = this.props;
 		const me = this,
+			{ errors, clearErrors } = this.props,
 			config = this.context.config;
-			//locales = config.locales;
-
 
 		return (
 			<Modal show={this.props.showimportmodal} onHide={this.close.bind(this)}>
@@ -81,6 +109,7 @@ export default class ImportModal extends React.Component {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
+					<AlertPanel errors={errors} clearErrors={clearErrors} action="i"/>
 					<ControlLabel>
 						<span className="app-input-asterisk">* </span>
 						<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.file")}:</span>
@@ -95,7 +124,7 @@ export default class ImportModal extends React.Component {
 						}
 					</Dropzone>
 
-					<div style={{marginTop: "5px 0"}}>
+					<div className="app-radio-group">
 						<ControlLabel>
 							<span className="app-input-asterisk">* </span>
 							<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.locale")}:</span>
@@ -109,7 +138,7 @@ export default class ImportModal extends React.Component {
 						})}
 					</div>
 
-					<div style={{margin: "5px 0"}}>
+					<div className="app-radio-group">
 						<ControlLabel>
 							<span className="app-input-asterisk">* </span>
 							<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.applyto")}:</span>

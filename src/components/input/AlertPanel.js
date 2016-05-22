@@ -66,6 +66,13 @@ export default class AlertPanel extends React.Component {
 						}).join(", ")
 					));
 					break;
+				case 'accept':
+					errMsg.push(
+						"Accept " +
+						err.match.join(" or ") +
+						" only."
+					);
+					break;
 				default:
 					errMsg.push(err.type);
 					break;
