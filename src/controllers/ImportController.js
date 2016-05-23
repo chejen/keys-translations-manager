@@ -1,4 +1,5 @@
 var router = require("express").Router();
+var Translations = require('../models/TranslationModel');
 var multiparty = require('multiparty');
 var form = new multiparty.Form();
 
@@ -9,11 +10,36 @@ var read = require('../../packages/keys-translations-manager-core/lib/importUtil
 router.route('/')
 		.post(function(req, res) {
 			form.parse(req, function(err, fields, files) {
-				res.json({files: files});
 				read(files.file[0].path, function(err, fileType, data){
 					if (err) res.status(500).send(err);
-					console.log("fileType", fileType);
-					console.log("data", data);
+
+					var locale = fields.locale[0],
+						project = fields.project,
+						collection = [],
+						idx = 0,
+						doc;
+
+					if (fileType === "properties") {
+						for (var key in data) {
+							doc = {
+								"key": key,
+								"project": project
+							}
+							doc[locale] = data[key];
+							collection[idx++] = doc;
+						}
+
+						Translations.collection.insert(collection, function(err, translations) {
+							if (err) res.status(500).send(err);
+							Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
+								if (err) res.status(500).send(err);
+								res.json(translations);
+							});
+						});
+					} else if (fileType === "properties") {
+						// TODO
+						res.json({files: files});
+					}
 				});
 
 				// delete file

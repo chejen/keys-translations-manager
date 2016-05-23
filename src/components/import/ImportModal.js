@@ -31,6 +31,16 @@ export default class ImportModal extends React.Component {
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.showimportmodal) {
+			this.setState({
+				selectedFile: null,
+				selectedLocale: null,
+				selectedProject: null
+			});
+		}
+	}
+
 	setLocale(locale) {
 		this.setState({
 			selectedLocale: locale

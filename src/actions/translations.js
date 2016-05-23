@@ -107,9 +107,7 @@ export function importLocale(params) {
 	let data = new FormData()
 	data.append('file', params.file)
 	data.append('locale', params.locale)
-	data.append('projectId', params.applyto)
-
-	console.log("data", data);
+	data.append('project', params.applyto)
 
 	return dispatch => {
 		return fetch(configUtil.getHost() + '/api/import', {
@@ -117,23 +115,16 @@ export function importLocale(params) {
 			body: data
 		})
 		.then(res => {
-			console.log("test-res", res);
+			if (res.status >= 400) {
+				throw new Error(res.status + ", " + res.statusText);
+			}
+			return res.json();
+		})
+		.then((result) => {
 			dispatch({
 				type: ActionTypes.IMPORT_LOCALE,
-				data: []
+				data: result
 			})
 		})
-		// .then(res => {
-		// 	if (res.status >= 400) {
-		// 		throw new Error(res.status + ", " + res.statusText);
-		// 	}
-		// 	return res.json();
-		// })
-		// .then((result) => {
-		// 	dispatch({
-		// 		type: ActionTypes.LOAD_TRANSLATIONS,
-		// 		data: result
-		// 	})
-		// })
 	}
 }
