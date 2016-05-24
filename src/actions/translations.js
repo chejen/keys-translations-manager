@@ -121,10 +121,17 @@ export function importLocale(params) {
 			return res.json();
 		})
 		.then((result) => {
-			dispatch({
-				type: ActionTypes.IMPORT_LOCALE,
-				data: result
-			})
+			if (result.success) {
+				dispatch({
+					type: ActionTypes.IMPORT_LOCALE,
+					data: result.data
+				})
+			} else {
+				dispatch({
+					type: ActionTypes.ALERT_ERRORS,
+					errors: result.errors
+				})
+			}
 		})
 	}
 }
