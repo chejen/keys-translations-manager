@@ -35,4 +35,33 @@ describe('[utility] transformationUtil', function() {
 			});
 		});
 	});
+
+
+	describe('json2Properties', function() {
+		before(function() {
+			data = {
+				"ui": {
+					"common": {
+						"add": "Add",
+						"edit": "Edit"
+					},
+					"json": {
+						"format": "formatted",
+						"mini": "minimized"
+					}
+				}
+			};
+		});
+
+		it('should return Properties object', function() {
+			var properties = {};
+			properties = transformationUtil.json2Properties(properties, data, "");
+			expect(properties).to.deep.equal({
+				"ui.common.add": "Add",
+				"ui.common.edit": "Edit",
+				"ui.json.format": "formatted",
+				"ui.json.mini": "minimized"
+			});
+		});
+	});
 });

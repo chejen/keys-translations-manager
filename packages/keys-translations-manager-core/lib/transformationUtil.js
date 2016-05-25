@@ -33,5 +33,18 @@ module.exports = {
 		}
 
 		return jsonObj;
+	},
+
+	json2Properties: function(properties, jsonObj, initStr) {
+		var newKey;
+		for (var key in jsonObj) {
+			newKey = initStr ? initStr + "." + key : key;
+			if (typeof jsonObj[key] === "object") {
+				properties = this.json2Properties(properties, jsonObj[key], newKey);
+			} else {
+				properties[newKey] = jsonObj[key];
+			}
+		}
+		return properties;
 	}
 };
