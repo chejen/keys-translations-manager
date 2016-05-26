@@ -2,6 +2,8 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
+import Tooltip from 'react-bootstrap/lib/Tooltip'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
 
@@ -71,6 +73,22 @@ export default class AlertPanel extends React.Component {
 						"Accept " +
 						err.match.join(" or ") +
 						" only."
+					);
+					break;
+				case 'iequals':
+				case 'iconflicts':
+					errMsg.push(
+						<span>
+							{localeUtil.getMsg("ui.err." + err.type)}
+							{' '}
+							<OverlayTrigger placement="top" overlay={<Tooltip id={"tooltip" + i}>{localeUtil.getMsg("ui.tip." + err.type)}</Tooltip>}>
+								<i className="fa fa-info-circle" style={{color:"black"}}/>
+							</OverlayTrigger>
+							<br/>
+							{err.key.map(function(e){
+								return '"' + e + '"'
+							}).join(", ")}
+						</span>
 					);
 					break;
 				default:

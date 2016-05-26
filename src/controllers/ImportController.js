@@ -32,7 +32,13 @@ router.route('/')
 						segment,
 						lenSegment,
 						tmpKey,
-						errors = [];
+						errors = [],
+						error = {
+							"iequals": [],
+							"iconflicts": []
+							//"icontains": [],
+							//"ibelongsTo": []
+						};
 
 					if (fileType === "json") {
 						data = json2Properties({}, data, "");
@@ -109,23 +115,30 @@ router.route('/')
 									if (destKey.indexOf(prefix) === 0) {
 										continue;
 									} else {
-										type = "icontains";
+										//type = "icontains";
+										type = "iconflicts";
 										tmpKey = srcKey.substr(lenPrefix);
 									}
 								} else {
 									if (destKey.indexOf(prefix) === 0) {
-										type = "ibelongsTo";
+										//type = "ibelongsTo";
+										type = "iconflicts";
 									} else {
 										type = "iequals";
 									}
 									tmpKey = srcKey;
 								}
 
+								error[type].push(tmpKey);
+							}
+						}
+
+						for (key in error) {
+							if (error[key].length > 0) {
 								errors.push({
-									key: tmpKey,
-									type: type,
-									action: action,
-									match: destKey
+									key: error[key],
+									type: key,
+									action: action
 								});
 							}
 						}
