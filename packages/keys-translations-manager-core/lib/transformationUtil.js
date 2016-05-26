@@ -1,5 +1,5 @@
 'use strict';
-module.exports = {
+var transformationUtil = {
 	properties2Json: function(jsonObj, propertyKey, propertyValue) {
 		var childObj = {},
 			keyPart,
@@ -40,7 +40,7 @@ module.exports = {
 		for (var key in jsonObj) {
 			newKey = initStr ? initStr + "." + key : key;
 			if (typeof jsonObj[key] === "object") {
-				properties = this.json2Properties(properties, jsonObj[key], newKey);
+				properties = transformationUtil.json2Properties(properties, jsonObj[key], newKey);
 			} else {
 				properties[newKey] = jsonObj[key];
 			}
@@ -48,3 +48,5 @@ module.exports = {
 		return properties;
 	}
 };
+
+module.exports = transformationUtil;

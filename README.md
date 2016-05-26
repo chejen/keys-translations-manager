@@ -90,7 +90,7 @@ Example request URIs:
 * Scaffolded with [MongoDB] [1], [Express] [2], [React] [3], and [Node.js] [4]
 * Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
 * Module Bundler: [webpack] [9]
-* Testing: [Mocha] [10], [Chai] [11] and [Enzyme] [12]
+* Unit Testing: [Mocha] [10], [Chai] [11] and [Enzyme] [12]
 * Miscellaneous: [Babel] [13], [ESLint] [14]
 
 
