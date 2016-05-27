@@ -9,6 +9,8 @@
       "desc": "描述",
       "download": "下載",
       "edit": "編輯",
+      "file": "檔案",
+      "import": "匯入",
       "language": "語言",
       "locale": "語系",
       "locales": "語系",
@@ -24,7 +26,13 @@
       "belongsTo": "【JSON::ParserError】\"{0}\" 與 {1}* 在 {2} 衝突",
       "contains": "【JSON::ParserError】\"{0}\" 與 \"{1}\" 在 {2} 衝突",
       "emptyfield": "以下欄位為必填: {0}",
-      "equals": "\"{0}\" 已經存在於以下專案: {1}"
+      "equals": "\"{0}\" 已經存在於以下專案: {1}",
+      "iconflicts": "以下這些 key 會在解析 JSON 時發生錯誤:",
+      "iequals": "以下的 key 會覆蓋掉已經存在的翻譯:"
+    },
+    "file": {
+      "accept": "僅接受 *.json 或 *.properties 的檔案格式。",
+      "select": "請將您的語系檔拖曳至此，或點擊此區以選取要匯入的檔案。"
     },
     "grid": {
       "edit": "(雙擊儲存格可進行編輯)",
@@ -34,6 +42,10 @@
     "json": {
       "format": "格式化",
       "mini": "最小化"
+    },
+    "tip": {
+      "iconflicts": "(例) 在解析成 JSON 格式時，\"ui.common.add\" 會與 \"ui\"、\"ui.common\"、\"ui.common.add.*\" 等 key 發生衝突。",
+      "iequals": "出現這個錯誤表示，這些 key 在您選取的專案中已經存在，而且選取的語系也有對應的翻譯。"
     }
   }
 }

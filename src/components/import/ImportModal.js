@@ -128,9 +128,16 @@ export default class ImportModal extends React.Component {
 							className="app-dropzone"
 							multiple={false} disablePreview
 							onDrop={this.onDrop.bind(this)}>
+
 						{this.state.selectedFile
-							? "The file to import: " + this.state.selectedFile.name
-							: "Drop your locale file here, or click to select a file to import."
+							? (<span>
+								<span>{localeUtil.getMsg("ui.file.selected")} </span>
+								<span style={{color:"#F92672"}}>{this.state.selectedFile.name}</span>
+							</span>)
+							: (<div>
+								<div>1. {localeUtil.getMsg("ui.file.select")}</div>
+								<div>2. {localeUtil.getMsg("ui.file.accept")}</div>
+							</div>)
 						}
 					</Dropzone>
 

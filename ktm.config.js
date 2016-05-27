@@ -7,7 +7,7 @@ module.exports = {
 		hostname: 'localhost',
 		port: 3000
 	},
-	database: 'mongodb://localhost:27017/translationdb',
+	database: 'mongodb://ktmuser:mlabktm@ds015740.mlab.com:15740/translationdb',
 	locales: ['en-US', 'zh-TW'],
 	projects: [ // make sure the ids are 'String' type
 		{id:'p1', name:'Project A'},
