@@ -24,7 +24,7 @@ router.route('/')
 						query = {
 							"project": project
 						},
-						collection = [],
+						bulk,
 						idx = 0,
 						doc,
 						srcHash = {},
@@ -57,15 +57,9 @@ router.route('/')
 								srcHash[prefix + tmpKey] = [prefix + key];
 							}
 						}
-
-						doc = {
-							"key": key,
-							"project": project
-						};
-						doc[locale] = data[key];
-						collection[idx++] = doc;
 					}
 
+					// check if keys conflict
 					query[locale] = { $ne: null }
 					Translations.find(query, function(err, translations) {
 						if (err) res.status(500).send(err);
@@ -75,6 +69,7 @@ router.route('/')
 							key,
 							srcKey,
 							destKey,
+							collision,
 							type;
 
 						while(len--){
@@ -104,13 +99,12 @@ router.route('/')
 								srcHash[prefix + key].push(destKey);
 							}
 						}
-						console.log("srcHash", srcHash);
 
 						for (key in srcHash) {
-							var keyAry = srcHash[key];
-							if (keyAry.length > 1) {
-								srcKey = keyAry[0];
-								destKey = keyAry[1];
+							collision = srcHash[key];
+							if (collision.length > 1) {
+								srcKey = collision[0];
+								destKey = collision[1];
 								if (srcKey.indexOf(prefix) === 0) {
 									if (destKey.indexOf(prefix) === 0) {
 										continue;
@@ -144,6 +138,7 @@ router.route('/')
 						}
 
 						if (errors.length) {
+							// [fail] response error messages
 							res.json({
 								action: action,
 								success: false,
@@ -151,14 +146,28 @@ router.route('/')
 								errors: errors
 							});
 						} else {
-							Translations.collection.insert(collection, function(err, translations) {
-								if (err) res.status(500).send(err);
+							// [pass] batch update (or insert)
+							bulk = Translations.collection.initializeUnorderedBulkOp();
+
+							for (key in data) {
+								query = {
+									key: key,
+									project: project
+								};
+								doc = {};
+								doc[locale] = data[key];
+								bulk.find(query).upsert().updateOne({
+									$set: doc
+								});
+							}
+
+							bulk.execute(function(err, bulkres){
 								Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
 									if (err) res.status(500).send(err);
 									res.json({
 										action: action,
 										success: true,
-										data: translation,
+										data: translations,
 										errors: []
 									});
 								});
