@@ -32,7 +32,7 @@ export default class ImportModal extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.showimportmodal) {
+		if (nextProps.showimportmodal && !this.props.showimportmodal) {
 			this.setState({
 				selectedFile: null,
 				selectedLocale: null,
@@ -54,7 +54,6 @@ export default class ImportModal extends React.Component {
 	}
 
 	onDrop(files) {
-		console.log(files);
 		const re = /\.(json|properties)$/,
 			file = files[0];
 		if ( re.test(file.name) ) {
@@ -82,7 +81,6 @@ export default class ImportModal extends React.Component {
 
 		for (key in data) {
 			if ({}.hasOwnProperty.call(data, key)) {
-				console.log(key, data[key]);
 				if ( !data[key] ) {
 					emptyFields.push(localeUtil.getMsg("ui.common." + key))
 				}
@@ -97,7 +95,6 @@ export default class ImportModal extends React.Component {
 				match: emptyFields
 			}]);
 		} else {
-			console.log("submit", data);
 			this.props.importLocale(data)
 		}
 	}
@@ -122,7 +119,7 @@ export default class ImportModal extends React.Component {
 					<AlertPanel errors={errors} clearErrors={clearErrors} action="i"/>
 					<ControlLabel>
 						<span className="app-input-asterisk">* </span>
-						<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.file")}:</span>
+						<span>{localeUtil.getMsg("ui.common.file")}:</span>
 					</ControlLabel>
 					<Dropzone accept=".json,.properties"
 							className="app-dropzone"
@@ -134,10 +131,10 @@ export default class ImportModal extends React.Component {
 								<span>{localeUtil.getMsg("ui.file.selected")} </span>
 								<span style={{color:"#F92672"}}>{this.state.selectedFile.name}</span>
 							</span>)
-							: (<div>
-								<div>1. {localeUtil.getMsg("ui.file.select")}</div>
-								<div>2. {localeUtil.getMsg("ui.file.accept")}</div>
-							</div>)
+							: (<ul>
+								<li>{localeUtil.getMsg("ui.file.select")}</li>
+								<li>{localeUtil.getMsg("ui.file.accept")}</li>
+							</ul>)
 						}
 					</Dropzone>
 

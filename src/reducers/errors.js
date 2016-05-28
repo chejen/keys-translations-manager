@@ -8,6 +8,7 @@ export default function errors(state = INIT_ERRORS, action) {
 		case ActionTypes.LOAD_MESSAGES:
 		case ActionTypes.LOAD_COUNTS:
 		case ActionTypes.SHOW_EDITMODAL:
+		case ActionTypes.SHOW_IMPORTMODAL:
 		case ActionTypes.CLEAR_ERRORS:
 			return [];
 		default:

@@ -80,14 +80,15 @@ export default class AlertPanel extends React.Component {
 					errMsg.push(
 						<span>
 							{localeUtil.getMsg("ui.err." + err.type)}
-							{' '}
+							&nbsp;
 							<OverlayTrigger placement="top" overlay={<Tooltip id={"tooltip" + i}>{localeUtil.getMsg("ui.tip." + err.type)}</Tooltip>}>
 								<i className="fa fa-info-circle" style={{color:"black"}}/>
 							</OverlayTrigger>
-							<br/>
-							{err.key.map(function(e){
-								return '"' + e + '"'
-							}).join(", ")}
+							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							{err.key.length > 3
+								? `${err.key[0]}, ${err.key[1]} ${localeUtil.getMsg("ui.common.others", err.key.length - 2)}`
+								: err.key.join(", ")
+							}
 						</span>
 					);
 					break;
