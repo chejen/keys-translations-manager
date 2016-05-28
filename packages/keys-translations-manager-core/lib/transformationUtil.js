@@ -36,8 +36,10 @@ var transformationUtil = {
 	},
 
 	json2Properties: function(properties, jsonObj, initStr) {
-		var newKey;
-		for (var key in jsonObj) {
+		var key,
+			newKey;
+
+		for (key in jsonObj) {
 			newKey = initStr ? initStr + "." + key : key;
 			if (typeof jsonObj[key] === "object") {
 				properties = transformationUtil.json2Properties(properties, jsonObj[key], newKey);

@@ -1,12 +1,12 @@
 'use strict';
 import transformationUtil from "../../../../packages/keys-translations-manager-core/lib/transformationUtil"
 
-let data
+let dataP, dataJ;
 
 describe('[utility] transformationUtil', function() {
 	describe('properties2Json', function() {
 		before(function() {
-			data = [
+			dataP = [
 				['ui.common.add', 'Add'],
 				['ui.message.unread', 'You have {0} unread messages.']
 			];
@@ -14,12 +14,12 @@ describe('[utility] transformationUtil', function() {
 
 		it('should return JSON object', function() {
 			var jsonObj = {},
-				len = data.length,
+				len = dataP.length,
 				i = 0,
 				d;
 
 			for (; i < len; i++) {
-				d = data[i];
+				d = dataP[i];
 				jsonObj = transformationUtil.properties2Json(jsonObj, d[0], d[1]);
 			}
 
@@ -36,10 +36,9 @@ describe('[utility] transformationUtil', function() {
 		});
 	});
 
-
 	describe('json2Properties', function() {
 		before(function() {
-			data = {
+			dataJ = {
 				"ui": {
 					"common": {
 						"add": "Add",
@@ -55,7 +54,7 @@ describe('[utility] transformationUtil', function() {
 
 		it('should return Properties object', function() {
 			var properties = {};
-			properties = transformationUtil.json2Properties(properties, data, "");
+			properties = transformationUtil.json2Properties(properties, dataJ, "");
 			expect(properties).to.deep.equal({
 				"ui.common.add": "Add",
 				"ui.common.edit": "Edit",
