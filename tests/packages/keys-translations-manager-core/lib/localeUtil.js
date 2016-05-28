@@ -2,6 +2,34 @@
 import localeUtil from "../../../../packages/keys-translations-manager-core/lib/localeUtil"
 
 describe('[utility] localeUtil', function() {
+	describe('setMessages', function() {
+		before(function() {
+			localeUtil.setMessages({
+				'ui': {
+					'common': {
+						'add': 'Add'
+					},
+					'message': {
+						'unread': 'You have {0} unread messages.'
+					}
+				}
+			});
+		});
+
+		it("should set messages", function() {
+			expect(localeUtil.messages).to.deep.eql({
+					'ui': {
+						'common': {
+							'add': 'Add'
+						},
+						'message': {
+							'unread': 'You have {0} unread messages.'
+						}
+					}
+				});
+		});
+	});
+
 	describe('getMsg', function() {
 		before(function() {
 			localeUtil.setMessages({

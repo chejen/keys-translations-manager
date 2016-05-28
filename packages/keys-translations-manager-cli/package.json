@@ -18,9 +18,9 @@
 	"repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
 	"dependencies": {
 		"keys-translations-manager-core": "^1.0.0",
-		"yargs": "^4.4.0",
+		"yargs": "^4.7.1",
 		"node-fs": "0.1.7",
-		"mongoose": "^4.4.12"
+		"mongoose": "^4.4.19"
 	},
 	"bin": {
 		"ktm": "./bin/ktm.js"
