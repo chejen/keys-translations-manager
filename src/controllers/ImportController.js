@@ -11,6 +11,7 @@ var form,
 	locale,
 	project,
 	query,
+	queryParam,
 	bulk,
 	doc,
 	key,
@@ -32,11 +33,17 @@ router.route('/')
 					// check if keys conflict
 					locale = fields.locale[0];
 					project = fields.project;
-					query = {
+
+					query = [{
 						"project": project
-					};
-					query[locale] = { $ne: null }
-					Translations.find(query, function(err, translations) {
+					}];
+					queryParam = {};
+					queryParam[locale] = { $ne: null };
+					query.push(queryParam);
+					queryParam = {};
+					queryParam[locale] = { $ne: "" };
+					query.push(queryParam);
+					Translations.find({$and: query}, function(err, translations) {
 						if (err) res.status(500).send(err);
 						error = importUtil.validate(data, translations);
 
