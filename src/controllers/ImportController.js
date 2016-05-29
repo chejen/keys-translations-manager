@@ -1,11 +1,8 @@
-var router = require("express").Router();
-var Translations = require('../models/TranslationModel');
-var multiparty = require('multiparty');
-
-// TODO
-//var read = require('keys-translations-manager-core/lib/importUtil').read;
-var importUtil = require('../../packages/keys-translations-manager-core/lib/importUtil');
-var json2Properties = require('../../packages/keys-translations-manager-core/lib/transformationUtil').json2Properties;
+var router = require("express").Router(),
+	multiparty = require('multiparty'),
+	importUtil = require('keys-translations-manager-core/lib/importUtil'),
+	json2Properties = require('keys-translations-manager-core/lib/transformationUtil').json2Properties,
+	Translations = require('../models/TranslationModel');
 
 var form,
 	locale,
