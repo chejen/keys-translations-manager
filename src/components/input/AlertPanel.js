@@ -43,38 +43,39 @@ export default class AlertPanel extends React.Component {
 				case 'equals':
 					errMsg.push(localeUtil.getMsg("ui.err.equals", err.params.key,
 						err.match.map(function(e){
-							return '"' + getProjectName(e) + '"'
+							return `"${getProjectName(e)}"`
 						}).join(", ")
 					));
 					break;
 				case 'contains':
 					errMsg.push(localeUtil.getMsg("ui.err.contains", err.params.key, err.key,
 						err.match.map(function(e){
-							return '"' + getProjectName(e) + '"'
+							return `"${getProjectName(e)}"`
 						}).join(", ")
 					));
 					break;
 				case 'belongsTo':
 					errMsg.push(localeUtil.getMsg("ui.err.belongsTo", err.params.key, err.key,
 						err.match.map(function(e){
-							return '"' + getProjectName(e) + '"'
+							return `"${getProjectName(e)}"`
 						}).join(", ")
 					));
 					break;
 				case 'emptyfield':
 					errMsg.push(localeUtil.getMsg("ui.err.emptyfield",
 						err.match.map(function(e){
-							return '"' + e + '"'
+							return `"${e}"`
 						}).join(", ")
 					));
 					break;
-				// case 'accept':
-				// 	errMsg.push(
-				// 		"Accept " +
-				// 		err.match.join(" or ") +
-				// 		" only."
-				// 	);
-				// 	break;
+				case 'accept':
+					errMsg.push(
+						localeUtil.getMsg("ui.file.accept",
+							err.match.map(function(e){
+							return `*.${e}`
+						}).join(` ${localeUtil.getMsg("ui.common.or")} `)
+					));
+					break;
 				case 'iequals':
 				case 'iconflicts':
 					errMsg.push(

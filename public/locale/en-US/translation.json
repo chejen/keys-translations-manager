@@ -1,1 +1,54 @@
-{"ui":{"common":{"others":"and {0} others","file":"File","import":"Import","cancel":"Cancel","applyto":"Apply to","action":"Actions","desc":"Description","locale":"Locale","locales":"Locales","language":"Language","download":"Download","delete":"Delete","add":"Add","edit":"Edit","update":"Update"},"file":{"selected":"The file to import:","select":"Drop your locale file here, or click to select a file to import.","accept":"Accept *.json or *.properties only."},"tip":{"iequals":"This means you already have translations with these keys for selected locale and project.","iconflicts":"(e.g.) \"ui.common.add\" will conflict with \"ui\", \"ui.common\", and/or \"ui.common.add.*\" while parsing to JSON format."},"err":{"iconflicts":"The following key(s) will cause JSON-parsing error(s):","iequals":"The following key(s) will override original translation(s):","contains":"【JSON::ParserError】\"{0}\" conflicts with \"{1}\" in the following project(s): {2}","belongsTo":"【JSON::ParserError】\"{0}\" conflicts with {1}* in the following project(s): {2}","equals":"\"{0}\" already exists in the following project(s): {1}","emptyfield":"The following field(s) are required: {0}"},"confirm":{"delete":"Are you sure you want to delete \"{0}\" ?","no":"No","yes":"Yes","header":"Confirm"},"grid":{"edit":"(dbclick to edit a cell)","empty":"No data","search":"Search"},"json":{"format":"formatted","mini":"minimized"}}}
+{
+  "ui": {
+    "common": {
+      "action": "Actions",
+      "add": "Add",
+      "applyto": "Apply to",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "desc": "Description",
+      "download": "Download",
+      "edit": "Edit",
+      "file": "File",
+      "import": "Import",
+      "language": "Language",
+      "locale": "Locale",
+      "locales": "Locales",
+      "or": "or",
+      "others": "and {0} others",
+      "update": "Update"
+    },
+    "confirm": {
+      "delete": "Are you sure you want to delete \"{0}\" ?",
+      "header": "Confirm",
+      "no": "No",
+      "yes": "Yes"
+    },
+    "err": {
+      "belongsTo": "【JSON::ParserError】\"{0}\" conflicts with {1}* in the following project(s): {2}",
+      "contains": "【JSON::ParserError】\"{0}\" conflicts with \"{1}\" in the following project(s): {2}",
+      "emptyfield": "The following field(s) are required: {0}",
+      "equals": "\"{0}\" already exists in the following project(s): {1}",
+      "iconflicts": "The following key(s) will cause JSON-parsing error(s):",
+      "iequals": "The following key(s) will override original translation(s):"
+    },
+    "file": {
+      "accept": "Accept {0} only.",
+      "select": "Drop your locale file here, or click to select a file to import.",
+      "selected": "The file to import:"
+    },
+    "grid": {
+      "edit": "(dbclick to edit a cell)",
+      "empty": "No data",
+      "search": "Search"
+    },
+    "json": {
+      "format": "formatted",
+      "mini": "minimized"
+    },
+    "tip": {
+      "iconflicts": "(e.g.) \"ui.common.add\" will conflict with \"ui\", \"ui.common\", and/or \"ui.common.add.*\" while parsing to JSON format.",
+      "iequals": "This means you already have translations with these keys for selected locale and project."
+    }
+  }
+}

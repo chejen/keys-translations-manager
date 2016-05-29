@@ -29,6 +29,7 @@ export default class ImportModal extends React.Component {
 			selectedProject: null
 		}
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+		this.acceptTypes = ["json", "properties"];
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -54,8 +55,9 @@ export default class ImportModal extends React.Component {
 	}
 
 	onDrop(files) {
-		const re = /\.(json|properties)$/,
-			file = files[0];
+		const re = new RegExp("\\.(" + this.acceptTypes.join("|") + ")"),
+			file = files[0],
+			me = this;
 		if ( re.test(file.name) ) {
 			this.setState({
 				selectedFile: file
@@ -65,7 +67,7 @@ export default class ImportModal extends React.Component {
 				type: 'accept',
 				action: "i",
 				params: file,
-				match: ["*.json", "*.properties"]
+				match: me.acceptTypes
 			}]);
 		}
 	}
@@ -133,7 +135,14 @@ export default class ImportModal extends React.Component {
 							</span>)
 							: (<ul>
 								<li>{localeUtil.getMsg("ui.file.select")}</li>
-								<li>{localeUtil.getMsg("ui.file.accept")}</li>
+								<li>
+								{localeUtil.getMsg(
+									"ui.file.accept",
+									this.acceptTypes.map(function(e){
+										return `*.${e}`
+									}).join(` ${localeUtil.getMsg("ui.common.or")} `)
+								)}
+								</li>
 							</ul>)
 						}
 					</Dropzone>
