@@ -50,6 +50,42 @@ describe('(reducer) errors', function() {
 	it('should handle CLEAR_ERRORS', () => {
 		expect(
 			reducer(errors, {
+				type: 'LOAD_MESSAGES',
+				errors: []
+			})
+		)
+		.to.be.an('array')
+		.to.have.lengthOf(0);
+
+		expect(
+			reducer(errors, {
+				type: 'LOAD_COUNTS',
+				errors: []
+			})
+		)
+		.to.be.an('array')
+		.to.have.lengthOf(0);
+
+		expect(
+			reducer(errors, {
+				type: 'SHOW_EDITMODAL',
+				errors: []
+			})
+		)
+		.to.be.an('array')
+		.to.have.lengthOf(0);
+
+		expect(
+			reducer(errors, {
+				type: 'SHOW_IMPORTMODAL',
+				errors: []
+			})
+		)
+		.to.be.an('array')
+		.to.have.lengthOf(0);
+
+		expect(
+			reducer(errors, {
 				type: 'CLEAR_ERRORS',
 				errors: []
 			})

@@ -43,6 +43,17 @@ describe('(reducer) components', function() {
 				showeditmodal: true,
 				editrecord: record
 			}, {
+				type: 'UPDATE_TRANSLATION'
+			})
+		).to.be.an('object')
+		.to.have.property('showeditmodal')
+			.that.is.false
+
+		expect(
+			reducer({
+				showeditmodal: true,
+				editrecord: record
+			}, {
 				type: 'CLOSE_EDITMODAL'
 			})
 		).to.be.an('object')
@@ -74,10 +85,19 @@ describe('(reducer) components', function() {
 	it('should handle CLOSE_IMPORTMODAL', () => {
 		expect(
 			reducer({
-				showimportmodal: true,
-				showeditmodal: false
+				showimportmodal: true
 			}, {
 				type: 'CLOSE_IMPORTMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showimportmodal')
+			.that.is.false
+
+		expect(
+			reducer({
+				showimportmodal: true
+			}, {
+				type: 'IMPORT_LOCALE'
 			})
 		).to.be.an('object')
 		.to.have.property('showimportmodal')
