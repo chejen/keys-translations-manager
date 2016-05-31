@@ -125,6 +125,8 @@ export default class ImportModal extends React.Component {
 					</ControlLabel>
 					<Dropzone accept=".json,.properties"
 							className="app-dropzone"
+							activeClassName="app-dropzone-enter"
+							rejectClassName="app-dropzone-enter"
 							multiple={false} disablePreview
 							onDrop={this.onDrop.bind(this)}>
 
