@@ -19,12 +19,15 @@
 [Prerequisites](#prerequisites) |
 [Getting Started](#getting-started) |
 [Custom](#custom) |
+[Import](#import) |
+[Data Validation](#data-validation) |
 [CLI](#cli) |
 [REST API](#rest-api) |
 [Technologies](#technologies) |
-[License](#license)
+[License](#license) |
+[Questions?](#questions)
 
-> This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their related translations. Also, you can download final locale files (either *.json or *.properties) through this application.
+> This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their translations. Also, you can download final locale files (either *.json or *.properties) through this application.
 
 
 ## Demo
@@ -59,6 +62,16 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 
 * Rebuild the code (```npm run build```) if you change the settings of **locales** or **projects**.
 * Restart the server if you change any of these configurations.
+
+
+## Import
+* Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [docs] [16] for more details)
+
+
+## Data Validation
+Keys-Translations Manager will help you validate your input and import, and here are 2 main principles:
+* The field `Key` is unique for every single project.
+* If the key "ui.common.add" exists, "ui", "ui.common", and "ui.common.add.*" are all disallowed. Otherwise, it would cause JSON parsing errors.
 
 
 ## CLI
@@ -97,6 +110,11 @@ Example request URIs:
 ## License
 This source code is licensed under the [MIT License](http://www.opensource.org/licenses/MIT).
 
+
+## Questions?
+Please don't hesitate to [open an issue](https://github.com/chejen/keys-translations-manager/issues/new) or [contact me](mailto:jkopre.qek@gmail.com).
+
+
 [1]: https://www.mongodb.org/
 [2]: http://expressjs.com/
 [3]: https://facebook.github.io/react/
@@ -112,3 +130,4 @@ This source code is licensed under the [MIT License](http://www.opensource.org/l
 [13]: https://babeljs.io/
 [14]: http://eslint.org/
 [15]: https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli
+[16]: https://github.com/chejen/keys-translations-manager/tree/master/docs/
