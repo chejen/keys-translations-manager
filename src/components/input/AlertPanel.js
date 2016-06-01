@@ -26,6 +26,7 @@ export default class AlertPanel extends React.Component {
 	render() {
 		const getProjectName = configUtil.getProjectName,
 			errors = this.props.errors,
+			num = 3,
 			len = errors.length;
 		let err,
 			errMsg = [],
@@ -86,8 +87,8 @@ export default class AlertPanel extends React.Component {
 								<i className="fa fa-info-circle" style={{color:"black"}}/>
 							</OverlayTrigger>
 							<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							{err.key.length > 3
-								? `${err.key[0]}, ${err.key[1]} ${localeUtil.getMsg("ui.common.others", err.key.length - 2)}`
+							{err.key.length >= (num + 2)
+								? `${err.key.slice(0, num).join(", ")} ${localeUtil.getMsg("ui.common.others", err.key.length - num)}`
 								: err.key.join(", ")
 							}
 						</span>

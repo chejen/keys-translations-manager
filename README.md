@@ -19,10 +19,9 @@
 [Prerequisites](#prerequisites) |
 [Getting Started](#getting-started) |
 [Custom](#custom) |
-[Import](#import) |
-[Data Validation](#data-validation) |
 [CLI](#cli) |
 [REST API](#rest-api) |
+[Import](#import) |
 [Technologies](#technologies) |
 [License](#license) |
 [Questions?](#questions)
@@ -64,16 +63,6 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 * Restart the server if you change any of these configurations.
 
 
-## Import
-* Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [docs] [16] for more details)
-
-
-## Data Validation
-Keys-Translations Manager will help you validate your input and import, and here are 2 main principles:
-* The field `Key` is unique for every single project.
-* If the key "ui.common.add" exists, "ui", "ui.common", and "ui.common.add.*" are all disallowed. Otherwise, it would cause JSON parsing errors.
-
-
 ## CLI
 * Download locales without opening the web application. (See [keys-translations-manager-cli] [15] for more details)
 
@@ -97,6 +86,10 @@ Example request URIs:
 
 * GET http://localhost:3000/api/download/f/json/p1/en-US
   * Download a JSON file for en-US locale.
+
+
+## Import
+* Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [docs] [16] for more details)
 
 
 ## Technologies
@@ -130,4 +123,4 @@ Please don't hesitate to [open an issue](https://github.com/chejen/keys-translat
 [13]: https://babeljs.io/
 [14]: http://eslint.org/
 [15]: https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli
-[16]: https://github.com/chejen/keys-translations-manager/tree/master/docs/
+[16]: https://github.com/chejen/keys-translations-manager/blob/master/docs/import.md
