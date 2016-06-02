@@ -22,14 +22,15 @@ describe('(component) FormPanel', () => {
 		expect(wrapper.type()).to.eql('form');
 	});
 
-	it('should contain <input>s', () => {
+	it('should contain TextFields and checkboxes', () => {
 		const { props, context } = setup()
 		const wrapper = shallow(
 			<FormPanel {...props}/>,
 			{context: context}
 		)
-		expect(wrapper.find('Input[type="text"]')).to.have.length(context.config.locales.length + 1);
-		expect(wrapper.find('Input[type="checkbox"]')).to.have.length(context.config.projects.length);
+		expect(wrapper.find('TextField[required]')).to.have.length(context.config.locales.length + 1);
+		expect(wrapper.find('TextField[componentClass="textarea"]')).to.have.length(1);
+		expect(wrapper.find('Checkbox')).to.have.length(context.config.projects.length);
 	});
 
 	it('should have ".app-checkbox-options" class in create mode', () => {
@@ -41,12 +42,26 @@ describe('(component) FormPanel', () => {
 		expect(wrapper.find(".app-checkbox-options")).to.have.length(1);
 	});
 
-	it('should have "background-color" style in edit mode', () => {
+	it("should have no value set in create mode", () => {
+		const { props, context } = setup()
+		const wrapper = shallow(
+			<FormPanel {...props}/>,
+			{context: context}
+		)
+		expect(wrapper.find('TextField[name="key"]').prop("value")).to.be.undefined;
+		expect(wrapper.find('TextField[name="en-US"]').prop("defaultValue")).to.be.empty;
+		expect(wrapper.find('TextField[name="zh-TW"]').prop("defaultValue")).to.be.empty;
+		expect(wrapper.find('TextField[name="description"]').prop("defaultValue")).to.be.empty;
+		expect(wrapper.find('Checkbox[value="p1"]').prop("checked")).to.be.true;
+	});
+
+	it("should have readonly 'key' field in edit mode", () => {
 		const data = {
 			"_id": "56d7037a0b70e760104ddf10",
+			"description": "some description",
 			"en-US": "Edit",
 			"key": "ui.common.edit",
-			"project": ["p1"],
+			"project": ["p2"],
 			"zh-TW": "編輯"
 		}
 		const { context } = setup()
@@ -54,50 +69,31 @@ describe('(component) FormPanel', () => {
 			<FormPanel data={data}/>,
 			{context: context}
 		)
-		expect(wrapper.find('Input').first().html().indexOf("background-color") > 0).to.be.true;
+		expect(wrapper.find('TextField[name="key"]').prop("readOnly")).to.be.true;
 	});
 
-	describe('child: Input[type="text"], key="key" (edit mode)', () => {
-		it('should call onInputChange() if text changed', () => {
-			FormPanel.prototype.onInputChange = sinon.spy()
-			const data = {
-				"_id": "56d7037a0b70e760104ddf10",
-				"en-US": "Edit",
-				"key": "ui.common.edit",
-				"project": ["p1"],
-				"zh-TW": "編輯"
-			}
-			const { context } = setup()
-			const wrapper = mount(
-				<FormPanel data={data}/>,
-				{context: context}
-			)
-			wrapper.find('input[type="text"]').first().simulate('change',{ target: { value: "ui.test" } });
-			expect(FormPanel.prototype.onInputChange).calledOnce;
-		});
+	it("should have values set in edit mode", () => {
+		const data = {
+			"_id": "56d7037a0b70e760104ddf10",
+			"description": "some description",
+			"en-US": "Edit",
+			"key": "ui.common.edit",
+			"project": ["p2"],
+			"zh-TW": "編輯"
+		}
+		const { context } = setup()
+		const wrapper = shallow(
+			<FormPanel data={data}/>,
+			{context: context}
+		)
+		expect(wrapper.find('TextField[name="key"]').prop("value")).to.be.eql("ui.common.edit");
+		expect(wrapper.find('TextField[name="en-US"]').prop("defaultValue")).to.be.eql("Edit");
+		expect(wrapper.find('TextField[name="zh-TW"]').prop("defaultValue")).to.be.eql("編輯");
+		expect(wrapper.find('TextField[name="description"]').prop("defaultValue")).to.be.eql("some description");
+		expect(wrapper.find('Checkbox[value="p1"]').prop("checked")).to.be.false;
 	});
 
-	describe('child: textarea, key="description"', () => {
-		it('should call onInputChange() if text changed', () => {
-			FormPanel.prototype.onInputChange = sinon.spy()
-			const data = {
-				"_id": "56d7037a0b70e760104ddf10",
-				"en-US": "Edit",
-				"description": "edit",
-				"key": "ui.common.edit",
-				"project": ["p1"],
-				"zh-TW": "編輯"
-			}
-			const { context } = setup()
-			const wrapper = mount(
-				<FormPanel data={data}/>,
-				{context: context}
-			)
-			expect(wrapper.find('textarea').first().text()).to.eql('edit');
-		});
-	});
-
-	describe('child: Input[type="checkbox"]', () => {
+	describe('child: input[type="checkbox"]', () => {
 		it('should call onCheckboxChange() if checked/unchecked', () => {
 			FormPanel.prototype.onCheckboxChange = sinon.spy()
 			const { context } = setup()

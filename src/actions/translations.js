@@ -102,3 +102,36 @@ export function updateTranslation(params) {
 		})
 	}
 }
+
+export function importLocale(params) {
+	let data = new FormData()
+	data.append('file', params.file)
+	data.append('locale', params.locale)
+	data.append('project', params.applyto)
+
+	return dispatch => {
+		return fetch(configUtil.getHost() + '/api/import', {
+			method: 'POST',
+			body: data
+		})
+		.then(res => {
+			if (res.status >= 400) {
+				throw new Error(res.status + ", " + res.statusText);
+			}
+			return res.json();
+		})
+		.then((result) => {
+			if (result.success) {
+				dispatch({
+					type: ActionTypes.IMPORT_LOCALE,
+					data: result.data
+				})
+			} else {
+				dispatch({
+					type: ActionTypes.ALERT_ERRORS,
+					errors: result.errors
+				})
+			}
+		})
+	}
+}

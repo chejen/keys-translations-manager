@@ -28,4 +28,22 @@ describe('(action) components', () => {
 				})
 		})
 	})
+
+	describe('showImportModal', () => {
+		it('should create an action to show ImportModal', () => {
+			expect(actions.showImportModal())
+				.to.deep.equal({
+					type: 'SHOW_IMPORTMODAL'
+				})
+		})
+	})
+
+	describe('closeImportModal', () => {
+		it('should create an action to close ImportModal', () => {
+			expect(actions.closeImportModal())
+				.to.deep.equal({
+					type: 'CLOSE_IMPORTMODAL'
+				})
+		})
+	})
 })

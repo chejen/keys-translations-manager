@@ -1,18 +1,30 @@
-import { SHOW_EDITMODAL, UPDATE_TRANSLATION, CLOSE_EDITMODAL } from '../constants/ActionTypes'
+import * as ActionTypes from '../constants/ActionTypes'
 import { INIT_COMPONENTS } from '../constants/InitStates'
 
 export default function components(state = INIT_COMPONENTS, action) {
 	switch (action.type) {
-		case SHOW_EDITMODAL:
+		case ActionTypes.SHOW_IMPORTMODAL:
 			return {
+				...state,
+				showimportmodal: true
+			};
+		case ActionTypes.IMPORT_LOCALE:
+		case ActionTypes.CLOSE_IMPORTMODAL:
+			return {
+				...state,
+				showimportmodal: false
+			};
+		case ActionTypes.SHOW_EDITMODAL:
+			return {
+				...state,
 				showeditmodal: true,
 				editrecord: action.record
 			};
-		case UPDATE_TRANSLATION:
-		case CLOSE_EDITMODAL:
+		case ActionTypes.UPDATE_TRANSLATION:
+		case ActionTypes.CLOSE_EDITMODAL:
 			return {
-				showeditmodal: false,
-				editrecord: state.editrecord
+				...state,
+				showeditmodal: false
 			};
 		default:
 			return state;

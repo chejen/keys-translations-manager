@@ -10,6 +10,7 @@ import MainPanel from '../components/layout/MainPanel'
 import SideBar from '../components/layout/SideBar'
 import OutputPanel from '../components/output/OutputPanel'
 import EditModal from '../components/input/EditModal'
+import ImportModal from '../components/import/ImportModal'
 import config from '../../ktm.config'
 const languages = ["en-US", "zh-TW"]
 
@@ -21,6 +22,7 @@ export default class App extends React.Component {
 		errors: React.PropTypes.array.isRequired,
 		translations: React.PropTypes.array.isRequired,
 		showeditmodal: React.PropTypes.bool.isRequired,
+		showimportmodal: React.PropTypes.bool.isRequired,
 		editrecord: React.PropTypes.object.isRequired,
 
 		MessageActions: React.PropTypes.object.isRequired,
@@ -71,13 +73,16 @@ export default class App extends React.Component {
 			MessageActions, TranslationActions,
 			ErrorActions, ComponentActions,
 			lang, messages, counts, errors,
-			translations, showeditmodal, editrecord } = this.props
+			translations, showeditmodal, editrecord,
+			showimportmodal } = this.props
 
 		return (lang) ? (
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
-					<DropdownMenu lang={lang} messages={messages} loadMessages={MessageActions.loadMessages}/>
+					<DropdownMenu lang={lang} messages={messages}
+						loadMessages={MessageActions.loadMessages}
+						showImportModal={ComponentActions.showImportModal}/>
 					<SideBar>
 						<InputPanel messages={messages}
 							alertErrors={ErrorActions.alertErrors}
@@ -88,8 +93,13 @@ export default class App extends React.Component {
 					<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
 					<OutputPanel projectCounts={counts} messages={messages}/>
 					<MainPanel>
-						<EditModal ref="editModal"
-							data={editrecord} errors={errors}
+						<ImportModal errors={errors}
+							alertErrors={ErrorActions.alertErrors}
+							clearErrors={ErrorActions.clearErrors}
+							importLocale={TranslationActions.importLocale}
+							showimportmodal={showimportmodal}
+							closeImportModal={ComponentActions.closeImportModal}/>
+						<EditModal data={editrecord} errors={errors}
 							showeditmodal={showeditmodal}
 							closeEditModal={ComponentActions.closeEditModal}
 							updateTranslation={TranslationActions.updateTranslation}

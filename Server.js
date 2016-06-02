@@ -10,6 +10,7 @@ import config from './ktm.config'
 import TranslationController from './src/controllers/TranslationController'
 import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
+import ImportController from './src/controllers/ImportController'
 let log = logUtil.log,
 	app = express(),
 	webpackConfig,
@@ -84,3 +85,4 @@ app.use(bodyParser.json());
 app.use("/api/translation", TranslationController);
 app.use("/api/count", CountController);
 app.use("/api/download", DownloadController);
+app.use("/api/import", ImportController);

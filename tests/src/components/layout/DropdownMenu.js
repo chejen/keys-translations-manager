@@ -3,7 +3,8 @@ import DropdownMenu from '../../../../src/components/layout/DropdownMenu'
 function setup() {
 	let props = {
 			lang: 'en-US',
-			loadMessages: sinon.spy()
+			loadMessages: sinon.spy(),
+			showImportModal: sinon.spy()
 		},
 		wrapper = shallow(<DropdownMenu {...props}/>);
 
@@ -19,7 +20,15 @@ describe('(component) DropdownMenu', () => {
 		expect(wrapper.type()).to.eql('ul');
 	});
 
-	describe('child: li > a', () => {
+	describe('child: Import', () => {
+		it('should call this.props.showImportModal() if clicked', () => {
+			const { props, wrapper } = setup()
+			wrapper.find('.nav').find('a').get(0).props.onClick();
+			expect(props.showImportModal).calledOnce;
+		});
+	});
+
+	describe('child: Language', () => {
 		describe('if param equals this.props.lang', () => {
 			it('shouldn\'t call this.props.loadMessages()', () => {
 				const { props, wrapper } = setup()

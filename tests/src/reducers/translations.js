@@ -106,4 +106,13 @@ describe('(reducer) translations', function() {
 			"zh-TW": "增加"
 		}])
 	})
+
+	it('should handle IMPORT_LOCALE', () => {
+		expect(
+			reducer(INIT_TRANSLATIONS, {
+				type: 'IMPORT_LOCALE',
+				data: translations
+			})
+		).to.deep.equal(translations)
+	})
 });

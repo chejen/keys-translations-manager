@@ -6,7 +6,8 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 export default class DropdownMenu extends React.Component {
 	static propTypes = {
 		lang: React.PropTypes.string.isRequired,
-		loadMessages: React.PropTypes.func.isRequired
+		loadMessages: React.PropTypes.func.isRequired,
+		showImportModal: React.PropTypes.func.isRequired
 	}
 
 	constructor() {
@@ -22,8 +23,18 @@ export default class DropdownMenu extends React.Component {
 
 	render() {
 		return(
-			<ul className="nav navbar-top-links navbar-right" title={localeUtil.getMsg("ui.common.language")}>
-				<li className="dropdown">
+			<ul className="nav navbar-top-links navbar-right">
+				<li className="dropdown" title={localeUtil.getMsg("ui.common.import")}>
+					<a className="dropdown-toggle" href="#" onClick={(event) => {
+								if (event) {
+									event.preventDefault();
+								}
+								this.props.showImportModal();
+							}}>
+						<i className="fa fa-cloud-upload fa-fw fa-lg"/>
+					</a>
+				</li>
+				<li className="dropdown" title={localeUtil.getMsg("ui.common.language")}>
 					<a className="dropdown-toggle" data-toggle="dropdown" href="#">
 						<i className="fa fa-language fa-fw fa-lg"/>
 						<i className="fa fa-caret-down"/>

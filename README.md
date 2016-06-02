@@ -14,7 +14,19 @@
 
 
 # Keys-Translations Manager
-> This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their related translations. Also, you can download final locale files (either *.json or *.properties) through this application.
+
+[Demo](#demo) |
+[Prerequisites](#prerequisites) |
+[Getting Started](#getting-started) |
+[Custom](#custom) |
+[CLI](#cli) |
+[REST API](#rest-api) |
+[Import](#import) |
+[Technologies](#technologies) |
+[License](#license) |
+[Questions?](#questions)
+
+> This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their translations. Also, you can download final locale files (either *.json or *.properties) through this application.
 
 
 ## Demo
@@ -27,7 +39,7 @@
 
 
 ## Getting Started
-Checkout this repo (or directly download the stable release from [here](https://github.com/chejen/keys-translations-manager/releases)), install dependencies, then start the web server:
+Checkout this repo (or directly download the stable releases from [here](https://github.com/chejen/keys-translations-manager/releases)), install dependencies, then start the web server:
 ```sh
 $ git clone https://github.com/chejen/keys-translations-manager
 $ cd keys-translations-manager
@@ -52,7 +64,7 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 
 
 ## CLI
-* Download locales without opening the web application. (See [keys-translations-manager-cli] [12] for more details)
+* Download locales without opening the web application. (See [keys-translations-manager-cli] [15] for more details)
 
 
 ## REST API
@@ -76,15 +88,30 @@ Example request URIs:
   * Download a JSON file for en-US locale.
 
 
+## Import
+* Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [docs] [16] for more details)
+
+
 ## Technologies
 * Scaffolded with [MongoDB] [1], [Express] [2], [React] [3], and [Node.js] [4]
 * Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
 * Module Bundler: [webpack] [9]
-* Miscellaneous: [Babel] [10], [ESLint] [11]
+* Unit Testing: [Mocha] [10], [Chai] [11] and [Enzyme] [12]
+* Miscellaneous: [Babel] [13], [ESLint] [14]
 
 
 ## License
 This source code is licensed under the [MIT License](http://www.opensource.org/licenses/MIT).
+
+
+## Questions?
+Please don't hesitate to [open an issue](https://github.com/chejen/keys-translations-manager/issues/new) or [contact me](mailto:jkopre.qek@gmail.com).
+
+
+## Roadmap
+* Push real-time notifications to client when data was changed by other users.
+* Add **MERGE** functionality to merge the same keys which are in different projects but have the same translations for every locale.
+
 
 [1]: https://www.mongodb.org/
 [2]: http://expressjs.com/
@@ -95,6 +122,10 @@ This source code is licensed under the [MIT License](http://www.opensource.org/l
 [7]: http://startbootstrap.com/template-overviews/sb-admin-2/
 [8]: http://formatjs.io/react/
 [9]: https://webpack.github.io/
-[10]: https://babeljs.io/
-[11]: http://eslint.org/
-[12]: https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli
+[10]: https://mochajs.org/
+[11]: http://chaijs.com/
+[12]: http://airbnb.io/enzyme/
+[13]: https://babeljs.io/
+[14]: http://eslint.org/
+[15]: https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli
+[16]: https://github.com/chejen/keys-translations-manager/blob/master/docs/import.md
