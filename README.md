@@ -108,6 +108,11 @@ This source code is licensed under the [MIT License](http://www.opensource.org/l
 Please don't hesitate to [open an issue](https://github.com/chejen/keys-translations-manager/issues/new) or [contact me](mailto:jkopre.qek@gmail.com).
 
 
+## Roadmap
+* Push real-time notifications to client when data was changed by other users.
+* Add **MERGE** functionality to merge the same keys which are in different projects but have the same translations for every locale.
+
+
 [1]: https://www.mongodb.org/
 [2]: http://expressjs.com/
 [3]: https://facebook.github.io/react/

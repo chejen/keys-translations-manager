@@ -1,6 +1,6 @@
 {
 	"name": "keys-translations-manager",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"private": true,
 	"description": "A web application for locale's keys and translations management.",
 	"keywords": [
@@ -49,7 +49,7 @@
 		"react-addons-pure-render-mixin": "~15.1.0",
 		"react-bootstrap": "~0.29.4",
 		"react-dom": "~15.1.0",
-		"react-dropzone": "^3.4.0",
+		"react-dropzone": "^3.5.0",
 		"react-redux": "^4.4.5",
 		"redux": "^3.5.2",
 		"redux-thunk": "^2.1.0"
@@ -66,14 +66,14 @@
 		"babel-preset-react-hmre": "^1.1.1",
 		"babel-preset-stage-0": "^6.5.0",
 		"chai": "^3.5.0",
-		"clean-css": "^3.4.13",
+		"clean-css": "^3.4.15",
 		"codecov": "^1.0.1",
 		"compression": "^1.6.2",
 		"cross-env": "^1.0.8",
 		"css-loader": "^0.23.1",
 		"ejs": "^2.4.2",
 		"enzyme": "^2.3.0",
-		"eslint": "^2.11.0",
+		"eslint": "^2.11.1",
 		"eslint-loader": "^1.3.0",
 		"eslint-plugin-babel": "^3.2.0",
 		"eslint-plugin-i18n": "^1.0.1",

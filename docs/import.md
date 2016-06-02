@@ -17,7 +17,7 @@
 ![step3](https://cloud.githubusercontent.com/assets/14872888/15712846/7a8d0d80-2846-11e6-983a-8ddf0b033117.png)
 
 > Keys-Translations Manager will help you validate your data, and here are 2 main principles:
-> 1. The field `Key` is unique for every single project.
+> 1. The field `Key` is unique by {locale + project}.
 > 2. If the key "ui.common.add" exists, "ui", "ui.common", and "ui.common.add.*" are all disallowed. Otherwise, it would cause JSON parsing errors.
 
 * Step 4: Repeat step 1 to step 3 until all of your locales are imported.
