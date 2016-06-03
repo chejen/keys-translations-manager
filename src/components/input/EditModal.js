@@ -25,6 +25,7 @@ export default class EditModal extends React.Component {
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
+	/* istanbul ignore next */
 	updateTranslation() {
 		const config = this.context.config,
 			el = this.refs.formPanel.getFormElements(),
