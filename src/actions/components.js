@@ -24,3 +24,15 @@ export function closeImportModal() {
 		type: ActionTypes.CLOSE_IMPORTMODAL
 	}
 }
+
+export function showMessagePopup() {
+	return {
+		type: ActionTypes.SHOW_MESSAGEPOPUP
+	}
+}
+
+export function closeMessagePopup() {
+	return {
+		type: ActionTypes.CLOSE_MESSAGEPOPUP
+	}
+}

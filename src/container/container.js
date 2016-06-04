@@ -18,6 +18,7 @@ function mapStateToProps(state) {
 		translations: state.translations,
 		showeditmodal: state.components.showeditmodal,
 		showimportmodal: state.components.showimportmodal,
+		showmessagepopup: state.components.showmessagepopup,
 		editrecord: state.components.editrecord
 	}
 }

@@ -1,6 +1,7 @@
 export const INIT_COMPONENTS = {
 	showimportmodal: false,
 	showeditmodal: false,
+	showmessagepopup: false,
 	editrecord: {}
 };
 export const INIT_COUNTS = {};

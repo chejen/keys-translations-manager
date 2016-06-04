@@ -23,6 +23,7 @@ export default class App extends React.Component {
 		translations: React.PropTypes.array.isRequired,
 		showeditmodal: React.PropTypes.bool.isRequired,
 		showimportmodal: React.PropTypes.bool.isRequired,
+		showmessagepopup: React.PropTypes.bool.isRequired,
 		editrecord: React.PropTypes.object.isRequired,
 
 		MessageActions: React.PropTypes.object.isRequired,
@@ -74,7 +75,7 @@ export default class App extends React.Component {
 			ErrorActions, ComponentActions,
 			lang, messages, counts, errors,
 			translations, showeditmodal, editrecord,
-			showimportmodal } = this.props
+			showimportmodal, showmessagepopup } = this.props
 
 		return (lang) ? (
 			<div id="wrapper">
@@ -111,6 +112,11 @@ export default class App extends React.Component {
 							showEditModal={ComponentActions.showEditModal}/>*/}
 					</MainPanel>
 				</div>
+				<MessagePopup msg="Data has been changed by others."
+						closeMessagePopup={ComponentActions.closeMessagePopup}
+						showmessagepopup={showmessagepopup}>
+					<b><u><a href="#">Refresh</a></u></b>
+				</MessagePopup>
 			</div>
 		) : (<div className="app-default">
 			<i className="fa fa-spinner fa-pulse fa-2x"/>

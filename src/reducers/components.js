@@ -3,6 +3,17 @@ import { INIT_COMPONENTS } from '../constants/InitStates'
 
 export default function components(state = INIT_COMPONENTS, action) {
 	switch (action.type) {
+		case ActionTypes.SHOW_MESSAGEPOPUP:
+			return {
+				...state,
+				showmessagepopup: true
+			};
+		case ActionTypes.LOAD_TRANSLATIONS:
+		case ActionTypes.CLOSE_MESSAGEPOPUP:
+			return {
+				...state,
+				showmessagepopup: false
+			};
 		case ActionTypes.SHOW_IMPORTMODAL:
 			return {
 				...state,
