@@ -103,4 +103,36 @@ describe('(reducer) components', function() {
 		.to.have.property('showimportmodal')
 			.that.is.false
 	})
+
+	it('should handle SHOW_MESSAGEPOPUP', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'SHOW_MESSAGEPOPUP'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.true
+	})
+
+	it('should handle CLOSE_MESSAGEPOPUP', () => {
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'CLOSE_MESSAGEPOPUP'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'LOAD_TRANSLATIONS'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.false
+	})
 });

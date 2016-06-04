@@ -1,6 +1,7 @@
 {
 	"verbose": true,
 	"ignore": [
+		"docs/",
 		"public/",
 		"src/client/",
 		"src/components/",

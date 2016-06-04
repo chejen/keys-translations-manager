@@ -46,4 +46,22 @@ describe('(action) components', () => {
 				})
 		})
 	})
+
+	describe('showMessagePopup', () => {
+		it('should create an action to show MessagePopup', () => {
+			expect(actions.showMessagePopup())
+				.to.deep.equal({
+					type: 'SHOW_MESSAGEPOPUP'
+				})
+		})
+	})
+
+	describe('closeMessagePopup', () => {
+		it('should create an action to close MessagePopup', () => {
+			expect(actions.closeMessagePopup())
+				.to.deep.equal({
+					type: 'CLOSE_MESSAGEPOPUP'
+				})
+		})
+	})
 })
