@@ -1,3 +1,4 @@
+import io from 'socket.io-client';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -14,6 +15,7 @@ import EditModal from '../components/input/EditModal'
 import ImportModal from '../components/import/ImportModal'
 import config from '../../ktm.config'
 const languages = ["en-US", "zh-TW"]
+const socket = io.connect('/');
 
 export default class App extends React.Component {
 	static propTypes = {
@@ -31,6 +33,7 @@ export default class App extends React.Component {
 		CountActions: React.PropTypes.object.isRequired,
 		TranslationActions: React.PropTypes.object.isRequired,
 		ErrorActions: React.PropTypes.object.isRequired,
+		SocketActions: React.PropTypes.object.isRequired,
 		ComponentActions: React.PropTypes.object.isRequired
 	}
 
@@ -48,7 +51,13 @@ export default class App extends React.Component {
 	}
 
 	componentWillMount() {
+		const me = this;
 		this.loadMessages();
+		socket.on('ktm', function (data) {
+			if (data && data.action === "datachanged") {
+				me.props.ComponentActions.showMessagePopup();
+			}
+		});
 	}
 
 	componentDidMount() {
@@ -61,6 +70,10 @@ export default class App extends React.Component {
 		}
 		if (nextProps.translations !== this.props.translations) {
 			nextProps.CountActions.loadCounts();
+			if (nextProps.emitdatachange) {
+				socket.emit('ktm', { action: 'datachanged' });
+				this.props.SocketActions.endDataChange();
+			}
 		}
 	}
 
@@ -116,7 +129,14 @@ export default class App extends React.Component {
 				<MessagePopup msg="Data has been changed by others."
 						closeMessagePopup={ComponentActions.closeMessagePopup}
 						showmessagepopup={showmessagepopup}>
-					<b><u><a href="#">Refresh</a></u></b>
+					<b><u>
+						<a href="#" onClick={(event) => {
+							if (event) {
+								event.preventDefault();
+							}
+							TranslationActions.loadTranslations();
+						}}>Refresh</a>
+					</u></b>
 				</MessagePopup>
 			</div>
 		) : (<div className="app-default">

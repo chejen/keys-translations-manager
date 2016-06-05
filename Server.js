@@ -11,9 +11,11 @@ import TranslationController from './src/controllers/TranslationController'
 import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
 import ImportController from './src/controllers/ImportController'
-let log = logUtil.log,
+const log = logUtil.log,
 	app = express(),
-	webpackConfig,
+	server = require('http').Server(app),
+	io = require('socket.io')(server);
+let webpackConfig,
 	compiler;
 
 mongoose.connect(config.database, function(err) {
@@ -26,7 +28,7 @@ mongoose.connect(config.database, function(err) {
 	}
 });
 
-app.listen(config.server.port, config.server.hostname, function(err) {
+server.listen(config.server.port, config.server.hostname, function(err) {
 	if (err) {
 		log('error', err);
 		process.exit(1);
@@ -37,6 +39,14 @@ app.listen(config.server.port, config.server.hostname, function(err) {
 	} else {
 		log('info', 'Dev-server (at http://localhost:3000) is starting, please wait ...');
 	}
+});
+io.on('connection', function (socket) {
+	socket.on('ktm', function (data) {
+		if (data && data.action === "datachanged") {
+			// sending to all clients except sender
+			socket.broadcast.emit('ktm', {action: "datachanged"});
+		}
+	});
 });
 
 app.set('view engine', 'ejs');

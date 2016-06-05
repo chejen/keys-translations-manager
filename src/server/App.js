@@ -115,7 +115,14 @@ export default class App extends React.Component {
 				<MessagePopup msg="Data has been changed by others."
 						closeMessagePopup={ComponentActions.closeMessagePopup}
 						showmessagepopup={showmessagepopup}>
-					<b><u><a href="#">Refresh</a></u></b>
+					<b><u>
+						<a href="#" onClick={(event) => {
+							if (event) {
+								event.preventDefault();
+							}
+							TranslationActions.loadTranslations();
+						}}>Refresh</a>
+					</u></b>
 				</MessagePopup>
 			</div>
 		) : (<div className="app-default">

@@ -7,6 +7,7 @@ import * as MessageActions from '../actions/messages'
 import * as CountActions from '../actions/counts'
 import * as TranslationActions from '../actions/translations'
 import * as ErrorActions from '../actions/errors'
+import * as SocketActions from '../actions/socket'
 import * as ComponentActions from '../actions/components'
 
 function mapStateToProps(state) {
@@ -16,6 +17,7 @@ function mapStateToProps(state) {
 		counts: state.counts,
 		errors: state.errors,
 		translations: state.translations,
+		emitdatachange: state.socket.emitdatachange,
 		showeditmodal: state.components.showeditmodal,
 		showimportmodal: state.components.showimportmodal,
 		showmessagepopup: state.components.showmessagepopup,
@@ -29,6 +31,7 @@ function mapDispatchToProps(dispatch) {
 		CountActions: bindActionCreators(CountActions, dispatch),
 		TranslationActions: bindActionCreators(TranslationActions, dispatch),
 		ErrorActions: bindActionCreators(ErrorActions, dispatch),
+		SocketActions: bindActionCreators(SocketActions, dispatch),
 		ComponentActions: bindActionCreators(ComponentActions, dispatch)
 	}
 }
