@@ -19,10 +19,21 @@ function setup() {
 }
 
 describe('(component) MessagePopup', () => {
-	it('should render as a <div>', () => {
+	it('should render as a <div> with "app-message-popup" class', () => {
 		const { wrapper } = setup()
-		console.log(wrapper);
 		expect(wrapper.type()).to.eql('div');
+		expect(wrapper.prop('className')).to.eql('app-message-popup');
+	});
+
+	it('should have a child with "app-message-bar" class', () => {
+		const { wrapper } = setup()
+		expect(wrapper.childAt(0).prop('className')).to.eql('app-message-bar');
+	});
+
+	it('should show message and contain child nodes', () => {
+		const { wrapper } = setup()
+		expect(wrapper.children('.app-message-bar').contains("Test Message")).to.be.true;
+		expect(wrapper.children('.app-message-bar').contains(<b>clild</b>)).to.be.true;
 	});
 
 	it('should call this.props.closeMessagePopup() if the close icon clicked', () => {
@@ -30,4 +41,5 @@ describe('(component) MessagePopup', () => {
 		wrapper.find('i').get(0).props.onClick();
 		expect(props.closeMessagePopup).calledOnce;
 	});
+
 });
