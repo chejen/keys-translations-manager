@@ -2,6 +2,7 @@
 [![Dependency Status][dependency-image]][dependency-url]
 [![Build Status (Linux)][travis-image]][travis-url]
 [![Build Status (Windows)][appveyor-image]][appveyor-url]
+[![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 [![Coverage Status][codecov-image]][codecov-url]
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
@@ -12,6 +13,8 @@
 [travis-url]: https://travis-ci.org/chejen/keys-translations-manager
 [appveyor-image]: https://img.shields.io/appveyor/ci/chejen/keys-translations-manager/master.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgd2lkdGg9IjEyOCIgaGVpZ2h0PSIxMjgiIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48ZyBmaWxsPSIjMUJBMUUyIiB0cmFuc2Zvcm09InNjYWxlKDgpIj48cGF0aCBkPSJNMCAyLjI2NWw2LjUzOS0uODg4LjAwMyA2LjI4OC02LjUzNi4wMzd6Ii8%2BPHBhdGggZD0iTTYuNTM2IDguMzlsLjAwNSA2LjI5My02LjUzNi0uODk2di01LjQ0eiIvPjxwYXRoIGQ9Ik03LjMyOCAxLjI2MWw4LjY3LTEuMjYxdjcuNTg1bC04LjY3LjA2OXoiLz48cGF0aCBkPSJNMTYgOC40NDlsLS4wMDIgNy41NTEtOC42Ny0xLjIyLS4wMTItNi4zNDV6Ii8%2BPC9nPjwvc3ZnPg==
 [appveyor-url]: https://ci.appveyor.com/project/chejen/keys-translations-manager
+[npm-downloads-image]: https://img.shields.io/npm/dt/keys-translations-manager-core.svg
+[npm-downloads-url]: https://www.npmjs.com/package/keys-translations-manager-core
 [codecov-image]: https://codecov.io/github/chejen/keys-translations-manager/coverage.svg?branch=master
 [codecov-url]: https://codecov.io/github/chejen/keys-translations-manager?branch=master
 
@@ -22,14 +25,14 @@
 [Prerequisites](#prerequisites) |
 [Getting Started](#getting-started) |
 [Custom](#custom) |
-[CLI](#cli) |
-[REST API](#rest-api) |
 [Import](#import) |
+[Export](#export) |
 [Technologies](#technologies) |
+[Roadmap](#roadmap) |
 [License](#license) |
 [Questions?](#questions)
 
-> This project offers a web application which aims to facilitate locale management. With this application, you can manage keys and their translations. Also, you can download final locale files (either *.json or *.properties) through this application.
+> Keys-Translations Manager, a web application scaffolded with MERN stack, aims to facilitate locale management. With this application, you can manage keys and their translations easily. Also, you can import or export locale files (either *.json or *.properties) through this application.
 
 
 ## Demo
@@ -66,33 +69,12 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 * Restart the server if you change any of these configurations.
 
 
-## CLI
-* Download locales without opening the web application. (See [keys-translations-manager-cli] [15] for more details)
-
-
-## REST API
-/api/download/{format}/{fileType}/{projectId}/{locale}
-
-* Method:
-  * GET
-
-* Parameters:
-  * `format`: replace it with **f** (formatted) or **n** (not formatted) 【Required】
-  * `fileType`: replace it with **json** or **properties** 【Required】
-  * `projectId`: replace it with the project ID set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js) 【Required】
-  * `locale`: replace it with the locale set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js)
-
-Example request URIs:
-
-* GET http://localhost:3000/api/download/n/properties/p1
-  * Download a ZIP file which contains all of the locales in project p1.
-
-* GET http://localhost:3000/api/download/f/json/p1/en-US
-  * Download a JSON file for en-US locale.
-
-
 ## Import
-* Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [docs] [16] for more details)
+Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [instructions] [16])
+
+
+## Export
+Not only can you download locales directly from the web, but you can also get them via [CLI] [15] or [REST API] [17].
 
 
 ## Technologies
@@ -103,17 +85,18 @@ Example request URIs:
 * Miscellaneous: [Babel] [13], [ESLint] [14]
 
 
+## Roadmap
+* Push real-time notifications to client when data was changed by other users.
+* Add **MERGE** functionality to merge the same keys which are in different projects but have the same translations for every locale.
+* Data visualization
+
+
 ## License
 This source code is licensed under the [MIT License](http://www.opensource.org/licenses/MIT).
 
 
 ## Questions?
 Please don't hesitate to [open an issue](https://github.com/chejen/keys-translations-manager/issues/new) or [contact me](mailto:jkopre.qek@gmail.com).
-
-
-## Roadmap
-* Push real-time notifications to client when data was changed by other users.
-* Add **MERGE** functionality to merge the same keys which are in different projects but have the same translations for every locale.
 
 
 [1]: https://www.mongodb.org/
@@ -132,3 +115,4 @@ Please don't hesitate to [open an issue](https://github.com/chejen/keys-translat
 [14]: http://eslint.org/
 [15]: https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli
 [16]: https://github.com/chejen/keys-translations-manager/blob/master/docs/import.md
+[17]: https://github.com/chejen/keys-translations-manager/blob/master/docs/rest-api.md
