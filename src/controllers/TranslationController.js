@@ -101,6 +101,35 @@ router.route('/')
 			Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
 				if (err) res.status(500).send(err);
 				res.json(translations);
+
+				/*
+				var keyHash = {},
+					translation,
+					l = translations.length;
+				//console.log("translations", translations);
+				while(l--){
+					translation = translations[l];
+					if (keyHash[translation.key]) {
+						keyHash[translation.key].push(translation);
+					} else {
+						keyHash[translation.key] = [translation];
+					}
+				}
+				console.log("keyHash", keyHash);
+				for (var key in keyHash) {
+					if (keyHash[key].length >= 2) {
+						var tmpHash = {};
+						var tmpKey = "";
+						var config = require('../../ktm.config');
+						const locales = config.locales;
+						const lenLocales = locales.length;
+						for (var i=0; i<lenLocales; i++) {
+							locale = locales[i];
+							tmpKey +=
+						}
+					}
+				}
+				*/
 			});
 		})
 		.post(function(req, res) {

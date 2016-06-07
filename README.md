@@ -32,7 +32,12 @@
 [License](#license) |
 [Questions?](#questions)
 
-> Keys-Translations Manager, a web application scaffolded with MERN stack, aims to facilitate locale management. With this application, you can manage keys and their translations easily. Also, you can import or export locale files (either *.json or *.properties) through this application.
+> Keys-Translations Manager, a web application scaffolded with MERN stack, aims to facilitate locale management. With this application, you can:
+> * control and manage locales in one place,
+> * import locales from JSON or Properties files,
+> * export locales to JSON or Properties files,
+> * get data validation for input/import, and
+> * get real-time notifications if data is changed by the other users.
 
 
 ## Demo
@@ -65,8 +70,7 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 |  locales  |   The locales need to be managed. (You can add or remove locales arbitrarily.)    | ```['en-US', 'zh-TW']```  |
 |  projects  |   The projects need to be localized. (You can add or remove projects arbitrarily.)    | ```[ {id:'p1', name:'project A'}, {id:'p2', name:'project B'} ]```  |
 
-* Rebuild the code (```npm run build```) if you change the settings of **locales** or **projects**.
-* Restart the server if you change any of these configurations.
+* Rebuild the code (```npm run build```) and restart the server if you change any of these configurations.
 
 
 ## Import
@@ -86,7 +90,6 @@ Not only can you download locales directly from the web, but you can also get th
 
 
 ## Roadmap
-* Push real-time notifications to client when data was changed by other users.
 * Add **MERGE** functionality to merge the same keys which are in different projects but have the same translations for every locale.
 * Data visualization
 

@@ -53,11 +53,13 @@ export default class App extends React.Component {
 	componentWillMount() {
 		const me = this;
 		this.loadMessages();
-		socket.on('ktm', function (data) {
-			if (data && data.action === "datachanged") {
-				me.props.ComponentActions.showMessagePopup();
-			}
-		});
+		if (config.enableNotifications) {
+			socket.on('ktm', function (data) {
+				if (data && data.action === "datachanged") {
+					me.props.ComponentActions.showMessagePopup();
+				}
+			});
+		}
 	}
 
 	componentDidMount() {
@@ -70,7 +72,7 @@ export default class App extends React.Component {
 		}
 		if (nextProps.translations !== this.props.translations) {
 			nextProps.CountActions.loadCounts();
-			if (nextProps.emitdatachange) {
+			if (config.enableNotifications && nextProps.emitdatachange) {
 				socket.emit('ktm', { action: 'datachanged' });
 				this.props.SocketActions.endDataChange();
 			}

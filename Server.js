@@ -40,14 +40,16 @@ server.listen(config.server.port, config.server.hostname, function(err) {
 		log('info', 'Dev-server (at http://localhost:3000) is starting, please wait ...');
 	}
 });
-io.on('connection', function (socket) {
-	socket.on('ktm', function (data) {
-		if (data && data.action === "datachanged") {
-			// sending to all clients except sender
-			socket.broadcast.emit('ktm', {action: "datachanged"});
-		}
+if (config.enableNotifications) {
+	io.on('connection', function (socket) {
+		socket.on('ktm', function (data) {
+			if (data && data.action === "datachanged") {
+				// sending to all clients except sender
+				socket.broadcast.emit('ktm', {action: "datachanged"});
+			}
+		});
 	});
-});
+}
 
 app.set('view engine', 'ejs');
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
