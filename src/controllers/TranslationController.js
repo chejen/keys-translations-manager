@@ -102,34 +102,58 @@ router.route('/')
 				if (err) res.status(500).send(err);
 				res.json(translations);
 
-				/*
-				var keyHash = {},
-					translation,
-					l = translations.length;
-				//console.log("translations", translations);
+///////////////
+/*
+				var translation,
+					l = translations.length,
+					keyHash = {},
+					keyCollision;
+
 				while(l--){
 					translation = translations[l];
-					if (keyHash[translation.key]) {
-						keyHash[translation.key].push(translation);
+					keyCollision = keyHash[translation.key];
+					if (keyCollision) {
+						keyCollision.push(translation);
 					} else {
 						keyHash[translation.key] = [translation];
 					}
 				}
 				console.log("keyHash", keyHash);
+
 				for (var key in keyHash) {
-					if (keyHash[key].length >= 2) {
-						var tmpHash = {};
-						var tmpKey = "";
-						var config = require('../../ktm.config');
-						const locales = config.locales;
-						const lenLocales = locales.length;
-						for (var i=0; i<lenLocales; i++) {
-							locale = locales[i];
-							tmpKey +=
+					keyCollision = keyHash[key];
+					console.log("keyCollision", keyCollision);
+					if (keyCollision.length >= 2) {
+						var translationHash = {},
+							translationCollision;
+						for (var j=0; j < keyCollision.length; j++) {
+							var translationSet = "";
+							var kc = keyCollision[j];
+							var config = require('../../ktm.config');
+							const locales = config.locales;
+							const lenLocales = locales.length;
+							for (var i=0; i<lenLocales; i++) {
+								translationSet += kc[ locales[i] ];
+							}
+		
+							translationCollision = translationHash[translationSet];
+							if (translationCollision) {
+								translationCollision.push(kc);
+							} else {
+								translationHash[translationSet] = [kc];
+							}
+						}
+						console.log("translationHash", translationHash);
+						for (var innerKey in translationHash) {
+							if (translationHash[innerKey].length >= 2) {
+								console.log("bingo", key, translationHash[innerKey]);
+							}
 						}
 					}
 				}
-				*/
+*/
+//////////////////
+
 			});
 		})
 		.post(function(req, res) {
