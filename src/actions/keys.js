@@ -1,19 +1,18 @@
 import * as ActionTypes from '../constants/ActionTypes'
 
-export function loadMessages(lang) {
+export function findMergeable() {
 	return dispatch => {
-		return fetch('public/locale/' + lang + '/translation.json')
+		return fetch('api/key')
 			.then(res => {
 				if (res.status >= 400) {
 					throw new Error(res.status + ", " + res.statusText);
 				}
 				return res.json();
 			})
-			.then((messages) => {
+			.then((result) => {
 				dispatch({
-					type: ActionTypes.LOAD_MESSAGES,
-					lang,
-					messages
+					type: ActionTypes.FIND_MERGEABLE,
+					data: result
 				})
 			})
 	}

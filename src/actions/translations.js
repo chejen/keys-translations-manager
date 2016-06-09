@@ -1,9 +1,8 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import configUtil from '../configUtil'
 
 export function addTranslation(params) {
 	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation', {
+		return fetch('api/translation', {
 			headers: {
 				'Accept': 'application/json; charset=utf-8',
 				'Content-Type': 'application/json; charset=utf-8'
@@ -35,7 +34,7 @@ export function addTranslation(params) {
 
 export function loadTranslations() {
 	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation')
+		return fetch('api/translation')
 			.then(res => {
 				if (res.status >= 400) {
 					throw new Error(res.status + ", " + res.statusText);
@@ -53,7 +52,7 @@ export function loadTranslations() {
 
 export function removeTranslation(id) {
 	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation/' + id, {
+		return fetch('api/translation/' + id, {
 					method: 'DELETE'
 				})
 				.then(res => {
@@ -73,7 +72,7 @@ export function removeTranslation(id) {
 
 export function updateTranslation(params) {
 	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation/' + params._id, {
+		return fetch('api/translation/' + params._id, {
 			headers: {
 				'Accept': 'application/json; charset=utf-8',
 				'Content-Type': 'application/json; charset=utf-8'
@@ -110,7 +109,7 @@ export function importLocale(params) {
 	data.append('project', params.applyto)
 
 	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/import', {
+		return fetch('api/import', {
 			method: 'POST',
 			body: data
 		})
@@ -132,6 +131,38 @@ export function importLocale(params) {
 					errors: result.errors
 				})
 			}
+		})
+	}
+}
+
+export function mergeTranslations(params) {
+	return dispatch => {
+		return fetch('api/key', {
+			headers: {
+				'Accept': 'application/json; charset=utf-8',
+				'Content-Type': 'application/json; charset=utf-8'
+			},
+			method: 'POST',
+			body: JSON.stringify(params)
+		})
+		.then(res => {
+			if (res.status >= 400) {
+				throw new Error(res.status + ", " + res.statusText);
+			}
+			return res.json();
+		})
+		.then((result) => {
+			if (result.success) {
+				dispatch({
+					type: ActionTypes.MERGE_TRANSLATIONS,
+					data: result.data
+				})
+			}/* else {
+				dispatch({
+					type: ActionTypes.ALERT_ERRORS,
+					errors: result.errors
+				})
+			}*/
 		})
 	}
 }

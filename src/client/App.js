@@ -12,6 +12,7 @@ import SideBar from '../components/layout/SideBar'
 import MessagePopup from '../components/layout/MessagePopup'
 import OutputPanel from '../components/output/OutputPanel'
 import EditModal from '../components/input/EditModal'
+import MergeModal from '../components/merge/MergeModal'
 import ImportModal from '../components/import/ImportModal'
 import config from '../../ktm.config'
 const languages = ["en-US", "zh-TW"]
@@ -25,13 +26,17 @@ export default class App extends React.Component {
 		errors: React.PropTypes.array.isRequired,
 		translations: React.PropTypes.array.isRequired,
 		showeditmodal: React.PropTypes.bool.isRequired,
+		showmergemodal: React.PropTypes.bool.isRequired,
 		showimportmodal: React.PropTypes.bool.isRequired,
 		showmessagepopup: React.PropTypes.bool.isRequired,
 		editrecord: React.PropTypes.object.isRequired,
+		keys: React.PropTypes.object.isRequired,
+		mergeable: React.PropTypes.array.isRequired,
 
 		MessageActions: React.PropTypes.object.isRequired,
 		CountActions: React.PropTypes.object.isRequired,
 		TranslationActions: React.PropTypes.object.isRequired,
+		KeyActions: React.PropTypes.object.isRequired,
 		ErrorActions: React.PropTypes.object.isRequired,
 		SocketActions: React.PropTypes.object.isRequired,
 		ComponentActions: React.PropTypes.object.isRequired
@@ -88,9 +93,10 @@ export default class App extends React.Component {
 	render() {
 		const {
 			MessageActions, TranslationActions,
-			ErrorActions, ComponentActions,
+			KeyActions, ErrorActions, ComponentActions,
 			lang, messages, counts, errors,
 			translations, showeditmodal, editrecord,
+			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
 
 		return (lang) ? (
@@ -99,6 +105,7 @@ export default class App extends React.Component {
 					<Header/>
 					<DropdownMenu lang={lang} messages={messages}
 						loadMessages={MessageActions.loadMessages}
+						findMergeable={KeyActions.findMergeable}
 						showImportModal={ComponentActions.showImportModal}/>
 					<SideBar>
 						<InputPanel messages={messages}
@@ -116,6 +123,11 @@ export default class App extends React.Component {
 							importLocale={TranslationActions.importLocale}
 							showimportmodal={showimportmodal}
 							closeImportModal={ComponentActions.closeImportModal}/>
+						<MergeModal keys={keys}
+							mergeable={mergeable}
+							showmergemodal={showmergemodal}
+							mergeTranslations={TranslationActions.mergeTranslations}
+							closeMergeModal={ComponentActions.closeMergeModal}/>
 						<EditModal data={editrecord} errors={errors}
 							showeditmodal={showeditmodal}
 							closeEditModal={ComponentActions.closeEditModal}

@@ -13,6 +13,12 @@ export function closeEditModal() {
 	}
 }
 
+export function closeMergeModal() {
+	return {
+		type: ActionTypes.CLOSE_MERGEMODAL
+	}
+}
+
 export function showImportModal() {
 	return {
 		type: ActionTypes.SHOW_IMPORTMODAL

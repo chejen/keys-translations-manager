@@ -4,7 +4,8 @@ function setup() {
 	let props = {
 			lang: 'en-US',
 			loadMessages: sinon.spy(),
-			showImportModal: sinon.spy()
+			showImportModal: sinon.spy(),
+			findMergeable: sinon.spy()
 		},
 		wrapper = shallow(<DropdownMenu {...props}/>);
 
@@ -25,6 +26,14 @@ describe('(component) DropdownMenu', () => {
 			const { props, wrapper } = setup()
 			wrapper.find('.nav').find('a').get(0).props.onClick();
 			expect(props.showImportModal).calledOnce;
+		});
+	});
+
+	describe('child: Merge', () => {
+		it('should call this.props.findMergeable() if clicked', () => {
+			const { props, wrapper } = setup()
+			wrapper.find('.nav').find('a').get(1).props.onClick();
+			expect(props.findMergeable).calledOnce;
 		});
 	});
 

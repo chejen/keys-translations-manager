@@ -8,6 +8,7 @@ import webpack from 'webpack'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
 import config from './ktm.config'
 import TranslationController from './src/controllers/TranslationController'
+import KeyController from './src/controllers/KeyController'
 import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
 import ImportController from './src/controllers/ImportController'
@@ -95,6 +96,7 @@ app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api/translation", TranslationController);
+app.use("/api/key", KeyController);
 app.use("/api/count", CountController);
 app.use("/api/download", DownloadController);
 app.use("/api/import", ImportController);

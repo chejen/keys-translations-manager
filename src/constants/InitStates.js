@@ -1,7 +1,10 @@
 export const INIT_COMPONENTS = {
 	showimportmodal: false,
+	showmergemodal: false,
 	showeditmodal: false,
 	showmessagepopup: false,
+	keys: {},
+	mergeable: [],
 	editrecord: {}
 };
 export const INIT_SOCKET = {

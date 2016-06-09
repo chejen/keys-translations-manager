@@ -7,7 +7,8 @@ export default class DropdownMenu extends React.Component {
 	static propTypes = {
 		lang: React.PropTypes.string.isRequired,
 		loadMessages: React.PropTypes.func.isRequired,
-		showImportModal: React.PropTypes.func.isRequired
+		showImportModal: React.PropTypes.func.isRequired,
+		findMergeable: React.PropTypes.func.isRequired
 	}
 
 	constructor() {
@@ -32,6 +33,16 @@ export default class DropdownMenu extends React.Component {
 								this.props.showImportModal();
 							}}>
 						<i className="fa fa-cloud-upload fa-fw fa-lg"/>
+					</a>
+				</li>
+				<li className="dropdown" title={localeUtil.getMsg("ui.common.import")}>
+					<a className="dropdown-toggle" href="#" onClick={(event) => {
+								if (event) {
+									event.preventDefault();
+								}
+								this.props.findMergeable();
+							}}>
+						<i className="fa fa-code-fork fa-fw fa-lg"/>
 					</a>
 				</li>
 				<li className="dropdown" title={localeUtil.getMsg("ui.common.language")}>

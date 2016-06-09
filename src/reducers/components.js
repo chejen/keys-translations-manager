@@ -25,6 +25,19 @@ export default function components(state = INIT_COMPONENTS, action) {
 				...state,
 				showimportmodal: false
 			};
+		case ActionTypes.FIND_MERGEABLE:
+			return {
+				...state,
+				showmergemodal: true,
+				keys: action.data.keys,
+				mergeable: action.data.mergeable
+			};
+		//case ActionTypes.MERGE_TRANSLATIONS:
+		case ActionTypes.CLOSE_MERGEMODAL:
+			return {
+				...state,
+				showmergemodal: false
+			};
 		case ActionTypes.SHOW_EDITMODAL:
 			return {
 				...state,

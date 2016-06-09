@@ -101,59 +101,6 @@ router.route('/')
 			Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
 				if (err) res.status(500).send(err);
 				res.json(translations);
-
-///////////////
-/*
-				var translation,
-					l = translations.length,
-					keyHash = {},
-					keyCollision;
-
-				while(l--){
-					translation = translations[l];
-					keyCollision = keyHash[translation.key];
-					if (keyCollision) {
-						keyCollision.push(translation);
-					} else {
-						keyHash[translation.key] = [translation];
-					}
-				}
-				console.log("keyHash", keyHash);
-
-				for (var key in keyHash) {
-					keyCollision = keyHash[key];
-					console.log("keyCollision", keyCollision);
-					if (keyCollision.length >= 2) {
-						var translationHash = {},
-							translationCollision;
-						for (var j=0; j < keyCollision.length; j++) {
-							var translationSet = "";
-							var kc = keyCollision[j];
-							var config = require('../../ktm.config');
-							const locales = config.locales;
-							const lenLocales = locales.length;
-							for (var i=0; i<lenLocales; i++) {
-								translationSet += kc[ locales[i] ];
-							}
-		
-							translationCollision = translationHash[translationSet];
-							if (translationCollision) {
-								translationCollision.push(kc);
-							} else {
-								translationHash[translationSet] = [kc];
-							}
-						}
-						console.log("translationHash", translationHash);
-						for (var innerKey in translationHash) {
-							if (translationHash[innerKey].length >= 2) {
-								console.log("bingo", key, translationHash[innerKey]);
-							}
-						}
-					}
-				}
-*/
-//////////////////
-
 			});
 		})
 		.post(function(req, res) {
