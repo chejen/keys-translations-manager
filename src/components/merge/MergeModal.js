@@ -34,27 +34,31 @@ export default class MergeModal extends React.Component {
 
 		return (
 			<Modal show={this.props.showmergemodal} onHide={this.close.bind(this)}>
+				<Modal.Header>
+					<Modal.Title>
+						test
+					</Modal.Title>
+				</Modal.Header>
 				<Modal.Body>
 					{k.length > 0
 						? (<div>
-							{"The following key(s) will be merged:"}
-							<br/><br/><b>
+							<b>{"The following key(s) will be merged:"} </b>
 							{k.length >= (num + 2)
 								? `${k.slice(0, num).join(", ")} ${localeUtil.getMsg("ui.common.others", k.length - num)}`
 								: k.join(", ")}
-							</b><br/><br/>
-							{"Are you sure you want to continue?"}
+							<br/><br/>
+							<b>{"Are you sure you want to continue?"}</b>
 							</div>)
-						: "No mergeable records found"
+						: "No records need to be merged."
 					}
 				</Modal.Body>
 				{k.length > 0 ?
 					<Modal.Footer>
 						<Button bsSize="small" bsStyle="primary" onClick={this.submit.bind(this)}>
-							{localeUtil.getMsg("ui.common.import")}
+							{localeUtil.getMsg("ui.confirm.yes")}
 						</Button>
 						<Button bsSize="small" onClick={this.close.bind(this)}>
-							{localeUtil.getMsg("ui.common.cancel")}
+							{localeUtil.getMsg("ui.confirm.no")}
 						</Button>
 					</Modal.Footer> :
 					<Modal.Footer>

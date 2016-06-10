@@ -32,7 +32,7 @@ export default function components(state = INIT_COMPONENTS, action) {
 				keys: action.data.keys,
 				mergeable: action.data.mergeable
 			};
-		//case ActionTypes.MERGE_TRANSLATIONS:
+		case ActionTypes.MERGE_TRANSLATIONS:
 		case ActionTypes.CLOSE_MERGEMODAL:
 			return {
 				...state,

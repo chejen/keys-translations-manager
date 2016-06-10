@@ -1,8 +1,10 @@
 var router = require("express").Router();
+var mongoose = require('mongoose');
 var Translations = require('../models/TranslationModel');
 var config = require('../../ktm.config');
 var locales = config.locales;
 var lenLocales = locales.length;
+var bulk, doc;
 
 router.route('/')
 		.get(function(req, res, next) {
@@ -38,7 +40,7 @@ router.route('/')
 							kc = keyCollision[j];
 							
 							for (var i=0; i < lenLocales; i++) {
-								translationSet += kc[ locales[i] ];
+								translationSet += (kc[ locales[i] ] ? kc[ locales[i] ] : "");
 							}
 		
 							translationCollision = translationHash[translationSet];
@@ -70,6 +72,8 @@ router.route('/')
 				translation,
 				projects;
 
+			bulk = Translations.collection.initializeUnorderedBulkOp();
+
 			while(len--){
 				translationAry = mergeable[len];
 				l = translationAry.length;
@@ -77,43 +81,28 @@ router.route('/')
 				while(l--){
 					translation = translationAry[l];
 					projects = projects.concat(translation.project)
+					doc = bulk.find({'_id': mongoose.Types.ObjectId(translation._id)});
 					if (l > 0) {
 						// delete
-						console.log("delete", translation._id);
+						doc.remove();
 					} else {
 						// update
-						console.log("update", projects);
+						doc.update({ $set: {project: projects} });
 					}
 				}
-			}
-			res.json([]);
-
-			// [pass] batch update (or insert)
-			/*bulk = Translations.collection.initializeUnorderedBulkOp();
-
-			for (key in data) {
-				query = {
-					key: key,
-					project: project
-				};
-				doc = {};
-				doc[locale] = data[key];
-				bulk.find(query).upsert().updateOne({
-					$set: doc
-				});
 			}
 
 			bulk.execute(function(){
 				Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
 					if (err) res.status(500).send(err);
 					res.json({
-						action: action,
+						action: "m",
 						success: true,
 						data: translations,
 						errors: []
 					});
 				});
-			});*/
+			});
 		});
 
 module.exports = router;
