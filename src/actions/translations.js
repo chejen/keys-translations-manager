@@ -158,12 +158,7 @@ export function mergeTranslations(params) {
 					type: ActionTypes.MERGE_TRANSLATIONS,
 					data: result.data
 				})
-			}/* else {
-				dispatch({
-					type: ActionTypes.ALERT_ERRORS,
-					errors: result.errors
-				})
-			}*/
+			}
 		})
 	}
 }

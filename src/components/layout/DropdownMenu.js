@@ -35,7 +35,7 @@ export default class DropdownMenu extends React.Component {
 						<i className="fa fa-cloud-upload fa-fw fa-lg"/>
 					</a>
 				</li>
-				<li className="dropdown" title={localeUtil.getMsg("ui.common.import")}>
+				<li className="dropdown" title={localeUtil.getMsg("ui.common.merge")}>
 					<a className="dropdown-toggle" href="#" onClick={(event) => {
 								if (event) {
 									event.preventDefault();
