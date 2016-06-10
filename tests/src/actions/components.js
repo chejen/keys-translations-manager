@@ -29,6 +29,15 @@ describe('(action) components', () => {
 		})
 	})
 
+	describe('closeMergeModal', () => {
+		it('should create an action to close MergeModal', () => {
+			expect(actions.closeMergeModal())
+				.to.deep.equal({
+					type: 'CLOSE_MERGEMODAL'
+				})
+		})
+	})
+
 	describe('showImportModal', () => {
 		it('should create an action to show ImportModal', () => {
 			expect(actions.showImportModal())
