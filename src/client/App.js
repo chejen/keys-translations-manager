@@ -16,7 +16,7 @@ import MergeModal from '../components/merge/MergeModal'
 import ImportModal from '../components/import/ImportModal'
 import config from '../../ktm.config'
 const languages = ["en-US", "zh-TW"]
-const socket = io.connect('/');
+let socket
 
 export default class App extends React.Component {
 	static propTypes = {
@@ -56,18 +56,19 @@ export default class App extends React.Component {
 	}
 
 	componentWillMount() {
-		const me = this;
 		this.loadMessages();
+	}
+
+	componentDidMount() {//Invoked once, only on the client
+		const me = this;
 		if (config.enableNotifications) {
+			socket = io.connect('/');
 			socket.on('ktm', function (data) {
 				if (data && data.action === "datachanged") {
 					me.props.ComponentActions.showMessagePopup();
 				}
 			});
 		}
-	}
-
-	componentDidMount() {
 		this.props.TranslationActions.loadTranslations();
 	}
 
