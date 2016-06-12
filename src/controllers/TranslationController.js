@@ -40,8 +40,7 @@ var getUniqueElements = function(ary) {
 					l,
 					idx,
 					type,
-					match = [],
-					isMatch = false;
+					match = [];
 
 				if (action === "c") { // create
 					while(len--) {
@@ -97,7 +96,7 @@ var getUniqueElements = function(ary) {
 	};
 
 router.route('/')
-		.get(function(req, res, next) {
+		.get(function(req, res) {
 			Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
 				if (err) res.status(500).send(err);
 				res.json(translations);
