@@ -10,7 +10,8 @@ describe('(action) counts', () => {
 
 		it("should create an action to count all the keys of each project", (done) => {
 			nock(configUtil.getHost())
-				.get('/api/count/projects')
+				.filteringPath(/t=[^&]*/g, 't=123')
+				.get('/api/count/projects?t=123')
 				.reply(200, [{"_id":"p1","count":28}])
 
 			const store = mockStore(INIT_COUNTS)

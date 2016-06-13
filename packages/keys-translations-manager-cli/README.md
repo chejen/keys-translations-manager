@@ -49,7 +49,7 @@ Add `.ktmrc` to your home directory (or add `.ktmrc` into your project if you in
 
 | Properties | Description | Required |
 |:----------:|:-----|:-----:|
-| project    | Specify a project ID set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/develop/ktm.config.js)| Y |
+| project    | Specify a project ID set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js)| Y |
 | locales    | Specify locales to output.| Y |
 | type       | Specify `json` or `properties`. | Y |
 | filename   | Specify a name for output file. | Y |
@@ -60,7 +60,10 @@ Add `.ktmrc` to your home directory (or add `.ktmrc` into your project if you in
 
 
 ## Usage
-ktm export
+```
+ktm <command>
+```
+* So far, `export` is the only command.
 
 
 ## Example

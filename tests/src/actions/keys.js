@@ -33,7 +33,8 @@ describe('(action) keys', () => {
 
 		it("should create an action to find mergeable keys", (done) => {
 			nock(configUtil.getHost())
-				.get('/api/key')
+				.filteringPath(/t=[^&]*/g, 't=123')
+				.get('/api/key?t=123')
 				.reply(200, data)
 
 			const store = mockStore(INIT_KEYS)

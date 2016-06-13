@@ -1,4 +1,4 @@
-# **v1.2.0** ()
+# **v1.2.0** (Jun 13, 2016)
 
 ### Features:
 - Added merge functionality.
@@ -16,7 +16,7 @@
 
 ### Other Changes:
 * Updated animated demo gif.
-* Added a tip for inline editing on grid's header.
+* Updated the tip for inline editing on grid's header.
 * Fixed an error of import validation.
 
 

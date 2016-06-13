@@ -3,7 +3,7 @@ import configUtil from '../configUtil'
 
 export function loadCounts() {
 	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/count/projects')
+		return fetch(configUtil.getHost() + '/api/count/projects?t=' + +new Date())
 			.then(res => {
 				if (res.status >= 400) {
 					throw new Error(res.status + ", " + res.statusText);

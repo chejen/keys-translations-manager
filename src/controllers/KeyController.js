@@ -10,8 +10,6 @@ router.route('/')
 		.get(function(req, res) {
 			Translations.find(function(err, translations) {
 				if (err) res.status(500).send(err);
-				console.log("translations", translations);
-				console.log("locales", locales);
 				res.json(findMergeable(translations, locales));
 			});
 		})

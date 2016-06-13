@@ -35,7 +35,7 @@ export function addTranslation(params) {
 
 export function loadTranslations() {
 	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation')
+		return fetch(configUtil.getHost() + '/api/translation?t=' + +new Date())
 			.then(res => {
 				if (res.status >= 400) {
 					throw new Error(res.status + ", " + res.statusText);

@@ -199,7 +199,8 @@ describe('(action) translations', () => {
 
 		it("should create an action to load translations", (done) => {
 			nock(configUtil.getHost())
-				.get('/api/translation')
+				.filteringPath(/t=[^&]*/g, 't=123')
+				.get('/api/translation?t=123')
 				.reply(200, translations)
 
 			const store = mockStore(INIT_TRANSLATIONS)
