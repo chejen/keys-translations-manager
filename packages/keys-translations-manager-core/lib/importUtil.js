@@ -42,7 +42,6 @@ module.exports = {
 			data,
 			srcKey,
 			destKey,
-			collision,
 			type,
 			srcHash = {},
 			destHash = {},

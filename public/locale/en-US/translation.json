@@ -5,6 +5,7 @@
       "add": "Add",
       "applyto": "Apply to",
       "cancel": "Cancel",
+      "close": "Close",
       "delete": "Delete",
       "desc": "Description",
       "download": "Download",
@@ -14,11 +15,13 @@
       "language": "Language",
       "locale": "Locale",
       "locales": "Locales",
+      "merge": "Merge",
       "or": "or",
       "others": "and {0} others",
       "update": "Update"
     },
     "confirm": {
+      "continue": "Are you sure you want to continue?",
       "delete": "Are you sure you want to delete \"{0}\" ?",
       "header": "Confirm",
       "no": "No",
@@ -38,13 +41,17 @@
       "selected": "The file to import:"
     },
     "grid": {
-      "edit": "(dbclick to edit a cell)",
+      "edit": "(Dbclick to edit a cell. Press enter to commit.)",
       "empty": "No data",
       "search": "Search"
     },
     "json": {
       "format": "formatted",
       "mini": "minimized"
+    },
+    "merge": {
+      "match": "The following key(s) will be merged:",
+      "nomatch": "No records need to be merged."
     },
     "tip": {
       "iconflicts": "(e.g.) \"ui.common.add\" will conflict with \"ui\", \"ui.common\", and/or \"ui.common.add.*\" while parsing to JSON format.",

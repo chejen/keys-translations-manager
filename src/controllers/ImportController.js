@@ -32,7 +32,7 @@ router.route('/')
 					project = fields.project;
 
 					query = [{
-						"project": project
+						"project": project[0]
 					}];
 					queryParam = {};
 					queryParam[locale] = { $ne: null };

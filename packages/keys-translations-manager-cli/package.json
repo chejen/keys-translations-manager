@@ -1,6 +1,6 @@
 {
 	"name": "keys-translations-manager-cli",
-	"version": "1.0.0",
+	"version": "1.2.0",
 	"description": "keys-translations-manager's command line.",
 	"keywords": [
 		"i18n",
@@ -11,7 +11,8 @@
 		"locale",
 		"localization",
 		"multilingual",
-		"translation"
+		"translation",
+		"MERN"
 	],
 	"author": "chejen",
 	"license": "MIT",
@@ -20,7 +21,7 @@
 		"keys-translations-manager-core": "^1.1.0",
 		"yargs": "^4.7.1",
 		"node-fs": "0.1.7",
-		"mongoose": "^4.4.19"
+		"mongoose": "^4.4.20"
 	},
 	"bin": {
 		"ktm": "./bin/ktm.js"

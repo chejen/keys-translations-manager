@@ -65,6 +65,24 @@ describe('(reducer) translations', function() {
 		).to.deep.equal(translations)
 	})
 
+	it('should handle IMPORT_LOCALE', () => {
+		expect(
+			reducer(INIT_TRANSLATIONS, {
+				type: 'IMPORT_LOCALE',
+				data: translations
+			})
+		).to.deep.equal(translations)
+	})
+
+	it('should handle MERGE_TRANSLATIONS', () => {
+		expect(
+			reducer(INIT_TRANSLATIONS, {
+				type: 'MERGE_TRANSLATIONS',
+				data: translations
+			})
+		).to.deep.equal(translations)
+	})
+
 	it('should handle REMOVE_TRANSLATION', () => {
 		expect(
 			reducer(translations, {
@@ -105,14 +123,5 @@ describe('(reducer) translations', function() {
 			"project": ["p1", "p2"],
 			"zh-TW": "增加"
 		}])
-	})
-
-	it('should handle IMPORT_LOCALE', () => {
-		expect(
-			reducer(INIT_TRANSLATIONS, {
-				type: 'IMPORT_LOCALE',
-				data: translations
-			})
-		).to.deep.equal(translations)
 	})
 });

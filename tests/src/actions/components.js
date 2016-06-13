@@ -29,6 +29,15 @@ describe('(action) components', () => {
 		})
 	})
 
+	describe('closeMergeModal', () => {
+		it('should create an action to close MergeModal', () => {
+			expect(actions.closeMergeModal())
+				.to.deep.equal({
+					type: 'CLOSE_MERGEMODAL'
+				})
+		})
+	})
+
 	describe('showImportModal', () => {
 		it('should create an action to show ImportModal', () => {
 			expect(actions.showImportModal())
@@ -43,6 +52,24 @@ describe('(action) components', () => {
 			expect(actions.closeImportModal())
 				.to.deep.equal({
 					type: 'CLOSE_IMPORTMODAL'
+				})
+		})
+	})
+
+	describe('showMessagePopup', () => {
+		it('should create an action to show MessagePopup', () => {
+			expect(actions.showMessagePopup())
+				.to.deep.equal({
+					type: 'SHOW_MESSAGEPOPUP'
+				})
+		})
+	})
+
+	describe('closeMessagePopup', () => {
+		it('should create an action to close MessagePopup', () => {
+			expect(actions.closeMessagePopup())
+				.to.deep.equal({
+					type: 'CLOSE_MESSAGEPOPUP'
 				})
 		})
 	})

@@ -94,7 +94,7 @@ router.route('/:outputType/:fileType/:project')
 			for (var i=0; i<lenLocales; i++) {
 				locale = locales[i];
 
-				criteria["project"] = project;
+				criteria.project = project;
 				select[locale] = 1;
 				query = Translations.find(criteria).select(select);
 				if (outputType === "f") query.sort({'key':-1});

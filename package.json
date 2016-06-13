@@ -12,7 +12,8 @@
 		"locale",
 		"localization",
 		"multilingual",
-		"translation"
+		"translation",
+		"MERN"
 	],
 	"author": "chejen",
 	"scripts": {
@@ -24,7 +25,8 @@
 		"build:js": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js",
 		"test": "cross-env NODE_ENV=test mocha -R spec --compilers js:babel-core/register  --require ./tests/testHelper.js tests/**/*.js",
 		"test:watch": "npm test -- --watch",
-		"posttest": "cross-env NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha tests/**/*.js --report lcovonly -- -R spec && codecov"
+		"coverage": "cross-env NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha tests/**/*.js --report lcovonly -- -R spec",
+		"codecov": "cat ./coverage/lcov.info | codecov"
 	},
 	"repository": {
 		"type": "git",
@@ -52,7 +54,8 @@
 		"react-dropzone": "^3.5.0",
 		"react-redux": "^4.4.5",
 		"redux": "^3.5.2",
-		"redux-thunk": "^2.1.0"
+		"redux-thunk": "^2.1.0",
+		"socket.io": "^1.4.6"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.9.0",
@@ -66,7 +69,7 @@
 		"babel-preset-react-hmre": "^1.1.1",
 		"babel-preset-stage-0": "^6.5.0",
 		"chai": "^3.5.0",
-		"clean-css": "^3.4.15",
+		"clean-css": "^3.4.17",
 		"codecov": "^1.0.1",
 		"compression": "^1.6.2",
 		"cross-env": "^1.0.8",
@@ -87,7 +90,7 @@
 		"nock": "^8.0.0",
 		"nodemon": "^1.9.2",
 		"react-addons-test-utils": "~15.1.0",
-		"redux-mock-store": "^1.0.4",
+		"redux-mock-store": "^1.1.0",
 		"rename": "^1.0.3",
 		"serve-favicon": "^2.3.0",
 		"sinon": "^1.17.4",

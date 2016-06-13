@@ -5,6 +5,7 @@
       "add": "新增",
       "applyto": "套用至",
       "cancel": "取消",
+      "close": "關閉",
       "delete": "刪除",
       "desc": "描述",
       "download": "下載",
@@ -14,11 +15,13 @@
       "language": "語言",
       "locale": "語系",
       "locales": "語系",
+      "merge": "合併",
       "or": "或",
       "others": "和其他 {0} 個",
       "update": "更新"
     },
     "confirm": {
+      "continue": "您確定要繼續嗎 ?",
       "delete": "您確定要刪除 \"{0}\" 嗎?",
       "header": "確認",
       "no": "否",
@@ -38,13 +41,17 @@
       "selected": "您選取的檔案:"
     },
     "grid": {
-      "edit": "(雙擊儲存格可進行編輯)",
+      "edit": "(雙擊儲存格可進行編輯 / 鍵入 Enter 以送出更新)",
       "empty": "無資料",
       "search": "關鍵字搜尋"
     },
     "json": {
       "format": "格式化",
       "mini": "最小化"
+    },
+    "merge": {
+      "match": "以下這些 key 將會被合併:",
+      "nomatch": "無符合合併條件的資料"
     },
     "tip": {
       "iconflicts": "(例) 在解析成 JSON 格式時，ui.common.add 會與 ui、ui.common、ui.common.add.* 等 key 發生衝突。",

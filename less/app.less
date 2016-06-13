@@ -42,6 +42,24 @@
 	border: 2px solid @dark-yellow;
 }
 
+.app-message-popup {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	z-index: 10;
+	padding: 5px;
+}
+.app-message-bar {
+	background-color: #FEF1B7;
+	color: black;
+	font-size: 90%;
+	border: 1px dashed @middle-color;
+	padding: 5px @default-space;
+	border-radius: 15px;
+	white-space: nowrap;
+	width: auto;
+	height: auto;
+}
 
 .ag-cell {
     padding-top: 3px !important;
@@ -54,7 +72,7 @@ body {
 	color: orange;
 	text-align: center;
 }
-.navbar-default {
+.navbar-default, .modal-header {
 	background-color: @light-yellow;
 	border: 0;
 }

@@ -7,12 +7,15 @@ module.exports = {
 			case 'info':
 				tag = chalk.bold.green(" [INFO] ");
 				break;
+			/* istanbul ignore next */
 			case 'warn':
 				tag = chalk.bold.yellow(" [WARN] ");
 				break;
+			/* istanbul ignore next */
 			case 'error':
 				tag = chalk.bold.red(" [ERROR] ");
 				break;
+			/* istanbul ignore next */
 			default:
 				tag = " ";
 				break;

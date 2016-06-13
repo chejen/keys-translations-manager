@@ -9,12 +9,149 @@ const record = {
 	"project": ["p1", "p2"],
 	"zh-TW": "新增"
 };
+const data = {
+	"keys":{
+		"ui.common.delete":true
+	},
+	"mergeable":[
+		[{
+			"_id":"56e3f81b88cbd598067d7d60",
+			"key":"ui.common.delete",
+			"en-US":"Delete",
+			"zh-TW":"移除",
+			"__v":0,
+			"project":["p2"]
+		}, {
+			"_id":"56e3f7fd88cbd598067d7d5e",
+			"key":"ui.common.delete",
+			"en-US":"Delete",
+			"zh-TW":"移除",
+			"__v":1,
+			"project":["p1"]
+		}]
+	]
+};
 
 describe('(reducer) components', function() {
 	it('should return the initial state', () => {
 		expect(
 			reducer(undefined, {})
 		).to.deep.equal(INIT_COMPONENTS)
+	})
+
+	it('should handle SHOW_MESSAGEPOPUP', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'SHOW_MESSAGEPOPUP'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.true
+	})
+
+	it('should handle CLOSE_MESSAGEPOPUP', () => {
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'LOAD_TRANSLATIONS'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'CLOSE_MESSAGEPOPUP'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.false
+	})
+
+	it('should handle SHOW_IMPORTMODAL', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'SHOW_IMPORTMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showimportmodal')
+			.that.is.true
+	})
+
+	it('should handle CLOSE_IMPORTMODAL', () => {
+		expect(
+			reducer({
+				showimportmodal: true
+			}, {
+				type: 'IMPORT_LOCALE'
+			})
+		).to.be.an('object')
+		.to.have.property('showimportmodal')
+			.that.is.false
+
+		expect(
+			reducer({
+				showimportmodal: true
+			}, {
+				type: 'CLOSE_IMPORTMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showimportmodal')
+			.that.is.false
+	})
+
+	it('should handle FIND_MERGEABLE', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'FIND_MERGEABLE',
+				data: data
+			})
+		).to.be.an('object')
+		.to.have.property('showmergemodal')
+			.that.is.true
+
+		expect(
+			reducer(undefined, {
+				type: 'FIND_MERGEABLE',
+				data: data
+			})
+		).to.have.property('keys')
+			.that.is.an('object')
+			.to.deep.equal(data.keys);
+
+		expect(
+			reducer(undefined, {
+				type: 'FIND_MERGEABLE',
+				data: data
+			})
+		).to.have.property('mergeable')
+			.that.is.an('array')
+			.to.deep.equal(data.mergeable);
+	})
+
+	it('should handle CLOSE_MERGEMODAL', () => {
+		expect(
+			reducer({
+				showimportmodal: true
+			}, {
+				type: 'MERGE_TRANSLATIONS'
+			})
+		).to.be.an('object')
+		.to.have.property('showmergemodal')
+			.that.is.false
+
+		expect(
+			reducer({
+				showimportmodal: true
+			}, {
+				type: 'CLOSE_MERGEMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showmergemodal')
+			.that.is.false
 	})
 
 	it('should handle SHOW_EDITMODAL', () => {
@@ -70,37 +207,5 @@ describe('(reducer) components', function() {
 		).to.have.property('editrecord')
 			.that.is.an('object')
 			.to.deep.equal(record);
-	})
-
-	it('should handle SHOW_IMPORTMODAL', () => {
-		expect(
-			reducer(INIT_COMPONENTS, {
-				type: 'SHOW_IMPORTMODAL'
-			})
-		).to.be.an('object')
-		.to.have.property('showimportmodal')
-			.that.is.true
-	})
-
-	it('should handle CLOSE_IMPORTMODAL', () => {
-		expect(
-			reducer({
-				showimportmodal: true
-			}, {
-				type: 'CLOSE_IMPORTMODAL'
-			})
-		).to.be.an('object')
-		.to.have.property('showimportmodal')
-			.that.is.false
-
-		expect(
-			reducer({
-				showimportmodal: true
-			}, {
-				type: 'IMPORT_LOCALE'
-			})
-		).to.be.an('object')
-		.to.have.property('showimportmodal')
-			.that.is.false
 	})
 });

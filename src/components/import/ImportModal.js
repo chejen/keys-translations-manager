@@ -54,6 +54,7 @@ export default class ImportModal extends React.Component {
 		})
 	}
 
+	/* istanbul ignore next */
 	onDrop(files) {
 		const re = new RegExp("\\.(" + this.acceptTypes.join("|") + ")"),
 			file = files[0],

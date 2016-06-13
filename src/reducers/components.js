@@ -3,6 +3,17 @@ import { INIT_COMPONENTS } from '../constants/InitStates'
 
 export default function components(state = INIT_COMPONENTS, action) {
 	switch (action.type) {
+		case ActionTypes.SHOW_MESSAGEPOPUP:
+			return {
+				...state,
+				showmessagepopup: true
+			};
+		case ActionTypes.LOAD_TRANSLATIONS:
+		case ActionTypes.CLOSE_MESSAGEPOPUP:
+			return {
+				...state,
+				showmessagepopup: false
+			};
 		case ActionTypes.SHOW_IMPORTMODAL:
 			return {
 				...state,
@@ -13,6 +24,19 @@ export default function components(state = INIT_COMPONENTS, action) {
 			return {
 				...state,
 				showimportmodal: false
+			};
+		case ActionTypes.FIND_MERGEABLE:
+			return {
+				...state,
+				showmergemodal: true,
+				keys: action.data.keys,
+				mergeable: action.data.mergeable
+			};
+		case ActionTypes.MERGE_TRANSLATIONS:
+		case ActionTypes.CLOSE_MERGEMODAL:
+			return {
+				...state,
+				showmergemodal: false
 			};
 		case ActionTypes.SHOW_EDITMODAL:
 			return {

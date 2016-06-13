@@ -9,6 +9,8 @@
 # keys-translations-manager-cli
 > It's a cli tool that helps you download locales managed by [keys-translations-manager](https://github.com/chejen/keys-translations-manager).
 
+* Older version: [v1.0.0](https://github.com/chejen/keys-translations-manager/blob/master/docs/cli-v1.0.md)
+
 
 ## Installation
 Global installation:
@@ -22,46 +24,54 @@ $ npm install --save-dev keys-translations-manager-cli
 ```
 
 ## Configuration
-Add `.ktmrc` to your home directory (or you can add `.ktmrc` into your project if you installed the cli tool locally.)
+Add `.ktmrc` to your home directory (or add `.ktmrc` into your project if you installed the cli tool locally.)
 
 * Sample `.ktmrc`:
 ```json
 {
   "database": "mongodb://localhost:27017/translationdb",
-  "output": {
+  "outputs": [{
+    "project": "p1",
+    "locales": ["en-US", "zh-TW"],
+    "type": "json",
+    "filename": "${locale}",
+    "path": "/path/to/project1",
+    "formatted": true
+  }, {
+    "project": "p2",
+    "locales": ["en-US", "zh-TW"],
+    "type": "properties",
     "filename": "translation",
-    "path": "/path/to/output/${locale}"
-  }
+    "path": "/path/to/project2/${locale}"
+  }]
 }
 ```
-* `${locale}` can be a placeholder for **filename** and/or **path**.
+
+| Properties | Description | Required |
+|:----------:|:-----|:-----:|
+| project    | Specify a project ID set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/develop/ktm.config.js)| Y |
+| locales    | Specify locales to output.| Y |
+| type       | Specify `json` or `properties`. | Y |
+| filename   | Specify a name for output file. | Y |
+| path       | Specify an output path. | Y |
+| formatted  | Sort keys alphabetically. |
+
+- `${locale}` can be a placeholder for **filename** and/or **path**.
 
 
 ## Usage
-ktm [locale1 (, locale2, ...)] -t [json | properties] -p [project ID]
-
-
-## Options
-
-| Option  | Shorthand  | Description | Required |
-|:------------|:---------------:|:-----|:-----:|
-| --type    | -t | Specify a file type. <br>(Please provide either `json` or `properties`) | Y |
-| --project | -p | Specify a project to output locales. <br>(Please provide **a project ID**) | Y |
-| --format  | -f | Sort keys alphabetically. |
-| --help    | -h | Show help. |
-
-* You have to map **project ID** to the setting in [ktm.config.js](../../ktm.config.js) (at [keys-translations-manager](https://github.com/chejen/keys-translations-manager)).
+ktm export
 
 
 ## Example
-If you globally installed the cli tool, just execute the command like this:
+If you globally installed the cli tool, execute the command like this:
 ```sh
-$ ktm en-US zh-TW -p p1 -t json --format
+$ ktm export
 ```
 Or, if you had it installed locally by your project, you can add `ktm` script to package.json's **scripts** property,
 ```js
 "scripts": {
-  "ktm": "ktm en-US zh-TW -p p1 -t json --format"
+  "ktm": "ktm export"
 }
 ```
 then execute:
@@ -70,5 +80,7 @@ $ npm run ktm
 ```
 
 Finally, you will get your outputs like these:
-* /path/to/output/en-US/translation.json
-* /path/to/output/zh-TW/translation.json
+* /path/to/project1/en-US.json
+* /path/to/project1/zh-TW.json
+* /path/to/project2/en-US/translation.properties
+* /path/to/project2/zh-TW/translation.properties

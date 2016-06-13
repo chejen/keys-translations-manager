@@ -8,12 +8,15 @@ import webpack from 'webpack'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
 import config from './ktm.config'
 import TranslationController from './src/controllers/TranslationController'
+import KeyController from './src/controllers/KeyController'
 import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
 import ImportController from './src/controllers/ImportController'
-let log = logUtil.log,
+const log = logUtil.log,
 	app = express(),
-	webpackConfig,
+	server = require('http').Server(app),
+	io = require('socket.io')(server);
+let webpackConfig,
 	compiler;
 
 mongoose.connect(config.database, function(err) {
@@ -26,7 +29,7 @@ mongoose.connect(config.database, function(err) {
 	}
 });
 
-app.listen(config.server.port, config.server.hostname, function(err) {
+server.listen(config.server.port, config.server.hostname, function(err) {
 	if (err) {
 		log('error', err);
 		process.exit(1);
@@ -38,6 +41,16 @@ app.listen(config.server.port, config.server.hostname, function(err) {
 		log('info', 'Dev-server (at http://localhost:3000) is starting, please wait ...');
 	}
 });
+if (config.enableNotifications) {
+	io.on('connection', function (socket) {
+		socket.on('ktm', function (data) {
+			if (data && data.action === "datachanged") {
+				// sending to all clients except sender
+				socket.broadcast.emit('ktm', {action: "datachanged"});
+			}
+		});
+	});
+}
 
 app.set('view engine', 'ejs');
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
@@ -83,6 +96,7 @@ app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api/translation", TranslationController);
+app.use("/api/key", KeyController);
 app.use("/api/count", CountController);
 app.use("/api/download", DownloadController);
 app.use("/api/import", ImportController);

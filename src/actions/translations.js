@@ -135,3 +135,30 @@ export function importLocale(params) {
 		})
 	}
 }
+
+export function mergeTranslations(params) {
+	return dispatch => {
+		return fetch(configUtil.getHost() + '/api/key', {
+			headers: {
+				'Accept': 'application/json; charset=utf-8',
+				'Content-Type': 'application/json; charset=utf-8'
+			},
+			method: 'POST',
+			body: JSON.stringify(params)
+		})
+		.then(res => {
+			if (res.status >= 400) {
+				throw new Error(res.status + ", " + res.statusText);
+			}
+			return res.json();
+		})
+		.then((result) => {
+			if (result.success) {
+				dispatch({
+					type: ActionTypes.MERGE_TRANSLATIONS,
+					data: result.data
+				})
+			}
+		})
+	}
+}

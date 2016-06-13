@@ -33,7 +33,44 @@ const data = {
 		"_id": "56d7034f0b70e760104ddf0e",
 		"__v": 0,
 		"project": ["p1"]
-	}
+	},
+	mergeTranslations: [{
+		"action": "m",
+		"success": true,
+		"data": [{
+			"_id":"56e3f81b88cbd598067d7d60",
+			"key":"ui.common.delete",
+			"en-US":"Delete",
+			"zh-TW":"移除",
+			"__v":0,
+			"project":["p1","p2"]
+		}],
+		"errors": []
+	}]
+}
+const params = {
+	addTranslation: {
+		"key": "ui.common.delete",
+		"description": "delete",
+		"en-US": "Delete",
+		"zh-TW": "刪除",
+		"project": ["p1"]
+	},
+	mergeTranslations: [{
+		"_id":"56e3f81b88cbd598067d7d60",
+		"key":"ui.common.delete",
+		"en-US":"Delete",
+		"zh-TW":"移除",
+		"__v":0,
+		"project":["p2"]
+	}, {
+		"_id":"56e3f7fd88cbd598067d7d5e",
+		"key":"ui.common.delete",
+		"en-US":"Delete",
+		"zh-TW":"移除",
+		"__v":1,
+		"project":["p1"]
+	}]
 }
 const errors = {
 	addTranslation: [{
@@ -91,13 +128,7 @@ describe('(action) translations', () => {
 						'Content-Type': 'application/json; charset=utf-8'
 					}
 				})
-				.post('/api/translation', {
-					"key": "ui.common.delete",
-					"description": "delete",
-					"en-US": "Delete",
-					"zh-TW": "刪除",
-					"project": ["p1"]
-				})
+				.post('/api/translation', params.addTranslation)
 				.reply(200, {
 					"action": "c",
 					"success": true,
@@ -107,13 +138,7 @@ describe('(action) translations', () => {
 
 			const store = mockStore(INIT_TRANSLATIONS)
 
-			store.dispatch(actions.addTranslation({
-					"key": "ui.common.delete",
-					"description": "delete",
-					"en-US": "Delete",
-					"zh-TW": "刪除",
-					"project": ["p1"]
-				}))
+			store.dispatch(actions.addTranslation(params.addTranslation))
 				.then(() => {
 					expect(store.getActions()[0])
 						.to.deep.equal({
@@ -293,4 +318,38 @@ describe('(action) translations', () => {
 		})
 	})
 
+	describe('mergeTranslations', () => {
+		afterEach(() => {
+			nock.cleanAll()
+		})
+
+		it("should create an action to merge translations", (done) => {
+			nock(configUtil.getHost(), {
+					reqheaders: {
+						'Accept': 'application/json; charset=utf-8',
+						'Content-Type': 'application/json; charset=utf-8'
+					}
+				})
+				.post('/api/key', params.mergeTranslations)
+				.reply(200, {
+					"action": "m",
+					"success": true,
+					"data": data.mergeTranslations,
+					"errors": []
+				});
+
+			const store = mockStore(INIT_TRANSLATIONS)
+
+			store.dispatch(actions.mergeTranslations(params.mergeTranslations))
+				.then(() => {
+					expect(store.getActions()[0])
+						.to.deep.equal({
+							type: "MERGE_TRANSLATIONS",
+							data: data.mergeTranslations
+						})
+				})
+				.then(done)
+				.catch(done)
+		})
+	})
 })

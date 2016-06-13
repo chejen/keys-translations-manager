@@ -13,6 +13,12 @@ export function closeEditModal() {
 	}
 }
 
+export function closeMergeModal() {
+	return {
+		type: ActionTypes.CLOSE_MERGEMODAL
+	}
+}
+
 export function showImportModal() {
 	return {
 		type: ActionTypes.SHOW_IMPORTMODAL
@@ -22,5 +28,17 @@ export function showImportModal() {
 export function closeImportModal() {
 	return {
 		type: ActionTypes.CLOSE_IMPORTMODAL
+	}
+}
+
+export function showMessagePopup() {
+	return {
+		type: ActionTypes.SHOW_MESSAGEPOPUP
+	}
+}
+
+export function closeMessagePopup() {
+	return {
+		type: ActionTypes.CLOSE_MESSAGEPOPUP
 	}
 }
