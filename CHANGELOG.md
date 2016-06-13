@@ -1,3 +1,25 @@
+# **v1.2.0** ()
+
+### Features:
+- Added merge functionality.
+- Added real-time notifications.
+  - Notifications can be turned off from ktm.config.js
+- Upgraded CLI to support multi-project exports.
+
+### Docs:
+* Added merge instructions.
+* Updated CLI documentation.
+* Moved the usage of Rest API from README.md to docs/.
+
+### Tests:
+* Added tests for merge functionality and real-time notifications.
+
+### Other Changes:
+* Updated animated demo gif.
+* Added a tip for inline editing on grid's header.
+* Fixed an error of import validation.
+
+
 # **v1.1.0** (Jun 2, 2016)
 
 ### Features:
@@ -10,7 +32,7 @@
 
 ### Other Changes:
 * Added description field. ([@alampros](https://github.com/alampros) in [#3](https://github.com/chejen/keys-translations-manager/pull/3))
-* Added [REST API](https://github.com/chejen/keys-translations-manager/tree/develop#rest-api) to README. ([#1](https://github.com/chejen/keys-translations-manager/issues/1))
+* Added [REST API](https://github.com/chejen/keys-translations-manager/blob/master/docs/rest-api.md) to README. ([#1](https://github.com/chejen/keys-translations-manager/issues/1))
 * Added CHANGELOG.md
 
 
@@ -23,7 +45,6 @@
 ### Tests:
 * Employed `enzyme` and `react-addons-test-utils` to test React components.
 * Added tests for src/components/**
-
 
 ### Other Changes:
 * Reorganized file and folder structure.

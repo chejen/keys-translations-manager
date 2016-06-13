@@ -38,11 +38,11 @@
 > * import locales from JSON or Properties files,
 > * export locales to JSON or Properties files,
 > * get data validation for input/import, and
-> * get real-time notifications if data is changed by the other users.
+> * get real-time notifications if data has been changed by the other users.
 
 
 ## Demo
-![demo](https://cloud.githubusercontent.com/assets/14872888/13722929/33d4bd16-e890-11e5-87ea-8809f7a9f81d.gif)
+![demo](https://cloud.githubusercontent.com/assets/14872888/15989888/44701a84-30b7-11e6-814d-d13686b0e433.gif)
 
 
 ## Prerequisites
@@ -70,8 +70,9 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 |  database  |   MongoDB connection URI    | ```'mongodb://localhost:27017/translationdb'```  |
 |  locales  |   The locales need to be managed. (You can add or remove locales arbitrarily.)    | ```['en-US', 'zh-TW']```  |
 |  projects  |   The projects need to be localized. (You can add or remove projects arbitrarily.)    | ```[ {id:'p1', name:'project A'}, {id:'p2', name:'project B'} ]```  |
+|  enableNotifications  |   Push real-time notifications to users    | ```true```  |
 
-* Rebuild the code (```npm run build```) and restart the server if you change any of these configurations.
+> Rebuild the code (```npm run build```) and restart the server if you change any of these configurations.
 
 
 ## Import
