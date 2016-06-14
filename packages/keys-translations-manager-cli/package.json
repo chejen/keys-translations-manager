@@ -1,6 +1,6 @@
 {
 	"name": "keys-translations-manager-cli",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"description": "keys-translations-manager's command line.",
 	"keywords": [
 		"i18n",
