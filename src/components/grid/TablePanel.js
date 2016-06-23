@@ -27,14 +27,6 @@ export default class TablePanel extends React.Component {
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.messages !== this.props.messages) {
-			this.setState({
-				columnDefs: this.getColumnDefs(this.props, this.context)
-			});
-		}
-	}
-
 	onQuickFilterText(event) {
 		this.refs.table.handleSearch(event.target.value);
 	}

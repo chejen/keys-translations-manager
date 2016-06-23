@@ -2,21 +2,20 @@ import io from 'socket.io-client';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-//import GridPanel from '../components/grid/GridPanel' // So far, author has no intention to support SSR for ag-grid
-import AlertPanel from '../components/input/AlertPanel'
-import InputPanel from '../components/input/InputPanel'
-import DropdownMenu from '../components/layout/DropdownMenu'
-import Header from '../components/layout/Header'
-import MainPanel from '../components/layout/MainPanel'
-import SideBar from '../components/layout/SideBar'
-import MessagePopup from '../components/layout/MessagePopup'
-import OutputPanel from '../components/output/OutputPanel'
-import EditModal from '../components/input/EditModal'
-import MergeModal from '../components/merge/MergeModal'
-import ImportModal from '../components/import/ImportModal'
-import config from '../../ktm.config'
+import TablePanel from './components/grid/TablePanel'
+import AlertPanel from './components/input/AlertPanel'
+import InputPanel from './components/input/InputPanel'
+import DropdownMenu from './components/layout/DropdownMenu'
+import Header from './components/layout/Header'
+import MainPanel from './components/layout/MainPanel'
+import SideBar from './components/layout/SideBar'
+import MessagePopup from './components/layout/MessagePopup'
+import OutputPanel from './components/output/OutputPanel'
+import EditModal from './components/input/EditModal'
+import MergeModal from './components/merge/MergeModal'
+import ImportModal from './components/import/ImportModal'
+import config from '../ktm.config'
 const languages = ["en-US", "zh-TW"]
-let socket
 
 export default class App extends React.Component {
 	static propTypes = {
@@ -62,8 +61,8 @@ export default class App extends React.Component {
 	componentDidMount() {//Invoked once, only on the client
 		const me = this;
 		if (config.enableNotifications) {
-			socket = io.connect('/');
-			socket.on('ktm', function (data) {
+			me.socket = io.connect('/');
+			me.socket.on('ktm', function (data) {
 				if (data && data.action === "datachanged") {
 					me.props.ComponentActions.showMessagePopup();
 				}
@@ -78,8 +77,8 @@ export default class App extends React.Component {
 		}
 		if (nextProps.translations !== this.props.translations) {
 			nextProps.CountActions.loadCounts();
-			if (config.enableNotifications && nextProps.emitdatachange) {
-				socket.emit('ktm', { action: 'datachanged' });
+			if (config.enableNotifications && nextProps.emitdatachange && this.socket) {
+				this.socket.emit('ktm', { action: 'datachanged' });
 				this.props.SocketActions.endDataChange();
 			}
 		}
@@ -135,10 +134,10 @@ export default class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						{/*<GridPanel translations={translations} messages={messages}
+						<TablePanel translations={translations} messages={messages}
 							updateTranslation={TranslationActions.updateTranslation}
 							removeTranslation={TranslationActions.removeTranslation}
-							showEditModal={ComponentActions.showEditModal}/>*/}
+							showEditModal={ComponentActions.showEditModal}/>
 					</MainPanel>
 				</div>
 				<MessagePopup msg="Data has been changed by others."
