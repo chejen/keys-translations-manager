@@ -2,9 +2,7 @@ import io from 'socket.io-client';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-//import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import TablePanel from '../components/grid/TablePanel'
-import GridPanel from '../components/grid/GridPanel'
 import AlertPanel from '../components/input/AlertPanel'
 import InputPanel from '../components/input/InputPanel'
 import DropdownMenu from '../components/layout/DropdownMenu'
@@ -18,7 +16,6 @@ import MergeModal from '../components/merge/MergeModal'
 import ImportModal from '../components/import/ImportModal'
 import config from '../../ktm.config'
 const languages = ["en-US", "zh-TW"]
-//let socket
 
 export default class App extends React.Component {
 	static propTypes = {
@@ -137,17 +134,10 @@ export default class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						{lang !== "en-US" ? <GridPanel translations={translations} messages={messages}
+						<TablePanel translations={translations} messages={messages}
 							updateTranslation={TranslationActions.updateTranslation}
 							removeTranslation={TranslationActions.removeTranslation}
 							showEditModal={ComponentActions.showEditModal}/>
-:
-<TablePanel translations={translations} messages={messages}
-							updateTranslation={TranslationActions.updateTranslation}
-							removeTranslation={TranslationActions.removeTranslation}
-							showEditModal={ComponentActions.showEditModal}/>
-					}
-
 					</MainPanel>
 				</div>
 				<MessagePopup msg="Data has been changed by others."
