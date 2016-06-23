@@ -5,7 +5,8 @@
 @light-color: #fff;
 @default-space: 10px;
 @dark-yellow: #EDB220;
-@light-yellow: #FDD11A;
+@middle-yellow: #FDD11A;
+@light-yellow: #ffff94;
 
 /* styles */
 .app-input-asterisk {
@@ -33,13 +34,13 @@
 	height: 70px;
 	width: 100%;
 	color: @middle-color;
-	border: 2px dashed @light-yellow;
+	border: 2px dashed @middle-yellow;
 	border-radius: 5px;
 	padding: @default-space;
 	cursor: pointer;
 }
 .app-dropzone-enter {
-	border: 2px solid @dark-yellow;
+	background-color: @light-yellow;
 }
 
 .app-message-popup {
@@ -50,7 +51,7 @@
 	padding: 5px;
 }
 .app-message-bar {
-	background-color: #FEF1B7;
+	background-color: @light-yellow;
 	color: black;
 	font-size: 90%;
 	border: 1px dashed @middle-color;
@@ -64,6 +65,27 @@
 .ag-cell {
     padding-top: 3px !important;
 }
+.react-bs-table {
+	margin: 5px 0;
+}
+.react-bs-container-header {
+	background-color: #eee;
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+	background-color: #f6f6f6;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+	background-color: @light-yellow;
+}
+.display-table{
+	display: table;
+	table-layout: fixed;
+}
+.display-cell{
+	display: table-cell;
+	vertical-align: middle;
+	float: none;
+}
 
 body {
     background-color: @middle-color;
@@ -73,7 +95,7 @@ body {
 	text-align: center;
 }
 .navbar-default, .modal-header {
-	background-color: @light-yellow;
+	background-color: @middle-yellow;
 	border: 0;
 }
 .navbar-default .navbar-brand, .navbar-right a {
@@ -81,7 +103,7 @@ body {
 }
 .sidebar {
 	background-color: @middle-color;
-	color: @light-yellow;
+	color: @middle-yellow;
 }
 .sidebar ul li {
     border-bottom: 0;
@@ -91,7 +113,7 @@ body {
 	color: @middle-color;
 }
 .panel-count .panel-heading {
-	background-color: @light-yellow;
+	background-color: @middle-yellow;
 	color: @dark-color;
 }
 .panel-desc {
