@@ -48,30 +48,25 @@ export default class TablePanel extends React.Component {
 	}
 
 	render() {
-		// const h = $(window).height();
-		// const offset = $(".ag-fresh").offset();
 		const me = this,
 			config = me.context.config,
-			locales = config.locales;
+			locales = config.locales,
+			h = $(window).height(),
+			minHeight = 200,
+			top = 370;
 
 		return (
 			<div>
-				<Row>
-					<Col sm={8} xs={12}>
-						{localeUtil.getMsg("ui.grid.edit")}
-					</Col>
-					<Col sm={4} xs={12}>
-						<InputGroup>
-							<InputGroup.Addon>
-								<i className="fa fa-search"/>
-							</InputGroup.Addon>
-							<FormControl type="text"
-								placeholder={localeUtil.getMsg("ui.grid.search")}
-								onChange={this.onQuickFilterText.bind(this)}/>
-						</InputGroup>
-					</Col>
-				</Row>
+				<InputGroup>
+					<InputGroup.Addon className="app-search-icon">
+						<i className="fa fa-search"/>
+					</InputGroup.Addon>
+					<FormControl type="text" className="app-search-bar"
+						placeholder={localeUtil.getMsg("ui.grid.search")}
+						onChange={this.onQuickFilterText.bind(this)}/>
+				</InputGroup>
 				<BootstrapTable ref="table" data={this.props.translations}
+						height={(h < (minHeight + top) ? minHeight : h - top) + ""}
 						striped={true} hover={true} condensed={true}
 						options={{
 							noDataText: localeUtil.getMsg("ui.grid.empty")
@@ -79,8 +74,7 @@ export default class TablePanel extends React.Component {
 						cellEdit={{
 							mode: "dbclick",
 							blurToSave: false,
-							afterSaveCell: function(row, cellName, cellValue){
-								console.log(row, cellName, cellValue)
+							afterSaveCell: function(row/*, cellName, cellValue*/){
 								me.props.updateTranslation(row);
 							}
 						}}>
@@ -114,11 +108,18 @@ export default class TablePanel extends React.Component {
 					{locales.map(function(locale){
 						return (
 							<TableHeaderColumn key={locale} width="100" dataField={locale} dataSort={true}>
-								{`${localeUtil.getMsg("ui.common.locale")} / ${locale}`}
+								<span className="app-col-asterisk">* </span>{`${localeUtil.getMsg("ui.common.locale")} / ${locale}`}
 							</TableHeaderColumn>
 						);
 					})}
 				</BootstrapTable>
+				<Row>
+					<Col xs={12}>
+						<span className="pull-right">
+							(<span className="app-col-asterisk">*</span> {localeUtil.getMsg("ui.grid.edit")})
+						</span>
+					</Col>
+				</Row>
 				<ConfirmModal ref="confirmModal"/>
 			</div>
 		);

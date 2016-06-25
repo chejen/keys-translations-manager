@@ -18,6 +18,7 @@
       "merge": "Merge",
       "or": "or",
       "others": "and {0} others",
+      "reload": "Reload",
       "update": "Update"
     },
     "confirm": {
@@ -41,7 +42,7 @@
       "selected": "The file to import:"
     },
     "grid": {
-      "edit": "(Dbclick to edit a cell. Press enter to commit.)",
+      "edit": "Dbclick to edit a cell. / Press Enter to commit.",
       "empty": "No data",
       "search": "Search"
     },
@@ -51,9 +52,10 @@
     },
     "merge": {
       "match": "The following key(s) will be merged:",
-      "nomatch": "No records need to be merged."
+      "nomatch": "No keys need to be merged."
     },
     "tip": {
+      "dataChanged": "Data has been changed by others.",
       "iconflicts": "(e.g.) \"ui.common.add\" will conflict with \"ui\", \"ui.common\", and/or \"ui.common.add.*\" while parsing to JSON format.",
       "iequals": "This means you already have translations with these keys for selected locale and project."
     }

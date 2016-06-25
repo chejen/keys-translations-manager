@@ -36,8 +36,6 @@
 		"node": ">=5"
 	},
 	"dependencies": {
-		"ag-grid": "4.2.7",
-		"ag-grid-react": "4.2.0",
 		"archiver": "^1.0.0",
 		"body-parser": "^1.15.2",
 		"bootstrap": "~3.3.6",

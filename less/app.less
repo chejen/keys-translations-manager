@@ -9,9 +9,14 @@
 @light-yellow: #ffff94;
 
 /* styles */
+.app-input-asterisk, .app-col-asterisk {
+	font-size: 18px;
+}
 .app-input-asterisk {
 	color: @warning-color;
-	font-size: 18px;
+}
+.app-col-asterisk {
+	color: @dark-yellow;
 }
 .app-input-label {
 	margin-bottom: 7px;
@@ -61,6 +66,14 @@
 	width: auto;
 	height: auto;
 }
+.app-search-icon {
+	border: 1px solid @dark-yellow;
+	background-color: @middle-yellow;
+	color: @dark-color;
+}
+.app-search-bar {
+	border: 1px solid @dark-yellow;
+}
 
 .react-bs-table {
 	margin: 5px 0;
@@ -74,15 +87,7 @@
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
 	background-color: @light-yellow;
 }
-.display-table{
-	display: table;
-	table-layout: fixed;
-}
-.display-cell{
-	display: table-cell;
-	vertical-align: middle;
-	float: none;
-}
+
 
 body {
     background-color: @middle-color;

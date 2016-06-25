@@ -140,7 +140,8 @@ export default class App extends React.Component {
 							showEditModal={ComponentActions.showEditModal}/>
 					</MainPanel>
 				</div>
-				<MessagePopup msg="Data has been changed by others."
+				<MessagePopup messages={messages}
+						msg={localeUtil.getMsg("ui.tip.dataChanged")}
 						closeMessagePopup={ComponentActions.closeMessagePopup}
 						showmessagepopup={showmessagepopup}>
 					<b><u>
@@ -149,7 +150,7 @@ export default class App extends React.Component {
 								event.preventDefault();
 							}
 							TranslationActions.loadTranslations();
-						}}>Refresh</a>
+						}}>{localeUtil.getMsg("ui.common.reload")}</a>
 					</u></b>
 				</MessagePopup>
 			</div>
