@@ -10,6 +10,7 @@ import Header from './components/layout/Header'
 import MainPanel from './components/layout/MainPanel'
 import SideBar from './components/layout/SideBar'
 import MessagePopup from './components/layout/MessagePopup'
+import Mask from './components/layout/Mask'
 import OutputPanel from './components/output/OutputPanel'
 import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
@@ -99,7 +100,7 @@ export default class App extends React.Component {
 			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
 
-		return (lang) ? (
+		return (
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
@@ -134,12 +135,13 @@ export default class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						<TablePanel translations={translations} messages={messages}
+						<TablePanel translations={translations || []} messages={messages}
 							updateTranslation={TranslationActions.updateTranslation}
 							removeTranslation={TranslationActions.removeTranslation}
 							showEditModal={ComponentActions.showEditModal}/>
 					</MainPanel>
 				</div>
+				<Mask show={!translations}/>
 				<MessagePopup messages={messages}
 						msg={localeUtil.getMsg("ui.tip.dataChanged")}
 						closeMessagePopup={ComponentActions.closeMessagePopup}
@@ -154,8 +156,6 @@ export default class App extends React.Component {
 					</u></b>
 				</MessagePopup>
 			</div>
-		) : (<div className="app-default">
-			<i className="fa fa-spinner fa-pulse fa-2x"/>
-		</div>);
+		);
 	}
 }

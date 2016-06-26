@@ -30,12 +30,12 @@ export default class TablePanel extends React.Component {
 		};
 	}
 
-	componentWillMount() {
-	//	window.addEventListener('resize', this.handleResize.bind(this));
+	componentDidMount() {
+		window.addEventListener('resize', this.handleResize.bind(this));
 	}
 
 	componentWillUnmount() {
-	//	window.removeEventListener('resize', this.handleResize);
+		window.removeEventListener('resize', this.handleResize);
 	}
 
 	handleResize() {
@@ -68,9 +68,10 @@ export default class TablePanel extends React.Component {
 		const me = this,
 			config = me.context.config,
 			locales = config.locales,
-			windowHeight = this.state.windowHeight || window.innerHeight,
 			minHeight = 200,
-			top = 370;
+			top = 370,
+			windowHeight = this.state.windowHeight || 
+						(typeof window === "undefined" ? minHeight + top : window.innerHeight);
 
 		return (
 			<div>

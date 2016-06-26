@@ -16,4 +16,4 @@ export const INIT_MESSAGES = {
 	lang: '',
 	messages: {}
 };
-export const INIT_TRANSLATIONS = [];
+export const INIT_TRANSLATIONS = null;

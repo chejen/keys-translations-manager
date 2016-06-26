@@ -9,6 +9,7 @@
 		"src/reducers/",
 		"src/server/",
 		"src/store/",
+		"src/App.js",
 		"tests/"
 	]
 }
