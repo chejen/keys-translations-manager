@@ -42,7 +42,7 @@
       "selected": "The file to import:"
     },
     "grid": {
-      "edit": "Dbclick to edit a cell. / Press Enter to commit.",
+      "edit": "Double-click the cell to edit. / Press Enter to commit.",
       "empty": "No data",
       "search": "Search"
     },

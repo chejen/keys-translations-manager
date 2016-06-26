@@ -25,6 +25,23 @@ export default class TablePanel extends React.Component {
 	constructor(props, context) {
 		super(props, context);
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+		this.state = {
+			windowHeight: 0
+		};
+	}
+
+	componentWillMount() {
+	//	window.addEventListener('resize', this.handleResize.bind(this));
+	}
+
+	componentWillUnmount() {
+	//	window.removeEventListener('resize', this.handleResize);
+	}
+
+	handleResize() {
+		this.setState({
+			windowHeight: window.innerHeight
+		});
 	}
 
 	onQuickFilterText(event) {
@@ -51,7 +68,7 @@ export default class TablePanel extends React.Component {
 		const me = this,
 			config = me.context.config,
 			locales = config.locales,
-			h = $(window).height(),
+			windowHeight = this.state.windowHeight || window.innerHeight,
 			minHeight = 200,
 			top = 370;
 
@@ -66,7 +83,7 @@ export default class TablePanel extends React.Component {
 						onChange={this.onQuickFilterText.bind(this)}/>
 				</InputGroup>
 				<BootstrapTable ref="table" data={this.props.translations}
-						height={(h < (minHeight + top) ? minHeight : h - top) + ""}
+						height={(windowHeight < (minHeight + top) ? minHeight : windowHeight - top) + ""}
 						striped={true} hover={true} condensed={true}
 						options={{
 							noDataText: localeUtil.getMsg("ui.grid.empty")
@@ -91,6 +108,7 @@ export default class TablePanel extends React.Component {
 					}}>
 						{localeUtil.getMsg("ui.common.action")}
 					</TableHeaderColumn>
+
 					<TableHeaderColumn width="100" dataField="project" dataFormat={function(cell){
 						const projectList = cell,
 								l = projectList ? projectList.length : 0,
@@ -103,8 +121,11 @@ export default class TablePanel extends React.Component {
 					}}>
 						{localeUtil.getMsg("ui.common.applyto")}
 					</TableHeaderColumn>
+
 					<TableHeaderColumn width="100" dataField="key" isKey={true} dataSort={true}>Key</TableHeaderColumn>
+					
 					<TableHeaderColumn width="100" dataField="description">{localeUtil.getMsg("ui.common.desc")}</TableHeaderColumn>
+					
 					{locales.map(function(locale){
 						return (
 							<TableHeaderColumn key={locale} width="100" dataField={locale} dataSort={true}>
@@ -115,9 +136,9 @@ export default class TablePanel extends React.Component {
 				</BootstrapTable>
 				<Row>
 					<Col xs={12}>
-						<span className="pull-right">
-							(<span className="app-col-asterisk">*</span> {localeUtil.getMsg("ui.grid.edit")})
-						</span>
+						<span className="app-col-asterisk">*</span>
+						{' '}
+						<span className="panel-desc">{localeUtil.getMsg("ui.grid.edit")}</span>
 					</Col>
 				</Row>
 				<ConfirmModal ref="confirmModal"/>
