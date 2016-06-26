@@ -80,7 +80,9 @@ if (process.env.NODE_ENV === 'production') {
 	app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
 	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
 	app.get('/', function(req, res) {
-		const markup = ''
+		const markup = ['<div style="color:orange;text-align:center">',
+							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
+						'</div>'].join("")
 		const css = ''
 		res.render('index', {
 			markup: markup,

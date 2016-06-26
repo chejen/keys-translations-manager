@@ -16,7 +16,11 @@ export default class Header extends React.Component {
 					<span className="icon-bar"></span>
 					<span className="icon-bar"></span>
 				</button>
-				<a className="navbar-brand" href="https://github.com/chejen/keys-translations-manager">Keys-Translations Manager</a>
+				<a className="navbar-brand" href="https://github.com/chejen/keys-translations-manager">
+					<i className="fa fa-github fa-fw fa-lg"/>
+					{' '}
+					Keys-Translations Manager
+				</a>
 			</div>
 		);
 	}
