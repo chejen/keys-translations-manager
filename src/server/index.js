@@ -6,10 +6,10 @@ import AppComponent from '../App'
 import configureStore from '../store/configureStore'
 const App = container(AppComponent)
 
-global.navigator = global.navigator || {};
-
-export default renderToString(
-	<Provider store={configureStore()}>
-		<App/>
-	</Provider>
-);
+export default function markup(initialState){
+	return renderToString(
+		<Provider store={configureStore(initialState)}>
+			<App/>
+		</Provider>
+	);
+};

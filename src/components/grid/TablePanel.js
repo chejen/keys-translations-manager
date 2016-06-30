@@ -70,7 +70,7 @@ export default class TablePanel extends React.Component {
 			locales = config.locales,
 			minHeight = 200,
 			top = 370,
-			windowHeight = this.state.windowHeight || 
+			windowHeight = this.state.windowHeight ||
 						(typeof window === "undefined" ? minHeight + top : window.innerHeight);
 
 		return (
@@ -124,9 +124,9 @@ export default class TablePanel extends React.Component {
 					</TableHeaderColumn>
 
 					<TableHeaderColumn width="100" dataField="key" isKey={true} dataSort={true}>Key</TableHeaderColumn>
-					
+
 					<TableHeaderColumn width="100" dataField="description">{localeUtil.getMsg("ui.common.desc")}</TableHeaderColumn>
-					
+
 					{locales.map(function(locale){
 						return (
 							<TableHeaderColumn key={locale} width="100" dataField={locale} dataSort={true}>

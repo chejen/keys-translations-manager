@@ -1,12 +1,14 @@
 import bodyParser from 'body-parser'
 import express from 'express'
 import favicon from 'serve-favicon'
+import fs from 'fs'
 import mongoose from 'mongoose'
 import path from 'path'
 import compression from 'compression'
 import webpack from 'webpack'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
 import config from './ktm.config'
+import { LANGUAGES } from './src/constants/Languages'
 import TranslationController from './src/controllers/TranslationController'
 import KeyController from './src/controllers/KeyController'
 import CountController from './src/controllers/CountController'
@@ -61,10 +63,29 @@ if (process.env.NODE_ENV === 'production') {
 	app.get('/', function(req, res) {
 		const markup = require('./src/server/index').default
 		const css = '<link rel="stylesheet" href="/public/css/app.css">'
-		res.render('index', {
-			markup: markup,
-			css: css
-		})
+		let lang = req.headers["accept-language"].split(",")[0]
+		lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang
+
+		fs.readFile('./public/locale/' + lang + '/translation.json', {encoding: 'utf-8'}, function(err, data){
+			if (err) {
+				res.status(500).send(err);
+			} else {
+				const messages = JSON.parse(data)
+				const preloadedState = {
+					messages: { lang, messages }
+				}
+				let initialState = `
+					<script>
+						window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
+					</script>
+				`
+				res.render('index', {
+					initialState,
+					markup: markup(preloadedState),
+					css
+				})
+			}
+		});
 	});
 } else {
 	webpackConfig = require('./webpack.config.dev');
@@ -84,10 +105,8 @@ if (process.env.NODE_ENV === 'production') {
 							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
 						'</div>'].join("")
 		const css = ''
-		res.render('index', {
-			markup: markup,
-			css: css
-		})
+		const initialState = ''
+		res.render('index', { initialState, markup, css })
 	});
 }
 

@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 ReactDOM.render(
-	<Provider store={configureStore()}>
+	<Provider store={configureStore(window.__INITIAL_STATE__)}>
 		<App/>
 	</Provider>,
 	document.getElementById('root')

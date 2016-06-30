@@ -15,8 +15,8 @@ import OutputPanel from './components/output/OutputPanel'
 import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
 import ImportModal from './components/import/ImportModal'
+import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
-const languages = ["en-US", "zh-TW"]
 
 export default class App extends React.Component {
 	static propTypes = {
@@ -24,7 +24,7 @@ export default class App extends React.Component {
 		messages: React.PropTypes.object.isRequired,
 		counts: React.PropTypes.object.isRequired,
 		errors: React.PropTypes.array.isRequired,
-		translations: React.PropTypes.array.isRequired,
+		translations: React.PropTypes.array,//.isRequired,//might be null in the begining
 		showeditmodal: React.PropTypes.bool.isRequired,
 		showmergemodal: React.PropTypes.bool.isRequired,
 		showimportmodal: React.PropTypes.bool.isRequired,
@@ -56,7 +56,9 @@ export default class App extends React.Component {
 	}
 
 	componentWillMount() {
-		this.loadMessages();
+		if (this.props.lang) {
+			localeUtil.setMessages(this.props.messages);
+		}
 	}
 
 	componentDidMount() {//Invoked once, only on the client
@@ -68,6 +70,11 @@ export default class App extends React.Component {
 					me.props.ComponentActions.showMessagePopup();
 				}
 			});
+		}
+		if (!this.props.lang) {
+			let lang = navigator.language || navigator.browserLanguage;
+			lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang;
+			this.loadMessages(lang);
 		}
 		this.props.TranslationActions.loadTranslations();
 	}
@@ -86,8 +93,6 @@ export default class App extends React.Component {
 	}
 
 	loadMessages(lang) {
-		lang = lang || navigator.language || navigator.browserLanguage;
-		lang = (languages.indexOf(lang) === -1) ? "en-US" : lang;
 		this.props.MessageActions.loadMessages(lang);
 	}
 
