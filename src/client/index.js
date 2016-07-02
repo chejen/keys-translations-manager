@@ -1,10 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import container from '../container/container'
-import AppComponent from '../App'
+import { Router, hashHistory } from 'react-router'
 import configureStore from '../store/configureStore'
-const App = container(AppComponent)
+import getRoutes from '../routes'
 
 if (process.env.NODE_ENV === 'development') {
 	require('../../less/app.less');
@@ -12,7 +11,9 @@ if (process.env.NODE_ENV === 'development') {
 
 ReactDOM.render(
 	<Provider store={configureStore(window.__INITIAL_STATE__)}>
-		<App/>
+		<Router history={hashHistory}>
+			{getRoutes()}
+		</Router>
 	</Provider>,
 	document.getElementById('root')
 );

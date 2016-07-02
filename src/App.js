@@ -2,7 +2,7 @@ import io from 'socket.io-client';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-import TablePanel from './components/grid/TablePanel'
+//import TablePanel from './components/grid/TablePanel'
 import AlertPanel from './components/input/AlertPanel'
 import InputPanel from './components/input/InputPanel'
 import DropdownMenu from './components/layout/DropdownMenu'
@@ -20,6 +20,7 @@ import config from '../ktm.config'
 
 export default class App extends React.Component {
 	static propTypes = {
+		children: React.PropTypes.node,
 		lang: React.PropTypes.string.isRequired,
 		messages: React.PropTypes.object.isRequired,
 		counts: React.PropTypes.object.isRequired,
@@ -140,10 +141,19 @@ export default class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						<TablePanel translations={translations || []} messages={messages}
+						{/*<TablePanel translations={translations || []} messages={messages}
 							updateTranslation={TranslationActions.updateTranslation}
 							removeTranslation={TranslationActions.removeTranslation}
-							showEditModal={ComponentActions.showEditModal}/>
+							showEditModal={ComponentActions.showEditModal}/>*/}
+						{this.props.children &&
+							React.cloneElement(this.props.children, {
+								translations: translations || [],
+								messages: messages,
+								updateTranslation: TranslationActions.updateTranslation,
+								removeTranslation: TranslationActions.removeTranslation,
+								showEditModal: ComponentActions.showEditModal
+							})
+						}
 					</MainPanel>
 				</div>
 				<Mask show={!translations}/>
