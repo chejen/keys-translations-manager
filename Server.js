@@ -38,10 +38,10 @@ server.listen(config.server.port, config.server.hostname, function(err) {
 		process.exit(1);
 	}
 
-	if (process.env.NODE_ENV === 'production') {
-		log('info', 'The server (at http://localhost:3000) has started.');
-	} else {
+	if (process.env.NODE_ENV === 'development') {
 		log('info', 'Dev-server (at http://localhost:3000) is starting, please wait ...');
+	} else {
+		log('info', 'The server (at http://localhost:3000) has started.');
 	}
 });
 if (config.enableNotifications) {
@@ -58,7 +58,28 @@ if (config.enableNotifications) {
 app.set('view engine', 'ejs');
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
+	webpackConfig = require('./webpack.config.dev');
+	compiler = webpack(webpackConfig);
+	app.use(require('webpack-dev-middleware')(compiler, {
+		/*stats: {
+			colors: true
+		},*/
+		noInfo: true,
+		publicPath: webpackConfig.output.publicPath
+	})).use(require('webpack-hot-middleware')(compiler));
+	app.use('/public/css', express.static(path.join(__dirname, 'public/css')));
+	app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
+	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
+	app.get('/', function(req, res) {
+		const markup = ['<div style="color:orange;text-align:center">',
+							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
+						'</div>'].join("")
+		const css = ''
+		const initialState = ''
+		res.render('index', { initialState, markup, css })
+	});
+} else {
 	app.use('/public', express.static(path.join(__dirname, 'public')));
 
 	app.get('/', function(req, res) {
@@ -100,27 +121,6 @@ if (process.env.NODE_ENV === 'production') {
 				res.status(404).send('Not found')
 			}
 		})
-	});
-} else {
-	webpackConfig = require('./webpack.config.dev');
-	compiler = webpack(webpackConfig);
-	app.use(require('webpack-dev-middleware')(compiler, {
-		/*stats: {
-			colors: true
-		},*/
-		noInfo: true,
-		publicPath: webpackConfig.output.publicPath
-	})).use(require('webpack-hot-middleware')(compiler));
-	app.use('/public/css', express.static(path.join(__dirname, 'public/css')));
-	app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
-	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
-	app.get('/', function(req, res) {
-		const markup = ['<div style="color:orange;text-align:center">',
-							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
-						'</div>'].join("")
-		const css = ''
-		const initialState = ''
-		res.render('index', { initialState, markup, css })
 	});
 }
 

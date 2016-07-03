@@ -25,7 +25,8 @@ var config = {
 		new webpack.DefinePlugin({
 			'process.env': {
 				'NODE_ENV': JSON.stringify('production'),
-				'CLIENT_SIDE': true
+				'CLIENT_SIDE': true,
+				'CODE_SPLITTING': true
 			}
 		})
 	],
