@@ -48,6 +48,24 @@ var transformationUtil = {
 			}
 		}
 		return properties;
+	},
+
+	json2Tree: function(jsonObj) {
+		var ary = [];
+		for (var key in jsonObj) {
+			if (jsonObj[key]._id) {
+				ary.push({
+					"name": key,
+					"translations": jsonObj[key]
+				});
+			} else {
+				ary.push({
+					"name": key,
+					"children": transformationUtil.json2Tree(jsonObj[key])
+				});
+			}
+		}
+		return ary;
 	}
 };
 

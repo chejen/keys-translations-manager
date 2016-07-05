@@ -21,7 +21,7 @@ module.exports = {
 					);
 				}
 			} else {
-				return path + ".undefined";
+				message = path + ".undefined";
 			}
 		}
 
