@@ -14,6 +14,7 @@ import KeyController from './src/controllers/KeyController'
 import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
 import ImportController from './src/controllers/ImportController'
+import VisController from './src/controllers/VisController'
 
 const log = logUtil.log,
 	app = express(),
@@ -56,6 +57,10 @@ if (config.enableNotifications) {
 }
 
 app.set('view engine', 'ejs');
+app.use(compression());
+app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
 if (process.env.NODE_ENV === 'development') {
@@ -68,9 +73,6 @@ if (process.env.NODE_ENV === 'development') {
 		noInfo: true,
 		publicPath: webpackConfig.output.publicPath
 	})).use(require('webpack-hot-middleware')(compiler));
-	app.use('/public/css', express.static(path.join(__dirname, 'public/css')));
-	app.use('/public/image', express.static(path.join(__dirname, 'public/image')));
-	app.use('/public/locale', express.static(path.join(__dirname, 'public/locale')));
 	app.get('/', function(req, res) {
 		const markup = ['<div style="color:orange;text-align:center">',
 							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
@@ -80,8 +82,6 @@ if (process.env.NODE_ENV === 'development') {
 		res.render('index', { initialState, markup, css })
 	});
 } else {
-	app.use('/public', express.static(path.join(__dirname, 'public')));
-
 	app.get('/', function(req, res) {
 		const match = require('react-router').match
 		const getRoutes = require('./src/routes').default
@@ -124,12 +124,10 @@ if (process.env.NODE_ENV === 'development') {
 	});
 }
 
-app.use(compression());
-app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use("/api/translation", TranslationController);
 app.use("/api/key", KeyController);
 app.use("/api/count", CountController);
 app.use("/api/download", DownloadController);
 app.use("/api/import", ImportController);
+app.use("/api/vis", VisController);
