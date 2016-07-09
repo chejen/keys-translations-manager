@@ -73,7 +73,7 @@ if (process.env.NODE_ENV === 'development') {
 		noInfo: true,
 		publicPath: webpackConfig.output.publicPath
 	})).use(require('webpack-hot-middleware')(compiler));
-	app.get('/', function(req, res) {
+	app.get(['/', '/vis/*'], function(req, res) {
 		const markup = ['<div style="color:orange;text-align:center">',
 							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
 						'</div>'].join("")
@@ -82,15 +82,16 @@ if (process.env.NODE_ENV === 'development') {
 		res.render('index', { initialState, markup, css })
 	});
 } else {
-	app.get('/', function(req, res) {
-		const match = require('react-router').match
+	app.get(['/', '/vis/*'], function(req, res) {
+	//app.use((req, res) => {
+		const Router = require('react-router')
 		const getRoutes = require('./src/routes').default
 		const markup = require('./src/server/index').default
 		const css = '<link rel="stylesheet" href="/public/css/app.css">'
 		let lang = req.headers["accept-language"].split(",")[0]
 		lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang
 
-		match({ routes: getRoutes(), location: req.url }, (error, redirectLocation, renderProps) => {
+		Router.match({ routes: getRoutes(), location: req.url }, (error, redirectLocation, renderProps) => {
 			if (error) {
 				res.status(500).send(error.message)
 			} else if (redirectLocation) {
