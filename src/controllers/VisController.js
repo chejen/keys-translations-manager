@@ -6,10 +6,14 @@ router.route('/:visType/:project')
 		.get(function(req, res) {
 			var visType = req.params.visType,
 				project = req.params.project,
+				criteria = { "project": project },
+				query,
 				len,
 				translation;
 
-			Translations.find({ "project": project }, function(err, translations) {
+			query = Translations.find(criteria).sort({'key':-1});
+			//Translations.find({ "project": project }, function(err, translations) {
+			query.exec(function(err, translations) {
 				if (err) res.status(500).send(err);
 
 				if (visType === "tree") {

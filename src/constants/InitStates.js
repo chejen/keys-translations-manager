@@ -17,3 +17,6 @@ export const INIT_MESSAGES = {
 	messages: {}
 };
 export const INIT_TRANSLATIONS = null;
+export const INIT_VIS = {
+	treedata: null
+};

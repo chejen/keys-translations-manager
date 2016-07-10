@@ -1,10 +1,13 @@
 import React from 'react'
 import d3 from 'd3'
+import { Link } from 'react-router'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 export default class Tree extends React.Component {
 	static propTypes = {
-		params: React.PropTypes.object.isRequired
+		params: React.PropTypes.object.isRequired,
+		loadTreeData: React.PropTypes.func.isRequired,
+		treedata: React.PropTypes.array
 	};
 
 	constructor() {
@@ -13,12 +16,27 @@ export default class Tree extends React.Component {
 	}
 
 	componentDidMount() {
-		const me = this,
-			minHeight = 350,
+		const minHeight = 350,
 			top = 370,
 			windowHeight = typeof window === "undefined" ? minHeight + top : window.innerHeight,
 			height = windowHeight < (minHeight + top) ? minHeight : windowHeight - top;
-		const treeData = [{"name":"test","translations":{"description":"","key":"test","en-US":"test","zh-TW":"test","_id":"578064007b68ce4a08274e61","__v":0,"project":["p1","p2"]}},{"name":"ui","children":[{"name":"common","children":[{"name":"delete","children":[{"name":"b","translations":{"__v":0,"_id":"577fd1e9031a03f21482b2e5","description":"","en-US":"Delete.b","key":"ui.common.delete.b","zh-TW":"@@b@@","project":["p1","p2"]}},{"name":"a","translations":{"__v":0,"_id":"577fd1df031a03f21482b2e4","description":"","en-US":"Delete.a","key":"ui.common.delete.a","zh-TW":"@@a@@","project":["p1","p2"]}}]},{"name":"add","translations":{"__v":0,"_id":"577a8684a4d9538f0f7e4ef5","description":"","en-US":"Add","key":"ui.common.add","zh-TW":"@@add@@","project":["p1","p2"]}}]}]}];
+
+		this.height = height;
+		this.diagonal = d3.svg.diagonal().projection(function(d) {
+			return [d.y, d.x];
+		});
+		this.tree = d3.layout.tree().size([height, 600]);
+		this.svg = d3.select("#vis_tree").append("svg")
+			.attr("width", "100%").attr("height", height).append("g")
+			.attr("transform", "translate(100,0)");
+		this.count = 0;
+
+		this.props.loadTreeData(this.props.params.projectId);
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const me = this,
+			treeData = nextProps.treedata;
 
 		if (treeData) {
 			if (treeData.length === 1) {
@@ -29,25 +47,11 @@ export default class Tree extends React.Component {
 					children: treeData
 				};
 			}
+			this.root.x0 = this.height / 2;
+			this.root.y0 = 0;
+			this.root.children.forEach(me.toggleAll.bind(me));
+			this.update(this.root);
 		}
-		this.root.x0 = height / 2;
-		this.root.y0 = 0;
-		this.root.children.forEach(me.toggleAll.bind(me));
-
-		this.diagonal = d3.svg.diagonal().projection(function(d) {
-			return [d.y, d.x];
-		});
-		this.tree = d3.layout.tree().size([height, 600]);
-		this.svg = d3.select("#vis_tree").append("svg")
-			.attr("width", "100%").attr("height", height).append("g")
-			.attr("transform", "translate(100,0)");
-		this.count = 0;
-
-		this.update(this.root);
-	}
-
-	componentWillReceiveProps() {
-
 	}
 
 	toggle(d) {
@@ -61,7 +65,7 @@ export default class Tree extends React.Component {
 	}
 
 	toggleAll(d) {
-		var me = this;
+		const me = this;
 		if (d.children) {
 			d.children.forEach(me.toggleAll.bind(me));
 			me.toggle(d);
@@ -70,7 +74,7 @@ export default class Tree extends React.Component {
 
 	update(root) {
 		const me = this,
-			duration = 300;
+			duration = 200;
 		let nodes = me.tree.nodes(this.root).reverse(),
 			links = me.tree.links(nodes),
 			node,
@@ -79,7 +83,7 @@ export default class Tree extends React.Component {
 			nodeExit,
 			link;
 
-		nodes.forEach(function(d) { d.y = d.depth * 100; });
+		nodes.forEach(function(d) { d.y = d.depth * 150; });
 
 		node = me.svg.selectAll("g.node")
 			.data(nodes, function(d) {
@@ -100,7 +104,7 @@ export default class Tree extends React.Component {
 			});
 
 		nodeEnter.append("circle")
-			.attr("r", 8).style("fill", "#fff");
+			.attr("r", 9).style("fill", "#fff");
 
 		nodeEnter.append("text")
 			.attr("x", function(d) {
@@ -112,14 +116,35 @@ export default class Tree extends React.Component {
 			})
 			.text(function(d) { return d.name; })
 
+		nodeEnter.append("title").html(function(d) {
+				let obj = d.translations,
+					filter = ["_id", "project", "key"],
+					str = "",
+					key;
+
+				if (obj) {
+					for (key in obj) {
+						if ({}.hasOwnProperty.call(obj, key)) {
+							if (filter.indexOf(key) === -1) {
+								str += `【${key}】<br/>${obj[key]}<br/><br/>`
+							}
+						}
+					}
+				}
+				return str;
+			});
+
 		nodeUpdate = node.transition().duration(duration)
 			.attr("transform", function(d) {
 				return `translate(${d.y},${d.x})`;
 			});
 
-		nodeUpdate.select("circle").attr("r", 4.5)
+		nodeUpdate.select("circle").attr("r", 5.5)
 			.style("fill", function(d) {
 				return d._children ? "#FDD11A" : "#fff";
+			})
+			.style("cursor", function(d) {
+				return (d.children || d._children) ? "pointer" : "default";
 			});
 
 		nodeUpdate.select("text").style("fill-opacity", 1);
@@ -164,8 +189,14 @@ export default class Tree extends React.Component {
 	}
 
 	render() {
+		const treeData = this.props.treedata
 		return (
-			<div id="vis_tree" />
+			<div id="vis_tree">
+				{treeData
+					? <Link to="/"><i title="go back" className="fa fa-arrow-left fa-lg"/></Link>
+					: <i className="fa fa-spinner fa-pulse fa-lg"/>
+				}
+			</div>
 		);
 	}
 }

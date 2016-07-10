@@ -9,6 +9,7 @@ export default function components(state = INIT_COMPONENTS, action) {
 				showmessagepopup: true
 			};
 		case ActionTypes.LOAD_TRANSLATIONS:
+		case ActionTypes.LOAD_TREE_DATA:
 		case ActionTypes.CLOSE_MESSAGEPOPUP:
 			return {
 				...state,

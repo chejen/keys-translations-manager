@@ -1,11 +1,13 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import { Link } from 'react-router'
 import Col from 'react-bootstrap/lib/Col'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class CountCol extends React.Component {
 	static propTypes = {
+		projectId: React.PropTypes.string.isRequired,
 		header: React.PropTypes.string.isRequired,
 		onClick: React.PropTypes.func.isRequired,
 		count: React.PropTypes.number.isRequired,
@@ -18,26 +20,28 @@ export default class CountCol extends React.Component {
 	}
 
 	render() {
+		const { projectId, header, onClick, count, desc } = this.props
 		return(
 			<Col lg={2} md={3} sm={4}>
 				<div className="panel panel-count">
 					<div className="panel-heading">
 						{/*<div className="text-center">{this.props.header}</div>*/}
-						<span className="pull-left">{this.props.header}</span>
+						<span className="pull-left">{header}</span>
 						<span className="pull-right">
 							<Glyphicon glyph="download-alt"
 								title={localeUtil.getMsg("ui.common.download")}
 								style={{cursor:"pointer"}}
-								onClick={this.props.onClick}/>
+								onClick={onClick}/>
 						</span>
 						<div className="clearfix"></div>
 					</div>
 					<div className="row">
 						<div className="huge text-center">
-							<b>{this.props.count}</b>
+							{/*<b>{this.props.count}</b>*/}
+							<b><Link to={`/vis/${projectId}`}>{count}</Link></b>
 						</div>
 						<div className="panel-desc text-center">
-							{this.props.desc}
+							{desc}
 						</div>
 					</div>
 				</div>
