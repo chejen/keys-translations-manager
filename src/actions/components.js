@@ -42,3 +42,9 @@ export function closeMessagePopup() {
 		type: ActionTypes.CLOSE_MESSAGEPOPUP
 	}
 }
+
+export function reloadData() {
+	return {
+		type: ActionTypes.RELOAD_DATA
+	}
+}

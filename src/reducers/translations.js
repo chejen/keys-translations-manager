@@ -11,6 +11,7 @@ export default function translations(state = INIT_TRANSLATIONS, action) {
 
 	switch (action.type) {
 		case ActionTypes.ADD_TRANSLATION:
+			state = state || []; //might be null
 			return [action.data, ...state];
 
 		case ActionTypes.LOAD_TRANSLATIONS:

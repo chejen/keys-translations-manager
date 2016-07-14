@@ -13,7 +13,8 @@ export default function components(state = INIT_COMPONENTS, action) {
 		case ActionTypes.CLOSE_MESSAGEPOPUP:
 			return {
 				...state,
-				showmessagepopup: false
+				showmessagepopup: false,
+				reloaddata: false
 			};
 		case ActionTypes.SHOW_IMPORTMODAL:
 			return {
@@ -50,6 +51,11 @@ export default function components(state = INIT_COMPONENTS, action) {
 			return {
 				...state,
 				showeditmodal: false
+			};
+		case ActionTypes.RELOAD_DATA:
+			return {
+				...state,
+				reloaddata: true
 			};
 		default:
 			return state;

@@ -8,16 +8,18 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import ConfirmModal from './ConfirmModal'
+import Mask from '../layout/Mask'
 import configUtil from '../../configUtil'
 
 export default class TablePanel extends React.Component {
 	static propTypes = {
 		messages: React.PropTypes.object,
-		translations: React.PropTypes.array.isRequired,
-		updateTranslation: React.PropTypes.func.isRequired,
-		removeTranslation: React.PropTypes.func.isRequired,
-		showEditModal: React.PropTypes.func.isRequired
+		CountActions: React.PropTypes.object.isRequired,
+		TranslationActions: React.PropTypes.object.isRequired,
+		ComponentActions: React.PropTypes.object.isRequired,
+		translations: React.PropTypes.array.isRequired
 	};
+
 	static contextTypes = {
 		config: React.PropTypes.object
 	};
@@ -32,10 +34,27 @@ export default class TablePanel extends React.Component {
 
 	componentDidMount() {
 		window.addEventListener('resize', this.handleResize.bind(this));
+		this.loadData();
+	}
+
+	componentWillReceiveProps(nextProps) {
+		const translations = nextProps.translations;
+
+		if (nextProps.reloaddata) {
+			this.loadData();
+		}
+
+		if (translations && translations !== this.props.translations) {
+			nextProps.CountActions.loadCounts();
+		}
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.handleResize);
+	}
+
+	loadData() {
+		this.props.TranslationActions.loadTranslations();
 	}
 
 	handleResize() {
@@ -49,7 +68,7 @@ export default class TablePanel extends React.Component {
 	}
 
 	showEditModal(data) {
-		this.props.showEditModal(data)
+		this.props.ComponentActions.showEditModal(data)
 	}
 
 	showConfirmModal(value, data) {
@@ -61,7 +80,7 @@ export default class TablePanel extends React.Component {
 	}
 
 	removeTranslation(value) {
-		this.props.removeTranslation(value);
+		this.props.TranslationActions.removeTranslation(value);
 	}
 
 	render() {
@@ -83,7 +102,7 @@ export default class TablePanel extends React.Component {
 						placeholder={localeUtil.getMsg("ui.grid.search")}
 						onChange={this.onQuickFilterText.bind(this)}/>
 				</InputGroup>
-				<BootstrapTable ref="table" data={this.props.translations}
+				<BootstrapTable ref="table" data={this.props.translations || []}
 						height={(windowHeight < (minHeight + top) ? minHeight : windowHeight - top) + ""}
 						striped={true} hover={true} condensed={true}
 						options={{
@@ -93,7 +112,7 @@ export default class TablePanel extends React.Component {
 							mode: "dbclick",
 							blurToSave: false,
 							afterSaveCell: function(row/*, cellName, cellValue*/){
-								me.props.updateTranslation(row);
+								me.props.TranslationActions.updateTranslation(row);
 							}
 						}}>
 
@@ -143,6 +162,7 @@ export default class TablePanel extends React.Component {
 					</Col>
 				</Row>
 				<ConfirmModal ref="confirmModal"/>
+				<Mask show={!this.props.translations}/>
 			</div>
 		);
 	}

@@ -3,6 +3,7 @@ export const INIT_COMPONENTS = {
 	showmergemodal: false,
 	showeditmodal: false,
 	showmessagepopup: false,
+	reloaddata: false,
 	keys: {},
 	mergeable: [],
 	editrecord: {}

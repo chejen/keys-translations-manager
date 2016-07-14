@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import * as MessageActions from '../actions/messages'
 import * as CountActions from '../actions/counts'
 import * as TranslationActions from '../actions/translations'
-import * as VisActions from '../actions/vis'
+// import * as VisActions from '../actions/vis'
 import * as KeyActions from '../actions/keys'
 import * as ErrorActions from '../actions/errors'
 import * as SocketActions from '../actions/socket'
@@ -19,12 +19,13 @@ function mapStateToProps(state) {
 		counts: state.counts,
 		errors: state.errors,
 		translations: state.translations,
-		treedata: state.vis.treedata,
+		//treedata: state.vis.treedata,
 		emitdatachange: state.socket.emitdatachange,
 		showeditmodal: state.components.showeditmodal,
 		showmergemodal: state.components.showmergemodal,
 		showimportmodal: state.components.showimportmodal,
 		showmessagepopup: state.components.showmessagepopup,
+		reloaddata: state.components.reloaddata,
 		keys: state.components.keys,
 		mergeable: state.components.mergeable,
 		editrecord: state.components.editrecord
@@ -36,7 +37,7 @@ function mapDispatchToProps(dispatch) {
 		MessageActions: bindActionCreators(MessageActions, dispatch),
 		CountActions: bindActionCreators(CountActions, dispatch),
 		TranslationActions: bindActionCreators(TranslationActions, dispatch),
-		VisActions: bindActionCreators(VisActions, dispatch),
+		//VisActions: bindActionCreators(VisActions, dispatch),
 		KeyActions: bindActionCreators(KeyActions, dispatch),
 		ErrorActions: bindActionCreators(ErrorActions, dispatch),
 		SocketActions: bindActionCreators(SocketActions, dispatch),

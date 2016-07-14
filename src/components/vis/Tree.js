@@ -2,12 +2,17 @@ import React from 'react'
 import d3 from 'd3'
 import { Link } from 'react-router'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class Tree extends React.Component {
 	static propTypes = {
 		params: React.PropTypes.object.isRequired,
-		loadTreeData: React.PropTypes.func.isRequired,
-		treedata: React.PropTypes.array
+		messages: React.PropTypes.object,
+		translations: React.PropTypes.array,
+		CountActions: React.PropTypes.object.isRequired,
+		VisActions: React.PropTypes.object.isRequired,
+		treedata: React.PropTypes.array,
+		reloaddata: React.PropTypes.bool.isRequired
 	};
 
 	constructor() {
@@ -31,27 +36,43 @@ export default class Tree extends React.Component {
 			.attr("transform", "translate(100,0)");
 		this.count = 0;
 
-		this.props.loadTreeData(this.props.params.projectId);
+		this.loadData(this.props.params.projectId);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		const me = this,
-			treeData = nextProps.treedata;
+			{treedata, translations, reloaddata, params, CountActions} = nextProps;
 
-		if (treeData) {
-			if (treeData.length === 1) {
-				this.root = treeData[0];
+		if (reloaddata || //socket
+				translations !== this.props.translations || //add/update/...
+				params.projectId !== this.props.params.projectId) { //change project
+			this.loadData(params.projectId);
+		}
+
+		if (treedata && treedata.length &&
+			treedata !== this.props.treedata) {
+
+			CountActions.loadCounts();
+
+			if (treedata.length === 1) {
+				this.root = treedata[0];
 			} else {
 				this.root = {
 					name: "-",
-					children: treeData
+					children: treedata
 				};
 			}
 			this.root.x0 = this.height / 2;
 			this.root.y0 = 0;
-			this.root.children.forEach(me.toggleAll.bind(me));
+			if (this.root.children) {
+				this.root.children.forEach(me.toggleAll.bind(me));
+			}
 			this.update(this.root);
 		}
+	}
+
+	loadData(projectId) {
+		this.props.VisActions.loadTreeData(projectId);
 	}
 
 	toggle(d) {
@@ -118,15 +139,15 @@ export default class Tree extends React.Component {
 
 		nodeEnter.append("title").html(function(d) {
 				let obj = d.translations,
-					filter = ["_id", "project", "key"],
+					filter = ["__v", "_id", "project", "key"],
 					str = "",
 					key;
 
 				if (obj) {
 					for (key in obj) {
 						if ({}.hasOwnProperty.call(obj, key)) {
-							if (filter.indexOf(key) === -1) {
-								str += `【${key}】<br/>${obj[key]}<br/><br/>`
+							if (filter.indexOf(key) === -1 && obj[key]) {
+								str += `【${key}】${obj[key]}<br/><br/>`
 							}
 						}
 					}
@@ -193,7 +214,7 @@ export default class Tree extends React.Component {
 		return (
 			<div id="vis_tree">
 				{treeData
-					? <Link to="/"><i title="go back" className="fa fa-arrow-left fa-lg"/></Link>
+					? <Link to="/"><i title={localeUtil.getMsg("ui.common.goBack")} className="fa fa-arrow-left fa-lg"/></Link>
 					: <i className="fa fa-spinner fa-pulse fa-lg"/>
 				}
 			</div>

@@ -10,7 +10,6 @@ import Header from './components/layout/Header'
 import MainPanel from './components/layout/MainPanel'
 import SideBar from './components/layout/SideBar'
 import MessagePopup from './components/layout/MessagePopup'
-import Mask from './components/layout/Mask'
 import OutputPanel from './components/output/OutputPanel'
 import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
@@ -27,12 +26,13 @@ export default class App extends React.Component {
 		messages: React.PropTypes.object.isRequired,
 		counts: React.PropTypes.object.isRequired,
 		errors: React.PropTypes.array.isRequired,
-		translations: React.PropTypes.array,//.isRequired,//might be null in the begining
-		treedata: React.PropTypes.array,
+		translations: React.PropTypes.array,
 		showeditmodal: React.PropTypes.bool.isRequired,
 		showmergemodal: React.PropTypes.bool.isRequired,
 		showimportmodal: React.PropTypes.bool.isRequired,
 		showmessagepopup: React.PropTypes.bool.isRequired,
+		emitdatachange: React.PropTypes.bool.isRequired,
+		reloaddata: React.PropTypes.bool.isRequired,
 		editrecord: React.PropTypes.object.isRequired,
 		keys: React.PropTypes.object.isRequired,
 		mergeable: React.PropTypes.array.isRequired,
@@ -40,7 +40,6 @@ export default class App extends React.Component {
 		MessageActions: React.PropTypes.object.isRequired,
 		CountActions: React.PropTypes.object.isRequired,
 		TranslationActions: React.PropTypes.object.isRequired,
-		VisActions: React.PropTypes.object.isRequired,
 		KeyActions: React.PropTypes.object.isRequired,
 		ErrorActions: React.PropTypes.object.isRequired,
 		SocketActions: React.PropTypes.object.isRequired,
@@ -48,16 +47,18 @@ export default class App extends React.Component {
 	}
 
 	static childContextTypes = {
-		config: React.PropTypes.object
+		config: React.PropTypes.object,
+		socket: React.PropTypes.object
 	}
 
 	constructor(props) {
 		super(props);
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+		this.state = { socket: null }
 	}
 
 	getChildContext() {
-		return { config: config }
+		return { config, socket: this.state.socket }
 	}
 
 	componentWillMount() {
@@ -69,33 +70,36 @@ export default class App extends React.Component {
 	componentDidMount() {//Invoked once, only on the client
 		const me = this;
 		if (config.enableNotifications) {
-			me.socket = io.connect('/');
-			me.socket.on('ktm', function (data) {
-				if (data && data.action === "datachanged") {
-					me.props.ComponentActions.showMessagePopup();
-				}
-			});
+			me.setSocket();
 		}
 		if (!this.props.lang) {
 			let lang = navigator.language || navigator.browserLanguage;
 			lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang;
 			this.loadMessages(lang);
 		}
-		this.props.TranslationActions.loadTranslations();
+//		this.props.TranslationActions.loadTranslations();
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.lang !== this.props.lang) {
 			localeUtil.setMessages(nextProps.messages);
 		}
-		if ((nextProps.translations !== this.props.translations) ||
-			(nextProps.treedata !== this.props.treedata)) {
-				nextProps.CountActions.loadCounts();
-				if (config.enableNotifications && nextProps.emitdatachange && this.socket) {
-					this.socket.emit('ktm', { action: 'datachanged' });
-					this.props.SocketActions.endDataChange();
-				}
+		if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
+			this.state.socket.emit('ktm', { action: 'datachanged' });
+			this.props.SocketActions.endDataChange();
 		}
+	}
+
+	setSocket() {
+		const me = this;
+		let socket;
+		socket = io.connect('/');
+		socket.on('ktm', function (data) {
+			if (data && data.action === "datachanged") {
+				me.props.ComponentActions.showMessagePopup();
+			}
+		});
+		this.setState({ socket });
 	}
 
 	loadMessages(lang) {
@@ -104,10 +108,10 @@ export default class App extends React.Component {
 
 	render() {
 		const {
-			MessageActions, TranslationActions, VisActions,
+			MessageActions, TranslationActions, CountActions,
 			KeyActions, ErrorActions, ComponentActions,
-			lang, messages, counts, errors, treedata,
-			translations, showeditmodal, editrecord,
+			lang, messages, counts, errors,
+			translations, showeditmodal, editrecord, reloaddata,
 			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
 
@@ -152,35 +156,24 @@ export default class App extends React.Component {
 							showEditModal={ComponentActions.showEditModal}/>*/}
 						{this.props.children &&
 							React.cloneElement(this.props.children, {
-								translations: translations || [],
-								messages: messages,
-								updateTranslation: TranslationActions.updateTranslation,
-								removeTranslation: TranslationActions.removeTranslation,
-								showEditModal: ComponentActions.showEditModal,
-								treedata:treedata || [],
-								loadTreeData: VisActions.loadTreeData
+								messages,
+								translations,
+								reloaddata,
+								CountActions
 							})
 						}
 					</MainPanel>
 				</div>
-				<Mask show={!translations}/>
 				<MessagePopup messages={messages}
 						msg={localeUtil.getMsg("ui.tip.dataChanged")}
 						closeMessagePopup={ComponentActions.closeMessagePopup}
 						showmessagepopup={showmessagepopup}>
 					<b><u>
 						<a href="#" onClick={(event) => {
-							const { pathname } = this.props.location
 							if (event) {
 								event.preventDefault();
 							}
-							if (pathname === "/") {
-								TranslationActions.loadTranslations();
-							} else if (pathname.indexOf("/vis/") >= 0) {
-								VisActions.loadTreeData(this.props.params.projectId);
-							} else {
-								TranslationActions.loadTranslations();
-							}
+							ComponentActions.reloadData();
 						}}>{localeUtil.getMsg("ui.common.reload")}</a>
 					</u></b>
 				</MessagePopup>
