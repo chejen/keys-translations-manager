@@ -63,4 +63,66 @@ describe('[utility] transformationUtil', function() {
 			});
 		});
 	});
+
+	describe('json2Tree', function() {
+		before(function() {
+			dataJ = {
+				"ui": {
+					"common": {
+						"delete": {
+							"description": "",
+							"key": "ui.common.delete",
+							"en-US": "Delete",
+							"zh-TW": "刪除",
+							"_id": "577a868da4d9538f0f7e4ef6",
+							"__v": 0,
+							"project": ["p1", "p2"]
+						},
+						"add": {
+							"description": "",
+							"key": "ui.common.add",
+							"en-US": "Add",
+							"zh-TW": "新增",
+							"_id": "577a8684a4d9538f0f7e4ef5",
+							"__v": 0,
+							"project": ["p1", "p2"]
+						}
+					}
+				}
+			};
+		});
+
+		it('should return tree data structure', function() {
+			var tree = transformationUtil.json2Tree(dataJ);
+			expect(tree).to.deep.equal([{
+				"name": "ui",
+				"children": [{
+					"name": "common",
+					"children": [{
+						"name": "delete",
+						"translations": {
+							"description": "",
+							"key": "ui.common.delete",
+							"en-US": "Delete",
+							"zh-TW": "刪除",
+							"_id": "577a868da4d9538f0f7e4ef6",
+							"__v": 0,
+							"project": ["p1", "p2"]
+						}
+					}, {
+						"name": "add",
+						"translations": {
+							"description": "",
+							"key": "ui.common.add",
+							"en-US": "Add",
+							"zh-TW": "新增",
+							"_id": "577a8684a4d9538f0f7e4ef5",
+							"__v": 0,
+							"project": ["p1", "p2"]
+						}
+					}]
+				}]
+			}]);
+		});
+	});
 });

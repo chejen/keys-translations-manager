@@ -21,6 +21,7 @@ const mockStore = configureStore(middlewares)
 
 global.document = doc
 global.window = win
+global.navigator = window.navigator
 global.React = React
 global.sinon = sinon
 global.expect = expect

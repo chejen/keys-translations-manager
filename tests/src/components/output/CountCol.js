@@ -1,8 +1,10 @@
 import CountCol from '../../../../src/components/output/CountCol'
 import Col from 'react-bootstrap/lib/Col'
+import { Link } from 'react-router'
 
 function setup() {
 	let props = {
+			projectId: 'p1',
 			header: 'header',
 			onClick: sinon.spy(),
 			count: 5,
@@ -50,8 +52,9 @@ describe('(component) CountCol', () => {
 
 		it('should show count', () => {
 			const { props, wrapper } = setup()
+			const { projectId, count } = props
 			expect(wrapper.find('.huge').contains(
-				<b>{props.count}</b>
+				<b><Link to={`/vis/${projectId}`}>{count}</Link></b>
 			)).to.be.true;
 		});
 	});
