@@ -1,17 +1,19 @@
-var router = require("express").Router();
-var archiver = require('archiver');
-var properties2Json = require('keys-translations-manager-core/lib/transformationUtil').properties2Json;
-var Translations = require('../models/TranslationModel');
-var config = require('../../ktm.config');
-var locales = config.locales;
+import express from 'express'
+import archiver from 'archiver'
+import transformationUtil from 'keys-translations-manager-core/lib/transformationUtil'
+import Translations from '../models/TranslationModel'
+import config from '../../ktm.config'
+const locales = config.locales
+const router = express.Router()
+const properties2Json = transformationUtil.properties2Json
 
 router.route('/:outputType/:fileType/:project/:locale')
 		.get(function(req, res) {
-			var outputType = req.params.outputType, //f: format, n: none
-				fileType = req.params.fileType, //json, properties
-				project = req.params.project,
-				locale = req.params.locale,
-				query,
+			// outputType (f: format, n: none)
+			// fileType (json, properties)
+			const { outputType, fileType, project, locale } = req.params
+
+			let query,
 				criteria = {
 					"project": project
 				},
@@ -25,7 +27,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 			query = Translations.find(criteria).select(select);
 			if (outputType === "f") query.sort({'key':-1});
 			query.exec(function(err, translations) {
-				var len,
+				let len,
 					translation,
 					rootObj = {};
 
@@ -67,23 +69,24 @@ router.route('/:outputType/:fileType/:project/:locale')
 
 router.route('/:outputType/:fileType/:project')
 		.get(function(req, res) {
-			var outputType = req.params.outputType, //f: format, n: none
-				fileType = req.params.fileType, //json, properties
-				project = req.params.project,
-				query,
-				criteria = {},
-				select = {
-					"_id": 0,
-					"key": 1
-				},
+			// outputType (f: format, n: none)
+			// fileType (json, properties)
+			const { outputType, fileType, project } = req.params,
 				lenLocales = locales.length,
-				count = 0,
-				locale,
 				archive = archiver.create('zip', {}),
 				zipHandler = function(stream, locale, fileExt) {
 					archive.append(stream, { name: locale + '/translation.' + fileExt });
 					if (++count === lenLocales) archive.finalize();
 				};
+
+			let query,
+				criteria = {},
+				select = {
+					"_id": 0,
+					"key": 1
+				},
+				count = 0,
+				locale;
 
 			res.set({
 				'Content-Type': 'application/zip',
@@ -91,7 +94,7 @@ router.route('/:outputType/:fileType/:project')
 			});
 			archive.pipe(res);
 
-			for (var i=0; i<lenLocales; i++) {
+			for (let i=0; i<lenLocales; i++) {
 				locale = locales[i];
 
 				criteria.project = project;
@@ -99,7 +102,7 @@ router.route('/:outputType/:fileType/:project')
 				query = Translations.find(criteria).select(select);
 				if (outputType === "f") query.sort({'key':-1});
 				query.exec(function(err, translations) {
-					var len,
+					let len,
 						translation,
 						rootObj = {},
 						locale = this;
@@ -120,7 +123,7 @@ router.route('/:outputType/:fileType/:project')
 						}
 
 					} else if (fileType === "properties") {
-						var str = "";
+						let str = "";
 						while(len--) {
 							translation = translations[len];
 							str += translation.key + "=" + translation[locale] + "\r\n";
@@ -131,4 +134,4 @@ router.route('/:outputType/:fileType/:project')
 			}
 		});
 
-module.exports = router;
+export default router

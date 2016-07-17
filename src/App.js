@@ -2,7 +2,6 @@ import io from 'socket.io-client';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-//import TablePanel from './components/grid/TablePanel'
 import AlertPanel from './components/input/AlertPanel'
 import InputPanel from './components/input/InputPanel'
 import DropdownMenu from './components/layout/DropdownMenu'
@@ -77,7 +76,6 @@ export default class App extends React.Component {
 			lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang;
 			this.loadMessages(lang);
 		}
-//		this.props.TranslationActions.loadTranslations();
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -150,10 +148,6 @@ export default class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						{/*<TablePanel translations={translations || []} messages={messages}
-							updateTranslation={TranslationActions.updateTranslation}
-							removeTranslation={TranslationActions.removeTranslation}
-							showEditModal={ComponentActions.showEditModal}/>*/}
 						{this.props.children &&
 							React.cloneElement(this.props.children, {
 								messages,

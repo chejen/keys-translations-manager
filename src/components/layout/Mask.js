@@ -1,24 +1,16 @@
 import React from 'react'
 import Modal from 'react-bootstrap/lib/Modal'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-export default class Mask extends React.Component {
-	static propTypes = {
-		show: React.PropTypes.bool.isRequired
-	};
+const Mask = (props) => (
+	<Modal backdrop='static' keyboard={false} bsSize='small' show={props.show}>
+		<Modal.Body style={{"textAlign": "center"}}>
+			<i className="fa fa-spinner fa-pulse fa-2x"/>
+		</Modal.Body>
+	</Modal>
+);
 
-	constructor() {
-		super();
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-	}
+Mask.propTypes = {
+	show: React.PropTypes.bool.isRequired
+};
 
-	render() {
-		return (
-			<Modal backdrop='static' keyboard={false} bsSize='small' show={this.props.show}>
-				<Modal.Body style={{"textAlign": "center"}}>
-					<i className="fa fa-spinner fa-pulse fa-2x"/>
-				</Modal.Body>
-			</Modal>
-		);
-	}
-}
+export default Mask

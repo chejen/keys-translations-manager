@@ -137,8 +137,8 @@ export default class ImportModal extends React.Component {
 								<span style={{color:"#F92672"}}>{this.state.selectedFile.name}</span>
 							</span>)
 							: (<ul>
-								<li>{localeUtil.getMsg("ui.file.select")}</li>
-								<li>
+								<li className="text-primary">{localeUtil.getMsg("ui.file.select")}</li>
+								<li className="text-primary">
 								{localeUtil.getMsg(
 									"ui.file.accept",
 									this.acceptTypes.map(function(e){

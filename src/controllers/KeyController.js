@@ -1,10 +1,12 @@
-var router = require("express").Router();
-var mongoose = require('mongoose');
-var findMergeable = require('keys-translations-manager-core/lib/mergeUtil').findMergeable;
-var Translations = require('../models/TranslationModel');
-var config = require('../../ktm.config');
-var locales = config.locales;
-var bulk, doc;
+import express from 'express'
+import mongoose from 'mongoose'
+import mergeUtil from 'keys-translations-manager-core/lib/mergeUtil'
+import Translations from '../models/TranslationModel'
+import config from '../../ktm.config'
+const locales = config.locales
+const router = express.Router()
+const findMergeable = mergeUtil.findMergeable
+let bulk, doc;
 
 router.route('/')
 		.get(function(req, res) {
@@ -14,8 +16,8 @@ router.route('/')
 			});
 		})
 		.post(function(req, res) {
-			var mergeable = req.body,
-				len = mergeable.length,
+			const mergeable = req.body;
+			let len = mergeable.length,
 				l,
 				translationAry,
 				translation,
@@ -52,4 +54,4 @@ router.route('/')
 			});
 		});
 
-module.exports = router;
+export default router

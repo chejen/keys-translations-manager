@@ -3,6 +3,7 @@ import d3 from 'd3'
 import { Link } from 'react-router'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import Mask from '../layout/Mask'
 
 export default class Tree extends React.Component {
 	static propTypes = {
@@ -210,13 +211,12 @@ export default class Tree extends React.Component {
 	}
 
 	render() {
-		const treeData = this.props.treedata
 		return (
 			<div id="vis_tree">
-				{treeData
-					? <Link to="/"><i title={localeUtil.getMsg("ui.common.goBack")} className="fa fa-arrow-left fa-lg"/></Link>
-					: <i className="fa fa-spinner fa-pulse fa-lg"/>
-				}
+				<Mask show={!this.props.treedata}/>
+				<Link to="/">
+					<i title={localeUtil.getMsg("ui.common.goBack")} className="fa fa-arrow-left fa-lg"/>
+				</Link>
 			</div>
 		);
 	}

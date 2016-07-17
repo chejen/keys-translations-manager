@@ -1,13 +1,14 @@
-var router = require("express").Router();
-var transformationUtil = require('keys-translations-manager-core/lib/transformationUtil');
-var Translations = require('../models/TranslationModel');
+import express from 'express'
+import transformationUtil from 'keys-translations-manager-core/lib/transformationUtil'
+import Translations from '../models/TranslationModel'
+const router = express.Router()
 
 router.route('/:visType/:project')
 		.get(function(req, res) {
-			var visType = req.params.visType,
+			const visType = req.params.visType,
 				project = req.params.project,
-				criteria = { "project": project },
-				query,
+				criteria = { "project": project };
+			let query,
 				len,
 				translation;
 
@@ -17,7 +18,7 @@ router.route('/:visType/:project')
 				if (err) res.status(500).send(err);
 
 				if (visType === "tree") {
-					var rootObj = {};
+					let rootObj = {};
 					len = translations.length;
 					while(len--) {
 						translation = translations[len];
@@ -30,4 +31,4 @@ router.route('/:visType/:project')
 			});
 		});
 
-module.exports = router;
+export default router

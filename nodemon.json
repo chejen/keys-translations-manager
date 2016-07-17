@@ -3,13 +3,17 @@
 	"ignore": [
 		"docs/",
 		"public/",
+		"src/actions/",
 		"src/client/",
 		"src/components/",
 		"src/constants/",
+		"src/containers/",
 		"src/reducers/",
 		"src/server/",
 		"src/store/",
-		"src/*.js",
+		"src/App.js",
+		"src/configUtil.js",
+		"src/routes.js",
 		"tests/"
 	]
 }

@@ -30,10 +30,13 @@ export default class TablePanel extends React.Component {
 		this.state = {
 			windowHeight: 0
 		};
+
+		//https://gist.github.com/Restuta/e400a555ba24daa396cc
+		this.handleResize = this.handleResize.bind(this);
 	}
 
 	componentDidMount() {
-		window.addEventListener('resize', this.handleResize.bind(this));
+		window.addEventListener('resize', this.handleResize);
 		this.loadData();
 	}
 
@@ -116,7 +119,7 @@ export default class TablePanel extends React.Component {
 							}
 						}}>
 
-					<TableHeaderColumn width="50" dataField="_id" dataFormat={function(cell, row){
+					<TableHeaderColumn width="50" dataField="_id" isKey={true} dataFormat={function(cell, row){
 						return (
 							<div>
 								<Glyphicon glyph="edit" className="app-action-icon" title={localeUtil.getMsg("ui.common.edit")}
@@ -142,23 +145,23 @@ export default class TablePanel extends React.Component {
 						{localeUtil.getMsg("ui.common.applyto")}
 					</TableHeaderColumn>
 
-					<TableHeaderColumn width="100" dataField="key" isKey={true} dataSort={true}>Key</TableHeaderColumn>
+					<TableHeaderColumn width="100" dataField="key" dataSort={true}>Key</TableHeaderColumn>
 
 					<TableHeaderColumn width="100" dataField="description">{localeUtil.getMsg("ui.common.desc")}</TableHeaderColumn>
 
 					{locales.map(function(locale){
 						return (
 							<TableHeaderColumn key={locale} width="100" dataField={locale} dataSort={true}>
-								<span className="app-col-asterisk">* </span>{`${localeUtil.getMsg("ui.common.locale")} / ${locale}`}
+								<span className="text-primary"><b>* </b></span>{`${localeUtil.getMsg("ui.common.locale")} / ${locale}`}
 							</TableHeaderColumn>
 						);
 					})}
 				</BootstrapTable>
 				<Row>
 					<Col xs={12}>
-						<span className="app-col-asterisk">*</span>
+						<span className="text-primary"><b>( * )</b></span>
 						{' '}
-						<span className="panel-desc">{localeUtil.getMsg("ui.grid.edit")}</span>
+						<span className="text-primary">{localeUtil.getMsg("ui.grid.edit")}</span>
 					</Col>
 				</Row>
 				<ConfirmModal ref="confirmModal"/>

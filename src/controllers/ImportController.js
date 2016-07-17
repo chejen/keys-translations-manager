@@ -1,10 +1,12 @@
-var router = require("express").Router(),
-	multiparty = require('multiparty'),
-	importUtil = require('keys-translations-manager-core/lib/importUtil'),
-	json2Properties = require('keys-translations-manager-core/lib/transformationUtil').json2Properties,
-	Translations = require('../models/TranslationModel');
+import express from 'express'
+import multiparty from 'multiparty'
+import Translations from '../models/TranslationModel'
+import importUtil from 'keys-translations-manager-core/lib/importUtil'
+import transformationUtil from 'keys-translations-manager-core/lib/transformationUtil'
+const router = express.Router()
+const json2Properties = transformationUtil.json2Properties
 
-var form,
+let form,
 	locale,
 	project,
 	query,
@@ -97,4 +99,4 @@ router.route('/')
 			}); //form.parse
 		});
 
-module.exports = router;
+export default router

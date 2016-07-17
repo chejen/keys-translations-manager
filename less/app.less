@@ -10,14 +10,11 @@
 @light-blue: #d5edf8;
 
 /* styles */
-.app-input-asterisk, .app-col-asterisk {
+.app-input-asterisk {
 	font-size: 18px;
 }
 .app-input-asterisk {
 	color: @warning-color;
-}
-.app-col-asterisk {
-	color: @dark-yellow;
 }
 .app-input-label {
 	margin-bottom: 7px;
@@ -125,16 +122,21 @@ body {
 	font-weight: bold;
 }
 
-#vis_tree .node circle {
-	fill: #000;
-	stroke: @dark-yellow;
-	stroke-width: 2px;
-}
+#vis_tree {
+	.node {
+		circle {
+			fill: #000;
+			stroke: @dark-yellow;
+			stroke-width: 2px;
+		}
+		text {
+			font: 14px sans-serif;
+		}
+	}
 
-#vis_tree .node text { font: 14px sans-serif; }
-
-#vis_tree .link {
-	fill: none;
-	stroke: #ccc;
-	stroke-width: 2px;
+	.link {
+		fill: none;
+		stroke: #ccc;
+		stroke-width: 2px;
+	}
 }

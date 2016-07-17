@@ -1,8 +1,9 @@
-var router = require("express").Router();
-var Translations = require('../models/TranslationModel');
+import express from 'express'
+import Translations from '../models/TranslationModel'
+const router = express.Router()
 
-var getUniqueElements = function(ary) {
-		var o = {};
+const getUniqueElements = function(ary) {
+		let o = {};
 		return ary.filter(function(e) {
 			return o.hasOwnProperty(e) ? false : (o[e] = true);
 		});
@@ -13,15 +14,15 @@ var getUniqueElements = function(ary) {
 		});
 	},*/
 	validate = function(data, origin, res, action, callback) {
-		var key = data.key,
+		const key = data.key,
 			segment = key.split("."),
-			lenSegment = segment.length,
-			count = 0,
+			lenSegment = segment.length;
+		let count = 0,
 			errors = [],
 			tester = "",
 			query;
 
-		for (var i=0; i<=lenSegment; i++) {
+		for (let i=0; i<=lenSegment; i++) {
 			if (i === lenSegment) {
 				tester = (key + ".").replace( /\./gm , "\\.");
 				query = { 'key': new RegExp('^' + tester) };
@@ -33,8 +34,8 @@ var getUniqueElements = function(ary) {
 			Translations.find(query, function(err, translations) {
 				if (err) res.status(500).send(err);
 
-				var tester = this.tester,
-					len = translations.length,
+				const tester = this.tester;
+				let len = translations.length,
 					ary = [], // projects where the tester already exists
 					p = data.project,
 					l,
@@ -103,7 +104,7 @@ router.route('/')
 			});
 		})
 		.post(function(req, res) {
-			var data = req.body,
+			const data = req.body,
 				action = "c",
 				translation = new Translations(data);
 
@@ -144,7 +145,7 @@ router.route('/:id')
 			Translations.findById(req.params.id, function(err, translation) {
 				if (err) res.status(500).send(err);
 
-				var data = req.body,
+				const data = req.body,
 					action = "u";
 				validate(data, translation, res, action, function(errors) {
 					if (errors.length > 0) {
@@ -155,7 +156,7 @@ router.route('/:id')
 							errors: errors
 						});
 					} else {
-						for (var key in data) translation[key] = data[key];
+						for (let key in data) translation[key] = data[key];
 						translation.save(function(err) {
 							if (err) res.status(500).send(err);
 							res.json({
@@ -182,4 +183,4 @@ router.route('/:id')
 			});
 		});
 
-module.exports = router;
+export default router

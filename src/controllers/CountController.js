@@ -1,7 +1,7 @@
 import express from 'express'
 import Translations from '../models/TranslationModel'
 import configUtil from '../configUtil'
-const projectIdList = configUtil.getProjectIdList();
+const projectIdList = configUtil.getProjectIdList()
 const router = express.Router()
 
 router.route('/projects')
@@ -25,4 +25,4 @@ router.route('/projects')
 			});
 		});
 
-module.exports = router;
+export default router
