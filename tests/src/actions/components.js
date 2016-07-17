@@ -73,4 +73,13 @@ describe('(action) components', () => {
 				})
 		})
 	})
+
+	describe('reloadData', () => {
+		it('should create an action to reload data', () => {
+			expect(actions.reloadData())
+				.to.deep.equal({
+					type: 'RELOAD_DATA'
+				})
+		})
+	})
 })

@@ -64,10 +64,50 @@ describe('(reducer) components', function() {
 			reducer({
 				showmessagepopup: true
 			}, {
+				type: 'LOAD_TRANSLATIONS'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'LOAD_TREE_DATA'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'LOAD_TREE_DATA'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
 				type: 'CLOSE_MESSAGEPOPUP'
 			})
 		).to.be.an('object')
 		.to.have.property('showmessagepopup')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'CLOSE_MESSAGEPOPUP'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
 			.that.is.false
 	})
 
@@ -207,5 +247,15 @@ describe('(reducer) components', function() {
 		).to.have.property('editrecord')
 			.that.is.an('object')
 			.to.deep.equal(record);
+	})
+
+	it('should handle RELOAD_DATA', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'RELOAD_DATA'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
+			.that.is.true
 	})
 });
