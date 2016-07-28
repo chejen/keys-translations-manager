@@ -37,8 +37,9 @@ export default class CountCol extends React.Component {
 					</div>
 					<div className="row">
 						<div className="huge text-center">
-							{/*<b>{this.props.count}</b>*/}
-							<b><Link to={`/vis/${projectId}`}>{count}</Link></b>
+							<b>
+							{count ? <Link to={`/vis/${projectId}`}>{count}</Link> : count}
+							</b>
 						</div>
 						<div className="panel-desc text-center">
 							{desc}

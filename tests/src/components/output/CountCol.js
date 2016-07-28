@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/lib/Col'
 import { Link } from 'react-router'
 
 function setup() {
-	let props = {
+	const props = {
 			projectId: 'p1',
 			header: 'header',
 			onClick: sinon.spy(),
@@ -50,7 +50,22 @@ describe('(component) CountCol', () => {
 			expect(wrapper.find('.row')).to.have.length(1);
 		});
 
-		it('should show count', () => {
+		it('should show text "0" if count is equal to 0', () => {
+			const props = {
+					projectId: 'p1',
+					header: 'header',
+					onClick: sinon.spy(),
+					count: 0,
+					desc: 'description'
+				},
+				wrapper = shallow(<CountCol {...props}/>);
+
+			expect(wrapper.find('.huge').contains(
+				<b>{props.count}</b>
+			)).to.be.true;
+		});
+		
+		it('should show count with Link if count is larger than 0', () => {
 			const { props, wrapper } = setup()
 			const { projectId, count } = props
 			expect(wrapper.find('.huge').contains(
