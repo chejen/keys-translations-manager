@@ -1,15 +1,24 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import d3 from 'd3'
-import { Link } from 'react-router'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
+import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
+import Button from 'react-bootstrap/lib/Button'
+import Label from 'react-bootstrap/lib/Label'
+import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import ConfirmModal from '../grid/ConfirmModal'
 import Mask from '../layout/Mask'
+import Tooltip from './Tooltip'
 
 export default class Tree extends React.Component {
 	static propTypes = {
 		params: React.PropTypes.object.isRequired,
 		messages: React.PropTypes.object,
 		translations: React.PropTypes.array,
+		TranslationActions: React.PropTypes.object.isRequired,
+		ComponentActions: React.PropTypes.object.isRequired,
 		CountActions: React.PropTypes.object.isRequired,
 		VisActions: React.PropTypes.object.isRequired,
 		treedata: React.PropTypes.array,
@@ -19,22 +28,60 @@ export default class Tree extends React.Component {
 	constructor() {
 		super();
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+		this.state = {
+			isTranslatedOrScaled: false,
+			data: null,
+			display: "none",
+			title: "",
+			desc: "",
+			content: "",
+			top: 0,
+			left: 0
+		};
+
+		this.enableMouseover = true;
+		this.radius = 5;
+		this.strokeWidth = 2; //set in less
+		this.margin = 100;
+		this.newX = 0;
+		this.newY = 0;
+		this.newScale = 1;
 	}
 
 	componentDidMount() {
-		const minHeight = 350,
+		const me = this,
+			minHeight = 350,
 			top = 370,
 			windowHeight = typeof window === "undefined" ? minHeight + top : window.innerHeight,
 			height = windowHeight < (minHeight + top) ? minHeight : windowHeight - top;
 
 		this.height = height;
+		this.zoom = d3.behavior.zoom()
+			.scaleExtent([1, 10])
+			.on("zoom", function() {
+				const x = d3.event.translate[0],
+					y = d3.event.translate[1],
+					scale = d3.event.scale;
+
+				if (x !== me.newX || y !== me.newY || scale !== me.newScale) {
+					me.newX = x;
+					me.newY = y;
+					me.newScale = scale;
+					me.svg.attr("transform", "translate(" + (x + me.margin) + "," + y + ")scale(" + scale + ")");
+					me.setState({
+						isTranslatedOrScaled: true,
+						display: "none"
+					});
+				}
+			});
 		this.diagonal = d3.svg.diagonal().projection(function(d) {
 			return [d.y, d.x];
 		});
 		this.tree = d3.layout.tree().size([height, 600]);
-		this.svg = d3.select("#vis_tree").append("svg")
+		this._svg = d3.select("#vis_tree").append("svg").call(this.zoom);
+		this.svg = this._svg
 			.attr("width", "100%").attr("height", height).append("g")
-			.attr("transform", "translate(100,0)");
+			.attr("transform", "translate(" + me.margin + ",0)");
 		this.count = 0;
 
 		this.loadData(this.props.params.projectId);
@@ -69,6 +116,7 @@ export default class Tree extends React.Component {
 				this.root.children.forEach(me.toggleAll.bind(me));
 			}
 			this.update(this.root);
+			this.reset();
 		}
 	}
 
@@ -103,6 +151,7 @@ export default class Tree extends React.Component {
 			nodeEnter,
 			nodeUpdate,
 			nodeExit,
+			nodeCount = 0,
 			link;
 
 		nodes.forEach(function(d) { d.y = d.depth * 150; });
@@ -121,16 +170,66 @@ export default class Tree extends React.Component {
 				return `translate(${root.y0},${root.x0})`
 			})
 			.on("click", function(d) {
+				me.enableMouseover = false;
 				me.toggle(d);
 				me.update(d);
 			});
 
 		nodeEnter.append("circle")
-			.attr("r", 9).style("fill", "#fff");
+			.attr("r", 9).style("fill", "#fff")
+			.on("mouseover", function(d) {
+				const obj = d.translations,
+					filter = ["__v", "_id", "project"];
+				let title,
+					desc,
+					content = [],
+					key;
+
+				if (me.enableMouseover && obj) {
+					for (key in obj) {
+						if ({}.hasOwnProperty.call(obj, key)) {
+							if (key === "key") {
+								title = obj.key;
+							} else if (key === "description") {
+								desc = obj.description;
+							} else if (filter.indexOf(key) === -1 && obj[key]) {
+								content.push(
+									<h5 key={key}>
+										<Label bsStyle="warning">{key}</Label>
+										{' ' + obj[key]}
+									</h5>
+								);
+							}
+						}
+					}
+
+					clearInterval(timingUtil.getTimeoutId());
+					me.setState({
+						data: obj,
+						display: "inline",
+						top: (d.x) * me.newScale + me.newY - 12,
+						left: (d.y + me.radius + me.strokeWidth) * me.newScale + me.newX + 130,
+						title,
+						desc,
+						content,
+						t: +new Date() //force update
+					});
+				}
+			})
+			.on("mouseout", function(d) {
+				if (d.translations) {
+					const timeoutId = setTimeout(function(){
+						me.setState({
+							display: "none"
+						});
+					}, 300);
+					timingUtil.setTimeoutId(timeoutId);
+				}
+			});
 
 		nodeEnter.append("text")
 			.attr("x", function(d) {
-				return d.children || d._children ? -13 : 13;
+				return d.children || d._children ? -15 : 15;
 			})
 			.attr("dy", ".35em")
 			.attr("text-anchor", function(d) {
@@ -138,30 +237,23 @@ export default class Tree extends React.Component {
 			})
 			.text(function(d) { return d.name; })
 
-		nodeEnter.append("title").html(function(d) {
-				let obj = d.translations,
-					filter = ["__v", "_id", "project", "key"],
-					str = "",
-					key;
 
-				if (obj) {
-					for (key in obj) {
-						if ({}.hasOwnProperty.call(obj, key)) {
-							if (filter.indexOf(key) === -1 && obj[key]) {
-								str += `【${key}】${obj[key]}<br/><br/>`
-							}
-						}
-					}
+		nodeUpdate = node
+			.each(function() {
+				nodeCount++;
+			})
+			.transition().duration(duration)
+			.each('end', function() {
+				nodeCount--;
+				if (!nodeCount) {
+					me.enableMouseover = true;
 				}
-				return str;
-			});
-
-		nodeUpdate = node.transition().duration(duration)
+			})
 			.attr("transform", function(d) {
 				return `translate(${d.y},${d.x})`;
 			});
 
-		nodeUpdate.select("circle").attr("r", 5.5)
+		nodeUpdate.select("circle").attr("r", me.radius)
 			.style("fill", function(d) {
 				return d._children ? "#FDD11A" : "#fff";
 			})
@@ -210,13 +302,79 @@ export default class Tree extends React.Component {
 		});
 	}
 
+	showEditModal(data) {
+		this.setState({
+			display: "none"
+		}, () => {
+			this.props.ComponentActions.showEditModal(data);
+		});
+	}
+
+	showConfirmModal(value, data) {
+		this.setState({
+			display: "none"
+		}, () => {
+			this.refs.confirmModal.open(
+				localeUtil.getMsg("ui.common.delete"),
+				localeUtil.getMsg("ui.confirm.delete", data.key),
+				this.removeTranslation.bind(this, value)
+			);
+		});
+	}
+
+	removeTranslation(value) {
+		this.props.TranslationActions.removeTranslation(value);
+	}
+
+	goBack() {
+		browserHistory.push("/");
+	}
+
+	reset() {
+		this.newX = 0;
+		this.newY = 0;
+		this.newScale = 1;
+		this.zoom.translate([this.newX, this.newY]).scale(this.newScale);
+		this.svg.attr("transform", `translate(${(this.newX + this.margin)},${this.newX})scale(${this.newScale})`);
+		this.setState({
+			isTranslatedOrScaled: false,
+			display: "none"
+		});
+	}
+
 	render() {
+		const { display, top, left, title, desc, content, data } = this.state;
+		const style = { display, top, left };
 		return (
 			<div id="vis_tree">
+				<Tooltip {...style}>
+					<div className="app-tooltip-title">{title}</div>
+					{desc && <div className="app-tooltip-desc">{desc}</div>}
+					<div className="app-tooltip-content">{content}</div>
+					<div className="app-tooltip-footer">
+						<Glyphicon glyph="edit" className="app-action-icon"
+							title={localeUtil.getMsg("ui.common.edit")}
+							onClick={this.showEditModal.bind(this, data)}/>
+						{data && <Glyphicon glyph="trash" className="app-action-icon"
+							title={localeUtil.getMsg("ui.common.delete")}
+							onClick={this.showConfirmModal.bind(this, data._id, data)}/>}
+					</div>
+				</Tooltip>
+				<ConfirmModal ref="confirmModal"/>
 				<Mask show={!this.props.treedata}/>
-				<Link to="/">
-					<i title={localeUtil.getMsg("ui.common.goBack")} className="fa fa-arrow-left fa-lg"/>
-				</Link>
+
+				<ButtonGroup>
+					<Button onClick={this.goBack.bind(this)}>
+						<i className="fa fa-arrow-left"/>
+						{' ' + localeUtil.getMsg("ui.common.goBack")}
+					</Button>
+					{this.state.isTranslatedOrScaled &&
+						<Button onClick={this.reset.bind(this)}>
+							<i className="fa fa-refresh"/>
+							{' ' + localeUtil.getMsg("ui.common.reset")}
+						</Button>
+					}
+				</ButtonGroup>
 			</div>
 		);
 	}

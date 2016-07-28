@@ -132,7 +132,7 @@ export default class TablePanel extends React.Component {
 						{localeUtil.getMsg("ui.common.action")}
 					</TableHeaderColumn>
 
-					<TableHeaderColumn width="100" dataField="project" dataFormat={function(cell){
+					<TableHeaderColumn width="100" editable={false} dataField="project" dataFormat={function(cell){
 						const projectList = cell,
 								l = projectList ? projectList.length : 0,
 								getProjectName = configUtil.getProjectName;
@@ -145,13 +145,13 @@ export default class TablePanel extends React.Component {
 						{localeUtil.getMsg("ui.common.applyto")}
 					</TableHeaderColumn>
 
-					<TableHeaderColumn width="100" dataField="key" dataSort={true}>Key</TableHeaderColumn>
+					<TableHeaderColumn width="100" editable={false} dataField="key" dataSort={true}>Key</TableHeaderColumn>
 
-					<TableHeaderColumn width="100" dataField="description">{localeUtil.getMsg("ui.common.desc")}</TableHeaderColumn>
+					<TableHeaderColumn width="100" editable={false} dataField="description">{localeUtil.getMsg("ui.common.desc")}</TableHeaderColumn>
 
 					{locales.map(function(locale){
 						return (
-							<TableHeaderColumn key={locale} width="100" dataField={locale} dataSort={true}>
+							<TableHeaderColumn key={locale} width="100" editable={true} dataField={locale} dataSort={true}>
 								<span className="text-primary"><b>* </b></span>{`${localeUtil.getMsg("ui.common.locale")} / ${locale}`}
 							</TableHeaderColumn>
 						);

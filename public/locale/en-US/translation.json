@@ -20,6 +20,7 @@
       "or": "or",
       "others": "and {0} others",
       "reload": "Reload",
+      "reset": "Reset",
       "update": "Update"
     },
     "confirm": {

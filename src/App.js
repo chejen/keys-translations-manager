@@ -153,6 +153,8 @@ export default class App extends React.Component {
 								messages,
 								translations,
 								reloaddata,
+								TranslationActions,
+								ComponentActions,
 								CountActions
 							})
 						}

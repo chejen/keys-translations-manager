@@ -4,10 +4,11 @@
 @middle-color: #333;
 @light-color: #fff;
 @default-space: 10px;
-@dark-yellow: #EDB220;
+@dark-yellow: #f0ad4e;
 @middle-yellow: #FDD11A;
 @light-yellow: #fef16d;
 @light-blue: #d5edf8;
+@tip-color: rgba(0, 0, 0, 0.6);
 
 /* styles */
 .app-input-asterisk {
@@ -73,6 +74,57 @@
 .app-search-bar {
 	border: 1px solid @dark-yellow;
 }
+
+
+.app-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.app-tooltip {
+	position: absolute;
+	text-align: left;
+	min-width: 280px;
+	max-width: 400px;
+	width: auto;
+	background: @tip-color;
+	color: @light-color;
+	border: 0px;
+	border-radius: 7px 7px 0 0;
+	font: 14px sans-serif;
+	box-shadow: 6px 6px 7px #bbb;
+}
+.app-tooltip-title {
+	color: @middle-yellow;
+	padding: 10px 10px 4px 10px;
+	font: bold 20px sans-serif;
+	.app-ellipsis;
+}
+.app-tooltip-desc {
+	color: @light-color;
+	padding: 0 10px 4px 10px;
+}
+.app-tooltip-content {
+	padding: @default-space;
+	border-top: 1px solid @light-color;
+	border-bottom: 1px solid @light-color;
+}
+.app-tooltip-footer {
+	padding: @default-space;
+	text-align: center;
+}
+.app-tooltip:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-width: 10px;
+	border-style: solid;
+	border-color: transparent @tip-color transparent transparent;
+	top: 36px;
+	left: -20px;
+}
+
 
 .react-bs-table {
 	margin: 5px 0;

@@ -13,12 +13,21 @@ function setup() {
 	TablePanel.prototype.onQuickFilterText = sinon.spy()
 	TablePanel.prototype.showEditModal = sinon.spy()
 
-	let props = {
-			translations: [],
+	const props = {
+			translations: [{
+				"_id": "56d7037a0b70e760104ddf10",
+				"en-US": "Edit",
+				"key": "ui.common.edit",
+				"project": ["p1"],
+				"zh-TW": "編輯"
+			}],
 			messages: {},
 			CountActions: {},
-			ComponentActions: {},
+			ComponentActions: {
+				showEditModal: sinon.spy()
+			},
 			TranslationActions: {
+				loadTranslations: sinon.spy(),
 				updateTranslation: sinon.spy()
 			}
 		},
@@ -58,6 +67,28 @@ describe('(component) TablePanel', () => {
 		expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 4);
 	});
 
+	it('should call loadTranslations() when component is mounted', () => {
+		const props = {
+				translations: [],
+				messages: {},
+				CountActions: {},
+				ComponentActions: {},
+				TranslationActions: {
+					updateTranslation: sinon.spy(),
+					loadTranslations: sinon.spy()
+				}
+			},
+			context = {
+				config: config
+			},
+			wrapper = mount(
+				<TablePanel {...props}/>,
+				{context: context}
+			);
+
+		expect(props.TranslationActions.loadTranslations).calledOnce;
+	});
+
 	describe('child: InputGroup', () => {
 		it('should call onQuickFilterText() if input value changed', () => {
 			const { wrapper } = setup()
@@ -65,5 +96,4 @@ describe('(component) TablePanel', () => {
 			expect(TablePanel.prototype.onQuickFilterText).calledOnce;
 		});
 	});
-
 });
