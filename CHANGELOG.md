@@ -1,3 +1,23 @@
+# **v1.3.0** (Jul 30, 2016)
+
+### Features:
+* Applied data visualization for keys and translations.
+* Used **react-router** for location transition handling and code splitting.
+* Replaced **ag-grid** with **react-bootstrap-table** to better support server-side rendering.
+
+### Docs:
+* Added visualization demonstration.
+
+### Tests:
+* Added tests for Mask, grid-related, and visualization-related components.
+* Added tests for new utilities.
+
+### Other Changes:
+* Added a loading mask.
+* Changed the style of search bar.
+* Refactored some components and controllers.
+
+
 # **v1.2.0** (Jun 13, 2016)
 
 ### Features:

@@ -11,6 +11,7 @@
       "download": "下載",
       "edit": "編輯",
       "file": "檔案",
+      "goBack": "返回",
       "import": "匯入",
       "language": "語言",
       "locale": "語系",
@@ -18,6 +19,8 @@
       "merge": "合併",
       "or": "或",
       "others": "和其他 {0} 個",
+      "reload": "重新載入",
+      "reset": "還原",
       "update": "更新"
     },
     "confirm": {
@@ -41,7 +44,7 @@
       "selected": "您選取的檔案:"
     },
     "grid": {
-      "edit": "(雙擊儲存格可進行編輯 / 鍵入 Enter 以送出更新)",
+      "edit": "雙擊儲存格可進行編輯 / 鍵入 Enter 以送出更新",
       "empty": "無資料",
       "search": "關鍵字搜尋"
     },
@@ -54,6 +57,7 @@
       "nomatch": "無符合合併條件的資料"
     },
     "tip": {
+      "dataChanged": "資料已經被其他人異動過",
       "iconflicts": "(例) 在解析成 JSON 格式時，ui.common.add 會與 ui、ui.common、ui.common.add.* 等 key 發生衝突。",
       "iequals": "出現這個錯誤表示，這些 key 在您選取的專案中已經存在，而且選取的語系也已經有對應的翻譯。"
     }

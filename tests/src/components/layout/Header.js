@@ -1,7 +1,7 @@
 import Header from '../../../../src/components/layout/Header'
 
 function setup() {
-	let wrapper = shallow(<Header/>)
+	const wrapper = shallow(<Header/>)
 	return wrapper
 }
 

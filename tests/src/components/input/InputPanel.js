@@ -1,7 +1,7 @@
 import InputPanel from '../../../../src/components/input/InputPanel'
 
 function setup() {
-	let props = {
+	const props = {
 			messages: {},
 			addTranslation: sinon.spy(),
 			alertErrors: sinon.spy()

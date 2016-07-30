@@ -4,13 +4,18 @@
 @middle-color: #333;
 @light-color: #fff;
 @default-space: 10px;
-@dark-yellow: #EDB220;
-@light-yellow: #FDD11A;
+@dark-yellow: #f0ad4e;
+@middle-yellow: #FDD11A;
+@light-yellow: #fef16d;
+@light-blue: #d5edf8;
+@tip-color: rgba(0, 0, 0, 0.6);
 
 /* styles */
 .app-input-asterisk {
-	color: @warning-color;
 	font-size: 18px;
+}
+.app-input-asterisk {
+	color: @warning-color;
 }
 .app-input-label {
 	margin-bottom: 7px;
@@ -33,13 +38,13 @@
 	height: 70px;
 	width: 100%;
 	color: @middle-color;
-	border: 2px dashed @light-yellow;
+	border: 2px dashed @middle-yellow;
 	border-radius: 5px;
 	padding: @default-space;
 	cursor: pointer;
 }
 .app-dropzone-enter {
-	border: 2px solid @dark-yellow;
+	background-color: @light-yellow;
 }
 
 .app-message-popup {
@@ -48,9 +53,10 @@
 	right: 0;
 	z-index: 10;
 	padding: 5px;
+	margin-right: 25px;
 }
 .app-message-bar {
-	background-color: #FEF1B7;
+	background-color: @light-blue;
 	color: black;
 	font-size: 90%;
 	border: 1px dashed @middle-color;
@@ -60,10 +66,79 @@
 	width: auto;
 	height: auto;
 }
-
-.ag-cell {
-    padding-top: 3px !important;
+.app-search-icon {
+	border: 1px solid @dark-yellow;
+	background-color: @middle-yellow;
+	color: @dark-color;
 }
+.app-search-bar {
+	border: 1px solid @dark-yellow;
+}
+
+
+.app-ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.app-tooltip {
+	position: absolute;
+	text-align: left;
+	min-width: 280px;
+	max-width: 400px;
+	width: auto;
+	background: @tip-color;
+	color: @light-color;
+	border: 0px;
+	border-radius: 7px 7px 0 0;
+	font: 14px sans-serif;
+	box-shadow: 6px 6px 7px #bbb;
+}
+.app-tooltip-title {
+	color: @middle-yellow;
+	padding: 10px 10px 4px 10px;
+	font: bold 20px sans-serif;
+	.app-ellipsis;
+}
+.app-tooltip-desc {
+	color: @light-color;
+	padding: 0 10px 4px 10px;
+}
+.app-tooltip-content {
+	padding: @default-space;
+	border-top: 1px solid @light-color;
+	border-bottom: 1px solid @light-color;
+}
+.app-tooltip-footer {
+	padding: @default-space;
+	text-align: center;
+}
+.app-tooltip:after {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-width: 10px;
+	border-style: solid;
+	border-color: transparent @tip-color transparent transparent;
+	top: 36px;
+	left: -20px;
+}
+
+
+.react-bs-table {
+	margin: 5px 0;
+}
+.react-bs-container-header {
+	background-color: #eee;
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+	background-color: #f6f6f6;
+}
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+	background-color: @light-blue;
+}
+
 
 body {
     background-color: @middle-color;
@@ -73,7 +148,7 @@ body {
 	text-align: center;
 }
 .navbar-default, .modal-header {
-	background-color: @light-yellow;
+	background-color: @middle-yellow;
 	border: 0;
 }
 .navbar-default .navbar-brand, .navbar-right a {
@@ -81,7 +156,7 @@ body {
 }
 .sidebar {
 	background-color: @middle-color;
-	color: @light-yellow;
+	color: @middle-yellow;
 }
 .sidebar ul li {
     border-bottom: 0;
@@ -91,10 +166,29 @@ body {
 	color: @middle-color;
 }
 .panel-count .panel-heading {
-	background-color: @light-yellow;
+	background-color: @middle-yellow;
 	color: @dark-color;
 }
 .panel-desc {
 	color: @dark-yellow;
 	font-weight: bold;
+}
+
+#vis_tree {
+	.node {
+		circle {
+			fill: #000;
+			stroke: @dark-yellow;
+			stroke-width: 2px;
+		}
+		text {
+			font: 14px sans-serif;
+		}
+	}
+
+	.link {
+		fill: none;
+		stroke: #ccc;
+		stroke-width: 2px;
+	}
 }

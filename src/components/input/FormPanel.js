@@ -5,10 +5,6 @@ import Checkbox from 'react-bootstrap/lib/Checkbox'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import TextField from './TextField'
 
-// if (process.env.NODE_ENV === 'development') {
-// 	require('../../app.less');
-// }
-
 export default class FormPanel extends React.Component {
 	static propTypes = {
 		data: React.PropTypes.object

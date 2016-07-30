@@ -9,10 +9,12 @@ export default function components(state = INIT_COMPONENTS, action) {
 				showmessagepopup: true
 			};
 		case ActionTypes.LOAD_TRANSLATIONS:
+		case ActionTypes.LOAD_TREE_DATA:
 		case ActionTypes.CLOSE_MESSAGEPOPUP:
 			return {
 				...state,
-				showmessagepopup: false
+				showmessagepopup: false,
+				reloaddata: false
 			};
 		case ActionTypes.SHOW_IMPORTMODAL:
 			return {
@@ -49,6 +51,23 @@ export default function components(state = INIT_COMPONENTS, action) {
 			return {
 				...state,
 				showeditmodal: false
+			};
+		case ActionTypes.RELOAD_DATA:
+			return {
+				...state,
+				reloaddata: true
+			};
+		case ActionTypes.SHOW_TOOLTIP:
+			return {
+				...state,
+				showtooltip: true,
+				tooltiptop: action.top || 0,
+				tooltipleft: action.left || 0
+			};
+		case ActionTypes.HIDE_TOOLTIP:
+			return {
+				...state,
+				showtooltip: false
 			};
 		default:
 			return state;

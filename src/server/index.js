@@ -1,15 +1,13 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
-import container from '../container/container'
-import AppComponent from './App'
+import { RouterContext } from 'react-router'
 import configureStore from '../store/configureStore'
-const App = container(AppComponent)
 
-global.navigator = global.navigator || {};
-
-export default renderToString(
-	<Provider store={configureStore()}>
-		<App/>
-	</Provider>
-);
+export default function markup(initialState, renderProps){
+	return renderToString(
+		<Provider store={configureStore(initialState)}>
+			<RouterContext {...renderProps} />
+		</Provider>
+	);
+};

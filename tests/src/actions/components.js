@@ -73,4 +73,33 @@ describe('(action) components', () => {
 				})
 		})
 	})
+
+	describe('reloadData', () => {
+		it('should create an action to reload data', () => {
+			expect(actions.reloadData())
+				.to.deep.equal({
+					type: 'RELOAD_DATA'
+				})
+		})
+	})
+
+	describe('showTooltip', () => {
+		it('should create an action to show tooltip', () => {
+			expect(actions.showTooltip(10, 20))
+				.to.deep.equal({
+					type: 'SHOW_TOOLTIP',
+					top: 10,
+					left: 20
+				})
+		})
+	})
+
+	describe('hideTooltip', () => {
+		it('should create an action to hide tooltip', () => {
+			expect(actions.hideTooltip())
+				.to.deep.equal({
+					type: 'HIDE_TOOLTIP'
+				})
+		})
+	})
 })

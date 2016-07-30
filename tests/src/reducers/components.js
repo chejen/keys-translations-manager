@@ -64,10 +64,50 @@ describe('(reducer) components', function() {
 			reducer({
 				showmessagepopup: true
 			}, {
+				type: 'LOAD_TRANSLATIONS'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'LOAD_TREE_DATA'
+			})
+		).to.be.an('object')
+		.to.have.property('showmessagepopup')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'LOAD_TREE_DATA'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
 				type: 'CLOSE_MESSAGEPOPUP'
 			})
 		).to.be.an('object')
 		.to.have.property('showmessagepopup')
+			.that.is.false
+
+		expect(
+			reducer({
+				showmessagepopup: true
+			}, {
+				type: 'CLOSE_MESSAGEPOPUP'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
 			.that.is.false
 	})
 
@@ -208,4 +248,43 @@ describe('(reducer) components', function() {
 			.that.is.an('object')
 			.to.deep.equal(record);
 	})
+
+	it('should handle RELOAD_DATA', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'RELOAD_DATA'
+			})
+		).to.be.an('object')
+		.to.have.property('reloaddata')
+			.that.is.true
+	})
+
+	it('should handle SHOW_TOOLTIP', () => {
+		const state = reducer(INIT_COMPONENTS, {
+				type: 'SHOW_TOOLTIP',
+				top: 10,
+				left: 20
+			});
+
+		expect(state).to.be.an('object')
+			.to.have.property('showtooltip')
+				.that.is.true
+
+		expect(state).to.have.property('tooltiptop')
+			.to.equal(10);
+
+		expect(state).to.have.property('tooltipleft')
+			.to.equal(20);
+	})
+
+	it('should handle CLOSE_TOOLTIP', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'CLOSE_TOOLTIP'
+			})
+		).to.be.an('object')
+		.to.have.property('showtooltip')
+			.that.is.false
+	})
+
 });

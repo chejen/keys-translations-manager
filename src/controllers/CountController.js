@@ -1,7 +1,8 @@
-var router = require("express").Router();
-var Translations = require('../models/TranslationModel');
-var configUtil = require('../configUtil');
-var projectIdList = configUtil.getProjectIdList();
+import express from 'express'
+import Translations from '../models/TranslationModel'
+import configUtil from '../configUtil'
+const projectIdList = configUtil.getProjectIdList()
+const router = express.Router()
 
 router.route('/projects')
 		.get(function(req, res) {
@@ -24,4 +25,4 @@ router.route('/projects')
 			});
 		});
 
-module.exports = router;
+export default router

@@ -108,5 +108,7 @@
         'superInFunctions': true,
         'jsx': true
     },
-    globals: {}
+    globals: {
+        '__DEV__': true
+    }
 }

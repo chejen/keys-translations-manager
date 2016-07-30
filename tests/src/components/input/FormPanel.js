@@ -1,7 +1,7 @@
 import FormPanel from '../../../../src/components/input/FormPanel'
 
 function setup() {
-	let props = {},
+	const props = {},
 		context = {
 			config: config
 		};

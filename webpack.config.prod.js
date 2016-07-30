@@ -23,9 +23,11 @@ var config = {
 			}
 		}),
 		new webpack.DefinePlugin({
+			'__DEV__': false,
 			'process.env': {
 				'NODE_ENV': JSON.stringify('production'),
-				'CLIENT_SIDE': true
+				'CLIENT_SIDE': true,
+				'CODE_SPLITTING': true
 			}
 		})
 	],

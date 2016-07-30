@@ -1,7 +1,7 @@
 import OutputPanel from '../../../../src/components/output/OutputPanel'
 
 function setup() {
-	let props = {
+	const props = {
 			projectCounts: {
 				p1: 10,
 				p2: 5

@@ -29,18 +29,6 @@ describe('(reducer) socket', function() {
 			.that.is.true
 	})
 
-	it('should bypass LOAD_TRANSLATIONS', () => {
-		expect(
-			reducer({
-				emitdatachange: false
-			}, {
-				type: 'LOAD_TRANSLATIONS'
-			})
-		).to.be.an('object')
-		.to.have.property('emitdatachange')
-			.that.is.false
-	})
-
 	it('should handle REMOVE_TRANSLATION', () => {
 		expect(
 			reducer({

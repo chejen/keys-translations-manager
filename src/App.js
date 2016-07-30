@@ -2,33 +2,36 @@ import io from 'socket.io-client';
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-import GridPanel from '../components/grid/GridPanel'
-import AlertPanel from '../components/input/AlertPanel'
-import InputPanel from '../components/input/InputPanel'
-import DropdownMenu from '../components/layout/DropdownMenu'
-import Header from '../components/layout/Header'
-import MainPanel from '../components/layout/MainPanel'
-import SideBar from '../components/layout/SideBar'
-import MessagePopup from '../components/layout/MessagePopup'
-import OutputPanel from '../components/output/OutputPanel'
-import EditModal from '../components/input/EditModal'
-import MergeModal from '../components/merge/MergeModal'
-import ImportModal from '../components/import/ImportModal'
-import config from '../../ktm.config'
-const languages = ["en-US", "zh-TW"]
-let socket
+import AlertPanel from './components/input/AlertPanel'
+import InputPanel from './components/input/InputPanel'
+import DropdownMenu from './components/layout/DropdownMenu'
+import Header from './components/layout/Header'
+import MainPanel from './components/layout/MainPanel'
+import SideBar from './components/layout/SideBar'
+import MessagePopup from './components/layout/MessagePopup'
+import OutputPanel from './components/output/OutputPanel'
+import EditModal from './components/input/EditModal'
+import MergeModal from './components/merge/MergeModal'
+import ImportModal from './components/import/ImportModal'
+import { LANGUAGES } from './constants/Languages'
+import config from '../ktm.config'
 
 export default class App extends React.Component {
 	static propTypes = {
+		children: React.PropTypes.node,
+		location: React.PropTypes.object.isRequired,
+		params: React.PropTypes.object.isRequired,
 		lang: React.PropTypes.string.isRequired,
 		messages: React.PropTypes.object.isRequired,
 		counts: React.PropTypes.object.isRequired,
 		errors: React.PropTypes.array.isRequired,
-		translations: React.PropTypes.array.isRequired,
+		translations: React.PropTypes.array,
 		showeditmodal: React.PropTypes.bool.isRequired,
 		showmergemodal: React.PropTypes.bool.isRequired,
 		showimportmodal: React.PropTypes.bool.isRequired,
 		showmessagepopup: React.PropTypes.bool.isRequired,
+		emitdatachange: React.PropTypes.bool.isRequired,
+		reloaddata: React.PropTypes.bool.isRequired,
 		editrecord: React.PropTypes.object.isRequired,
 		keys: React.PropTypes.object.isRequired,
 		mergeable: React.PropTypes.array.isRequired,
@@ -43,64 +46,74 @@ export default class App extends React.Component {
 	}
 
 	static childContextTypes = {
-		config: React.PropTypes.object
+		config: React.PropTypes.object,
+		socket: React.PropTypes.object
 	}
 
 	constructor(props) {
 		super(props);
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+		this.state = { socket: null }
 	}
 
 	getChildContext() {
-		return { config: config }
+		return { config, socket: this.state.socket }
 	}
 
 	componentWillMount() {
-		this.loadMessages();
+		if (this.props.lang) {
+			localeUtil.setMessages(this.props.messages);
+		}
 	}
 
 	componentDidMount() {//Invoked once, only on the client
 		const me = this;
 		if (config.enableNotifications) {
-			socket = io.connect('/');
-			socket.on('ktm', function (data) {
-				if (data && data.action === "datachanged") {
-					me.props.ComponentActions.showMessagePopup();
-				}
-			});
+			me.setSocket();
 		}
-		this.props.TranslationActions.loadTranslations();
+		if (!this.props.lang) {
+			let lang = navigator.language || navigator.browserLanguage;
+			lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang;
+			this.loadMessages(lang);
+		}
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.lang !== this.props.lang) {
 			localeUtil.setMessages(nextProps.messages);
 		}
-		if (nextProps.translations !== this.props.translations) {
-			nextProps.CountActions.loadCounts();
-			if (config.enableNotifications && nextProps.emitdatachange) {
-				socket.emit('ktm', { action: 'datachanged' });
-				this.props.SocketActions.endDataChange();
-			}
+		if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
+			this.state.socket.emit('ktm', { action: 'datachanged' });
+			this.props.SocketActions.endDataChange();
 		}
 	}
 
+	setSocket() {
+		const me = this;
+		let socket;
+		socket = io.connect('/');
+		socket.on('ktm', function (data) {
+			if (data && data.action === "datachanged") {
+				me.props.ComponentActions.showMessagePopup();
+			}
+		});
+		this.setState({ socket });
+	}
+
 	loadMessages(lang) {
-		lang = lang || navigator.language || navigator.browserLanguage;
-		lang = (languages.indexOf(lang) === -1) ? "en-US" : lang;
 		this.props.MessageActions.loadMessages(lang);
 	}
 
 	render() {
 		const {
-			MessageActions, TranslationActions,
+			MessageActions, TranslationActions, CountActions,
 			KeyActions, ErrorActions, ComponentActions,
 			lang, messages, counts, errors,
-			translations, showeditmodal, editrecord,
+			translations, showeditmodal, editrecord, reloaddata,
 			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
 
-		return (lang) ? (
+		return (
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
@@ -135,13 +148,20 @@ export default class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						<GridPanel translations={translations} messages={messages}
-							updateTranslation={TranslationActions.updateTranslation}
-							removeTranslation={TranslationActions.removeTranslation}
-							showEditModal={ComponentActions.showEditModal}/>
+						{this.props.children &&
+							React.cloneElement(this.props.children, {
+								messages,
+								translations,
+								reloaddata,
+								TranslationActions,
+								ComponentActions,
+								CountActions
+							})
+						}
 					</MainPanel>
 				</div>
-				<MessagePopup msg="Data has been changed by others."
+				<MessagePopup messages={messages}
+						msg={localeUtil.getMsg("ui.tip.dataChanged")}
 						closeMessagePopup={ComponentActions.closeMessagePopup}
 						showmessagepopup={showmessagepopup}>
 					<b><u>
@@ -149,13 +169,11 @@ export default class App extends React.Component {
 							if (event) {
 								event.preventDefault();
 							}
-							TranslationActions.loadTranslations();
-						}}>Refresh</a>
+							ComponentActions.reloadData();
+						}}>{localeUtil.getMsg("ui.common.reload")}</a>
 					</u></b>
 				</MessagePopup>
 			</div>
-		) : (<div className="app-default">
-			<i className="fa fa-spinner fa-pulse fa-2x"/>
-		</div>);
+		);
 	}
 }

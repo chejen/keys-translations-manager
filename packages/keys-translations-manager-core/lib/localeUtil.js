@@ -12,6 +12,9 @@ module.exports = {
 			message = pathParts.reduce(function (obj, pathPart) {
 				return obj[pathPart];
 			}, this.messages);
+		} catch (e) {
+			//console.error(e);
+			message = "";
 		} finally {
 			if (message) {
 				for (i = 0; i < len;){
@@ -21,7 +24,7 @@ module.exports = {
 					);
 				}
 			} else {
-				return path + ".undefined";
+				message = path + ".undefined";
 			}
 		}
 

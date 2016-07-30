@@ -1,7 +1,7 @@
 import DropdownMenu from '../../../../src/components/layout/DropdownMenu'
 
 function setup() {
-	let props = {
+	const props = {
 			lang: 'en-US',
 			loadMessages: sinon.spy(),
 			showImportModal: sinon.spy(),

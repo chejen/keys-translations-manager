@@ -6,7 +6,6 @@ var dir = {
 };
 
 module.exports = {
-	devtool: 'cheap-module-eval-source-map',
 	entry: [
 		'eventsource-polyfill', // necessary for hot reloading with IE
 		'webpack-hot-middleware/client',
@@ -21,6 +20,7 @@ module.exports = {
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
 		new webpack.DefinePlugin({
+			'__DEV__': true,
 			'process.env': {
 				'NODE_ENV': JSON.stringify('development'),
 				'CLIENT_SIDE': true

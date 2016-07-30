@@ -4,20 +4,20 @@
 
 * Step 1: Click the import button on the upper-right corner to open a popup.
 
-![step1](https://cloud.githubusercontent.com/assets/14872888/15960940/c80d42c4-2f34-11e6-9008-169886f4c4ec.png)
+![step1](https://cloud.githubusercontent.com/assets/14872888/17220529/46c6645c-5522-11e6-8c62-c0ada35c349d.png)
 
 * Step 2: Choose a file, select locale and project to import, then hit the '**Imort**' button to submit.
 
-![step2](https://cloud.githubusercontent.com/assets/14872888/15959507/afda5b8a-2f2d-11e6-9ebc-07f52df61b5d.png)
+![step2](https://cloud.githubusercontent.com/assets/14872888/17220530/46ca8988-5522-11e6-9e75-2405ad0dfb21.png)
 
 > Only `*.json` or `*.properties` will be accepted by Keys-Translations Manager.
 
 * Step 3: Let system check if the data imported is valid. If so, you will see the result like this:
 
-![step3](https://cloud.githubusercontent.com/assets/14872888/15959509/afe8f136-2f2d-11e6-8ba9-655127b5f613.png)
+![step3](https://cloud.githubusercontent.com/assets/14872888/17220532/46cf33de-5522-11e6-8407-ba2a989ccadf.png)
 
 > Keys-Translations Manager will help you validate your data, and here are 2 main principles: **(1)** The field `Key` is unique by {project + locale}. **(2)** If the key "ui.common.add" exists, "ui", "ui.common", and "ui.common.add.*" are all disallowed. Otherwise, it would cause JSON parsing errors.
 
 * Step 4: Repeat step 1 to step 3 until all of your locales are imported.
 
-![step4](https://cloud.githubusercontent.com/assets/14872888/15959508/afdee236-2f2d-11e6-8f20-11d7b74aa6ab.png)
+![step4](https://cloud.githubusercontent.com/assets/14872888/17220536/46e9a0fc-5522-11e6-8639-4b85e23cf3e5.png)

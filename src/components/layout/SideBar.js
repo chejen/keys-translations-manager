@@ -1,33 +1,25 @@
 import React from 'react'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-export default class SideBar extends React.Component {
-	static propTypes = {
-		children: React.PropTypes.node
-	};
+const SideBar = (props) => (
+	<div className="navbar-default sidebar" role="navigation">
+		<div className="sidebar-nav navbar-collapse nav">
+			<ul className="nav" id="side-menu">
+				<li className="sidebar-search">
+					{/*<InputPanel/>*/}
+					{props.children}
+				</li>
+				{/*<li>
+					<a href="index.html">
+						<i className="fa fa-dashboard fa-fw"></i> Dashboard
+					</a>
+				</li>*/}
+			</ul>
+		</div>
+	</div>
+);
 
-	constructor() {
-		super();
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-	}
+SideBar.propTypes = {
+	children: React.PropTypes.node
+};
 
-	render() {
-		return(
-			<div className="navbar-default sidebar" role="navigation">
-				<div className="sidebar-nav navbar-collapse nav">
-					<ul className="nav" id="side-menu">
-						<li className="sidebar-search">
-							{/*<InputPanel/>*/}
-							{this.props.children}
-						</li>
-						{/*<li>
-							<a href="index.html">
-								<i className="fa fa-dashboard fa-fw"></i> Dashboard
-							</a>
-						</li>*/}
-					</ul>
-				</div>
-			</div>
-		);
-	}
-}
+export default SideBar

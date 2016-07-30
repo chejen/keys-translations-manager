@@ -1,99 +1,143 @@
-var router = require("express").Router();
-var Translations = require('../models/TranslationModel');
-
-var getUniqueElements = function(ary) {
-		var o = {};
-		return ary.filter(function(e) {
+import express from 'express'
+import Translations from '../models/TranslationModel'
+const router = express.Router()
+const getUniqueElements = (ary) => {
+		let o = {};
+		return ary.filter(e => {
 			return o.hasOwnProperty(e) ? false : (o[e] = true);
 		});
 	},
-	/*getDiffElements = function(ary1, ary2) {
-		return ary2.filter(function(i){
-			return ary1.indexOf(i) < 0;
+	getTranslationById = id => {
+		return new Promise((resolve, reject) => {
+			Translations.findById(id, (err, translation) => {
+				if (err) reject(err);
+				resolve(translation);
+			});
 		});
-	},*/
-	validate = function(data, origin, res, action, callback) {
-		var key = data.key,
-			segment = key.split("."),
-			lenSegment = segment.length,
-			count = 0,
-			errors = [],
-			tester = "",
-			query;
-
-		for (var i=0; i<=lenSegment; i++) {
-			if (i === lenSegment) {
-				tester = (key + ".").replace( /\./gm , "\\.");
-				query = { 'key': new RegExp('^' + tester) };
+	},
+	getResponse = (data, translation, errors, action) => {
+		return new Promise((resolve, reject) => {
+			if (errors.length > 0) {
+				resolve({
+					action: action,
+					success: false,
+					data: null,
+					errors: errors
+				});
 			} else {
-				tester += (i ? "." : "") + segment[i];
-				query = { 'key': tester };
-			}
-
-			Translations.find(query, function(err, translations) {
-				if (err) res.status(500).send(err);
-
-				var tester = this.tester,
-					len = translations.length,
-					ary = [], // projects where the tester already exists
-					p = data.project,
-					l,
-					idx,
-					type,
-					match = [];
-
-				if (action === "c") { // create
-					while(len--) {
-						ary = getUniqueElements( ary.concat(translations[len].project) );
+				if (action === "u") {
+					for (let key in data) {
+						translation[key] = data[key];
 					}
-				} else { // update
-					while(len--) {
-						if (data._id != translations[len]._id) {
+				}
+				translation.save(function(err) {
+					if (err) reject(err);
+					if (action === "c") {
+						resolve({
+							action: action,
+							success: true,
+							data: translation,
+							errors: []
+						});
+					} else {
+						Translations.findById(translation._id, function(err, translation) {
+							if (err) reject(err);
+							resolve({
+								action: action,
+								success: true,
+								data: translation,
+								errors: []
+							});
+						});
+					}
+				});
+			}
+		});
+	},
+	validate = (data, origin, res, action) => {
+		return new Promise((resolve, reject) => {
+			const key = data.key,
+				segment = key.split("."),
+				lenSegment = segment.length;
+			let count = 0,
+				errors = [],
+				tester = "",
+				query;
+
+			for (let i=0; i <= lenSegment; i++) {
+				if (i === lenSegment) {
+					tester = (key + ".").replace( /\./gm , "\\.");
+					query = { 'key': new RegExp('^' + tester) };
+				} else {
+					tester += (i ? "." : "") + segment[i];
+					query = { 'key': tester };
+				}
+
+				Translations.find(query, function(err, translations) {
+					if (err) reject(err);
+
+					const tester = this.tester;
+					let len = translations.length,
+						ary = [], // projects where the tester already exists
+						p = data.project,
+						l,
+						idx,
+						type,
+						match = [];
+
+					if (action === "c") { // create
+						while(len--) {
 							ary = getUniqueElements( ary.concat(translations[len].project) );
 						}
-					}
-				}
-
-				if (ary.length > 0) {
-					l = p.length;
-					while(l--) {
-						idx = ary.indexOf(p[l]);
-						if (idx >= 0) {
-							match.push(p[l]);
+					} else { // update
+						while(len--) {
+							if (data._id != translations[len]._id) {
+								ary = getUniqueElements( ary.concat(translations[len].project) );
+							}
 						}
 					}
-				}
 
-				if (match.length > 0) {
-					if (this.iterator === lenSegment) {
-						type = "belongsTo";
-					} else if (this.iterator === lenSegment - 1) {
-						type = "equals";
-					} else {
-						type = "contains";
+					if (ary.length > 0) {
+						l = p.length;
+						while(l--) {
+							idx = ary.indexOf(p[l]);
+							if (idx >= 0) {
+								match.push(p[l]);
+							}
+						}
 					}
 
-					errors.push({
-						key: tester.replace( /\\\./gm , "."),
-						type: type,
-						action: action,
-						origin: origin,
-						params: data,
-						match: match
-					});
-				}
+					if (match.length > 0) {
+						if (this.iterator === lenSegment) {
+							type = "belongsTo";
+						} else if (this.iterator === lenSegment - 1) {
+							type = "equals";
+						} else {
+							type = "contains";
+						}
 
-				if ( (count++ === lenSegment) && (typeof callback === "function") ) {
-					callback(errors);
-				}
-			}.bind({
-					iterator: i,
-					tester: tester
-				})
-			);
+						errors.push({
+							key: tester.replace( /\\\./gm , "."),
+							type: type,
+							action: action,
+							origin: origin,
+							params: data,
+							match: match
+						});
+					}
 
-		}
-	};
+					if (count++ === lenSegment) {
+						resolve(errors);
+					}
+				}.bind({
+						iterator: i,
+						tester: tester
+					})
+				);
+			}
+		}); //eof Promise
+	}; //eof validate
+
 
 router.route('/')
 		.get(function(req, res) {
@@ -103,72 +147,51 @@ router.route('/')
 			});
 		})
 		.post(function(req, res) {
-			var data = req.body,
+			const data = req.body,
 				action = "c",
 				translation = new Translations(data);
 
-			validate(data, null, res, action, function(errors){
-				if (errors.length > 0) {
-					res.json({
-						action: action,
-						success: false,
-						data: null,
-						errors: errors
-					});
-				} else {
-					translation.save(function(err) {
-						if (err) res.status(500).send(err);
-						Translations.findById(translation._id, function(err, translation) {
-							if (err) res.status(500).send(err);
-
-							res.json({
-								action: action,
-								success: true,
-								data: translation,
-								errors: []
-							});
-						});
-					});
-				}
-			});
+			validate(data, null, res, action)
+				.then(errors => {
+					return getResponse(data, translation, errors, action);
+				})
+				.then(response => {
+					res.json(response);
+				})
+				.catch(err => {
+					res.status(500).send(err);
+				});
 		});
 
 router.route('/:id')
 		.get(function(req, res) {
-			Translations.findById(req.params.id, function(err, translation) {
-				if (err) res.status(500).send(err);
-				res.status(500).send({ error: 'Something failed!' });
-			});
+			getTranslationById(req.params.id)
+				.then(translation => {
+					res.json(translation);
+				})
+				.catch(err => {
+					res.status(500).send(err);
+				});
 		})
 		.put(function(req, res) {
-			Translations.findById(req.params.id, function(err, translation) {
-				if (err) res.status(500).send(err);
+			let _translation;
+			const data = req.body,
+				action = "u";
 
-				var data = req.body,
-					action = "u";
-				validate(data, translation, res, action, function(errors) {
-					if (errors.length > 0) {
-						res.json({
-							action: action,
-							success: false,
-							data: null,
-							errors: errors
-						});
-					} else {
-						for (var key in data) translation[key] = data[key];
-						translation.save(function(err) {
-							if (err) res.status(500).send(err);
-							res.json({
-								action: action,
-								success: true,
-								data: translation,
-								errors: []
-							});
-						});
-					}
+			getTranslationById(req.params.id)
+				.then(translation => {
+					_translation = translation;
+					return validate(data, translation, res, action);
+				})
+				.then(errors => {
+					return getResponse(data, _translation, errors, action);
+				})
+				.then(response => {
+					res.json(response);
+				})
+				.catch(err => {
+					res.status(500).send(err);
 				});
-
-			});
 		})
 		.delete(function(req, res) {
 			Translations.remove({
@@ -182,4 +205,4 @@ router.route('/:id')
 			});
 		});
 
-module.exports = router;
+export default router

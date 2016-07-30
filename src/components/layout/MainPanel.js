@@ -1,28 +1,20 @@
 import React from 'react'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 
-export default class MainPanel extends React.Component {
-	static propTypes = {
-		children: React.PropTypes.node
-	};
+const MainPanel = (props) => (
+	<Row>
+		<Col lg={12}>
+			{/*<div className="panel panel-default">
+				<div className="panel-body"></div>
+			</div>*/}
+			{props.children}
+		</Col>
+	</Row>
+);
 
-	constructor() {
-		super();
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-	}
+MainPanel.propTypes = {
+	children: React.PropTypes.node
+};
 
-	render() {
-		return(
-			<Row>
-				<Col lg={12}>
-					{/*<div className="panel panel-default">
-						<div className="panel-body"></div>
-					</div>*/}
-					{this.props.children}
-				</Col>
-			</Row>
-		);
-	}
-}
+export default MainPanel
