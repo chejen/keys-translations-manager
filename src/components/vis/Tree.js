@@ -21,6 +21,9 @@ export default class Tree extends React.Component {
 		ComponentActions: React.PropTypes.object.isRequired,
 		CountActions: React.PropTypes.object.isRequired,
 		VisActions: React.PropTypes.object.isRequired,
+		showtooltip: React.PropTypes.bool.isRequired,
+		tooltiptop: React.PropTypes.number.isRequired,
+		tooltipleft: React.PropTypes.number.isRequired,
 		treedata: React.PropTypes.array,
 		reloaddata: React.PropTypes.bool.isRequired
 	};
@@ -31,12 +34,9 @@ export default class Tree extends React.Component {
 		this.state = {
 			isTranslatedOrScaled: false,
 			data: null,
-			display: "none",
 			title: "",
 			desc: "",
-			content: "",
-			top: 0,
-			left: 0
+			content: ""
 		};
 
 		this.enableMouseover = true;
@@ -69,8 +69,7 @@ export default class Tree extends React.Component {
 					me.newScale = scale;
 					me.svg.attr("transform", "translate(" + (x + me.margin) + "," + y + ")scale(" + scale + ")");
 					me.setState({
-						isTranslatedOrScaled: true,
-						display: "none"
+						isTranslatedOrScaled: true
 					});
 				}
 			});
@@ -206,22 +205,22 @@ export default class Tree extends React.Component {
 					clearInterval(timingUtil.getTimeoutId());
 					me.setState({
 						data: obj,
-						display: "inline",
-						top: (d.x) * me.newScale + me.newY - 12,
-						left: (d.y + me.radius + me.strokeWidth) * me.newScale + me.newX + 130,
 						title,
 						desc,
 						content,
 						t: +new Date() //force update
+					}, function(){
+						me.props.ComponentActions.showTooltip(
+							(d.x) * me.newScale + me.newY - 12,
+							(d.y + me.radius + me.strokeWidth) * me.newScale + me.newX + 130
+						);
 					});
 				}
 			})
 			.on("mouseout", function(d) {
 				if (d.translations) {
 					const timeoutId = setTimeout(function(){
-						me.setState({
-							display: "none"
-						});
+						me.props.ComponentActions.hideTooltip();
 					}, 300);
 					timingUtil.setTimeoutId(timeoutId);
 				}
@@ -280,7 +279,7 @@ export default class Tree extends React.Component {
 		link.enter().insert("svg:path", "g")
 			.attr("class", "link")
 			.attr("d", function() {
-				var o = {x: root.x0, y: root.y0};
+				const o = {x: root.x0, y: root.y0};
 				return me.diagonal({source: o, target: o});
 			})
 			.transition()
@@ -291,7 +290,7 @@ export default class Tree extends React.Component {
 
 		link.exit().transition().duration(duration)
 			.attr("d", function() {
-				var o = {x: root.x, y: root.y};
+				const o = {x: root.x, y: root.y};
 				return me.diagonal({source: o, target: o});
 			})
 			.remove();
@@ -303,23 +302,15 @@ export default class Tree extends React.Component {
 	}
 
 	showEditModal(data) {
-		this.setState({
-			display: "none"
-		}, () => {
-			this.props.ComponentActions.showEditModal(data);
-		});
+		this.props.ComponentActions.showEditModal(data);
 	}
 
 	showConfirmModal(value, data) {
-		this.setState({
-			display: "none"
-		}, () => {
-			this.refs.confirmModal.open(
-				localeUtil.getMsg("ui.common.delete"),
-				localeUtil.getMsg("ui.confirm.delete", data.key),
-				this.removeTranslation.bind(this, value)
-			);
-		});
+		this.refs.confirmModal.open(
+			localeUtil.getMsg("ui.common.delete"),
+			localeUtil.getMsg("ui.confirm.delete", data.key),
+			this.removeTranslation.bind(this, value)
+		);
 	}
 
 	removeTranslation(value) {
@@ -337,17 +328,21 @@ export default class Tree extends React.Component {
 		this.zoom.translate([this.newX, this.newY]).scale(this.newScale);
 		this.svg.attr("transform", `translate(${(this.newX + this.margin)},${this.newX})scale(${this.newScale})`);
 		this.setState({
-			isTranslatedOrScaled: false,
-			display: "none"
+			isTranslatedOrScaled: false
 		});
 	}
 
 	render() {
-		const { display, top, left, title, desc, content, data } = this.state;
-		const style = { display, top, left };
+		const { title, desc, content, data } = this.state;
+		const style = {
+			display: this.props.showtooltip ? "inline" : "none",
+			top: this.props.tooltiptop,
+			left: this.props.tooltipleft,
+		};
+
 		return (
 			<div id="vis_tree">
-				<Tooltip {...style}>
+				<Tooltip {...style} ComponentActions={this.props.ComponentActions}>
 					<div className="app-tooltip-title">{title}</div>
 					{desc && <div className="app-tooltip-desc">{desc}</div>}
 					<div className="app-tooltip-content">{content}</div>

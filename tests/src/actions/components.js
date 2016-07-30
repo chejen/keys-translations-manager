@@ -82,4 +82,24 @@ describe('(action) components', () => {
 				})
 		})
 	})
+
+	describe('showTooltip', () => {
+		it('should create an action to show tooltip', () => {
+			expect(actions.showTooltip(10, 20))
+				.to.deep.equal({
+					type: 'SHOW_TOOLTIP',
+					top: 10,
+					left: 20
+				})
+		})
+	})
+
+	describe('hideTooltip', () => {
+		it('should create an action to hide tooltip', () => {
+			expect(actions.hideTooltip())
+				.to.deep.equal({
+					type: 'HIDE_TOOLTIP'
+				})
+		})
+	})
 })

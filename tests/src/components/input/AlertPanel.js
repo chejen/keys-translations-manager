@@ -1,7 +1,7 @@
 import AlertPanel from '../../../../src/components/input/AlertPanel'
 
 function setup() {
-	let props = {
+	const props = {
 			action: "c",
 			clearErrors: sinon.spy(),
 			errors: [{

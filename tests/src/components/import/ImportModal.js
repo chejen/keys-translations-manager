@@ -5,7 +5,7 @@ function setup() {
 	ImportModal.prototype.setLocale = sinon.spy()
 	ImportModal.prototype.setProject = sinon.spy()
 
-	let props = {
+	const props = {
 			showimportmodal: true,
 			closeImportModal: sinon.spy(),
 			errors: [],

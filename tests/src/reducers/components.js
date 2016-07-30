@@ -258,4 +258,33 @@ describe('(reducer) components', function() {
 		.to.have.property('reloaddata')
 			.that.is.true
 	})
+
+	it('should handle SHOW_TOOLTIP', () => {
+		const state = reducer(INIT_COMPONENTS, {
+				type: 'SHOW_TOOLTIP',
+				top: 10,
+				left: 20
+			});
+
+		expect(state).to.be.an('object')
+			.to.have.property('showtooltip')
+				.that.is.true
+
+		expect(state).to.have.property('tooltiptop')
+			.to.equal(10);
+
+		expect(state).to.have.property('tooltipleft')
+			.to.equal(20);
+	})
+
+	it('should handle CLOSE_TOOLTIP', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'CLOSE_TOOLTIP'
+			})
+		).to.be.an('object')
+		.to.have.property('showtooltip')
+			.that.is.false
+	})
+
 });

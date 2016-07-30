@@ -5,7 +5,7 @@ import { Router, browserHistory } from 'react-router'
 import configureStore from '../store/configureStore'
 import getRoutes from '../routes'
 
-if (process.env.NODE_ENV === 'development') {
+if (__DEV__) {
 	require('../../less/app.less');
 }
 

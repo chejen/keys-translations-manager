@@ -1,7 +1,6 @@
 import React from 'react'
 import AppComponent from './App'
 import RootContainer from './containers/RootContainer'
-// import TablePanel from './containers/GridContainer'
 import TablePanel from './components/grid/TablePanel'
 const App = RootContainer(AppComponent)
 const NoMatch = () => <div><h1>404</h1><br/>Not Found</div>

@@ -1,9 +1,12 @@
 export const INIT_COMPONENTS = {
+	reloaddata: false,
 	showimportmodal: false,
 	showmergemodal: false,
 	showeditmodal: false,
 	showmessagepopup: false,
-	reloaddata: false,
+	showtooltip: false,
+	tooltiptop: 0,
+	tooltipleft: 0,
 	keys: {},
 	mergeable: [],
 	editrecord: {}

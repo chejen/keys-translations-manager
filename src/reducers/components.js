@@ -57,6 +57,18 @@ export default function components(state = INIT_COMPONENTS, action) {
 				...state,
 				reloaddata: true
 			};
+		case ActionTypes.SHOW_TOOLTIP:
+			return {
+				...state,
+				showtooltip: true,
+				tooltiptop: action.top || 0,
+				tooltipleft: action.left || 0
+			};
+		case ActionTypes.HIDE_TOOLTIP:
+			return {
+				...state,
+				showtooltip: false
+			};
 		default:
 			return state;
 	}

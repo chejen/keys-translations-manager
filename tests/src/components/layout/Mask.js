@@ -2,7 +2,7 @@ import Mask from '../../../../src/components/layout/Mask'
 import Modal from 'react-bootstrap/lib/Modal'
 
 function setup() {
-	let props = {
+	const props = {
 			show: false
 		},
 		wrapper = shallow(

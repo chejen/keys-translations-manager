@@ -1,7 +1,7 @@
 import Sidebar from '../../../../src/components/layout/SideBar'
 
 function setup() {
-	let wrapper = shallow(<Sidebar>test</Sidebar>)
+	const wrapper = shallow(<Sidebar>test</Sidebar>)
 	return wrapper
 }
 

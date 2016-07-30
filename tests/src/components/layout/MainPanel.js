@@ -1,7 +1,7 @@
 import MainPanel from '../../../../src/components/layout/MainPanel'
 
 function setup() {
-	let wrapper = render(<MainPanel>test</MainPanel>)
+	const wrapper = render(<MainPanel>test</MainPanel>)
 	return wrapper
 }
 

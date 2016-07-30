@@ -2,7 +2,7 @@ import TextField from '../../../../src/components/input/TextField'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 
 function setup() {
-	let props = {
+	const props = {
 		name: "key",
 		label: "Key"
 	}

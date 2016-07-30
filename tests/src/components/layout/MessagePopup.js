@@ -1,7 +1,7 @@
 import MessagePopup from '../../../../src/components/layout/MessagePopup'
 
 function setup() {
-	let props = {
+	const props = {
 			msg: 'Test Message',
 			showmessagepopup: true,
 			closeMessagePopup: sinon.spy()

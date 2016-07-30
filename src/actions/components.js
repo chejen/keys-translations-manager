@@ -48,3 +48,17 @@ export function reloadData() {
 		type: ActionTypes.RELOAD_DATA
 	}
 }
+
+export function showTooltip(top, left) {
+	return {
+		type: ActionTypes.SHOW_TOOLTIP,
+		top,
+		left
+	}
+}
+
+export function hideTooltip() {
+	return {
+		type: ActionTypes.HIDE_TOOLTIP
+	}
+}

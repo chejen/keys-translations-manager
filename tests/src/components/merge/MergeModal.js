@@ -2,7 +2,7 @@ import ImportModal from '../../../../src/components/merge/MergeModal'
 import Modal from 'react-bootstrap/lib/Modal'
 
 function setup() {
-	let propsN = {
+	const propsN = {
 			keys: {},
 			mergeable: [],
 			showmergemodal: true,
