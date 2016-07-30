@@ -4,8 +4,7 @@ import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
 
 export default class Tooltip extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.node,
-		style: React.PropTypes.object.isRequired
+		children: React.PropTypes.node
 	};
 
 	constructor() {

@@ -1,25 +1,31 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
-//import TablePanel from './components/grid/TablePanel'
-import TablePanel from './containers/GridContainer'
-import container from './containers/RootContainer'
 import AppComponent from './App'
-const App = container(AppComponent)
+import RootContainer from './containers/RootContainer'
+// import TablePanel from './containers/GridContainer'
+import TablePanel from './components/grid/TablePanel'
+const App = RootContainer(AppComponent)
 const NoMatch = () => <div><h1>404</h1><br/>Not Found</div>
-let Tree
 
-if (process.env.CODE_SPLITTING) {
-	//Tree = require('react-router-proxy?name=vis!./components/vis/Tree.js');
-	Tree = require('react-router-proxy?name=vis!./containers/VisContainer');
-} else {
-	//Tree = require('./components/vis/Tree').default;
-	Tree = require('./containers/VisContainer').default;
+// polyfill webpack require.ensure
+if (typeof require.ensure !== 'function') {
+	require.ensure = (d, c) => c(require)
 }
 
-export default () => (
-	<Route path="/" component={App}>
-		<IndexRoute component={TablePanel}/>
-		<Route path="vis/:projectId" component={Tree}/>
-		<Route path="*" component={NoMatch}/>
-	</Route>
-)
+export default () => ({
+	path: '/',
+	component: App,
+	indexRoute: {
+		component: TablePanel
+	},
+	childRoutes: [{
+		path: 'vis/:projectId',
+		getComponent (nextState, cb) {
+			require.ensure([], (require) => {
+				cb(null, require('./containers/VisContainer').default)
+			}, 'vis')
+		}
+	}, {
+		path: '*',
+		component: NoMatch
+	}]
+})
