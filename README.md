@@ -28,8 +28,8 @@
 [Import](#import) |
 [Export](#export) |
 [Merge](#merge) |
+[Visualization](#visualization) |
 [Technologies](#technologies) |
-[Roadmap](#roadmap) |
 [License](#license) |
 [Questions?](#questions)
 
@@ -87,16 +87,17 @@ Not only can you download locales directly from the web, but you can also get th
 Keys-Translations Manager can help you to merge the same keys that have the same translations for each locale but sit in different projects. (See [instructions] [18])
 
 
+## Visualization
+See the [demo] [20]
+
+
 ## Technologies
 * Scaffolded with [MongoDB] [1], [Express] [2], [React] [3], and [Node.js] [4]
 * Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
+* Visualization: [D3] [19]
 * Module Bundler: [webpack] [9]
 * Unit Testing: [Mocha] [10], [Chai] [11] and [Enzyme] [12]
 * Miscellaneous: [Babel] [13], [ESLint] [14]
-
-
-## Roadmap
-* Data visualization
 
 
 ## License
@@ -125,3 +126,5 @@ Please don't hesitate to [open an issue](https://github.com/chejen/keys-translat
 [16]: https://github.com/chejen/keys-translations-manager/blob/master/docs/import.md
 [17]: https://github.com/chejen/keys-translations-manager/blob/master/docs/rest-api.md
 [18]: https://github.com/chejen/keys-translations-manager/blob/master/docs/merge.md
+[19]: https://d3js.org/
+[20]: https://github.com/chejen/keys-translations-manager/blob/master/docs/vis.md
