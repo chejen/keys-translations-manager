@@ -1,4 +1,4 @@
-# **v1.3.0** (Jul 30, 2016)
+# **v1.3.0** (Jul 31, 2016)
 
 ### Features:
 * Applied data visualization for keys and translations.

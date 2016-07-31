@@ -32,24 +32,12 @@ const getUniqueElements = (ary) => {
 				}
 				translation.save(function(err) {
 					if (err) reject(err);
-					if (action === "c") {
-						resolve({
-							action: action,
-							success: true,
-							data: translation,
-							errors: []
-						});
-					} else {
-						Translations.findById(translation._id, function(err, translation) {
-							if (err) reject(err);
-							resolve({
-								action: action,
-								success: true,
-								data: translation,
-								errors: []
-							});
-						});
-					}
+					resolve({
+						action: action,
+						success: true,
+						data: translation,
+						errors: []
+					});
 				});
 			}
 		});

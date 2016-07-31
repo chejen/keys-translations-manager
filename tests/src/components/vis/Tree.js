@@ -48,14 +48,6 @@ describe('(component) Tree', () => {
 		expect(wrapper.find('ButtonGroup')).to.have.length(1);
 	});
 
-	it('should call loadTreeData() at componentDidMount()', () => {
-		const { props } = setup(),
-			wrapper = mount(
-				<Tree {...props}/>
-			);
-		expect(props.VisActions.loadTreeData).calledOnce;
-	});
-
 	describe('child: Tooltip', () => {
 		it('should contain title, content, and footer', () => {
 			const { wrapper } = setup()

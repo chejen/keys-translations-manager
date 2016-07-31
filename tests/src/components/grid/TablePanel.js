@@ -71,7 +71,9 @@ describe('(component) TablePanel', () => {
 		const props = {
 				translations: [],
 				messages: {},
-				CountActions: {},
+				CountActions: {
+					loadCounts: sinon.spy()
+				},
 				ComponentActions: {},
 				TranslationActions: {
 					updateTranslation: sinon.spy(),
@@ -87,6 +89,10 @@ describe('(component) TablePanel', () => {
 			);
 
 		expect(props.TranslationActions.loadTranslations).calledOnce;
+
+		wrapper.setProps({ reloaddata: true, translations: [] });
+		expect(props.TranslationActions.loadTranslations).calledTwice;
+		expect(props.CountActions.loadCounts).calledOnce;
 	});
 
 	describe('child: InputGroup', () => {

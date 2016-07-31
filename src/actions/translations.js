@@ -103,6 +103,7 @@ export function updateTranslation(params) {
 	}
 }
 
+/* istanbul ignore next */
 export function importLocale(params) {
 	let data = new FormData()
 	data.append('file', params.file)

@@ -23,6 +23,7 @@ const log = logUtil.log,
 let webpackConfig,
 	compiler;
 
+mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
 mongoose.connect(config.database, function(err) {
 	if (err) {
 		log('error', 'Failed to connect database');

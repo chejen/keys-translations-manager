@@ -1,13 +1,14 @@
 import Tooltip from '../../../../src/components/vis/Tooltip'
+import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
 
 function setup() {
-	Tooltip.prototype.onMouseOver = sinon.spy()
-	Tooltip.prototype.onMouseOut = sinon.spy()
-
 	const props = {
 			display: "none",
 			top: 0,
-			left: 0
+			left: 0,
+			ComponentActions: {
+				hideTooltip: sinon.spy()
+			}
 		},
 		wrapper = shallow(<Tooltip {...props}/>);
 
@@ -22,10 +23,21 @@ describe('(component) Tooltip', () => {
 		const { wrapper } = setup()
 		expect(wrapper.type()).to.eql('span');
 
+	});
+
+	it('should call getTimeoutId when mouse over', () => {
+		const { wrapper } = setup()
+		timingUtil.getTimeoutId = sinon.spy()
+
 		wrapper.find('span').get(0).props.onMouseOver();
-		expect(Tooltip.prototype.onMouseOver).calledOnce;
+		expect(timingUtil.getTimeoutId).calledOnce;
+	});
+
+	it('should call setTimeoutId when mouse out', () => {
+		const { props, wrapper } = setup()
+		timingUtil.setTimeoutId = sinon.spy()
 
 		wrapper.find('span').get(0).props.onMouseOut();
-		expect(Tooltip.prototype.onMouseOut).calledOnce;
+		expect(timingUtil.setTimeoutId).calledOnce;
 	});
 });

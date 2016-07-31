@@ -48,6 +48,7 @@ export default class Tree extends React.Component {
 		this.newScale = 1;
 	}
 
+	/* istanbul ignore next */
 	componentDidMount() {
 		const me = this,
 			minHeight = 350,
@@ -86,6 +87,7 @@ export default class Tree extends React.Component {
 		this.loadData(this.props.params.projectId);
 	}
 
+	/* istanbul ignore next */
 	componentWillReceiveProps(nextProps) {
 		const me = this,
 			{treedata, translations, reloaddata, params, CountActions} = nextProps;
@@ -123,6 +125,7 @@ export default class Tree extends React.Component {
 		this.props.VisActions.loadTreeData(projectId);
 	}
 
+	/* istanbul ignore next */
 	toggle(d) {
 		if (d.children) {
 			d._children = d.children;
@@ -133,6 +136,7 @@ export default class Tree extends React.Component {
 		}
 	}
 
+	/* istanbul ignore next */
 	toggleAll(d) {
 		const me = this;
 		if (d.children) {
@@ -313,6 +317,7 @@ export default class Tree extends React.Component {
 		);
 	}
 
+	/* istanbul ignore next */
 	removeTranslation(value) {
 		this.props.TranslationActions.removeTranslation(value);
 	}

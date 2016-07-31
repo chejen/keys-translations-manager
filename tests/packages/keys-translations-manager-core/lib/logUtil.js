@@ -13,6 +13,12 @@ describe('[utility] logUtil', function() {
 		it("should log something with chalk", function() {
 			logUtil.log('info', 'log something');
 			expect(console.log).calledOnce;
+
+			logUtil.log('warn', 'log something');
+			expect(console.log).calledTwice;
+
+			logUtil.log('error', 'log something');
+			expect(console.log).calledThrice;
 		});
 	});
 });

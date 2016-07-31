@@ -41,9 +41,9 @@ export default class TablePanel extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const translations = nextProps.translations;
+		const { reloaddata, translations } = nextProps;
 
-		if (nextProps.reloaddata) {
+		if (reloaddata) {
 			this.loadData();
 		}
 
@@ -60,6 +60,7 @@ export default class TablePanel extends React.Component {
 		this.props.TranslationActions.loadTranslations();
 	}
 
+	/* istanbul ignore next */
 	handleResize() {
 		this.setState({
 			windowHeight: window.innerHeight

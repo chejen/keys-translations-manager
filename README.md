@@ -1,7 +1,6 @@
 [![MIT Licensed][license-image]][license-url]
 [![Build Status (Windows)][appveyor-image]][appveyor-url]
 [![Build Status (Linux)][travis-image]][travis-url]
-[![Dependency Status][dependency-image]][dependency-url]
 [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 [![Coverage Status][codecov-image]][codecov-url]
 
@@ -11,8 +10,6 @@
 [appveyor-url]: https://ci.appveyor.com/project/chejen/keys-translations-manager
 [travis-image]: https://img.shields.io/travis/chejen/keys-translations-manager/master.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSItMTQyLjUgLTE0Mi41IDI4NSAyODUiPjxjaXJjbGUgcj0iMTQxLjciIGZpbGw9IiNERDQ4MTQiLz48ZyBpZD0iYSIgZmlsbD0iI0ZGRiI%2BPGNpcmNsZSBjeD0iLTk2LjQiIHI9IjE4LjkiLz48cGF0aCBkPSJNLTQ1LjYgNjguNGMtMTYuNi0xMS0yOS0yOC0zNC00Ny44IDYtNSA5LjgtMTIuMyA5LjgtMjAuNnMtMy44LTE1LjctOS44LTIwLjZjNS0xOS44IDE3LjQtMzYuNyAzNC00Ny44bDEzLjggMjMuMkMtNDYtMzUuMi01NS4zLTE4LjctNTUuMyAwYzAgMTguNyA5LjMgMzUuMiAyMy41IDQ1LjJ6Ii8%2BPC9nPjx1c2UgeGxpbms6aHJlZj0iI2EiIHRyYW5zZm9ybT0icm90YXRlKDEyMCkiLz48dXNlIHhsaW5rOmhyZWY9IiNhIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDApIi8%2BPC9zdmc%2B
 [travis-url]: https://travis-ci.org/chejen/keys-translations-manager
-[dependency-image]: https://david-dm.org/chejen/keys-translations-manager.svg
-[dependency-url]: https://david-dm.org/chejen/keys-translations-manager
 [npm-downloads-image]: https://img.shields.io/npm/dt/keys-translations-manager-core.svg
 [npm-downloads-url]: https://www.npmjs.com/package/keys-translations-manager-core
 [codecov-image]: https://codecov.io/github/chejen/keys-translations-manager/coverage.svg?branch=master
@@ -95,6 +92,7 @@ See the [demo] [20]
 * Scaffolded with [MongoDB] [1], [Express] [2], [React] [3], and [Node.js] [4]
 * Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
 * Visualization: [D3] [19]
+* Real-Time Notifications: [Socket.IO] [21]
 * Module Bundler: [webpack] [9]
 * Unit Testing: [Mocha] [10], [Chai] [11] and [Enzyme] [12]
 * Miscellaneous: [Babel] [13], [ESLint] [14]
@@ -128,3 +126,4 @@ Please don't hesitate to [open an issue](https://github.com/chejen/keys-translat
 [18]: https://github.com/chejen/keys-translations-manager/blob/master/docs/merge.md
 [19]: https://d3js.org/
 [20]: https://github.com/chejen/keys-translations-manager/blob/master/docs/vis.md
+[21]: http://socket.io/
