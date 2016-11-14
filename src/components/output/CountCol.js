@@ -33,7 +33,7 @@ export default class CountCol extends React.Component {
 								style={{cursor:"pointer"}}
 								onClick={onClick}/>
 						</span>
-						<div className="clearfix"></div>
+						<div className="clearfix"/>
 					</div>
 					<div className="row">
 						<div className="huge text-center">

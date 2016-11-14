@@ -5,9 +5,9 @@ export default function Header() {
 		<div className="navbar-header">
 			<button type="button" className="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 				<span className="sr-only">Toggle navigation</span>
-				<span className="icon-bar"></span>
-				<span className="icon-bar"></span>
-				<span className="icon-bar"></span>
+				<span className="icon-bar"/>
+				<span className="icon-bar"/>
+				<span className="icon-bar"/>
 			</button>
 			<a className="navbar-brand" href="https://github.com/chejen/keys-translations-manager">
 				<i className="fa fa-github fa-fw fa-lg"/>
