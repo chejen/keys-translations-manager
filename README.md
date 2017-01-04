@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="https://cloud.githubusercontent.com/assets/14872888/21645988/5160c954-d2cf-11e6-8a09-2c64cf6f62c4.png"/>
+</p>
+
+
 [![MIT Licensed][license-image]][license-url]
 [![Build Status (Windows)][appveyor-image]][appveyor-url]
 [![Build Status (Linux)][travis-image]][travis-url]
