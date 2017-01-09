@@ -1,6 +1,5 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import d3 from 'd3'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
@@ -11,6 +10,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ConfirmModal from '../grid/ConfirmModal'
 import Mask from '../layout/Mask'
 import Tooltip from './Tooltip'
+import * as d3 from "d3"
 
 export default class Tree extends React.Component {
 	static propTypes = {
@@ -50,38 +50,41 @@ export default class Tree extends React.Component {
 
 	/* istanbul ignore next */
 	componentDidMount() {
-		const me = this,
-			minHeight = 350,
+		const minHeight = 350,
 			top = 370,
 			windowHeight = typeof window === "undefined" ? minHeight + top : window.innerHeight,
 			height = windowHeight < (minHeight + top) ? minHeight : windowHeight - top;
 
 		this.height = height;
-		this.zoom = d3.behavior.zoom()
+		this.zoom = d3.zoom()
 			.scaleExtent([1, 10])
-			.on("zoom", function() {
-				const x = d3.event.translate[0],
-					y = d3.event.translate[1],
-					scale = d3.event.scale;
+			.on("zoom", () => {
+				const t = d3.event.transform,
+					x = t.x,
+					y = t.y,
+					scale = t.k;
 
-				if (x !== me.newX || y !== me.newY || scale !== me.newScale) {
-					me.newX = x;
-					me.newY = y;
-					me.newScale = scale;
-					me.svg.attr("transform", "translate(" + (x + me.margin) + "," + y + ")scale(" + scale + ")");
-					me.setState({
-						isTranslatedOrScaled: true
-					});
-				}
+				this.newX = x;
+				this.newY = y;
+				this.newScale = scale;
+				this.svg.attr("transform", "translate(" + (x + this.margin) + "," + y + ")scale(" + scale + ")");
+				this.setState({
+					isTranslatedOrScaled: true
+				});
 			});
-		this.diagonal = d3.svg.diagonal().projection(function(d) {
-			return [d.y, d.x];
-		});
-		this.tree = d3.layout.tree().size([height, 600]);
+
+		// https://github.com/d3/d3-shape/issues/27
+		this.diagonal = (s, d) => {
+			return `M ${s.y} ${s.x} C ${(s.y + d.y) / 2} ${s.x}, ${(s.y + d.y) / 2} ${d.x}, ${d.y} ${d.x}`
+		};
+
+		// https://github.com/d3/d3/blob/master/CHANGES.md#hierarchies-d3-hierarchy
+		this.treemap = d3.tree().size([height, 600]);
+
 		this._svg = d3.select("#vis_tree").append("svg").call(this.zoom);
 		this.svg = this._svg
 			.attr("width", "100%").attr("height", height).append("g")
-			.attr("transform", "translate(" + me.margin + ",0)");
+			.attr("transform", "translate(" + this.margin + ",0)");
 		this.count = 0;
 
 		this.loadData(this.props.params.projectId);
@@ -91,6 +94,7 @@ export default class Tree extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		const me = this,
 			{treedata, translations, reloaddata, params, CountActions} = nextProps;
+		let data;
 
 		if (reloaddata || //socket
 				translations !== this.props.translations || //add/update/...
@@ -104,15 +108,18 @@ export default class Tree extends React.Component {
 			CountActions.loadCounts();
 
 			if (treedata.length === 1) {
-				this.root = treedata[0];
+				data = treedata[0];
 			} else {
-				this.root = {
+				data = {
 					name: "-",
 					children: treedata
 				};
 			}
+			this.root = d3.hierarchy(data, d => { return d.children; });
 			this.root.x0 = this.height / 2;
 			this.root.y0 = 0;
+
+			// Collapse after the second level
 			if (this.root.children) {
 				this.root.children.forEach(me.toggleAll.bind(me));
 			}
@@ -147,20 +154,21 @@ export default class Tree extends React.Component {
 
 	update(root) {
 		const me = this,
-			duration = 200;
-		let nodes = me.tree.nodes(this.root).reverse(),
-			links = me.tree.links(nodes),
-			node,
+			duration = 200,
+			treeData = this.treemap(this.root),
+			nodes = treeData.descendants(),
+			links = treeData.descendants().slice(1);
+		let node,
 			nodeEnter,
 			nodeUpdate,
 			nodeExit,
 			nodeCount = 0,
 			link;
 
-		nodes.forEach(function(d) { d.y = d.depth * 150; });
+		nodes.forEach(d => { d.y = d.depth * 150; });
 
 		node = me.svg.selectAll("g.node")
-			.data(nodes, function(d) {
+			.data(nodes, d => {
 				if (!d.id) {
 					d.id = ++me.count;
 				}
@@ -169,19 +177,19 @@ export default class Tree extends React.Component {
 
 		nodeEnter = node.enter().append("g")
 			.attr("class", "node")
-			.attr("transform", function() {
+			.attr("transform", () => {
 				return `translate(${root.y0},${root.x0})`
 			})
-			.on("click", function(d) {
+			.on("click", d => {
 				me.enableMouseover = false;
 				me.toggle(d);
 				me.update(d);
 			});
 
 		nodeEnter.append("circle")
-			.attr("r", 9).style("fill", "#fff")
-			.on("mouseover", function(d) {
-				const obj = d.translations,
+			.attr("r", me.radius).style("fill", "#fff")
+			.on("mouseover", d => {
+				const obj = d.data.translations,
 					filter = ["__v", "_id", "project"];
 				let title,
 					desc,
@@ -213,7 +221,7 @@ export default class Tree extends React.Component {
 						desc,
 						content,
 						t: +new Date() //force update
-					}, function(){
+					}, () => {
 						me.props.ComponentActions.showTooltip(
 							(d.x) * me.newScale + me.newY - 12,
 							(d.y + me.radius + me.strokeWidth) * me.newScale + me.newX + 130
@@ -221,9 +229,9 @@ export default class Tree extends React.Component {
 					});
 				}
 			})
-			.on("mouseout", function(d) {
-				if (d.translations) {
-					const timeoutId = setTimeout(function(){
+			.on("mouseout", d => {
+				if (d.data.translations) {
+					const timeoutId = setTimeout(() => {
 						me.props.ComponentActions.hideTooltip();
 					}, 300);
 					timingUtil.setTimeoutId(timeoutId);
@@ -231,36 +239,35 @@ export default class Tree extends React.Component {
 			});
 
 		nodeEnter.append("text")
-			.attr("x", function(d) {
+			.attr("x", d => {
 				return d.children || d._children ? -15 : 15;
 			})
 			.attr("dy", ".35em")
-			.attr("text-anchor", function(d) {
+			.attr("text-anchor", d => {
 				return d.children || d._children ? "end" : "start";
 			})
-			.text(function(d) { return d.name; })
+			.text(d => { return d.data.name; })
 
-
-		nodeUpdate = node
-			.each(function() {
+		nodeUpdate = nodeEnter.merge(node)
+			.each(() => {
 				nodeCount++;
 			})
 			.transition().duration(duration)
-			.each('end', function() {
+			.on('end', () => {
 				nodeCount--;
 				if (!nodeCount) {
 					me.enableMouseover = true;
 				}
 			})
-			.attr("transform", function(d) {
+			.attr("transform", d => {
 				return `translate(${d.y},${d.x})`;
 			});
 
 		nodeUpdate.select("circle").attr("r", me.radius)
-			.style("fill", function(d) {
+			.style("fill", d => {
 				return d._children ? "#FDD11A" : "#fff";
 			})
-			.style("cursor", function(d) {
+			.style("cursor", d => {
 				return (d.children || d._children) ? "pointer" : "default";
 			});
 
@@ -268,7 +275,7 @@ export default class Tree extends React.Component {
 
 		nodeExit = node.exit().transition()
 			.duration(duration)
-			.attr("transform", function() {
+			.attr("transform", () => {
 				return `translate(${root.y},${root.x})`
 			})
 			.remove();
@@ -278,28 +285,32 @@ export default class Tree extends React.Component {
 		nodeExit.select("text").style("fill-opacity", 1e-6);
 
 		link = me.svg.selectAll("path.link")
-			.data(links, function(d) { return d.target.id; });
+			.data(links, d => { return d.id; });
 
 		link.enter().insert("svg:path", "g")
 			.attr("class", "link")
-			.attr("d", function() {
+			.attr("d", () => {
 				const o = {x: root.x0, y: root.y0};
-				return me.diagonal({source: o, target: o});
+				return me.diagonal(o, o);
 			})
 			.transition()
 			.duration(duration)
-			.attr("d", me.diagonal);
+			.attr("d", d => {
+				return me.diagonal(d, d.parent)
+			});
 
-		link.transition().duration(duration).attr("d", me.diagonal);
+		link.transition().duration(duration).attr("d", d => {
+			return me.diagonal(d, d.parent)
+		});
 
 		link.exit().transition().duration(duration)
-			.attr("d", function() {
+			.attr("d", () => {
 				const o = {x: root.x, y: root.y};
-				return me.diagonal({source: o, target: o});
+				return me.diagonal(o, o);
 			})
 			.remove();
 
-		nodes.forEach(function(d) {
+		nodes.forEach(d => {
 			d.x0 = d.x;
 			d.y0 = d.y;
 		});
@@ -330,11 +341,14 @@ export default class Tree extends React.Component {
 		this.newX = 0;
 		this.newY = 0;
 		this.newScale = 1;
-		this.zoom.translate([this.newX, this.newY]).scale(this.newScale);
-		this.svg.attr("transform", `translate(${(this.newX + this.margin)},${this.newX})scale(${this.newScale})`);
-		this.setState({
-			isTranslatedOrScaled: false
-		});
+
+		this._svg.transition().duration(200)
+			.call(this.zoom.transform, d3.zoomIdentity)
+			.on('end', () => {
+				this.setState({
+					isTranslatedOrScaled: false
+				});
+			});
 	}
 
 	render() {
