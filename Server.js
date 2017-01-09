@@ -71,6 +71,10 @@ if (process.env.NODE_ENV === 'development') {
 		/*stats: {
 			colors: true
 		},*/
+		watchOptions: {
+			aggregateTimeout: 300,
+			poll: 1000
+		},
 		noInfo: true,
 		publicPath: webpackConfig.output.publicPath
 	})).use(require('webpack-hot-middleware')(compiler));
