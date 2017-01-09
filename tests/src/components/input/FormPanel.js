@@ -52,7 +52,7 @@ describe('(component) FormPanel', () => {
 		expect(wrapper.find('TextField[name="en-US"]').prop("defaultValue")).to.be.empty;
 		expect(wrapper.find('TextField[name="zh-TW"]').prop("defaultValue")).to.be.empty;
 		expect(wrapper.find('TextField[name="description"]').prop("defaultValue")).to.be.empty;
-		expect(wrapper.find('Checkbox[value="p1"]').prop("checked")).to.be.true;
+		expect(wrapper.find('Checkbox[value="p1"]').prop("checked")).to.be.false;
 	});
 
 	it("should have readonly 'key' field in edit mode", () => {

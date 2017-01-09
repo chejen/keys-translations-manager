@@ -51,7 +51,7 @@ export default class FormPanel extends React.Component {
 			}
 			while (lenProjects--) {
 				project = projects[lenProjects]
-				o[project.id] = true
+				o[project.id] = false
 			}
 		}
 
