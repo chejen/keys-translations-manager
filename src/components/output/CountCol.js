@@ -25,15 +25,15 @@ export default class CountCol extends React.Component {
 			<Col lg={2} md={3} sm={4}>
 				<div className="panel panel-count">
 					<div className="panel-heading">
-						{/*<div className="text-center">{this.props.header}</div>*/}
-						<span className="pull-left">{header}</span>
-						<span className="pull-right">
+						<div className="panel-title app-ellipsis" title={header}>
+							{header}
+						</div>
+						<div className="panel-glyph">
 							<Glyphicon glyph="download-alt"
 								title={localeUtil.getMsg("ui.common.download")}
 								style={{cursor:"pointer"}}
 								onClick={onClick}/>
-						</span>
-						<div className="clearfix"/>
+						</div>
 					</div>
 					<div className="row">
 						<div className="huge text-center">
