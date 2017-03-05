@@ -24,7 +24,14 @@ let webpackConfig,
 	compiler;
 
 mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
-mongoose.connect(config.database, function(err) {
+mongoose.connect(config.database, {
+	server: {
+		socketOptions: {
+			socketTimeoutMS: 60000,
+			connectionTimeout: 60000
+		}
+	}
+}, function(err) {
 	if (err) {
 		log('error', 'Failed to connect database');
 		log('error', err);

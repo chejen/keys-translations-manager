@@ -16,11 +16,11 @@ var config = {
 		publicPath: '/public/js/'
 	},
 	plugins: [
-		new webpack.optimize.DedupePlugin(),
 		new webpack.optimize.UglifyJsPlugin({
-			compressor: {
-				warnings: false,
-			}
+			sourceMap: true
+		}),
+		new webpack.LoaderOptionsPlugin({
+			minimize: true
 		}),
 		new webpack.DefinePlugin({
 			'__DEV__': false,
@@ -33,12 +33,16 @@ var config = {
 	],
 	devtool: 'source-map',
 	module: {
-		loaders: [{
+		rules: [{
 			test: /\.jsx?$/,
-			loaders: ['babel', WebpackStrip.loader('console.log', 'console.warn')]
+			use: ['babel-loader', WebpackStrip.loader('console.log', 'console.warn')]
 		}/*, {
 			test: /\.(css|less)$/,
-			loader: 'style!css!less'
+			use: [
+				"style-loader",
+				"css-loader",
+				"less-loader"
+			]
 		}, {
 			test: /\.(png|jpg|gif|ttf|woff|woff2)$/,
 			loader: 'url?limit=25000'

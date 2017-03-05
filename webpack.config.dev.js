@@ -18,7 +18,7 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.NoErrorsPlugin(),
+		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.DefinePlugin({
 			'__DEV__': true,
 			'process.env': {
@@ -29,18 +29,22 @@ module.exports = {
 	],
 	devtool: 'cheap-module-eval-source-map',
 	module: {
-		preLoaders: [{
+		rules: [{
 			test: /\.jsx?$/,
+			enforce: 'pre',
 			exclude: path.resolve(__dirname, 'node_modules'),
-			loaders: ['eslint-loader']
-		}],
-		loaders: [{
+			use: ['eslint-loader']
+		}, {
 			test: /\.jsx?$/,
-			loaders: ['babel'],
+			use: ['babel-loader'],
 			include: dir.src
 		}, {
 			test: /\.(css|less)$/,
-			loader: 'style!css!less'
+			use: [
+				"style-loader",
+				"css-loader",
+				"less-loader"
+			]
 		}]
 	}
 };
