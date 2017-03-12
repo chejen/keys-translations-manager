@@ -42,7 +42,7 @@ export default class DropdownMenu extends React.Component {
 								}
 								this.props.findMergeable();
 							}}>
-						<i className="fa fa-code-fork fa-fw fa-lg"/>
+						<i className="fa fa-code-fork fa-flip-vertical fa-fw fa-lg"/>
 					</a>
 				</li>
 				<li className="dropdown" title={localeUtil.getMsg("ui.common.language")}>

@@ -30,9 +30,9 @@ describe('(component) CountCol', () => {
 			expect(wrapper.find('.panel-heading')).to.have.length(1);
 		});
 
-		it('should contain \'header\'', () => {
+		it('should contain \'header\' with ellipsis effect', () => {
 			const { wrapper } = setup()
-			expect(wrapper.find('.panel-heading').find('.pull-left').props().children).to.be.equal('header');
+			expect(wrapper.find('.panel-heading').find('.app-ellipsis').props().children).to.be.equal('header');
 		});
 
 		describe('child: Glyphicon', () => {
@@ -64,7 +64,7 @@ describe('(component) CountCol', () => {
 				<b>{props.count}</b>
 			)).to.be.true;
 		});
-		
+
 		it('should show count with Link if count is larger than 0', () => {
 			const { props, wrapper } = setup()
 			const { projectId, count } = props

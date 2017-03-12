@@ -61,7 +61,8 @@ export default class OutputPanel extends React.Component {
 					{config.projects.map(function(e){
 						return (
 							<CountCol onClick={me.download.bind(me, e)} key={e.id}
-								header={e.name} projectId={e.id} desc="keys"
+								header={e.name} projectId={e.id}
+								desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
 								count={projectCounts ? (projectCounts[e.id] || 0) : 0}/>
 						);
 					})}

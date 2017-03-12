@@ -27,8 +27,8 @@ mongoose.Promise = global.Promise; //mpromise (mongoose's default promise librar
 mongoose.connect(config.database, {
 	server: {
 		socketOptions: {
-			socketTimeoutMS: 60000,
-			connectionTimeout: 60000
+			socketTimeoutMS: 90000,
+			connectionTimeout: 90000
 		}
 	}
 }, function(err) {
