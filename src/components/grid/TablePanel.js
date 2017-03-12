@@ -1,5 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import Button from 'react-bootstrap/lib/Button'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 import InputGroup from 'react-bootstrap/lib/InputGroup'
@@ -13,6 +14,7 @@ import configUtil from '../../configUtil'
 
 export default class TablePanel extends React.Component {
 	static propTypes = {
+		reloaddata: React.PropTypes.boolean,
 		messages: React.PropTypes.object,
 		CountActions: React.PropTypes.object.isRequired,
 		TranslationActions: React.PropTypes.object.isRequired,
@@ -87,6 +89,13 @@ export default class TablePanel extends React.Component {
 		this.props.TranslationActions.removeTranslation(value);
 	}
 
+	downloadCsv() {
+		let url = configUtil.getHost() + "/api/download/csv"
+
+		/* istanbul ignore next */
+		location.href = url;
+	}
+
 	render() {
 		const me = this,
 			config = me.context.config,
@@ -105,6 +114,11 @@ export default class TablePanel extends React.Component {
 					<FormControl type="text" className="app-search-bar"
 						placeholder={localeUtil.getMsg("ui.grid.search")}
 						onChange={this.onQuickFilterText.bind(this)}/>
+					<InputGroup.Button style={{"paddingLeft": "5px"}}>
+						<Button onClick={this.downloadCsv}>
+							<i className="fa fa-file-text-o"/> CSV
+						</Button>
+					</InputGroup.Button>
 				</InputGroup>
 				<BootstrapTable ref="table" data={this.props.translations || []}
 						height={(windowHeight < (minHeight + top) ? minHeight : windowHeight - top) + ""}

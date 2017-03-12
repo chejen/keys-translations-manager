@@ -4,6 +4,7 @@ import transformationUtil from 'keys-translations-manager-core/lib/transformatio
 import Translations from '../models/TranslationModel'
 import config from '../../ktm.config'
 const locales = config.locales
+const lenLocales = locales.length
 const router = express.Router()
 const properties2Json = transformationUtil.properties2Json
 
@@ -40,7 +41,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 						"Content-Type": "application/json; charset=utf-8"
 					});
 
-					while(len--) {
+					while (len--) {
 						translation = translations[len];
 						rootObj = properties2Json(rootObj, translation.key, translation[locale]);
 					}
@@ -57,7 +58,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 						"Content-Type": "text/x-java-properties; charset=utf-8"
 					});
 
-					while(len--) {
+					while (len--) {
 						translation = translations[len];
 						res.write(translation.key + "=" + translation[locale] + "\r\n");
 					}
@@ -72,7 +73,6 @@ router.route('/:outputType/:fileType/:project')
 			// outputType (f: format, n: none)
 			// fileType (json, properties)
 			const { outputType, fileType, project } = req.params,
-				lenLocales = locales.length,
 				archive = archiver.create('zip', {}),
 				zipHandler = function(stream, locale, fileExt) {
 					archive.append(stream, { name: locale + '/translation.' + fileExt });
@@ -94,7 +94,7 @@ router.route('/:outputType/:fileType/:project')
 			});
 			archive.pipe(res);
 
-			for (let i=0; i<lenLocales; i++) {
+			for (let i = 0; i < lenLocales; i++) {
 				locale = locales[i];
 
 				criteria.project = project;
@@ -111,7 +111,7 @@ router.route('/:outputType/:fileType/:project')
 
 					len = translations.length;
 					if (fileType === "json") {
-						while(len--) {
+						while (len--) {
 							translation = translations[len];
 							rootObj = properties2Json(rootObj, translation.key, translation[locale]);
 						}
@@ -124,7 +124,7 @@ router.route('/:outputType/:fileType/:project')
 
 					} else if (fileType === "properties") {
 						let str = "";
-						while(len--) {
+						while (len--) {
 							translation = translations[len];
 							str += translation.key + "=" + translation[locale] + "\r\n";
 						}
@@ -132,6 +132,46 @@ router.route('/:outputType/:fileType/:project')
 					}
 				}.bind(locale));
 			}
+		});
+
+router.route('/csv')
+		.get(function(req, res) {
+			Translations.find({}, null, {sort: {'_id': 1}}, function(err, translations) {
+				const delimiter = "\t"
+				let len = translations.length,
+					translation,
+					i,
+					str;
+
+				if (err) res.status(500).send(err);
+
+				res.set({
+					"Content-Disposition": "attachment; filename=\"translations.csv\"",
+					"Content-Type": "text/csv; charset=utf-8"
+				});
+
+				// header
+				str = "";
+				for (i = 0; i < lenLocales; i++) {
+					str += delimiter + locales[i];
+				}
+				res.write(`Project${delimiter}Key${delimiter}Description${str}\r\n`);
+
+				// content
+				while (len--) {
+					translation = translations[len];
+					str = "";
+					for (i = 0; i < lenLocales; i++) {
+						str += delimiter + (translation[ locales[i] ] || "");
+					}
+					res.write(translation.project.toString()
+						+ delimiter + translation.key
+						+ delimiter + (translation.description || "")
+						+ str + "\r\n");
+				}
+
+				res.end();
+			});
 		});
 
 export default router
