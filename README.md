@@ -78,29 +78,29 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 
 
 ## Import
-Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [instructions] [16])
+Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [instructions][16])
 
 
 ## Export
-Not only can you download locales directly from the web, but you can also get them via [CLI] [15] or [REST API] [17].
+Not only can you download locales directly from the web, but you can also get them via [CLI][15] or [REST API][17].
 
 
 ## Merge
-Keys-Translations Manager can help you to merge the same keys that have the same translations for each locale but sit in different projects. (See [instructions] [18])
+Keys-Translations Manager can help you to merge the same keys that have the same translations for each locale but sit in different projects. (See [instructions][18])
 
 
 ## Visualization
-See the [demo] [20]
+See the [demo][20]
 
 
 ## Technologies
-* Scaffolded with [MongoDB] [1], [Express] [2], [React] [3], and [Node.js] [4]
-* Styled with [Bootstrap] [5] (theme: [SB Admin 2] [7]) and [Less] [6]
-* Visualization: [D3] [19]
-* Real-Time Notifications: [Socket.IO] [21]
-* Module Bundler: [webpack] [9]
-* Unit Testing: [Mocha] [10], [Chai] [11] and [Enzyme] [12]
-* Miscellaneous: [Babel] [13], [ESLint] [14]
+* Scaffolded with [MongoDB][1], [Express][2], [React][3], and [Node.js][4]
+* Styled with [Bootstrap][5] (theme: [SB Admin 2][7]) and [Less][6]
+* Visualization: [D3][19]
+* Real-Time Notifications: [Socket.IO][21]
+* Module Bundler: [webpack][9]
+* Unit Testing: [Mocha][10], [Chai][11] and [Enzyme][12]
+* Miscellaneous: [Babel][13], [ESLint][14]
 
 
 ## License
