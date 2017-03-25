@@ -1,6 +1,6 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 import Col from 'react-bootstrap/lib/Col'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'

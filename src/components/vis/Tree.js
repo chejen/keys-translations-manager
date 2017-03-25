@@ -1,5 +1,4 @@
 import React from 'react'
-import { browserHistory } from 'react-router'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
@@ -14,8 +13,8 @@ import * as d3 from "d3"
 
 export default class Tree extends React.Component {
 	static propTypes = {
-		params: React.PropTypes.object.isRequired,
-		messages: React.PropTypes.object,
+		match: React.PropTypes.object.isRequired,
+		history: React.PropTypes.object.isRequired,
 		translations: React.PropTypes.array,
 		TranslationActions: React.PropTypes.object.isRequired,
 		ComponentActions: React.PropTypes.object.isRequired,
@@ -86,20 +85,19 @@ export default class Tree extends React.Component {
 			.attr("width", "100%").attr("height", height).append("g")
 			.attr("transform", "translate(" + this.margin + ",0)");
 		this.count = 0;
-
-		this.loadData(this.props.params.projectId);
+		this.loadData(this.props.match.params.projectId);
 	}
 
 	/* istanbul ignore next */
 	componentWillReceiveProps(nextProps) {
 		const me = this,
-			{treedata, translations, reloaddata, params, CountActions} = nextProps;
+			{treedata, translations, reloaddata, match, CountActions} = nextProps;
 		let data;
 
 		if (reloaddata || //socket
 				translations !== this.props.translations || //add/update/...
-				params.projectId !== this.props.params.projectId) { //change project
-			this.loadData(params.projectId);
+				match.params.projectId !== this.props.match.params.projectId) { //change project
+			this.loadData(match.params.projectId);
 		}
 
 		if (treedata && treedata.length &&
@@ -334,7 +332,8 @@ export default class Tree extends React.Component {
 	}
 
 	goBack() {
-		browserHistory.push("/");
+		// this.props.history.goBack();
+		this.props.history.push("/");
 	}
 
 	reset() {

@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Router, browserHistory } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
+import createBrowserHistory from 'history/createBrowserHistory'
 import configureStore from '../store/configureStore'
-import getRoutes from '../routes'
+import RootContainer from '../containers/RootContainer'
 
 if (__DEV__) {
 	require('../../less/app.less');
@@ -11,9 +12,9 @@ if (__DEV__) {
 
 ReactDOM.render(
 	<Provider store={configureStore(window.__INITIAL_STATE__)}>
-		<Router history={browserHistory}>
-			{getRoutes()}
-		</Router>
+		<BrowserRouter history={createBrowserHistory()}>
+			<RootContainer/>
+		</BrowserRouter>
 	</Provider>,
 	document.getElementById('root')
 );

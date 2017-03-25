@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import React from 'react'
+import { Route } from 'react-router-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import AlertPanel from './components/input/AlertPanel'
@@ -13,14 +14,14 @@ import OutputPanel from './components/output/OutputPanel'
 import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
 import ImportModal from './components/import/ImportModal'
+import TablePanel from './components/grid/TablePanel'
+import VisContainer from './containers/VisContainer'
 import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
 
 export default class App extends React.Component {
 	static propTypes = {
 		children: React.PropTypes.node,
-		location: React.PropTypes.object.isRequired,
-		params: React.PropTypes.object.isRequired,
 		lang: React.PropTypes.string.isRequired,
 		messages: React.PropTypes.object.isRequired,
 		counts: React.PropTypes.object.isRequired,
@@ -148,16 +149,22 @@ export default class App extends React.Component {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
-						{this.props.children &&
-							React.cloneElement(this.props.children, {
-								messages,
-								translations,
-								reloaddata,
-								TranslationActions,
-								ComponentActions,
-								CountActions
-							})
-						}
+						<Route exact path="/" render={() => (
+							<TablePanel messages={messages}
+								translations={translations}
+								reloaddata={reloaddata}
+								TranslationActions={TranslationActions}
+								ComponentActions={ComponentActions}
+								CountActions={CountActions}/>
+						)}/>
+						<Route path="/vis/:projectId" render={props => (
+							<VisContainer {...props}
+								translations={translations}
+								reloaddata={reloaddata}
+								TranslationActions={TranslationActions}
+								ComponentActions={ComponentActions}
+								CountActions={CountActions}/>
+						)}/>
 					</MainPanel>
 				</div>
 				<MessagePopup messages={messages}
