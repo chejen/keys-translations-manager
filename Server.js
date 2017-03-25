@@ -96,44 +96,40 @@ if (process.env.NODE_ENV === 'development') {
 } else {
 	app.get(['/', '/vis/*'], function(req, res) {
 	//app.use((req, res) => {
-		const Router = require('react-router')
-		const getRoutes = require('./src/routes').default
 		const markup = require('./src/server/index').default
 		const css = '<link rel="stylesheet" href="/public/css/app.css">'
+		const context = {}
 		let lang = req.headers["accept-language"].split(",")[0]
 		lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang
 
-		Router.match({ routes: getRoutes(), location: req.url }, (error, redirectLocation, renderProps) => {
-			if (error) {
-				res.status(500).send(error.message)
-			} else if (redirectLocation) {
-				res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-			} else if (renderProps) {
-				fs.readFile('./public/locale/' + lang + '/translation.json', {encoding: 'utf-8'}, function(err, data){
-					if (err) {
-						res.status(500).send(err);
-					} else {
-						const messages = JSON.parse(data)
-						const preloadedState = {
-							messages: { lang, messages }
-						}
-						let initialState = `
-							<script>
-								window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
-							</script>
-						`
-
-						res.render('index', {
-							initialState,
-							markup: markup(preloadedState, renderProps),
-							css: css
-						})
+		if (context.url) {
+			res.writeHead(301, {
+				Location: context.url
+			})
+			res.end()
+		} else {
+			fs.readFile('./public/locale/' + lang + '/translation.json', {encoding: 'utf-8'}, function(err, data){
+				if (err) {
+					res.status(500).send(err);
+				} else {
+					const messages = JSON.parse(data)
+					const preloadedState = {
+						messages: { lang, messages }
 					}
-				});
-			} else {
-				res.status(404).send('Not found')
-			}
-		})
+					let initialState = `
+						<script>
+							window.__INITIAL_STATE__ = ${JSON.stringify(preloadedState)}
+						</script>
+					`
+
+					res.render('index', {
+						initialState,
+						markup: markup(preloadedState, req, context),
+						css: css
+					})
+				}
+			});
+		}
 	});
 }
 
