@@ -20,7 +20,9 @@ router.route('/projects')
 					"count": {"$sum": 1}
 				}
 			}], function (err, result) {
-				if (err) res.status(500).send(err);
+				if (err) {
+					res.status(500).send(err);
+				}
 				res.json(result);
 			});
 		});

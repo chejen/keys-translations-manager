@@ -23,7 +23,9 @@ router.route('/')
 			form = new multiparty.Form(); //needs to new the form every time
 			form.parse(req, function(err, fields, files) {
 				importUtil.read(files.file[0].path, function(err, fileType, data){
-					if (err) res.status(500).send(err);
+					if (err) {
+						res.status(500).send(err);
+					}
 
 					if (fileType === "json") {
 						data = json2Properties({}, data, "");
@@ -43,7 +45,9 @@ router.route('/')
 					queryParam[locale] = { $ne: "" };
 					query.push(queryParam);
 					Translations.find({$and: query}, function(err, translations) {
-						if (err) res.status(500).send(err);
+						if (err) {
+							res.status(500).send(err);
+						}
 						error = importUtil.validate(data, translations);
 
 						errors = []; //reset for UI
@@ -70,20 +74,24 @@ router.route('/')
 							bulk = Translations.collection.initializeUnorderedBulkOp();
 
 							for (key in data) {
-								query = {
-									key: key,
-									project: project
-								};
-								doc = {};
-								doc[locale] = data[key];
-								bulk.find(query).upsert().updateOne({
-									$set: doc
-								});
+								if (data.hasOwnProperty(key)) {
+									query = {
+										key: key,
+										project: project
+									};
+									doc = {};
+									doc[locale] = data[key];
+									bulk.find(query).upsert().updateOne({
+										$set: doc
+									});
+								}
 							}
 
 							bulk.execute(function(){
 								Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
-									if (err) res.status(500).send(err);
+									if (err) {
+										res.status(500).send(err);
+									}
 									res.json({
 										action: action,
 										success: true,

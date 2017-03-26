@@ -57,8 +57,8 @@ Checkout this repo (or directly download the stable releases from [here](https:/
 ```sh
 $ git clone https://github.com/chejen/keys-translations-manager
 $ cd keys-translations-manager
-$ npm install
-$ npm start
+$ npm install (or yarn install)
+$ npm start (or yarn start)
 ```
 Open http://localhost:3000/ and enjoy it.
 
@@ -74,7 +74,7 @@ There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure.
 |  projects  |   The projects need to be localized. (You can add or remove projects arbitrarily.)    | ```[ {id:'p1', name:'project A'}, {id:'p2', name:'project B'} ]```  |
 |  enableNotifications  |   Push real-time notifications to users    | ```true```  |
 
-> Rebuild the code (```npm run build```) and restart the server if you change any of these configurations.
+> Rebuild the code (```npm run build``` or ```yarn build```) and restart the server if you change any of these configurations.
 
 
 ## Import

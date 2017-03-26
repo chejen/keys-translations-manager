@@ -10,7 +10,9 @@ var locales = config.locales,
 	},
 	TranslationSchema;
 
-while(lenLocales--) schema[locales[lenLocales]] = String;
+while(lenLocales--) {
+	schema[locales[lenLocales]] = String;
+}
 TranslationSchema = new mongoose.Schema(schema);
 
 module.exports = mongoose.model('Translation', TranslationSchema);

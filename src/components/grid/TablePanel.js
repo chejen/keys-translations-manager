@@ -14,12 +14,12 @@ import configUtil from '../../configUtil'
 
 export default class TablePanel extends React.Component {
 	static propTypes = {
-		reloaddata: React.PropTypes.boolean,
+		reloaddata: React.PropTypes.bool,
 		messages: React.PropTypes.object,
 		CountActions: React.PropTypes.object.isRequired,
 		TranslationActions: React.PropTypes.object.isRequired,
 		ComponentActions: React.PropTypes.object.isRequired,
-		translations: React.PropTypes.array.isRequired
+		translations: React.PropTypes.array
 	};
 
 	static contextTypes = {

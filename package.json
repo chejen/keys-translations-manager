@@ -18,6 +18,7 @@
 	"author": "chejen",
 	"scripts": {
 		"postinstall": "npm run build",
+		"lint": "eslint \"src/**/*.js\"",
 		"dev": "cross-env NODE_ENV=development nodemon --exec babel-node -- ./Server.js",
 		"start": "cross-env NODE_ENV=production babel-node ./Server.js",
 		"build": "npm run build:css && npm run build:js",
@@ -28,6 +29,7 @@
 		"coverage": "cross-env NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha tests/**/*.js --report lcovonly -- -R spec",
 		"codecov": "cat ./coverage/lcov.info | codecov"
 	},
+	"pre-commit": ["lint", "test"],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/chejen/keys-translations-manager"
@@ -91,6 +93,7 @@
 		"mocha": "^3.2.0",
 		"nock": "^9.0.2",
 		"nodemon": "^1.11.0",
+		"pre-commit": "^1.2.2",
 		"react-addons-test-utils": "~15.4.2",
 		"redux-mock-store": "^1.2.1",
 		"rename": "^1.0.4",

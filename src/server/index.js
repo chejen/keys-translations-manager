@@ -13,4 +13,4 @@ export default function markup(initialState, req, context){
 			</StaticRouter>
 		</Provider>
 	);
-};
+}

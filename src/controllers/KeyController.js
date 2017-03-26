@@ -11,7 +11,9 @@ let bulk, doc;
 router.route('/')
 		.get(function(req, res) {
 			Translations.find(function(err, translations) {
-				if (err) res.status(500).send(err);
+				if (err) {
+					res.status(500).send(err);
+				}
 				res.json(findMergeable(translations, locales));
 			});
 		})
@@ -43,7 +45,9 @@ router.route('/')
 
 			bulk.execute(function(){
 				Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
-					if (err) res.status(500).send(err);
+					if (err) {
+						res.status(500).send(err);
+					}
 					res.json({
 						action: "m",
 						success: true,

@@ -15,7 +15,9 @@ router.route('/:visType/:project')
 			query = Translations.find(criteria).sort({'key':-1});
 			//Translations.find({ "project": project }, function(err, translations) {
 			query.exec(function(err, translations) {
-				if (err) res.status(500).send(err);
+				if (err) {
+					res.status(500).send(err);
+				}
 
 				if (visType === "tree") {
 					let rootObj = {};

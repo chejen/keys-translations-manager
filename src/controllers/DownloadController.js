@@ -26,13 +26,17 @@ router.route('/:outputType/:fileType/:project/:locale')
 			criteria[locale] = {$exists: true};
 			select[locale] = 1;
 			query = Translations.find(criteria).select(select);
-			if (outputType === "f") query.sort({'key':-1});
+			if (outputType === "f") {
+				query.sort({'key':-1});
+			}
 			query.exec(function(err, translations) {
 				let len,
 					translation,
 					rootObj = {};
 
-				if (err) res.status(500).send(err);
+				if (err) {
+					res.status(500).send(err);
+				}
 
 				len = translations.length;
 				if (fileType === "json") {
@@ -76,7 +80,9 @@ router.route('/:outputType/:fileType/:project')
 				archive = archiver.create('zip', {}),
 				zipHandler = function(stream, locale, fileExt) {
 					archive.append(stream, { name: locale + '/translation.' + fileExt });
-					if (++count === lenLocales) archive.finalize();
+					if (++count === lenLocales) {
+						archive.finalize();
+					}
 				};
 
 			let query,
@@ -100,14 +106,18 @@ router.route('/:outputType/:fileType/:project')
 				criteria.project = project;
 				select[locale] = 1;
 				query = Translations.find(criteria).select(select);
-				if (outputType === "f") query.sort({'key':-1});
+				if (outputType === "f") {
+					query.sort({'key':-1});
+				}
 				query.exec(function(err, translations) {
 					let len,
 						translation,
 						rootObj = {},
 						locale = this;
 
-					if (err) res.status(500).send(err);
+					if (err) {
+						res.status(500).send(err);
+					}
 
 					len = translations.length;
 					if (fileType === "json") {
@@ -143,7 +153,9 @@ router.route('/csv')
 					i,
 					str;
 
-				if (err) res.status(500).send(err);
+				if (err) {
+					res.status(500).send(err);
+				}
 
 				res.set({
 					"Content-Disposition": "attachment; filename=\"translations.csv\"",

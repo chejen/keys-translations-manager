@@ -4,13 +4,19 @@ const router = express.Router()
 const getUniqueElements = (ary) => {
 		let o = {};
 		return ary.filter(e => {
-			return o.hasOwnProperty(e) ? false : (o[e] = true);
+			if (o.hasOwnProperty(e)) {
+				return false;
+			}
+			o[e] = true;
+			return true;
 		});
 	},
 	getTranslationById = id => {
 		return new Promise((resolve, reject) => {
 			Translations.findById(id, (err, translation) => {
-				if (err) reject(err);
+				if (err) {
+					reject(err);
+				}
 				resolve(translation);
 			});
 		});
@@ -27,11 +33,15 @@ const getUniqueElements = (ary) => {
 			} else {
 				if (action === "u") {
 					for (let key in data) {
-						translation[key] = data[key];
+						if (data.hasOwnProperty(key)) {
+							translation[key] = data[key];
+						}
 					}
 				}
 				translation.save(function(err) {
-					if (err) reject(err);
+					if (err) {
+						reject(err);
+					}
 					resolve({
 						action: action,
 						success: true,
@@ -61,8 +71,11 @@ const getUniqueElements = (ary) => {
 					query = { 'key': tester };
 				}
 
+				// eslint-disable-next-line no-loop-func
 				Translations.find(query, function(err, translations) {
-					if (err) reject(err);
+					if (err) {
+						reject(err);
+					}
 
 					const tester = this.tester;
 					let len = translations.length,
@@ -79,7 +92,7 @@ const getUniqueElements = (ary) => {
 						}
 					} else { // update
 						while(len--) {
-							if (data._id != translations[len]._id) {
+							if (data._id !== translations[len]._id.toString()) { // string vs object
 								ary = getUniqueElements( ary.concat(translations[len].project) );
 							}
 						}
@@ -130,7 +143,9 @@ const getUniqueElements = (ary) => {
 router.route('/')
 		.get(function(req, res) {
 			Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
-				if (err) res.status(500).send(err);
+				if (err) {
+					res.status(500).send(err);
+				}
 				res.json(translations);
 			});
 		})
@@ -185,7 +200,9 @@ router.route('/:id')
 			Translations.remove({
 				_id: req.params.id
 			}, function(err, count) {
-				if (err) res.status(500).send(err);
+				if (err) {
+					res.status(500).send(err);
+				}
 				res.json({
 					id: req.params.id,
 					count: count
