@@ -1,6 +1,6 @@
 import CountCol from '../../../../src/components/output/CountCol'
 import Col from 'react-bootstrap/lib/Col'
-import { Link } from 'react-router'
+import { Link } from 'react-router-dom'
 
 function setup() {
 	const props = {
