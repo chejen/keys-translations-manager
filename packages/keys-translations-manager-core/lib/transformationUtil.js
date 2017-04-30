@@ -66,6 +66,45 @@ var transformationUtil = {
 			}
 		}
 		return ary;
+	},
+
+	document2FileContent: function(translations, locale, fileType, formatted) {
+		var len = translations.length,
+			translation,
+			rootObj = {},
+			str = "",
+			formatContent = function(obj) {
+				if (formatted === true) { //formatted
+					return JSON.stringify(obj, null, 2);
+				} else { //minimized
+					return JSON.stringify(obj);
+				}
+			};
+
+		if (fileType === "json") { //nested JSON
+			while(len--) {
+				translation = translations[len];
+				rootObj = transformationUtil.properties2Json(rootObj, translation.key, translation[locale]);
+			}
+
+			str = formatContent(rootObj);
+
+		} else if (fileType === "flat") { //flat JSON
+			while(len--) {
+				translation = translations[len];
+				rootObj[translation.key] = translation[locale];
+			}
+
+			str = formatContent(rootObj);
+
+		} else if (fileType === "properties") {
+			while(len--) {
+				translation = translations[len];
+				str += translation.key + "=" + translation[locale] + "\r\n";
+			}
+		}
+
+		return str;
 	}
 };
 

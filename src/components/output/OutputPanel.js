@@ -2,10 +2,10 @@ import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
 import CountCol from './CountCol'
+import FileTypeCol from './FileTypeCol'
 
 export default class OutputPanel extends React.Component {
 	static propTypes = {
@@ -18,7 +18,7 @@ export default class OutputPanel extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			fileType: "j"
+			fileType: "nj"
 		};
 		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
@@ -33,7 +33,7 @@ export default class OutputPanel extends React.Component {
 		let url = configUtil.getHost() + "/api/download/"
 
 		/* istanbul ignore next */
-		if (this.state.fileType === 'jf') {
+		if (this.state.fileType === 'njf' || this.state.fileType === 'fjf') {
 			url += "f/";
 		} else {
 			url += "n/";
@@ -42,6 +42,8 @@ export default class OutputPanel extends React.Component {
 		/* istanbul ignore next */
 		if (this.state.fileType === 'p') {
 			url += "properties/";
+		} else if (this.state.fileType === 'fj' || this.state.fileType === 'fjf') {
+			url += "flat/";
 		} else {
 			url += "json/";
 		}
@@ -54,31 +56,34 @@ export default class OutputPanel extends React.Component {
 		const me = this
 		const config = this.context.config
 		const {projectCounts} = this.props
+		const fileTypeList = [{
+			value: "nj", label: `nested JSON (${localeUtil.getMsg("ui.json.mini")})`
+		}, {
+			value: "njf", label: `nested JSON (${localeUtil.getMsg("ui.json.format")})`
+		}, {
+			value: "fj", label: `flat JSON (${localeUtil.getMsg("ui.json.mini")})`
+		}, {
+			value: "fjf", label: `flat JSON (${localeUtil.getMsg("ui.json.format")})`
+		}, {
+			value: "p", label: "Properties"
+		}]
 
 		return(
 			<Well>
 				<Row>
-					{config.projects.map(function(e){
-						return (
-							<CountCol onClick={me.download.bind(me, e)} key={e.id}
-								header={e.name} projectId={e.id}
-								desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
-								count={projectCounts ? (projectCounts[e.id] || 0) : 0}/>
-						);
-					})}
+					{config.projects.map(e => (
+						<CountCol onClick={me.download.bind(me, e)} key={e.id}
+							header={e.name} projectId={e.id}
+							desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
+							count={projectCounts ? (projectCounts[e.id] || 0) : 0} />
+					))}
 				</Row>
 				<Row>
-					<Col>
-						&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="fileType" value="j" checked={this.state.fileType==="j"}
-							onChange={this.setFileType.bind(this, "j")}/> JSON ({localeUtil.getMsg("ui.json.mini")})
-						&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="fileType" value="jf" checked={this.state.fileType==="jf"}
-							onChange={this.setFileType.bind(this, "jf")}/> JSON ({localeUtil.getMsg("ui.json.format")})
-						&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="fileType" value="p" checked={this.state.fileType==="p"}
-							onChange={this.setFileType.bind(this, "p")}/> Properties
-					</Col>
+					{fileTypeList.map(e => (
+						<FileTypeCol key={e.value} value={e.value} label={e.label}
+							fileType={me.state.fileType}
+							onChange={me.setFileType.bind(me, e.value)} />
+					))}
 				</Row>
 			</Well>
 		);

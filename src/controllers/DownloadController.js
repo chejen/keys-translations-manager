@@ -6,12 +6,12 @@ import config from '../../ktm.config'
 const locales = config.locales
 const lenLocales = locales.length
 const router = express.Router()
-const properties2Json = transformationUtil.properties2Json
+const document2FileContent = transformationUtil.document2FileContent
 
 router.route('/:outputType/:fileType/:project/:locale')
 		.get(function(req, res) {
 			// outputType (f: format, n: none)
-			// fileType (json, properties)
+			// fileType (json, flat, properties)
 			const { outputType, fileType, project, locale } = req.params
 
 			let query,
@@ -30,44 +30,27 @@ router.route('/:outputType/:fileType/:project/:locale')
 				query.sort({'key':-1});
 			}
 			query.exec(function(err, translations) {
-				let len,
-					translation,
-					rootObj = {};
+				let str,
+					formatted = outputType === "f";
 
 				if (err) {
 					res.status(500).send(err);
 				}
 
-				len = translations.length;
-				if (fileType === "json") {
+				str = document2FileContent(translations, locale, fileType, formatted);
+
+				if (fileType === "json" || fileType === "flat") {
 					res.set({
 						"Content-Disposition": "attachment; filename=\"translation.json\"",
 						"Content-Type": "application/json; charset=utf-8"
 					});
-
-					while (len--) {
-						translation = translations[len];
-						rootObj = properties2Json(rootObj, translation.key, translation[locale]);
-					}
-
-					if (outputType === "f") { //formatted
-						res.send(JSON.stringify(rootObj, null, 2));
-					} else { //minimized
-						res.send(JSON.stringify(rootObj));
-					}
-
 				} else if (fileType === "properties") {
 					res.set({
 						"Content-Disposition": "attachment; filename=\"translation.properties\"",
 						"Content-Type": "text/x-java-properties; charset=utf-8"
 					});
-
-					while (len--) {
-						translation = translations[len];
-						res.write(translation.key + "=" + translation[locale] + "\r\n");
-					}
-					res.end();
 				}
+				res.send(str);
 
 			});
 		});
@@ -75,7 +58,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 router.route('/:outputType/:fileType/:project')
 		.get(function(req, res) {
 			// outputType (f: format, n: none)
-			// fileType (json, properties)
+			// fileType (json, flat, properties)
 			const { outputType, fileType, project } = req.params,
 				archive = archiver.create('zip', {}),
 				zipHandler = function(stream, locale, fileExt) {
@@ -110,36 +93,17 @@ router.route('/:outputType/:fileType/:project')
 					query.sort({'key':-1});
 				}
 				query.exec(function(err, translations) {
-					let len,
-						translation,
-						rootObj = {},
-						locale = this;
+					let str,
+						locale = this,
+						formatted = outputType === "f",
+						finalFileType = fileType === "flat" ? "json" : fileType;
 
 					if (err) {
 						res.status(500).send(err);
 					}
 
-					len = translations.length;
-					if (fileType === "json") {
-						while (len--) {
-							translation = translations[len];
-							rootObj = properties2Json(rootObj, translation.key, translation[locale]);
-						}
-
-						if (outputType === "f") { //formatted
-							zipHandler(JSON.stringify(rootObj, null, 2), locale, fileType);
-						} else { //minimized
-							zipHandler(JSON.stringify(rootObj), locale, fileType);
-						}
-
-					} else if (fileType === "properties") {
-						let str = "";
-						while (len--) {
-							translation = translations[len];
-							str += translation.key + "=" + translation[locale] + "\r\n";
-						}
-						zipHandler(str, locale, fileType);
-					}
+					str = document2FileContent(translations, locale, fileType, formatted);
+					zipHandler(str, locale, finalFileType);
 				}.bind(locale));
 			}
 		});

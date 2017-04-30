@@ -7,7 +7,7 @@
 
 * Parameters:
   * `format`: replace it with **f** (formatted) or **n** (not formatted) 【Required】
-  * `fileType`: replace it with **json** or **properties** 【Required】
+  * `fileType`: replace it with **json** (nested JSON), **flat** (flat JSON) or **properties** 【Required】
   * `projectId`: replace it with the project ID set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js) 【Required】
   * `locale`: replace it with the locale set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js)
 

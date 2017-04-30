@@ -1,7 +1,7 @@
 'use strict';
 import transformationUtil from "../../../../packages/keys-translations-manager-core/lib/transformationUtil"
 
-let dataP, dataJ;
+let dataP, dataJ, dataD;
 
 describe('[utility] transformationUtil', function() {
 	describe('properties2Json', function() {
@@ -123,6 +123,38 @@ describe('[utility] transformationUtil', function() {
 					}]
 				}]
 			}]);
+		});
+	});
+
+	describe('document2FileContent', function() {
+		before(function() {
+			dataD = [
+				{ 'key': 'ui.common.delete', 'en-US': 'Delete', 'zh-TW': '刪除' },
+				{ 'key': 'ui.common.add', 'en-US': 'Add', 'zh-TW': '新增' }
+			];
+		});
+
+		it('should return string for nested JSON', function() {
+			var str = transformationUtil.document2FileContent(dataD, 'zh-TW', 'json', false);
+			expect(str).to.be.a('string');
+			expect(str).to.equal('{"ui":{"common":{"add":"新增","delete":"刪除"}}}');
+		});
+
+		it('should return string for flat JSON', function() {
+			var str = transformationUtil.document2FileContent(dataD, 'en-US', 'flat', true);
+			expect(str).to.be.a('string');
+			expect(str).to.equal(`
+{
+  "ui.common.add": "Add",
+  "ui.common.delete": "Delete"
+}
+			`.trim());
+		});
+
+		it('should return string for Properties', function() {
+			var str = transformationUtil.document2FileContent(dataD, 'en-US', 'properties', false);
+			expect(str).to.be.a('string');
+			expect(str).to.equal('ui.common.add=Add\r\nui.common.delete=Delete\r\n');
 		});
 	});
 });

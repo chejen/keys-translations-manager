@@ -51,7 +51,7 @@ Add `.ktmrc` to your home directory (or add `.ktmrc` into your project if you in
 |:----------:|:-----|:-----:|
 | project    | Specify a project ID set in [ktm.config.js](https://github.com/chejen/keys-translations-manager/blob/master/ktm.config.js)| Y |
 | locales    | Specify locales to output.| Y |
-| type       | Specify `json` or `properties`. | Y |
+| type       | Specify one of the following: `json` (nested JSON), `flat` (flat JSON) or `properties`. | Y |
 | filename   | Specify a name for output file. | Y |
 | path       | Specify an output path. | Y |
 | formatted  | Sort keys alphabetically. |

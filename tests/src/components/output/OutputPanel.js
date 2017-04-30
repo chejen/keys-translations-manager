@@ -1,5 +1,6 @@
 import OutputPanel from '../../../../src/components/output/OutputPanel'
 import CountCol from '../../../../src/components/output/CountCol'
+import FileTypeCol from '../../../../src/components/output/FileTypeCol'
 
 function setup() {
 	OutputPanel.prototype.download = sinon.spy()
@@ -37,9 +38,9 @@ describe('(component) OutputPanel', () => {
 		expect(wrapper.find('CountCol')).to.have.length(config.projects.length);
 	});
 
-	it('should have 3 radio buttons', () => {
+	it('should have 5 FileTypeCols', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('input[type="radio"]')).to.have.length(3);
+		expect(wrapper.find('FileTypeCol')).to.have.length(5);
 	});
 
 	describe('child: CountCol', () => {
@@ -50,10 +51,10 @@ describe('(component) OutputPanel', () => {
 		});
 	});
 
-	describe('child: input', () => {
-		it('should call setFileType() when clicked', () => {
+	describe('child: FileTypeCol', () => {
+		it('should call setFileType() when changed', () => {
 			const { wrapper } = setup()
-			wrapper.find('input[type="radio"]').last().simulate('change',{ target: { value: "p" } });
+			wrapper.find('FileTypeCol').get(0).props.onChange();
 			expect(OutputPanel.prototype.setFileType).calledOnce;
 		});
 	});

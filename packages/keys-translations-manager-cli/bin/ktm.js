@@ -3,7 +3,7 @@
 var path = require('path'),
 	fs = require('node-fs'),
 	mongoose = require('mongoose'),
-	properties2Json = require('keys-translations-manager-core/lib/transformationUtil').properties2Json,
+	document2FileContent = require('keys-translations-manager-core/lib/transformationUtil').document2FileContent,
 	log = require('keys-translations-manager-core/lib/logUtil').log,
 	yargs = require('yargs'),
 	argv = yargs.argv,
@@ -116,7 +116,8 @@ mongoose.connect(cfg.database, function(err) {
 					fileType = output.type,
 					project = output.project,
 					filePath = output.path.replace("${locale}", locale),
-					file = path.join(filePath, output.filename.replace("${locale}", locale) + `.${fileType}`),
+					finalFileType = fileType === "flat" ? "json" : fileType,
+					file = path.join(filePath, output.filename.replace("${locale}", locale) + `.${finalFileType}`),
 					query,
 					criteria = {
 						"project": project
@@ -131,33 +132,10 @@ mongoose.connect(cfg.database, function(err) {
 				query = Translations.find(criteria).select(select);
 				if (formatted === true) query.sort({'key':-1});
 				query.exec(function(err, translations) {
-					var len,
-						translation,
-						rootObj = {},
-						str = "";
+					var str;
 
 					if (err) afterFail(err);
-
-					len = translations.length;
-
-					if (fileType === "json") {
-						while(len--) {
-							translation = translations[len];
-							rootObj = properties2Json(rootObj, translation.key, translation[locale]);
-						}
-
-						if (formatted === true) { //formatted
-							str = JSON.stringify(rootObj, null, 2)
-						} else { //minimized
-							str = JSON.stringify(rootObj);
-						}
-
-					} else if (fileType === "properties") {
-						while(len--) {
-							translation = translations[len];
-							str += translation.key + "=" + translation[locale] + "\r\n";
-						}
-					}
+					str = document2FileContent(translations, locale, fileType, formatted);
 
 					fs.writeFile(file, str, function (err) {
 						if (err) {
