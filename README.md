@@ -37,8 +37,8 @@
 
 > Keys-Translations Manager, a web application scaffolded with MERN stack, aims to facilitate locale management. With this application, you can:
 > * control and manage locales in one place,
-> * import locales from JSON or Properties files,
-> * export locales to JSON or Properties files,
+> * import locales from JSON (both nested/flat are supported) or Properties files,
+> * export locales to JSON (both nested/flat are supported) or Properties files,
 > * get data validation for input/import, and
 > * get real-time notifications if data has been changed by the other users.
 
@@ -48,7 +48,7 @@
 
 
 ## Prerequisites
-* Download [Node.js](https://nodejs.org/en/) (suggestion: v6+) and [MongoDB](https://www.mongodb.org/), and then get them installed.
+* Download [Node.js](https://nodejs.org/en/) (v6+ is required) and [MongoDB](https://www.mongodb.org/), and then get them installed.
 * Start [mongod](https://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/) process and make sure it's running normally.
 
 

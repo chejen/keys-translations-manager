@@ -1,3 +1,34 @@
+# **v1.4.0** (May 7, 2017)
+
+### BREAKING CHANGES:
+* Node v6+ is now required.
+
+### Features:
+* Support flat JSON output. ([691031f](https://github.com/chejen/keys-translations-manager/commit/691031fee3415f8c52754666b780a5145bbe6bea))
+* Support CSV export. ([bdbaaa4](https://github.com/chejen/keys-translations-manager/commit/bdbaaa4c391e79c8bed8f802d55a8c8becfa0d9e))
+
+### Docs:
+* Updated CLI documentation for flat JSON support.
+
+### Tests:
+* Added flat JSON related tests.
+
+### Other Changes:
+* Environment:
+  * Extracted a number of modules to vendor chunk for production build.
+  * Added pre-commit hook for git.
+  * Added yarn.lock
+
+* Dependencies:
+  * Upgraded react-router to v4. ([de05a58](https://github.com/chejen/keys-translations-manager/commit/de05a5849239d83235a21cdfcabd13b6015de8ae)) ([17ba890](https://github.com/chejen/keys-translations-manager/commit/17ba8908ad70b0e9df74a8d27c1042227489bca7))
+  * Upgraded webpack to v2. ([2ac53df](https://github.com/chejen/keys-translations-manager/commit/2ac53dfa5be71f4b08c179a1a359302269060b82)) ([c34118b](https://github.com/chejen/keys-translations-manager/commit/c34118b6e350c1d56228603d76a7196c7cf948e3))
+  * Upgraded D3 to v4. ([610901c](https://github.com/chejen/keys-translations-manager/commit/610901c4e476d0dde3ea5d9616d1bfe3ea187768)) ([7a9f30d](https://github.com/chejen/keys-translations-manager/commit/7a9f30ddccc46bc2cde05d578047d350d5914d4c))
+
+* Components:
+  * Truncated overflowed header of CountCol with ellipsis
+  * Set the default of projects on FormPanel to not selected.
+
+
 # **v1.3.0** (Jul 31, 2016)
 
 ### Features:
