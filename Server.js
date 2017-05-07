@@ -90,14 +90,16 @@ if (process.env.NODE_ENV === 'development') {
 							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
 						'</div>'].join("")
 		const css = ''
+		const vendor = ''
 		const initialState = ''
-		res.render('index', { initialState, markup, css })
+		res.render('index', { initialState, markup, css, vendor })
 	});
 } else {
 	app.get(['/', '/vis/*'], function(req, res) {
 	//app.use((req, res) => {
 		const markup = require('./src/server/index').default
 		const css = '<link rel="stylesheet" href="/public/css/app.css">'
+		const vendor = '<script src="/public/js/vendor.js"></script>'
 		const context = {}
 		let lang = req.headers["accept-language"].split(",")[0]
 		lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang
@@ -125,7 +127,8 @@ if (process.env.NODE_ENV === 'development') {
 					res.render('index', {
 						initialState,
 						markup: markup(preloadedState, req, context),
-						css: css
+						css,
+						vendor
 					})
 				}
 			});

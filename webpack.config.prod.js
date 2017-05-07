@@ -8,7 +8,10 @@ var dir = {
 
 var config = {
 	entry: {
-		bundle: path.join(dir.src, 'client', 'index')
+		bundle: path.join(dir.src, 'client', 'index'),
+		vendor: ['react', 'react-dom',
+				'redux', 'redux-thunk', 'react-redux',
+				'react-router', 'react-router-dom']
 	},
 	output: {
 		path: dir.dist,
@@ -16,6 +19,10 @@ var config = {
 		publicPath: '/public/js/'
 	},
 	plugins: [
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			minChunks: Infinity
+		}),
 		new webpack.optimize.UglifyJsPlugin({
 			sourceMap: true
 		}),
