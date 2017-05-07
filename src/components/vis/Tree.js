@@ -1,5 +1,9 @@
 import React from 'react'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import * as d3Zoom from 'd3-zoom'
+import * as d3Hierarchy from 'd3-hierarchy'
+import * as d3Selection from 'd3-selection'
+import {event as currentEvent} from 'd3-selection'; // https://github.com/d3/d3/issues/2814
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
@@ -9,7 +13,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import ConfirmModal from '../grid/ConfirmModal'
 import Mask from '../layout/Mask'
 import Tooltip from './Tooltip'
-import * as d3 from "d3"
+
+const d3 = Object.assign({}, d3Zoom, d3Hierarchy, d3Selection);
 
 export default class Tree extends React.Component {
 	static propTypes = {
@@ -58,7 +63,8 @@ export default class Tree extends React.Component {
 		this.zoom = d3.zoom()
 			.scaleExtent([1, 10])
 			.on("zoom", () => {
-				const t = d3.event.transform,
+				// https://github.com/facebook/react/issues/6641
+				const t = currentEvent.transform,
 					x = t.x,
 					y = t.y,
 					scale = t.k;
