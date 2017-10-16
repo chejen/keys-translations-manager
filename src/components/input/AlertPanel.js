@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Alert from 'react-bootstrap/lib/Alert'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
@@ -9,9 +10,9 @@ import configUtil from '../../configUtil'
 
 export default class AlertPanel extends React.Component {
 	static propTypes = {
-		clearErrors: React.PropTypes.func.isRequired,
-		errors: React.PropTypes.array,
-		action: React.PropTypes.string.isRequired
+		clearErrors: PropTypes.func.isRequired,
+		errors: PropTypes.array,
+		action: PropTypes.string.isRequired
 	};
 
 	constructor() {

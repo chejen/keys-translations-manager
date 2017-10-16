@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
@@ -9,10 +10,10 @@ import FileTypeCol from './FileTypeCol'
 
 export default class OutputPanel extends React.Component {
 	static propTypes = {
-		projectCounts: React.PropTypes.object.isRequired
+		projectCounts: PropTypes.object.isRequired
 	};
 	static contextTypes = {
-		config: React.PropTypes.object
+		config: PropTypes.object
 	};
 
 	constructor() {

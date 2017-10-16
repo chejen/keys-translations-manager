@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
@@ -6,16 +7,16 @@ import FormControl from 'react-bootstrap/lib/FormControl'
 
 export default class TextField extends React.Component {
 	static propTypes = {
-		required: React.PropTypes.bool,
-		readOnly: React.PropTypes.bool,
-		label: React.PropTypes.string,
-		name: React.PropTypes.string.isRequired,
-		value: React.PropTypes.string,
-		defaultValue: React.PropTypes.string,
-		placeholder: React.PropTypes.string,
-		className: React.PropTypes.string,
-		componentClass: React.PropTypes.string,
-		onChange:  React.PropTypes.func
+		required: PropTypes.bool,
+		readOnly: PropTypes.bool,
+		label: PropTypes.string,
+		name: PropTypes.string.isRequired,
+		value: PropTypes.string,
+		defaultValue: PropTypes.string,
+		placeholder: PropTypes.string,
+		className: PropTypes.string,
+		componentClass: PropTypes.string,
+		onChange:  PropTypes.func
 	}
 
 	constructor(props, context) {

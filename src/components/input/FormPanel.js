@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -7,10 +8,10 @@ import TextField from './TextField'
 
 export default class FormPanel extends React.Component {
 	static propTypes = {
-		data: React.PropTypes.object
+		data: PropTypes.object
 	};
 	static contextTypes = {
-		config: React.PropTypes.object
+		config: PropTypes.object
 	};
 
 	constructor(props, context) {

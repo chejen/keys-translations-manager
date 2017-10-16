@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Link } from 'react-router-dom'
 import Col from 'react-bootstrap/lib/Col'
@@ -7,11 +8,11 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class CountCol extends React.Component {
 	static propTypes = {
-		projectId: React.PropTypes.string.isRequired,
-		header: React.PropTypes.string.isRequired,
-		onClick: React.PropTypes.func.isRequired,
-		count: React.PropTypes.number.isRequired,
-		desc: React.PropTypes.string.isRequired
+		projectId: PropTypes.string.isRequired,
+		header: PropTypes.string.isRequired,
+		onClick: PropTypes.func.isRequired,
+		count: PropTypes.number.isRequired,
+		desc: PropTypes.string.isRequired
 	};
 
 	constructor() {

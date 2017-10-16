@@ -1,12 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 export default class MessagePopup extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.node,
-		msg: React.PropTypes.string.isRequired,
-		showmessagepopup: React.PropTypes.bool.isRequired,
-		closeMessagePopup: React.PropTypes.func.isRequired
+		children: PropTypes.node,
+		msg: PropTypes.string.isRequired,
+		showmessagepopup: PropTypes.bool.isRequired,
+		closeMessagePopup: PropTypes.func.isRequired
 	};
 
 	constructor() {

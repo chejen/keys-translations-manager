@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Dropzone from 'react-dropzone'
 import Button from 'react-bootstrap/lib/Button'
@@ -10,15 +11,15 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class ImportModal extends React.Component {
 	static propTypes = {
-		showimportmodal: React.PropTypes.bool.isRequired,
-		closeImportModal: React.PropTypes.func.isRequired,
-		errors: React.PropTypes.array.isRequired,
-		importLocale: React.PropTypes.func.isRequired,
-		alertErrors: React.PropTypes.func.isRequired,
-		clearErrors: React.PropTypes.func.isRequired
+		showimportmodal: PropTypes.bool.isRequired,
+		closeImportModal: PropTypes.func.isRequired,
+		errors: PropTypes.array.isRequired,
+		importLocale: PropTypes.func.isRequired,
+		alertErrors: PropTypes.func.isRequired,
+		clearErrors: PropTypes.func.isRequired
 	};
 	static contextTypes = {
-		config: React.PropTypes.object
+		config: PropTypes.object
 	};
 
 	constructor(props, context) {

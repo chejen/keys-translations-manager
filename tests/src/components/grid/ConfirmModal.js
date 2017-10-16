@@ -27,7 +27,7 @@ describe('(component) ConfirmModal', () => {
 		expect(wrapper.state('show')).to.be.true;
 		expect(wrapper.state('confirmTitle')).to.eql("Confirm");
 		expect(wrapper.state('confirmMsg')).to.eql("Confirm Message");
-		expect(wrapper.state('show')).to.be.function;
+		expect(wrapper.state('confirmFunc')).to.be.a('function');
 	});
 
 	describe('child: "Yes" button', () => {

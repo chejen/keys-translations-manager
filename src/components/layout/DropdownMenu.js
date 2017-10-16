@@ -1,14 +1,15 @@
 /*eslint i18n/no-chinese-character: 0*/
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class DropdownMenu extends React.Component {
 	static propTypes = {
-		lang: React.PropTypes.string.isRequired,
-		loadMessages: React.PropTypes.func.isRequired,
-		showImportModal: React.PropTypes.func.isRequired,
-		findMergeable: React.PropTypes.func.isRequired
+		lang: PropTypes.string.isRequired,
+		loadMessages: PropTypes.func.isRequired,
+		showImportModal: PropTypes.func.isRequired,
+		findMergeable: PropTypes.func.isRequired
 	}
 
 	constructor() {

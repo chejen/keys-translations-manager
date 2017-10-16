@@ -1,13 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Col from 'react-bootstrap/lib/Col'
 
 export default class FileTypeCol extends React.Component {
 	static propTypes = {
-		value: React.PropTypes.string.isRequired,
-		fileType: React.PropTypes.string.isRequired,
-		label: React.PropTypes.string.isRequired,
-		onChange: React.PropTypes.func.isRequired
+		value: PropTypes.string.isRequired,
+		fileType: PropTypes.string.isRequired,
+		label: PropTypes.string.isRequired,
+		onChange: PropTypes.func.isRequired
 	};
 
 	constructor() {

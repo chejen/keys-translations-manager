@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
@@ -8,16 +9,16 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class EditModal extends React.Component {
 	static propTypes = {
-		showeditmodal: React.PropTypes.bool.isRequired,
-		closeEditModal: React.PropTypes.func.isRequired,
-		data: React.PropTypes.object.isRequired,
-		errors: React.PropTypes.array.isRequired,
-		updateTranslation: React.PropTypes.func.isRequired,
-		alertErrors: React.PropTypes.func.isRequired,
-		clearErrors: React.PropTypes.func.isRequired
+		showeditmodal: PropTypes.bool.isRequired,
+		closeEditModal: PropTypes.func.isRequired,
+		data: PropTypes.object.isRequired,
+		errors: PropTypes.array.isRequired,
+		updateTranslation: PropTypes.func.isRequired,
+		alertErrors: PropTypes.func.isRequired,
+		clearErrors: PropTypes.func.isRequired
 	};
 	static contextTypes = {
-		config: React.PropTypes.object
+		config: PropTypes.object
 	};
 
 	constructor(props, context) {

@@ -24,25 +24,22 @@ describe('(reducer) errors', function() {
 	})
 
 	it('should handle ALERT_ERRORS', () => {
-		expect(
-			reducer(INIT_ERRORS, {
-				type: 'ALERT_ERRORS',
-				errors
-			})
-		)
+		const ary = reducer(INIT_ERRORS, {
+			type: 'ALERT_ERRORS',
+			errors
+		});
+
+		expect(ary)
 		.to.be.an('array')
 		.to.have.length.above(0)
-		.to.have.deep.property('[0].action')
-			.that.is.an('string')
+
+		expect(ary[0])
+		.to.have.property('action')
+			.that.is.a('string')
 			.to.be.oneOf(['c', 'u']);
 
-		expect(
-			reducer(INIT_ERRORS, {
-				type: 'ALERT_ERRORS',
-				errors
-			})
-		)
-		.to.have.deep.property('[0].type')
+		expect(ary[0])
+		.to.have.property('type')
 			.that.is.an('string')
 			.to.be.oneOf(["emptyfield", "equals", "belongsTo", "contains"]);
 	})

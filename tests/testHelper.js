@@ -11,16 +11,20 @@ import nock from 'nock'
 import thunk from 'redux-thunk'
 import config from '../ktm.config'
 import configUtil from '../src/configUtil'
-import { shallow, mount, render } from 'enzyme'
+import Enzyme from 'enzyme'
+import Adapter from 'enzyme-adapter-react-15'
 
-const doc = jsdom.jsdom('<!doctype html><html><body></body></html>')
-const win = doc.defaultView
+Enzyme.configure({ adapter: new Adapter() })
+
+const { JSDOM } = jsdom
+const dom = new JSDOM('<!doctype html><html><body></body></html>')
+// const win = doc.defaultView
 const expect = chai.use(sinonChai).expect
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares)
 
-global.document = doc
-global.window = win
+global.document = dom.window.document
+global.window = dom.window
 global.navigator = window.navigator
 global.React = React
 global.sinon = sinon
@@ -30,6 +34,6 @@ global.nock = nock
 global.config = config
 global.configUtil = configUtil
 global.mockStore = mockStore
-global.shallow = shallow
-global.mount = mount
-global.render = render
+global.shallow = Enzyme.shallow
+global.mount = Enzyme.mount
+global.render = Enzyme.render

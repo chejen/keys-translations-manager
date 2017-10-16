@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Modal from 'react-bootstrap/lib/Modal'
 
 const Mask = (props) => (
@@ -10,7 +11,7 @@ const Mask = (props) => (
 );
 
 Mask.propTypes = {
-	show: React.PropTypes.bool.isRequired
+	show: PropTypes.bool.isRequired
 };
 
 export default Mask

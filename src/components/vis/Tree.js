@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import * as d3Zoom from 'd3-zoom'
 import * as d3Hierarchy from 'd3-hierarchy'
@@ -18,18 +19,18 @@ const d3 = Object.assign({}, d3Zoom, d3Hierarchy, d3Selection);
 
 export default class Tree extends React.Component {
 	static propTypes = {
-		match: React.PropTypes.object.isRequired,
-		history: React.PropTypes.object.isRequired,
-		translations: React.PropTypes.array,
-		TranslationActions: React.PropTypes.object.isRequired,
-		ComponentActions: React.PropTypes.object.isRequired,
-		CountActions: React.PropTypes.object.isRequired,
-		VisActions: React.PropTypes.object.isRequired,
-		showtooltip: React.PropTypes.bool.isRequired,
-		tooltiptop: React.PropTypes.number.isRequired,
-		tooltipleft: React.PropTypes.number.isRequired,
-		treedata: React.PropTypes.array,
-		reloaddata: React.PropTypes.bool.isRequired
+		match: PropTypes.object.isRequired,
+		history: PropTypes.object.isRequired,
+		translations: PropTypes.array,
+		TranslationActions: PropTypes.object.isRequired,
+		ComponentActions: PropTypes.object.isRequired,
+		CountActions: PropTypes.object.isRequired,
+		VisActions: PropTypes.object.isRequired,
+		showtooltip: PropTypes.bool.isRequired,
+		tooltiptop: PropTypes.number.isRequired,
+		tooltipleft: PropTypes.number.isRequired,
+		treedata: PropTypes.array,
+		reloaddata: PropTypes.bool.isRequired
 	};
 
 	constructor() {

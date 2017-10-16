@@ -74,7 +74,8 @@ router.route('/')
 							bulk = Translations.collection.initializeUnorderedBulkOp();
 
 							for (key in data) {
-								if (data.hasOwnProperty(key)) {
+								/*eslint guard-for-in: 0*/
+								// if (data.hasOwnProperty(key)) { // temporarily removed to support Node v6
 									query = {
 										key: key,
 										project: project
@@ -84,7 +85,7 @@ router.route('/')
 									bulk.find(query).upsert().updateOne({
 										$set: doc
 									});
-								}
+								// }
 							}
 
 							bulk.execute(function(){

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Row from 'react-bootstrap/lib/Row'
@@ -14,16 +15,16 @@ import configUtil from '../../configUtil'
 
 export default class TablePanel extends React.Component {
 	static propTypes = {
-		reloaddata: React.PropTypes.bool,
-		messages: React.PropTypes.object,
-		CountActions: React.PropTypes.object.isRequired,
-		TranslationActions: React.PropTypes.object.isRequired,
-		ComponentActions: React.PropTypes.object.isRequired,
-		translations: React.PropTypes.array
+		reloaddata: PropTypes.bool,
+		messages: PropTypes.object,
+		CountActions: PropTypes.object.isRequired,
+		TranslationActions: PropTypes.object.isRequired,
+		ComponentActions: PropTypes.object.isRequired,
+		translations: PropTypes.array
 	};
 
 	static contextTypes = {
-		config: React.PropTypes.object
+		config: PropTypes.object
 	};
 
 	constructor(props, context) {

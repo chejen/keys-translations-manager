@@ -1,5 +1,6 @@
-import io from 'socket.io-client';
+import io from 'socket.io-client'
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -21,34 +22,34 @@ import config from '../ktm.config'
 
 export default class App extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.node,
-		lang: React.PropTypes.string.isRequired,
-		messages: React.PropTypes.object.isRequired,
-		counts: React.PropTypes.object.isRequired,
-		errors: React.PropTypes.array.isRequired,
-		translations: React.PropTypes.array,
-		showeditmodal: React.PropTypes.bool.isRequired,
-		showmergemodal: React.PropTypes.bool.isRequired,
-		showimportmodal: React.PropTypes.bool.isRequired,
-		showmessagepopup: React.PropTypes.bool.isRequired,
-		emitdatachange: React.PropTypes.bool.isRequired,
-		reloaddata: React.PropTypes.bool.isRequired,
-		editrecord: React.PropTypes.object.isRequired,
-		keys: React.PropTypes.object.isRequired,
-		mergeable: React.PropTypes.array.isRequired,
+		children: PropTypes.node,
+		lang: PropTypes.string.isRequired,
+		messages: PropTypes.object.isRequired,
+		counts: PropTypes.object.isRequired,
+		errors: PropTypes.array.isRequired,
+		translations: PropTypes.array,
+		showeditmodal: PropTypes.bool.isRequired,
+		showmergemodal: PropTypes.bool.isRequired,
+		showimportmodal: PropTypes.bool.isRequired,
+		showmessagepopup: PropTypes.bool.isRequired,
+		emitdatachange: PropTypes.bool.isRequired,
+		reloaddata: PropTypes.bool.isRequired,
+		editrecord: PropTypes.object.isRequired,
+		keys: PropTypes.object.isRequired,
+		mergeable: PropTypes.array.isRequired,
 
-		MessageActions: React.PropTypes.object.isRequired,
-		CountActions: React.PropTypes.object.isRequired,
-		TranslationActions: React.PropTypes.object.isRequired,
-		KeyActions: React.PropTypes.object.isRequired,
-		ErrorActions: React.PropTypes.object.isRequired,
-		SocketActions: React.PropTypes.object.isRequired,
-		ComponentActions: React.PropTypes.object.isRequired
+		MessageActions: PropTypes.object.isRequired,
+		CountActions: PropTypes.object.isRequired,
+		TranslationActions: PropTypes.object.isRequired,
+		KeyActions: PropTypes.object.isRequired,
+		ErrorActions: PropTypes.object.isRequired,
+		SocketActions: PropTypes.object.isRequired,
+		ComponentActions: PropTypes.object.isRequired
 	}
 
 	static childContextTypes = {
-		config: React.PropTypes.object,
-		socket: React.PropTypes.object
+		config: PropTypes.object,
+		socket: PropTypes.object
 	}
 
 	constructor(props) {

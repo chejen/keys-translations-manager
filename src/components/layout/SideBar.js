@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const SideBar = (props) => (
 	<div className="navbar-default sidebar" role="navigation">
@@ -19,7 +20,7 @@ const SideBar = (props) => (
 );
 
 SideBar.propTypes = {
-	children: React.PropTypes.node
+	children: PropTypes.node
 };
 
 export default SideBar

@@ -12,9 +12,12 @@ function setup() {
 	Tree.prototype.reset = sinon.spy();
 
 	const props = {
-			params: {
-				projectId: "p1"
+			match: {
+				params: {
+					projectId: "p1"
+				}
 			},
+			history: {},
 			messages: {},
 			translations: [],
 			TranslationActions: {},
@@ -25,6 +28,9 @@ function setup() {
 			VisActions: {
 				loadTreeData: sinon.spy()
 			},
+			showtooltip: false,
+			tooltiptop: 0,
+			tooltipleft: 0,
 			treedata: [],
 			reloaddata: false
 		},

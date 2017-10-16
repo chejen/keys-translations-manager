@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
@@ -6,11 +7,11 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 export default class MergeModal extends React.Component {
 	static propTypes = {
-		keys: React.PropTypes.object.isRequired,
-		mergeable: React.PropTypes.array.isRequired,
-		showmergemodal: React.PropTypes.bool.isRequired,
-		closeMergeModal: React.PropTypes.func.isRequired,
-		mergeTranslations: React.PropTypes.func.isRequired
+		keys: PropTypes.object.isRequired,
+		mergeable: PropTypes.array.isRequired,
+		showmergemodal: PropTypes.bool.isRequired,
+		closeMergeModal: PropTypes.func.isRequired,
+		mergeTranslations: PropTypes.func.isRequired
 	};
 
 	constructor(props, context) {

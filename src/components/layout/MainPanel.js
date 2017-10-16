@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 
@@ -14,7 +15,7 @@ const MainPanel = (props) => (
 );
 
 MainPanel.propTypes = {
-	children: React.PropTypes.node
+	children: PropTypes.node
 };
 
 export default MainPanel

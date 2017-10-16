@@ -100,13 +100,17 @@
         'node': true,
         'jquery': true
     },
-    ecmaFeatures: {
-        'arrowFunctions': true,
-        'classes': true,
-        'modules': true,
-        'spread': true,
-        'superInFunctions': true,
-        'jsx': true
+    parserOptions: {
+        ecmaVersion: 6,
+        sourceType: "module",
+        ecmaFeatures: {
+            'arrowFunctions': true,
+            'classes': true,
+            'modules': true,
+            'spread': true,
+            'superInFunctions': true,
+            'jsx': true
+        }
     },
     globals: {
         '__DEV__': true

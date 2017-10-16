@@ -1,14 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
 
 export default class Tooltip extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.node,
-		display: React.PropTypes.string.isRequired,
-		top: React.PropTypes.number.isRequired,
-		left: React.PropTypes.number.isRequired,
-		ComponentActions: React.PropTypes.object.isRequired
+		children: PropTypes.node,
+		display: PropTypes.string.isRequired,
+		top: PropTypes.number.isRequired,
+		left: PropTypes.number.isRequired,
+		ComponentActions: PropTypes.object.isRequired
 	};
 
 	constructor() {
