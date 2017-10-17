@@ -4,8 +4,6 @@ import Mask from '../../../../src/components/layout/Mask'
 import Modal from 'react-bootstrap/lib/Modal'
 import InputGroup from 'react-bootstrap/lib/InputGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import Row from 'react-bootstrap/lib/Row'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 
@@ -52,10 +50,9 @@ describe('(component) TablePanel', () => {
 		expect(wrapper.type()).to.eql('div');
 	});
 
-	it('should have an InputGroup, a Row, a ConfirmModal, and a Mask', () => {
+	it('should have an InputGroup, a ConfirmModal, and a Mask', () => {
 		const { wrapper } = setup()
 		expect(wrapper.find('InputGroup')).to.have.length(1);
-		expect(wrapper.find('Row')).to.have.length(1);
 		expect(wrapper.find('ConfirmModal')).to.have.length(1);
 		expect(wrapper.find('Mask')).to.have.length(1);
 	});
@@ -64,8 +61,15 @@ describe('(component) TablePanel', () => {
 		const { wrapper, context } = setup(),
 			locales = context.config.locales;
 		expect(wrapper.find('BootstrapTable')).to.have.length(1);
-		expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 4);
+		expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 5);
 	});
+
+	// it('should have a Tooltip with required id "tooltip-locales" on TableHeaderColumn "LOCALES"', () => {
+	// 	const { wrapper, context } = setup(),
+	// 		locales = context.config.locales;
+	// 	expect(wrapper.find('BootstrapTable')).to.have.length(1);
+	// 	expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 5);
+	// });
 
 	it('should call loadTranslations() when component is mounted', () => {
 		const props = {

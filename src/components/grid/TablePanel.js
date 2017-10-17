@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
-import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
 import InputGroup from 'react-bootstrap/lib/InputGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
+import Tooltip from 'react-bootstrap/lib/Tooltip'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import ConfirmModal from './ConfirmModal'
@@ -135,51 +135,104 @@ export default class TablePanel extends React.Component {
 							}
 						}}>
 
-					<TableHeaderColumn width="50" dataField="_id" isKey={true} dataFormat={function(cell, row){
-						return (
-							<div>
-								<Glyphicon glyph="edit" className="app-action-icon" title={localeUtil.getMsg("ui.common.edit")}
-									onClick={me.showEditModal.bind(me, row)}/>
-								<Glyphicon glyph="trash" className="app-action-icon" title={localeUtil.getMsg("ui.common.delete")}
-									onClick={me.showConfirmModal.bind(me, cell, row)}/>
-							</div>
-						);
-					}}>
+					<TableHeaderColumn
+						row="0"
+						rowSpan="2"
+						width="30"
+						dataField="_id"
+						isKey={true}
+						dataFormat={function(cell, row){
+							return (
+								<div>
+									<Glyphicon
+										glyph="edit"
+										className="app-action-icon"
+										title={localeUtil.getMsg("ui.common.edit")}
+										onClick={me.showEditModal.bind(me, row)}
+									/>
+									<Glyphicon
+										glyph="trash"
+										className="app-action-icon"
+										title={localeUtil.getMsg("ui.common.delete")}
+										onClick={me.showConfirmModal.bind(me, cell, row)}
+									/>
+								</div>
+							);
+						}}
+					>
 						{localeUtil.getMsg("ui.common.action")}
 					</TableHeaderColumn>
 
-					<TableHeaderColumn width="100" editable={false} dataField="project" dataFormat={function(cell){
-						const projectList = cell,
-								l = projectList ? projectList.length : 0,
-								getProjectName = configUtil.getProjectName;
-						let i, project = [];
-						for (i = 0; i < l; i++) {
-							project.push( getProjectName(projectList[i]) );
-						}
-						return <div>{project.join(", ")}</div>
-					}}>
+					<TableHeaderColumn
+						row="0"
+						rowSpan="2"
+						width="100"
+						editable={false}
+						dataField="project"
+						dataFormat={function(cell){
+							const projectList = cell,
+									l = projectList ? projectList.length : 0,
+									getProjectName = configUtil.getProjectName;
+							let i, project = [];
+							for (i = 0; i < l; i++) {
+								project.push( getProjectName(projectList[i]) );
+							}
+							return <div>{project.join(", ")}</div>
+						}}
+					>
 						{localeUtil.getMsg("ui.common.applyto")}
 					</TableHeaderColumn>
 
-					<TableHeaderColumn width="100" editable={false} dataField="key" dataSort={true}>Key</TableHeaderColumn>
+					<TableHeaderColumn
+						row="0"
+						rowSpan="2"
+						width="100"
+						editable={false}
+						dataField="key"
+						dataSort={true}
+					>
+						Key
+					</TableHeaderColumn>
 
-					<TableHeaderColumn width="100" editable={false} dataField="description">{localeUtil.getMsg("ui.common.desc")}</TableHeaderColumn>
+					<TableHeaderColumn
+						row="0"
+						rowSpan="2"
+						width="100"
+						editable={false}
+						dataField="description"
+					>
+						{localeUtil.getMsg("ui.common.desc")}
+					</TableHeaderColumn>
+
+					<TableHeaderColumn row="0" colSpan={locales.length}>
+						{localeUtil.getMsg("ui.common.locales")}
+						{' '}
+						<OverlayTrigger
+							placement="top"
+							overlay={<Tooltip id="tooltip-locales">
+									{localeUtil.getMsg("ui.grid.edit")}
+									</Tooltip>
+							}
+						>
+							<i className="fa fa-info-circle text-primary"/>
+						</OverlayTrigger>
+					</TableHeaderColumn>
 
 					{locales.map(function(locale){
 						return (
-							<TableHeaderColumn key={locale} width="100" editable={true} dataField={locale} dataSort={true}>
-								<span className="text-primary"><b>* </b></span>{`${localeUtil.getMsg("ui.common.locale")} / ${locale}`}
+							<TableHeaderColumn
+								key={locale}
+								row="1"
+								width="100"
+								editable={true}
+								dataField={locale}
+								dataSort={true}
+							>
+								{locale}
 							</TableHeaderColumn>
 						);
 					})}
 				</BootstrapTable>
-				<Row>
-					<Col xs={12}>
-						<span className="text-primary"><b>( * )</b></span>
-						{' '}
-						<span className="text-primary">{localeUtil.getMsg("ui.grid.edit")}</span>
-					</Col>
-				</Row>
 				<ConfirmModal ref="confirmModal"/>
 				<Mask show={!this.props.translations}/>
 			</div>

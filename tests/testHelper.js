@@ -12,7 +12,7 @@ import thunk from 'redux-thunk'
 import config from '../ktm.config'
 import configUtil from '../src/configUtil'
 import Enzyme from 'enzyme'
-import Adapter from 'enzyme-adapter-react-15'
+import Adapter from 'enzyme-adapter-react-16'
 
 Enzyme.configure({ adapter: new Adapter() })
 

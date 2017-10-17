@@ -19,6 +19,7 @@ var config = {
 		publicPath: '/public/js/'
 	},
 	plugins: [
+		new webpack.optimize.ModuleConcatenationPlugin(),
 		new webpack.optimize.CommonsChunkPlugin({
 			name: 'vendor',
 			minChunks: Infinity
@@ -42,6 +43,7 @@ var config = {
 	module: {
 		rules: [{
 			test: /\.jsx?$/,
+			exclude: path.resolve(__dirname, 'node_modules'),
 			use: ['babel-loader', WebpackStrip.loader('console.log', 'console.warn')]
 		}/*, {
 			test: /\.(css|less)$/,
