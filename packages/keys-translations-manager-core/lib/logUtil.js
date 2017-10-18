@@ -20,6 +20,6 @@ module.exports = {
 				tag = " ";
 				break;
 		}
-		console.log(chalk.grey("  ktm") + tag + msg + "\n");
+		console.log(chalk.grey("  ktm") + tag + msg);
 	}
 };

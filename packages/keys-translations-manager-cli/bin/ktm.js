@@ -26,13 +26,7 @@ yargs
 	.usage('Usage: ktm <command> \n  where <command> is: export')
 	.example('ktm export')
 	.command('export', 'Export locales to specified paths.')
-	.version(function() {
-		return JSON.parse(
-			fs.readFileSync(
-				path.join(__dirname, '../package.json')
-			)
-		).version;
-	})
+	.version()
 	.alias('v', 'version')
 	.help('help')
 	.alias('h', 'help')
@@ -71,7 +65,8 @@ if (!cfg) {
 	}
 }
 
-mongoose.connect(cfg.database, function(err) {
+mongoose.Promise = global.Promise;
+mongoose.connect(cfg.database, { useMongoClient: true }, function(err) {
 	if (err) {
 		log('error', 'Failed to connect database !');
 		log('error', err);
@@ -100,7 +95,7 @@ mongoose.connect(cfg.database, function(err) {
 				afterWriteFile = function(file){
 					log('info', 'Successfully output to ' + file);
 					if (--count === 0) {
-						log('info', 'Finished!');
+						log('info', 'Finished!\n');
 						mongoose.connection.close();
 						process.exit(0);
 					}

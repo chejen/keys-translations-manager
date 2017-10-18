@@ -1,6 +1,6 @@
 {
 	"name": "keys-translations-manager-core",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "keys-translations-manager's core",
 	"keywords": [
 		"i18n",
@@ -19,7 +19,7 @@
 	"repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-core",
 	"main": "./index.js",
 	"dependencies": {
-		"chalk": "^1.1.3",
+		"chalk": "^2.2.0",
 		"properties-parser": "0.3.1"
 	}
 }
