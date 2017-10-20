@@ -1,8 +1,8 @@
-import ImportModal from '../../../../src/components/grid/ConfirmModal'
+import ConfirmModal from '../../../../src/components/grid/ConfirmModal'
 import Modal from 'react-bootstrap/lib/Modal'
 
 function setup() {
-	return shallow(<ImportModal/>)
+	return shallow(<ConfirmModal/>)
 }
 
 describe('(component) ConfirmModal', () => {

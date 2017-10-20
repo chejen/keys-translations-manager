@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import FormPanel from './FormPanel'
 import AlertPanel from './AlertPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-export default class EditModal extends React.Component {
+export default class EditModal extends React.PureComponent {
 	static propTypes = {
 		showeditmodal: PropTypes.bool.isRequired,
 		closeEditModal: PropTypes.func.isRequired,
@@ -21,15 +20,10 @@ export default class EditModal extends React.Component {
 		config: PropTypes.object
 	};
 
-	constructor(props, context) {
-		super(props, context);
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-	}
-
 	/* istanbul ignore next */
 	updateTranslation() {
 		const config = this.context.config,
-			el = this.refs.formPanel.getFormElements(),
+			el = this.refFormPanel.getFormElements(),
 			projects = el["project[]"],
 			lenProjects = projects.length,
 			locales = config.locales,
@@ -88,7 +82,7 @@ export default class EditModal extends React.Component {
 				</Modal.Header>
 				<Modal.Body>
 					<AlertPanel errors={errors} clearErrors={clearErrors} action="u"/>
-					<FormPanel ref="formPanel" action="u" data={data}/>
+					<FormPanel ref={cmp => { this.refFormPanel = cmp; }} action="u" data={data}/>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation.bind(this)}>

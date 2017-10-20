@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import * as d3Zoom from 'd3-zoom'
 import * as d3Hierarchy from 'd3-hierarchy'
 import * as d3Selection from 'd3-selection'
@@ -17,7 +16,7 @@ import Tooltip from './Tooltip'
 
 const d3 = Object.assign({}, d3Zoom, d3Hierarchy, d3Selection);
 
-export default class Tree extends React.Component {
+export default class Tree extends React.PureComponent {
 	static propTypes = {
 		match: PropTypes.object.isRequired,
 		history: PropTypes.object.isRequired,
@@ -35,7 +34,6 @@ export default class Tree extends React.Component {
 
 	constructor() {
 		super();
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 		this.state = {
 			isTranslatedOrScaled: false,
 			data: null,
@@ -326,7 +324,7 @@ export default class Tree extends React.Component {
 	}
 
 	showConfirmModal(value, data) {
-		this.refs.confirmModal.open(
+		this.refConfirmModal.open(
 			localeUtil.getMsg("ui.common.delete"),
 			localeUtil.getMsg("ui.confirm.delete", data.key),
 			this.removeTranslation.bind(this, value)
@@ -380,7 +378,7 @@ export default class Tree extends React.Component {
 							onClick={this.showConfirmModal.bind(this, data._id, data)}/>}
 					</div>
 				</Tooltip>
-				<ConfirmModal ref="confirmModal"/>
+				<ConfirmModal ref={cmp => { this.refConfirmModal = cmp; }} />
 				<Mask show={!this.props.treedata}/>
 
 				<ButtonGroup>

@@ -1,53 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Link } from 'react-router-dom'
 import Col from 'react-bootstrap/lib/Col'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-export default class CountCol extends React.Component {
-	static propTypes = {
-		projectId: PropTypes.string.isRequired,
-		header: PropTypes.string.isRequired,
-		onClick: PropTypes.func.isRequired,
-		count: PropTypes.number.isRequired,
-		desc: PropTypes.string.isRequired
-	};
-
-	constructor() {
-		super();
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-	}
-
-	render() {
-		const { projectId, header, onClick, count, desc } = this.props
-		return(
-			<Col lg={2} md={3} sm={4}>
-				<div className="panel panel-count">
-					<div className="panel-heading">
-						<div className="panel-title app-ellipsis" title={header}>
-							{header}
-						</div>
-						<div className="panel-glyph">
-							<Glyphicon glyph="download-alt"
-								title={localeUtil.getMsg("ui.common.download")}
-								style={{cursor:"pointer"}}
-								onClick={onClick}/>
-						</div>
-					</div>
-					<div className="row">
-						<div className="huge text-center">
-							<b>
-							{count ? <Link to={`/vis/${projectId}`}>{count}</Link> : count}
-							</b>
-						</div>
-						<div className="panel-desc text-center">
-							{desc}
-						</div>
-					</div>
+const CountCol = ({ projectId, header, onClick, count, desc }) => (
+	<Col lg={2} md={3} sm={4}>
+		<div className="panel panel-count">
+			<div className="panel-heading">
+				<div className="panel-title app-ellipsis" title={header}>
+					{header}
 				</div>
-			</Col>
-		);
-	}
-}
+				<div className="panel-glyph">
+					<Glyphicon
+						glyph="download-alt"
+						title={localeUtil.getMsg("ui.common.download")}
+						style={{cursor:"pointer"}}
+						onClick={onClick}
+					/>
+				</div>
+			</div>
+			<div className="row">
+				<div className="huge text-center">
+					<b>
+					{count ? <Link to={`/vis/${projectId}`}>{count}</Link> : count}
+					</b>
+				</div>
+				<div className="panel-desc text-center">
+					{desc}
+				</div>
+			</div>
+		</div>
+	</Col>
+);
+
+CountCol.propTypes = {
+	projectId: PropTypes.string.isRequired,
+	header: PropTypes.string.isRequired,
+	onClick: PropTypes.func.isRequired,
+	count: PropTypes.number.isRequired,
+	desc: PropTypes.string.isRequired
+};
+
+export default CountCol;

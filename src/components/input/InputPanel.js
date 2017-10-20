@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import FormPanel from './FormPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-export default class InputPanel extends React.Component {
+export default class InputPanel extends React.PureComponent {
 	static propTypes = {
 		messages: PropTypes.object.isRequired,
 		addTranslation: PropTypes.func.isRequired,
@@ -16,14 +15,9 @@ export default class InputPanel extends React.Component {
 		config: PropTypes.object
 	};
 
-	constructor() {
-		super();
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-	}
-
 	addTranslation() {
 		const config = this.context.config,
-				el = this.refs.formPanel.getFormElements(),
+				el = this.refFormPanel.getFormElements(),
 				projects = el["project[]"],
 				lenProjects = projects.length,
 				locales = config.locales,
@@ -74,7 +68,11 @@ export default class InputPanel extends React.Component {
 	render() {
 		return(
 			<div>
-				<FormPanel ref="formPanel" action="c" messages={this.props.messages}/>
+				<FormPanel
+					action="c"
+					messages={this.props.messages}
+					ref={cmp => { this.refFormPanel = cmp; }}
+				/>
 				<br/>
 				<div className="pull-right">
 					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation.bind(this)}>

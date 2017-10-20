@@ -1,12 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import TextField from './TextField'
 
-export default class FormPanel extends React.Component {
+export default class FormPanel extends React.PureComponent {
 	static propTypes = {
 		data: PropTypes.object
 	};
@@ -57,11 +56,10 @@ export default class FormPanel extends React.Component {
 		}
 
 		this.state = o;
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
 	getFormElements() {
-		const form = ReactDOM.findDOMNode(this.refs.form)
+		const form = ReactDOM.findDOMNode(this.refForm)
 		return form.elements
 	}
 
@@ -101,7 +99,7 @@ export default class FormPanel extends React.Component {
 		}
 
 		return(
-			<form ref="form">
+			<form ref={cmp => { this.refForm = cmp; }}>
 				{(this.state.action === "u")
 					? <TextField name="key" label="Key" value={data.key} readOnly required/>
 					: <TextField name="key" label="Key" required/>

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -8,7 +7,7 @@ import configUtil from '../../configUtil'
 import CountCol from './CountCol'
 import FileTypeCol from './FileTypeCol'
 
-export default class OutputPanel extends React.Component {
+export default class OutputPanel extends React.PureComponent {
 	static propTypes = {
 		projectCounts: PropTypes.object.isRequired
 	};
@@ -21,7 +20,6 @@ export default class OutputPanel extends React.Component {
 		this.state = {
 			fileType: "nj"
 		};
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 	}
 
 	setFileType(fileType) {

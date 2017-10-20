@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const SideBar = (props) => (
+const SideBar = props => (
 	<div className="navbar-default sidebar" role="navigation">
 		<div className="sidebar-nav navbar-collapse nav">
 			<ul className="nav" id="side-menu">

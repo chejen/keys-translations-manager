@@ -1,9 +1,10 @@
 import TablePanel from '../../../../src/components/grid/TablePanel'
 import ConfirmModal from '../../../../src/components/grid/ConfirmModal'
 import Mask from '../../../../src/components/layout/Mask'
-import Modal from 'react-bootstrap/lib/Modal'
 import InputGroup from 'react-bootstrap/lib/InputGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
+import Modal from 'react-bootstrap/lib/Modal'
+import Tooltip from 'react-bootstrap/lib/Tooltip'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
 
 
@@ -35,12 +36,17 @@ function setup() {
 		wrapper = shallow(
 			<TablePanel {...props}/>,
 			{context: context}
+		),
+		wrapper2 = mount(
+			<TablePanel {...props}/>,
+			{context: context}
 		);
 
 	return {
 		props,
 		context,
-		wrapper
+		wrapper,
+		wrapper2
 	}
 }
 
@@ -63,13 +69,6 @@ describe('(component) TablePanel', () => {
 		expect(wrapper.find('BootstrapTable')).to.have.length(1);
 		expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 5);
 	});
-
-	// it('should have a Tooltip with required id "tooltip-locales" on TableHeaderColumn "LOCALES"', () => {
-	// 	const { wrapper, context } = setup(),
-	// 		locales = context.config.locales;
-	// 	expect(wrapper.find('BootstrapTable')).to.have.length(1);
-	// 	expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 5);
-	// });
 
 	it('should call loadTranslations() when component is mounted', () => {
 		const props = {
@@ -104,6 +103,22 @@ describe('(component) TablePanel', () => {
 			const { wrapper } = setup()
 			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: "test" } });
 			expect(TablePanel.prototype.onQuickFilterText).calledOnce;
+		});
+	});
+
+	describe('child: OverlayTrigger', () => {
+		it('should have a Tooltip with required id "tooltip-locales" as a overlay', () => {
+			const { wrapper2 } = setup();
+			const overlay = wrapper2.find('OverlayTrigger').props().overlay;
+			expect(overlay.type).to.eql(Tooltip);
+			expect(overlay.props.id).to.eql('tooltip-locales');
+		});
+
+		it('should contain a iconic font', () => {
+			const { wrapper } = setup();
+			expect(wrapper.find('OverlayTrigger').contains(
+				<i className="fa fa-info-circle text-primary"/>
+			)).to.be.true;
 		});
 	});
 });

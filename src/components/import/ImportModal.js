@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Dropzone from 'react-dropzone'
 import Button from 'react-bootstrap/lib/Button'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
@@ -9,7 +8,7 @@ import Modal from 'react-bootstrap/lib/Modal'
 import AlertPanel from '../input/AlertPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-export default class ImportModal extends React.Component {
+export default class ImportModal extends React.PureComponent {
 	static propTypes = {
 		showimportmodal: PropTypes.bool.isRequired,
 		closeImportModal: PropTypes.func.isRequired,
@@ -24,12 +23,14 @@ export default class ImportModal extends React.Component {
 
 	constructor(props, context) {
 		super(props, context);
+		this.close = this.close.bind(this);
+		this.onDrop = this.onDrop.bind(this);
+		this.submit = this.submit.bind(this);
 		this.state = {
 			selectedFile: null,
 			selectedLocale: null,
 			selectedProject: null
 		}
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 		this.acceptTypes = ["json", "properties"];
 	}
 
@@ -113,7 +114,7 @@ export default class ImportModal extends React.Component {
 			config = this.context.config;
 
 		return (
-			<Modal show={this.props.showimportmodal} onHide={this.close.bind(this)}>
+			<Modal show={this.props.showimportmodal} onHide={this.close}>
 				<Modal.Header>
 					<Modal.Title>
 						{localeUtil.getMsg("ui.common.import")}
@@ -130,7 +131,7 @@ export default class ImportModal extends React.Component {
 							activeClassName="app-dropzone-enter"
 							rejectClassName="app-dropzone-enter"
 							multiple={false} disablePreview
-							onDrop={this.onDrop.bind(this)}>
+							onDrop={this.onDrop}>
 
 						{this.state.selectedFile
 							? (<span>
@@ -182,10 +183,10 @@ export default class ImportModal extends React.Component {
 
 				</Modal.Body>
 				<Modal.Footer>
-					<Button bsSize="small" bsStyle="primary" onClick={this.submit.bind(this)}>
+					<Button bsSize="small" bsStyle="primary" onClick={this.submit}>
 						{localeUtil.getMsg("ui.common.import")}
 					</Button>
-					<Button bsSize="small" onClick={this.close.bind(this)}>
+					<Button bsSize="small" onClick={this.close}>
 						{localeUtil.getMsg("ui.common.cancel")}
 					</Button>
 				</Modal.Footer>

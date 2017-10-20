@@ -2,7 +2,6 @@ import io from 'socket.io-client'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import AlertPanel from './components/input/AlertPanel'
 import InputPanel from './components/input/InputPanel'
@@ -20,7 +19,7 @@ import VisContainer from './containers/VisContainer'
 import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
 	static propTypes = {
 		children: PropTypes.node,
 		lang: PropTypes.string.isRequired,
@@ -54,7 +53,6 @@ export default class App extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 		this.state = { socket: null }
 	}
 

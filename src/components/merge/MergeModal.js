@@ -1,72 +1,65 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-export default class MergeModal extends React.Component {
-	static propTypes = {
-		keys: PropTypes.object.isRequired,
-		mergeable: PropTypes.array.isRequired,
-		showmergemodal: PropTypes.bool.isRequired,
-		closeMergeModal: PropTypes.func.isRequired,
-		mergeTranslations: PropTypes.func.isRequired
-	};
+const num = 10
 
-	constructor(props, context) {
-		super(props, context);
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+const MergeModal = ({
+	keys, mergeable, showmergemodal, closeMergeModal, mergeTranslations
+}) => {
+	const k = Object.keys(keys).map(key => key)
+	const submit = () => {
+		mergeTranslations(mergeable)
 	}
 
-	submit() {
-		this.props.mergeTranslations(this.props.mergeable)
-	}
-
-	close() {
-		this.props.closeMergeModal()
-	}
-
-	render() {
-		const num = 10
-		const k = Object.keys(this.props.keys).map(key => key)
-
-		return (
-			<Modal show={this.props.showmergemodal} onHide={this.close.bind(this)}>
-				<Modal.Header>
-					<Modal.Title>
-						{localeUtil.getMsg("ui.common.merge")}
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					{k.length > 0
-						? (<div>
-								<b>{localeUtil.getMsg("ui.merge.match")} </b>
-									{k.length >= (num + 2)
-									? `${k.slice(0, num).join(", ")} ${localeUtil.getMsg("ui.common.others", k.length - num)}`
-									: k.join(", ")}
-								<br/><br/>
-								<b>{localeUtil.getMsg("ui.confirm.continue")}</b>
-							</div>)
-						: localeUtil.getMsg("ui.merge.nomatch")
-					}
-				</Modal.Body>
-				{k.length > 0 ?
-					<Modal.Footer>
-						<Button bsSize="small" bsStyle="primary" onClick={this.submit.bind(this)}>
-							{localeUtil.getMsg("ui.confirm.yes")}
-						</Button>
-						<Button bsSize="small" onClick={this.close.bind(this)}>
-							{localeUtil.getMsg("ui.confirm.no")}
-						</Button>
-					</Modal.Footer> :
-					<Modal.Footer>
-						<Button bsSize="small" bsStyle="primary" onClick={this.close.bind(this)}>
-							{localeUtil.getMsg("ui.common.close")}
-						</Button>
-					</Modal.Footer>
+	return (
+		<Modal show={showmergemodal} onHide={closeMergeModal}>
+			<Modal.Header>
+				<Modal.Title>
+					{localeUtil.getMsg("ui.common.merge")}
+				</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				{
+				k.length > 0
+				? (<div>
+					<b>{localeUtil.getMsg("ui.merge.match")} </b>
+						{k.length >= (num + 2)
+						? `${k.slice(0, num).join(", ")} ${localeUtil.getMsg("ui.common.others", k.length - num)}`
+						: k.join(", ")}
+					<br/><br/>
+					<b>{localeUtil.getMsg("ui.confirm.continue")}</b>
+				</div>)
+				: localeUtil.getMsg("ui.merge.nomatch")
 				}
-			</Modal>
-		);
-	}
-}
+			</Modal.Body>
+			{k.length > 0 ?
+				<Modal.Footer>
+					<Button bsSize="small" bsStyle="primary" onClick={submit}>
+						{localeUtil.getMsg("ui.confirm.yes")}
+					</Button>
+					<Button bsSize="small" onClick={closeMergeModal}>
+						{localeUtil.getMsg("ui.confirm.no")}
+					</Button>
+				</Modal.Footer> :
+				<Modal.Footer>
+					<Button bsSize="small" bsStyle="primary" onClick={closeMergeModal}>
+						{localeUtil.getMsg("ui.common.close")}
+					</Button>
+				</Modal.Footer>
+			}
+		</Modal>
+	);
+};
+
+MergeModal.propTypes = {
+	keys: PropTypes.object.isRequired,
+	mergeable: PropTypes.array.isRequired,
+	showmergemodal: PropTypes.bool.isRequired,
+	closeMergeModal: PropTypes.func.isRequired,
+	mergeTranslations: PropTypes.func.isRequired
+};
+
+export default MergeModal;

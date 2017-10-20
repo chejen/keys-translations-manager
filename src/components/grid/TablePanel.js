@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Button from 'react-bootstrap/lib/Button'
 import InputGroup from 'react-bootstrap/lib/InputGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
@@ -13,7 +12,7 @@ import ConfirmModal from './ConfirmModal'
 import Mask from '../layout/Mask'
 import configUtil from '../../configUtil'
 
-export default class TablePanel extends React.Component {
+export default class TablePanel extends React.PureComponent {
 	static propTypes = {
 		reloaddata: PropTypes.bool,
 		messages: PropTypes.object,
@@ -29,13 +28,13 @@ export default class TablePanel extends React.Component {
 
 	constructor(props, context) {
 		super(props, context);
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
 		this.state = {
 			windowHeight: 0
 		};
 
 		//https://gist.github.com/Restuta/e400a555ba24daa396cc
 		this.handleResize = this.handleResize.bind(this);
+		this.onQuickFilterText = this.onQuickFilterText.bind(this);
 	}
 
 	componentDidMount() {
@@ -71,7 +70,7 @@ export default class TablePanel extends React.Component {
 	}
 
 	onQuickFilterText(event) {
-		this.refs.table.handleSearch(event.target.value);
+		this.refTable.handleSearch(event.target.value);
 	}
 
 	showEditModal(data) {
@@ -79,7 +78,7 @@ export default class TablePanel extends React.Component {
 	}
 
 	showConfirmModal(value, data) {
-		this.refs.confirmModal.open(
+		this.refConfirmModal.open(
 			localeUtil.getMsg("ui.common.delete"),
 			localeUtil.getMsg("ui.confirm.delete", data.key),
 			this.removeTranslation.bind(this, value)
@@ -114,26 +113,31 @@ export default class TablePanel extends React.Component {
 					</InputGroup.Addon>
 					<FormControl type="text" className="app-search-bar"
 						placeholder={localeUtil.getMsg("ui.grid.search")}
-						onChange={this.onQuickFilterText.bind(this)}/>
+						onChange={this.onQuickFilterText}/>
 					<InputGroup.Button style={{"paddingLeft": "5px"}}>
 						<Button onClick={this.downloadCsv}>
 							<i className="fa fa-file-text-o"/> CSV
 						</Button>
 					</InputGroup.Button>
 				</InputGroup>
-				<BootstrapTable ref="table" data={this.props.translations || []}
-						height={(windowHeight < (minHeight + top) ? minHeight : windowHeight - top) + ""}
-						striped={true} hover={true} condensed={true}
-						options={{
-							noDataText: localeUtil.getMsg("ui.grid.empty")
-						}}
-						cellEdit={{
-							mode: "dbclick",
-							blurToSave: false,
-							afterSaveCell: function(row/*, cellName, cellValue*/){
-								me.props.TranslationActions.updateTranslation(row);
-							}
-						}}>
+				<BootstrapTable
+					ref={cmp => { this.refTable = cmp; }}
+					data={this.props.translations || []}
+					height={(windowHeight < (minHeight + top) ? minHeight : windowHeight - top) + ""}
+					striped={true}
+					hover={true}
+					condensed={true}
+					options={{
+						noDataText: localeUtil.getMsg("ui.grid.empty")
+					}}
+					cellEdit={{
+						mode: "dbclick",
+						blurToSave: false,
+						afterSaveCell: row => {
+							me.props.TranslationActions.updateTranslation(row);
+						}
+					}}
+				>
 
 					<TableHeaderColumn
 						row="0"
@@ -233,7 +237,7 @@ export default class TablePanel extends React.Component {
 						);
 					})}
 				</BootstrapTable>
-				<ConfirmModal ref="confirmModal"/>
+				<ConfirmModal ref={cmp => { this.refConfirmModal = cmp; }} />
 				<Mask show={!this.props.translations}/>
 			</div>
 		);

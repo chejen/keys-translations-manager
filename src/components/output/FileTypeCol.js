@@ -1,32 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import Col from 'react-bootstrap/lib/Col'
 
-export default class FileTypeCol extends React.Component {
-	static propTypes = {
-		value: PropTypes.string.isRequired,
-		fileType: PropTypes.string.isRequired,
-		label: PropTypes.string.isRequired,
-		onChange: PropTypes.func.isRequired
-	};
+const FileTypeCol = ({ value, fileType, label, onChange }) => (
+	<Col lg={3} md={4} sm={6}>
+		<input
+			type="radio"
+			name="fileType"
+			value={value}
+			checked={fileType === value}
+			onChange={onChange}
+		/>
+		{` ${label}`}
+	</Col>
+);
 
-	constructor() {
-		super();
-		this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-	}
+FileTypeCol.propTypes = {
+	value: PropTypes.string.isRequired,
+	fileType: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired,
+	onChange: PropTypes.func.isRequired
+};
 
-	render() {
-		const { value, fileType, label, onChange } = this.props
-		return(
-			<Col lg={3} md={4} sm={6}>
-				<input
-					type="radio" name="fileType" value={value}
-					checked={fileType === value}
-					onChange={onChange}
-				/>
-				{` ${label}`}
-			</Col>
-		);
-	}
-}
+export default FileTypeCol;
