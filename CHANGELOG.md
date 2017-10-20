@@ -1,3 +1,8 @@
+# **v1.4.1** (Oct 21, 2017)
+
+* Upgraded React to 16 and updated all of the dependencies and devDependencies.
+
+
 # **v1.4.0** (May 7, 2017)
 
 ### BREAKING CHANGES:

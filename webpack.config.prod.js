@@ -11,7 +11,8 @@ var config = {
 		bundle: path.join(dir.src, 'client', 'index'),
 		vendor: ['react', 'react-dom',
 				'redux', 'redux-thunk', 'react-redux',
-				'react-router', 'react-router-dom']
+				'react-router', 'react-router-dom',
+				'socket.io-client']
 	},
 	output: {
 		path: dir.dist,
