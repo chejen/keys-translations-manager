@@ -25,18 +25,18 @@ let webpackConfig,
 
 mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
 mongoose.connect(config.database, {
-	useMongoClient: true, //http://mongoosejs.com/docs/connections.html#use-mongo-client
 	socketTimeoutMS: 90000,
 	connectTimeoutMS: 90000
-}, function(err) {
-	if (err) {
+}).then(
+	() => {
+		// console.log('Connect to database successfully.');
+	},
+	err => {
 		log('error', 'Failed to connect database');
 		log('error', err);
 		process.exit(1);
-	//} else {
-	//	console.log('Connect to database successfully.');
 	}
-});
+);
 
 server.listen(config.server.port, config.server.hostname, function(err) {
 	if (err) {
