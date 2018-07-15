@@ -17,7 +17,6 @@
 	],
 	"author": "chejen",
 	"scripts": {
-		"postinstall": "npm run build",
 		"lint": "eslint \"src/**/*.js\"",
 		"dev": "cross-env NODE_ENV=development nodemon --exec babel-node -- ./Server.js",
 		"start": "cross-env NODE_ENV=production babel-node ./Server.js",
@@ -29,10 +28,16 @@
 		"coverage": "cross-env NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha tests/**/*.js --report lcovonly -- -R spec",
 		"codecov": "cat ./coverage/lcov.info | codecov"
 	},
-	"pre-commit": [
-		"lint",
-		"test"
-	],
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged && npm run test"
+		}
+	},
+	"lint-staged": {
+		"src/**/*.js": [
+			"eslint"
+		]
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/chejen/keys-translations-manager"
@@ -54,15 +59,15 @@
 		"mongoose": "^5.0.0",
 		"multiparty": "^4.1.3",
 		"prop-types": "~15.6.0",
-		"react": "~16.0.0",
-		"react-bootstrap": "~0.31.3",
+		"react": "~16.4.1",
+		"react-bootstrap": "~0.32.1",
 		"react-bootstrap-table": "~4.1.0",
-		"react-dom": "~16.0.0",
+		"react-dom": "~16.4.1",
 		"react-dropzone": "^4.2.1",
 		"react-redux": "^5.0.6",
 		"react-router": "^4.2.0",
 		"react-router-dom": "^4.2.2",
-		"redux": "^3.7.2",
+		"redux": "^4.0.0",
 		"redux-thunk": "^2.2.0",
 		"socket.io": "^2.0.3"
 	},
@@ -82,33 +87,34 @@
 		"codecov": "^3.0.0",
 		"compression": "^1.7.1",
 		"cross-env": "^5.1.0",
-		"css-loader": "^0.28.7",
+		"css-loader": "^1.0.0",
 		"ejs": "^2.5.7",
 		"enzyme": "^3.1.0",
 		"enzyme-adapter-react-16": "^1.0.2",
-		"eslint": "^4.9.0",
-		"eslint-loader": "^1.9.0",
-		"eslint-plugin-babel": "^4.1.2",
+		"eslint": "^5.1.0",
+		"eslint-loader": "^2.0.0",
+		"eslint-plugin-babel": "^5.1.0",
 		"eslint-plugin-i18n": "^1.1.0",
 		"eslint-plugin-react": "^7.4.0",
 		"eventsource-polyfill": "~0.9.6",
+		"husky": "^1.0.0-rc.13",
 		"istanbul": "~0.4.5",
 		"jsdom": "^11.3.0",
-		"less": "^2.7.2",
+		"less": "^3.7.1",
 		"less-loader": "^4.0.5",
+		"lint-staged": "^7.2.0",
 		"mocha": "^5.0.0",
 		"nock": "^9.0.22",
 		"nodemon": "^1.12.1",
-		"pre-commit": "^1.2.2",
-		"react-test-renderer": "~16.0.0",
+		"react-test-renderer": "~16.4.1",
 		"redux-mock-store": "^1.3.0",
 		"rename": "^1.0.4",
 		"serve-favicon": "^2.4.5",
-		"sinon": "^4.0.1",
-		"sinon-chai": "^2.14.0",
-		"style-loader": "~0.19.0",
-		"webpack": "^3.8.1",
-		"webpack-dev-middleware": "^1.12.0",
+		"sinon": "^6.1.3",
+		"sinon-chai": "^3.2.0",
+		"style-loader": "~0.21.0",
+		"webpack": "^4.16.0",
+		"webpack-dev-middleware": "^3.1.3",
 		"webpack-hot-middleware": "^2.20.0",
 		"webpack-strip": "~0.1.0"
 	},
