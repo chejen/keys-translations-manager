@@ -42,15 +42,15 @@ export default class TablePanel extends React.PureComponent {
 		this.loadData();
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const { reloaddata, translations } = nextProps;
+	componentDidUpdate(prevProps) {
+		const { reloaddata, translations, CountActions } = this.props;
 
 		if (reloaddata) {
 			this.loadData();
 		}
 
-		if (translations && translations !== this.props.translations) {
-			nextProps.CountActions.loadCounts();
+		if (translations && translations !== prevProps.translations) {
+			CountActions.loadCounts();
 		}
 	}
 

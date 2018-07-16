@@ -94,19 +94,19 @@ export default class Tree extends React.PureComponent {
 	}
 
 	/* istanbul ignore next */
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		const me = this,
-			{treedata, translations, reloaddata, match, CountActions} = nextProps;
+			{treedata, translations, reloaddata, match, CountActions} = this.props;
 		let data;
 
 		if (reloaddata || //socket
-				translations !== this.props.translations || //add/update/...
-				match.params.projectId !== this.props.match.params.projectId) { //change project
+				translations !== prevProps.translations || //add/update/...
+				match.params.projectId !== prevProps.match.params.projectId) { //change project
 			this.loadData(match.params.projectId);
 		}
 
 		if (treedata && treedata.length &&
-			treedata !== this.props.treedata) {
+			treedata !== prevProps.treedata) {
 
 			CountActions.loadCounts();
 

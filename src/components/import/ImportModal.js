@@ -20,6 +20,22 @@ export default class ImportModal extends React.PureComponent {
 	static contextTypes = {
 		config: PropTypes.object
 	};
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.showimportmodal && !prevState.pervShowimportmodal) {
+			return {
+				pervShowimportmodal: true,
+				selectedFile: null,
+				selectedLocale: null,
+				selectedProject: null
+			};
+		}
+		if (!nextProps.showimportmodal && prevState.pervShowimportmodal) {
+			return {
+				pervShowimportmodal: false,
+			}
+		}
+		return null;
+	}
 
 	constructor(props, context) {
 		super(props, context);
@@ -27,21 +43,12 @@ export default class ImportModal extends React.PureComponent {
 		this.onDrop = this.onDrop.bind(this);
 		this.submit = this.submit.bind(this);
 		this.state = {
+			pervShowimportmodal: false,
 			selectedFile: null,
 			selectedLocale: null,
 			selectedProject: null
 		}
 		this.acceptTypes = ["json", "properties"];
-	}
-
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.showimportmodal && !this.props.showimportmodal) {
-			this.setState({
-				selectedFile: null,
-				selectedLocale: null,
-				selectedProject: null
-			});
-		}
 	}
 
 	setLocale(locale) {

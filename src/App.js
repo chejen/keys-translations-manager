@@ -53,17 +53,14 @@ export default class App extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
+		if (props.lang) {
+			localeUtil.setMessages(props.messages);
+		}
 		this.state = { socket: null }
 	}
 
 	getChildContext() {
 		return { config, socket: this.state.socket }
-	}
-
-	componentWillMount() {
-		if (this.props.lang) {
-			localeUtil.setMessages(this.props.messages);
-		}
 	}
 
 	componentDidMount() {//Invoked once, only on the client
@@ -78,11 +75,8 @@ export default class App extends React.PureComponent {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.lang !== this.props.lang) {
-			localeUtil.setMessages(nextProps.messages);
-		}
-		if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
+	componentDidUpdate() {
+		if (this.props.emitdatachange && config.enableNotifications && this.state.socket) {
 			this.state.socket.emit('ktm', { action: 'datachanged' });
 			this.props.SocketActions.endDataChange();
 		}
@@ -112,6 +106,8 @@ export default class App extends React.PureComponent {
 			translations, showeditmodal, editrecord, reloaddata,
 			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
+
+		localeUtil.setMessages(messages);
 
 		return (
 			<div id="wrapper">

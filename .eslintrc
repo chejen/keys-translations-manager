@@ -1,8 +1,8 @@
 {
-    parser: "babel-eslint",
-    plugins: ["babel", "react", "i18n"],
-    extends: "eslint:recommended",
-    rules: {
+    "parser": "babel-eslint",
+    "plugins": ["babel", "react", "i18n", "import"],
+    "extends": "eslint:recommended",
+    "rules": {
         "accessor-pairs": 2,
         "block-scoped-var": 2,
         "complexity": 0,
@@ -76,6 +76,14 @@
 
         "i18n/no-chinese-character": 2,
 
+        "import/no-unresolved": 2,
+        "import/export": 2,
+        "import/no-named-as-default": 2,
+        "import/no-named-as-default-member": 2,
+        "import/no-deprecated": 2,
+        "import/no-extraneous-dependencies": 2,
+        "import/no-mutable-exports": 2,
+
         "react/jsx-no-duplicate-props": 2,
         "react/jsx-no-undef": 2,
         "react/jsx-uses-react": 2,
@@ -94,25 +102,25 @@
         "react/sort-comp": 2,
         "react/jsx-wrap-multilines": 2
     },
-    env: {
-        'browser': true,
-        'es6': true,
-        'node': true,
-        'jquery': true
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true,
+        "jquery": true
     },
-    parserOptions: {
-        ecmaVersion: 6,
-        sourceType: "module",
-        ecmaFeatures: {
-            'arrowFunctions': true,
-            'classes': true,
-            'modules': true,
-            'spread': true,
-            'superInFunctions': true,
-            'jsx': true
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "arrowFunctions": true,
+            "classes": true,
+            "modules": true,
+            "spread": true,
+            "superInFunctions": true,
+            "jsx": true
         }
     },
-    globals: {
-        '__DEV__': true
+    "globals": {
+        "__DEV__": true
     }
 }
