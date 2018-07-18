@@ -29,16 +29,6 @@
 		"coverage": "cross-env NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha tests/**/*.js --report lcovonly -- -R spec",
 		"codecov": "cat ./coverage/lcov.info | codecov"
 	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged && npm run test"
-		}
-	},
-	"lint-staged": {
-		"src/**/*.js": [
-			"eslint"
-		]
-	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/chejen/keys-translations-manager"

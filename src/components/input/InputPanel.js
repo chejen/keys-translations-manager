@@ -1,22 +1,21 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
+import ConfigContext from '../../context/ConfigContext'
 import FormPanel from './FormPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-export default class InputPanel extends React.PureComponent {
+class InputPanel extends React.PureComponent {
 	static propTypes = {
+		config: PropTypes.object.isRequired,
 		messages: PropTypes.object.isRequired,
 		addTranslation: PropTypes.func.isRequired,
-		alertErrors: PropTypes.func.isRequired
-	};
-	static contextTypes = {
-		config: PropTypes.object
+		alertErrors: PropTypes.func.isRequired,
 	};
 
 	addTranslation() {
-		const config = this.context.config,
+		const { config } = this.props,
 				el = this.refFormPanel.getFormElements(),
 				projects = el["project[]"],
 				lenProjects = projects.length,
@@ -67,10 +66,11 @@ export default class InputPanel extends React.PureComponent {
 
 	render() {
 		return(
-			<div>
+			<Fragment>
 				<FormPanel
 					action="c"
 					messages={this.props.messages}
+					config={this.props.config}
 					ref={cmp => { this.refFormPanel = cmp; }}
 				/>
 				<br/>
@@ -79,7 +79,13 @@ export default class InputPanel extends React.PureComponent {
 						<Glyphicon glyph="plus"/> {localeUtil.getMsg("ui.common.add")}
 					</Button>
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 }
+
+export default props => (
+	<ConfigContext.Consumer>
+		{config => <InputPanel {...props} config={config} />}
+	</ConfigContext.Consumer>
+)

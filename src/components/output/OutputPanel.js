@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import ConfigContext from '../../context/ConfigContext'
 import configUtil from '../../configUtil'
 import CountCol from './CountCol'
 import FileTypeCol from './FileTypeCol'
@@ -10,9 +11,6 @@ import FileTypeCol from './FileTypeCol'
 export default class OutputPanel extends React.PureComponent {
 	static propTypes = {
 		projectCounts: PropTypes.object.isRequired
-	};
-	static contextTypes = {
-		config: PropTypes.object
 	};
 
 	constructor() {
@@ -53,7 +51,6 @@ export default class OutputPanel extends React.PureComponent {
 
 	render() {
 		const me = this
-		const config = this.context.config
 		const {projectCounts} = this.props
 		const fileTypeList = [{
 			value: "nj", label: `nested JSON (${localeUtil.getMsg("ui.json.mini")})`
@@ -68,23 +65,27 @@ export default class OutputPanel extends React.PureComponent {
 		}]
 
 		return(
-			<Well>
-				<Row>
-					{config.projects.map(e => (
-						<CountCol onClick={me.download.bind(me, e)} key={e.id}
-							header={e.name} projectId={e.id}
-							desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
-							count={projectCounts ? (projectCounts[e.id] || 0) : 0} />
-					))}
-				</Row>
-				<Row>
-					{fileTypeList.map(e => (
-						<FileTypeCol key={e.value} value={e.value} label={e.label}
-							fileType={me.state.fileType}
-							onChange={me.setFileType.bind(me, e.value)} />
-					))}
-				</Row>
-			</Well>
+			<ConfigContext.Consumer>
+				{config => (
+					<Well>
+						<Row>
+							{config.projects.map(e => (
+								<CountCol onClick={me.download.bind(me, e)} key={e.id}
+									header={e.name} projectId={e.id}
+									desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
+									count={projectCounts ? (projectCounts[e.id] || 0) : 0} />
+							))}
+						</Row>
+						<Row>
+							{fileTypeList.map(e => (
+								<FileTypeCol key={e.value} value={e.value} label={e.label}
+									fileType={me.state.fileType}
+									onChange={me.setFileType.bind(me, e.value)} />
+							))}
+						</Row>
+					</Well>
+				)}
+			</ConfigContext.Consumer>
 		);
 	}
 }

@@ -7,16 +7,14 @@ import TextField from './TextField'
 
 export default class FormPanel extends React.PureComponent {
 	static propTypes = {
-		data: PropTypes.object
-	};
-	static contextTypes = {
-		config: PropTypes.object
+		config: PropTypes.object,
+		data: PropTypes.object,
 	};
 
-	constructor(props, context) {
-		super(props, context);
+	constructor(props) {
+		super(props);
 
-		const config = context.config,
+		const config = props.config,
 			data = props.data,
 			locales = config.locales,
 			projects = config.projects;
@@ -70,8 +68,7 @@ export default class FormPanel extends React.PureComponent {
 	}
 
 	render() {
-		const config = this.context.config,
-			data = this.props.data,
+		const { config, data } = this.props,
 			locales = config.locales,
 			projects = config.projects,
 			lenLocales = locales.length,

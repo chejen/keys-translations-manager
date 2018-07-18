@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Route } from 'react-router-dom'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import ConfigContext from './context/ConfigContext'
 import AlertPanel from './components/input/AlertPanel'
 import InputPanel from './components/input/InputPanel'
 import DropdownMenu from './components/layout/DropdownMenu'
@@ -46,21 +47,15 @@ export default class App extends React.PureComponent {
 		ComponentActions: PropTypes.object.isRequired
 	}
 
-	static childContextTypes = {
-		config: PropTypes.object,
-		socket: PropTypes.object
-	}
-
 	constructor(props) {
 		super(props);
-		if (props.lang) {
-			localeUtil.setMessages(props.messages);
-		}
 		this.state = { socket: null }
 	}
 
-	getChildContext() {
-		return { config, socket: this.state.socket }
+	componentWillMount() {
+		if (this.props.lang) {
+			localeUtil.setMessages(this.props.messages);
+		}
 	}
 
 	componentDidMount() {//Invoked once, only on the client
@@ -75,8 +70,11 @@ export default class App extends React.PureComponent {
 		}
 	}
 
-	componentDidUpdate() {
-		if (this.props.emitdatachange && config.enableNotifications && this.state.socket) {
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.lang !== this.props.lang) {
+			localeUtil.setMessages(nextProps.messages);
+		}
+		if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
 			this.state.socket.emit('ktm', { action: 'datachanged' });
 			this.props.SocketActions.endDataChange();
 		}
@@ -107,74 +105,74 @@ export default class App extends React.PureComponent {
 			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
 
-		localeUtil.setMessages(messages);
-
 		return (
 			<div id="wrapper">
-				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
-					<Header/>
-					<DropdownMenu lang={lang} messages={messages}
-						loadMessages={MessageActions.loadMessages}
-						findMergeable={KeyActions.findMergeable}
-						showImportModal={ComponentActions.showImportModal}/>
-					<SideBar>
-						<InputPanel messages={messages}
-							alertErrors={ErrorActions.alertErrors}
-							addTranslation={TranslationActions.addTranslation}/>
-					</SideBar>
-				</nav>
-				<div id="page-wrapper">
-					<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
-					<OutputPanel projectCounts={counts} messages={messages}/>
-					<MainPanel>
-						<ImportModal errors={errors}
-							alertErrors={ErrorActions.alertErrors}
-							clearErrors={ErrorActions.clearErrors}
-							importLocale={TranslationActions.importLocale}
-							showimportmodal={showimportmodal}
-							closeImportModal={ComponentActions.closeImportModal}/>
-						<MergeModal keys={keys}
-							mergeable={mergeable}
-							showmergemodal={showmergemodal}
-							mergeTranslations={TranslationActions.mergeTranslations}
-							closeMergeModal={ComponentActions.closeMergeModal}/>
-						<EditModal data={editrecord} errors={errors}
-							showeditmodal={showeditmodal}
-							closeEditModal={ComponentActions.closeEditModal}
-							updateTranslation={TranslationActions.updateTranslation}
-							alertErrors={ErrorActions.alertErrors}
-							clearErrors={ErrorActions.clearErrors}/>
-						<Route exact path="/" render={() => (
-							<TablePanel messages={messages}
-								translations={translations}
-								reloaddata={reloaddata}
-								TranslationActions={TranslationActions}
-								ComponentActions={ComponentActions}
-								CountActions={CountActions}/>
-						)}/>
-						<Route path="/vis/:projectId" render={props => (
-							<VisContainer {...props}
-								translations={translations}
-								reloaddata={reloaddata}
-								TranslationActions={TranslationActions}
-								ComponentActions={ComponentActions}
-								CountActions={CountActions}/>
-						)}/>
-					</MainPanel>
-				</div>
-				<MessagePopup messages={messages}
-						msg={localeUtil.getMsg("ui.tip.dataChanged")}
-						closeMessagePopup={ComponentActions.closeMessagePopup}
-						showmessagepopup={showmessagepopup}>
-					<b><u>
-						<a href="#" onClick={(event) => {
-							if (event) {
-								event.preventDefault();
-							}
-							ComponentActions.reloadData();
-						}}>{localeUtil.getMsg("ui.common.reload")}</a>
-					</u></b>
-				</MessagePopup>
+				<ConfigContext.Provider value={config}>
+					<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
+						<Header/>
+						<DropdownMenu lang={lang} messages={messages}
+							loadMessages={MessageActions.loadMessages}
+							findMergeable={KeyActions.findMergeable}
+							showImportModal={ComponentActions.showImportModal}/>
+						<SideBar>
+							<InputPanel messages={messages}
+								alertErrors={ErrorActions.alertErrors}
+								addTranslation={TranslationActions.addTranslation}/>
+						</SideBar>
+					</nav>
+					<div id="page-wrapper">
+						<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
+						<OutputPanel projectCounts={counts} messages={messages}/>
+						<MainPanel>
+							<ImportModal errors={errors}
+								alertErrors={ErrorActions.alertErrors}
+								clearErrors={ErrorActions.clearErrors}
+								importLocale={TranslationActions.importLocale}
+								showimportmodal={showimportmodal}
+								closeImportModal={ComponentActions.closeImportModal}/>
+							<MergeModal keys={keys}
+								mergeable={mergeable}
+								showmergemodal={showmergemodal}
+								mergeTranslations={TranslationActions.mergeTranslations}
+								closeMergeModal={ComponentActions.closeMergeModal}/>
+							<EditModal data={editrecord} errors={errors}
+								showeditmodal={showeditmodal}
+								closeEditModal={ComponentActions.closeEditModal}
+								updateTranslation={TranslationActions.updateTranslation}
+								alertErrors={ErrorActions.alertErrors}
+								clearErrors={ErrorActions.clearErrors}/>
+							<Route exact path="/" render={() => (
+								<TablePanel messages={messages}
+									translations={translations}
+									reloaddata={reloaddata}
+									TranslationActions={TranslationActions}
+									ComponentActions={ComponentActions}
+									CountActions={CountActions}/>
+							)}/>
+							<Route path="/vis/:projectId" render={props => (
+								<VisContainer {...props}
+									translations={translations}
+									reloaddata={reloaddata}
+									TranslationActions={TranslationActions}
+									ComponentActions={ComponentActions}
+									CountActions={CountActions}/>
+							)}/>
+						</MainPanel>
+					</div>
+					<MessagePopup messages={messages}
+							msg={localeUtil.getMsg("ui.tip.dataChanged")}
+							closeMessagePopup={ComponentActions.closeMessagePopup}
+							showmessagepopup={showmessagepopup}>
+						<b><u>
+							<a href="#" onClick={(event) => {
+								if (event) {
+									event.preventDefault();
+								}
+								ComponentActions.reloadData();
+							}}>{localeUtil.getMsg("ui.common.reload")}</a>
+						</u></b>
+					</MessagePopup>
+				</ConfigContext.Provider>
 			</div>
 		);
 	}
