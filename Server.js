@@ -66,7 +66,6 @@ app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
 if (process.env.NODE_ENV === 'development') {
 	webpackConfig = require('./webpack.config.dev');

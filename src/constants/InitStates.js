@@ -3,6 +3,7 @@ export const INIT_COMPONENTS = {
 	showimportmodal: false,
 	showmergemodal: false,
 	showeditmodal: false,
+	showconfirmmodal: false,
 	showmessagepopup: false,
 	showtooltip: false,
 	tooltiptop: 0,

@@ -22,6 +22,7 @@ function mapStateToProps(state) {
 		translations: state.translations,
 		emitdatachange: state.socket.emitdatachange,
 		showeditmodal: state.components.showeditmodal,
+		showconfirmmodal: state.components.showconfirmmodal,
 		showmergemodal: state.components.showmergemodal,
 		showimportmodal: state.components.showimportmodal,
 		showmessagepopup: state.components.showmessagepopup,

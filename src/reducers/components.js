@@ -52,6 +52,18 @@ export default function components(state = INIT_COMPONENTS, action) {
 				...state,
 				showeditmodal: false
 			};
+		case ActionTypes.SHOW_CONFIRMMODAL:
+			return {
+				...state,
+				showconfirmmodal: true,
+				editrecord: action.record,
+			};
+		case ActionTypes.REMOVE_TRANSLATION:
+		case ActionTypes.CLOSE_CONFIRMMODAL:
+			return {
+				...state,
+				showconfirmmodal: false
+			};
 		case ActionTypes.RELOAD_DATA:
 			return {
 				...state,

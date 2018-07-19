@@ -46,14 +46,14 @@ var config = {
 			test: /\.jsx?$/,
 			exclude: path.resolve(__dirname, 'node_modules'),
 			use: ['babel-loader', WebpackStrip.loader('console.log', 'console.warn')]
-		}/*, {
+		}, {
 			test: /\.(css|less)$/,
 			use: [
 				"style-loader",
 				"css-loader",
 				"less-loader"
 			]
-		}, {
+		}/*, {
 			test: /\.(png|jpg|gif|ttf|woff|woff2)$/,
 			loader: 'url?limit=25000'
 		}*/]

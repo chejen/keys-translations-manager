@@ -165,6 +165,16 @@ after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
 
+ag-grid-react@18.1.0:
+  version "18.1.0"
+  resolved "https://registry.yarnpkg.com/ag-grid-react/-/ag-grid-react-18.1.0.tgz#ecbdb14ebb8880dd233ab8956c08003f35f9e1e0"
+  dependencies:
+    prop-types "15.6.0"
+
+ag-grid@18.1.1:
+  version "18.1.1"
+  resolved "https://registry.yarnpkg.com/ag-grid/-/ag-grid-18.1.1.tgz#55bb84ee30a5393162704f30aca2562ae798c328"
+
 ajv-keywords@^3.0.0, ajv-keywords@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.2.0.tgz#e86b819c602cf8821ad637413698f1dec021847a"
@@ -5709,7 +5719,7 @@ prop-types-extra@^1.0.1:
   dependencies:
     warning "^3.0.0"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@~15.6.0:
+prop-types@15.6.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.6.0, prop-types@~15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:

@@ -16,6 +16,7 @@ import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
 import ImportModal from './components/import/ImportModal'
 import TablePanel from './components/grid/TablePanel'
+import ConfirmModal from './components/grid/ConfirmModal'
 import VisContainer from './containers/VisContainer'
 import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
@@ -29,6 +30,7 @@ export default class App extends React.PureComponent {
 		errors: PropTypes.array.isRequired,
 		translations: PropTypes.array,
 		showeditmodal: PropTypes.bool.isRequired,
+		showconfirmmodal: PropTypes.bool.isRequired,
 		showmergemodal: PropTypes.bool.isRequired,
 		showimportmodal: PropTypes.bool.isRequired,
 		showmessagepopup: PropTypes.bool.isRequired,
@@ -49,13 +51,10 @@ export default class App extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
-		this.state = { socket: null }
-	}
-
-	componentWillMount() {
-		if (this.props.lang) {
-			localeUtil.setMessages(this.props.messages);
+		if (props.lang) {
+			localeUtil.setMessages(props.messages);
 		}
+		this.state = { socket: null }
 	}
 
 	componentDidMount() {//Invoked once, only on the client
@@ -70,11 +69,8 @@ export default class App extends React.PureComponent {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.lang !== this.props.lang) {
-			localeUtil.setMessages(nextProps.messages);
-		}
-		if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
+	componentDidUpdate() {
+		if (this.props.emitdatachange && config.enableNotifications && this.state.socket) {
 			this.state.socket.emit('ktm', { action: 'datachanged' });
 			this.props.SocketActions.endDataChange();
 		}
@@ -102,8 +98,10 @@ export default class App extends React.PureComponent {
 			KeyActions, ErrorActions, ComponentActions,
 			lang, messages, counts, errors,
 			translations, showeditmodal, editrecord, reloaddata,
-			showmergemodal, keys, mergeable,
+			showconfirmmodal, showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
+
+		localeUtil.setMessages(messages);
 
 		return (
 			<div id="wrapper">
@@ -141,6 +139,11 @@ export default class App extends React.PureComponent {
 								updateTranslation={TranslationActions.updateTranslation}
 								alertErrors={ErrorActions.alertErrors}
 								clearErrors={ErrorActions.clearErrors}/>
+							<ConfirmModal data={editrecord}
+								showconfirmmodal={showconfirmmodal}
+								closeConfirmModal={ComponentActions.closeConfirmModal}
+								removeTranslation={TranslationActions.removeTranslation}
+							/>
 							<Route exact path="/" render={() => (
 								<TablePanel messages={messages}
 									translations={translations}
@@ -160,9 +163,10 @@ export default class App extends React.PureComponent {
 						</MainPanel>
 					</div>
 					<MessagePopup messages={messages}
-							msg={localeUtil.getMsg("ui.tip.dataChanged")}
-							closeMessagePopup={ComponentActions.closeMessagePopup}
-							showmessagepopup={showmessagepopup}>
+						msg={localeUtil.getMsg("ui.tip.dataChanged")}
+						closeMessagePopup={ComponentActions.closeMessagePopup}
+						showmessagepopup={showmessagepopup}
+					>
 						<b><u>
 							<a href="#" onClick={(event) => {
 								if (event) {
