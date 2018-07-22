@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Well from 'react-bootstrap/lib/Well'
 import Row from 'react-bootstrap/lib/Row'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-import ConfigContext from '../../context/ConfigContext'
 import configUtil from '../../configUtil'
 import CountCol from './CountCol'
 import FileTypeCol from './FileTypeCol'
@@ -27,22 +26,22 @@ export default class OutputPanel extends React.PureComponent {
 	}
 
 	download(project) {
-		let url = configUtil.getHost() + "/api/download/"
+		let url = configUtil.getHost() + '/api/download/'
 
 		/* istanbul ignore next */
 		if (this.state.fileType === 'njf' || this.state.fileType === 'fjf') {
-			url += "f/";
+			url += 'f/';
 		} else {
-			url += "n/";
+			url += 'n/';
 		}
 
 		/* istanbul ignore next */
 		if (this.state.fileType === 'p') {
-			url += "properties/";
+			url += 'properties/';
 		} else if (this.state.fileType === 'fj' || this.state.fileType === 'fjf') {
-			url += "flat/";
+			url += 'flat/';
 		} else {
-			url += "json/";
+			url += 'json/';
 		}
 
 		/* istanbul ignore next */
@@ -51,7 +50,7 @@ export default class OutputPanel extends React.PureComponent {
 
 	render() {
 		const me = this
-		const {projectCounts} = this.props
+		const { projectCounts } = this.props
 		const fileTypeList = [{
 			value: "nj", label: `nested JSON (${localeUtil.getMsg("ui.json.mini")})`
 		}, {
@@ -65,27 +64,25 @@ export default class OutputPanel extends React.PureComponent {
 		}]
 
 		return(
-			<ConfigContext.Consumer>
-				{config => (
-					<Well>
-						<Row>
-							{config.projects.map(e => (
-								<CountCol onClick={me.download.bind(me, e)} key={e.id}
-									header={e.name} projectId={e.id}
-									desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
-									count={projectCounts ? (projectCounts[e.id] || 0) : 0} />
-							))}
-						</Row>
-						<Row>
-							{fileTypeList.map(e => (
-								<FileTypeCol key={e.value} value={e.value} label={e.label}
-									fileType={me.state.fileType}
-									onChange={me.setFileType.bind(me, e.value)} />
-							))}
-						</Row>
-					</Well>
-				)}
-			</ConfigContext.Consumer>
+			<Well>
+				<Row>
+					{configUtil.getProjects().map(e => (
+						<CountCol key={e.id}
+							onClick={me.download.bind(me, e)}
+							header={e.name} projectId={e.id}
+							desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
+							count={projectCounts ? (projectCounts[e.id] || 0) : 0}
+						/>
+					))}
+				</Row>
+				<Row>
+					{fileTypeList.map(e => (
+						<FileTypeCol key={e.value} value={e.value} label={e.label}
+							fileType={me.state.fileType}
+							onChange={me.setFileType.bind(me, e.value)} />
+					))}
+				</Row>
+			</Well>
 		);
 	}
 }

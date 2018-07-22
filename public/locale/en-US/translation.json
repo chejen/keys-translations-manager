@@ -56,6 +56,13 @@
       "match": "The following key(s) will be merged:",
       "nomatch": "No keys need to be merged."
     },
+    "pagination": {
+      "next": "Next",
+      "of": "of",
+      "page": "Page",
+      "previous": "Previous",
+      "rows": "rows"
+    },
     "tip": {
       "dataChanged": "Data has been changed by others.",
       "iconflicts": "(e.g.) \"ui.common.add\" will conflict with \"ui\", \"ui.common\", and/or \"ui.common.add.*\" while parsing to JSON format.",

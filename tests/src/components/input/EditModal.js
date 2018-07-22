@@ -18,17 +18,10 @@ function setup() {
 			alertErrors: sinon.spy(),
 			clearErrors: sinon.spy()
 		},
-		context = {
-			config: config
-		},
-		wrapper = shallow(
-			<EditModal {...props}/>,
-			{context: context}
-		);
+		wrapper = shallow(<EditModal {...props}/>);
 
 	return {
 		props,
-		context,
 		wrapper
 	}
 }

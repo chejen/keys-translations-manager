@@ -10,7 +10,6 @@ import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Button from 'react-bootstrap/lib/Button'
 import Label from 'react-bootstrap/lib/Label'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import ConfirmModal from '../grid/ConfirmModal'
 import Mask from '../layout/Mask'
 import Tooltip from './Tooltip'
 
@@ -323,12 +322,8 @@ export default class Tree extends React.PureComponent {
 		this.props.ComponentActions.showEditModal(data);
 	}
 
-	showConfirmModal(value, data) {
-		this.refConfirmModal.open(
-			localeUtil.getMsg("ui.common.delete"),
-			localeUtil.getMsg("ui.confirm.delete", data.key),
-			this.removeTranslation.bind(this, value)
-		);
+	showConfirmModal(data) {
+		this.props.ComponentActions.showConfirmModal(data);
 	}
 
 	/* istanbul ignore next */
@@ -375,10 +370,9 @@ export default class Tree extends React.PureComponent {
 							onClick={this.showEditModal.bind(this, data)}/>
 						{data && <Glyphicon glyph="trash" className="app-action-icon"
 							title={localeUtil.getMsg("ui.common.delete")}
-							onClick={this.showConfirmModal.bind(this, data._id, data)}/>}
+							onClick={this.showConfirmModal.bind(this, data)}/>}
 					</div>
 				</Tooltip>
-				<ConfirmModal ref={cmp => { this.refConfirmModal = cmp; }} />
 				<Mask show={!this.props.treedata}/>
 
 				<ButtonGroup>

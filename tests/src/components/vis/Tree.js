@@ -1,10 +1,4 @@
 import Tree from '../../../../src/components/vis/Tree'
-import Tooltip from '../../../../src/components/vis/Tooltip'
-import ConfirmModal from '../../../../src/components/grid/ConfirmModal'
-import Mask from '../../../../src/components/layout/Mask'
-import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
-import Button from 'react-bootstrap/lib/Button'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 
 function setup() {
 	Tree.prototype.showConfirmModal = sinon.spy();
@@ -22,7 +16,8 @@ function setup() {
 			translations: [],
 			TranslationActions: {},
 			ComponentActions: {
-				showEditModal: sinon.spy()
+				showEditModal: sinon.spy(),
+				showConfirmModal: sinon.spy(),
 			},
 			CountActions: {},
 			VisActions: {
@@ -46,10 +41,9 @@ describe('(component) Tree', () => {
 		expect(wrapper.prop('id')).to.eql('vis_tree');
 	});
 
-	it('should have a Tooltip, a ConfirmModal, a Mask, and a ButtonGroup', () => {
+	it('should have a Tooltip, a Mask, and a ButtonGroup', () => {
 		const { wrapper } = setup();
 		expect(wrapper.find('Tooltip')).to.have.length(1);
-		expect(wrapper.find('ConfirmModal')).to.have.length(1);
 		expect(wrapper.find('Mask')).to.have.length(1);
 		expect(wrapper.find('ButtonGroup')).to.have.length(1);
 	});

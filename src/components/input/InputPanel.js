@@ -2,27 +2,26 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
 import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import ConfigContext from '../../context/ConfigContext'
 import FormPanel from './FormPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import configUtil from '../../configUtil'
 
-class InputPanel extends React.PureComponent {
+export default class InputPanel extends React.PureComponent {
 	static propTypes = {
-		config: PropTypes.object.isRequired,
 		messages: PropTypes.object.isRequired,
 		addTranslation: PropTypes.func.isRequired,
 		alertErrors: PropTypes.func.isRequired,
 	};
 
 	addTranslation() {
-		const { config } = this.props,
-				el = this.refFormPanel.getFormElements(),
+		const el = this.refFormPanel.getFormElements(),
 				projects = el["project[]"],
 				lenProjects = projects.length,
-				locales = config.locales,
+				locales = configUtil.getLocales(),
 				lenLocales = locales.length;
 
-		let i, vk, vl, locale, project = [], emptyFields = [], data = {description: el.description.value.trim()};
+		let i, vk, vl, locale, project = [], emptyFields = [],
+			data = { description: el.description.value.trim() };
 
 		vk = el.key.value.trim()
 		if (vk) {
@@ -46,13 +45,13 @@ class InputPanel extends React.PureComponent {
 				project.push(projects[i].value);
 			}
 		}
-		if ( project.length > 0 ) {
+		if (project.length > 0) {
 			data.project = project
 		} else {
 			emptyFields.push(localeUtil.getMsg("ui.common.applyto"))
 		}
 
-		if ( emptyFields.length > 0 ) {
+		if (emptyFields.length > 0) {
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "c",
@@ -70,7 +69,6 @@ class InputPanel extends React.PureComponent {
 				<FormPanel
 					action="c"
 					messages={this.props.messages}
-					config={this.props.config}
 					ref={cmp => { this.refFormPanel = cmp; }}
 				/>
 				<br/>
@@ -83,9 +81,3 @@ class InputPanel extends React.PureComponent {
 		);
 	}
 }
-
-export default props => (
-	<ConfigContext.Consumer>
-		{config => <InputPanel {...props} config={config} />}
-	</ConfigContext.Consumer>
-)

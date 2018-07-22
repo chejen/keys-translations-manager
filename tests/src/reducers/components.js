@@ -249,6 +249,61 @@ describe('(reducer) components', function() {
 			.to.deep.equal(record);
 	})
 
+	it('should handle SHOW_CONFIRMMODAL', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'SHOW_CONFIRMMODAL',
+				record: {}
+			})
+		).to.be.an('object')
+		.to.have.property('showconfirmmodal')
+			.that.is.true
+
+		expect(
+			reducer(undefined, {
+				type: 'SHOW_CONFIRMMODAL',
+				record: record
+			})
+		).to.have.property('editrecord')
+			.that.is.an('object')
+			.to.contain.all.keys('_id', 'key', 'project');
+	})
+
+	it('should handle CLOSE_CONFIRMMODAL', () => {
+		expect(
+			reducer({
+				showconfirmmodal: true,
+				editrecord: record
+			}, {
+				type: 'REMOVE_TRANSLATION'
+			})
+		).to.be.an('object')
+		.to.have.property('showconfirmmodal')
+			.that.is.false
+
+		expect(
+			reducer({
+				showconfirmmodal: true,
+				editrecord: record
+			}, {
+				type: 'CLOSE_CONFIRMMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showconfirmmodal')
+			.that.is.false
+
+		expect(
+			reducer({
+				showeditmodal: true,
+				editrecord: record
+			}, {
+				type: 'CLOSE_CONFIRMMODAL'
+			})
+		).to.have.property('editrecord')
+			.that.is.an('object')
+			.to.deep.equal(record);
+	})
+
 	it('should handle RELOAD_DATA', () => {
 		expect(
 			reducer(INIT_COMPONENTS, {

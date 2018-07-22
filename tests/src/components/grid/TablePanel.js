@@ -1,12 +1,5 @@
 import TablePanel from '../../../../src/components/grid/TablePanel'
-import ConfirmModal from '../../../../src/components/grid/ConfirmModal'
-import Mask from '../../../../src/components/layout/Mask'
-import InputGroup from 'react-bootstrap/lib/InputGroup'
-import FormControl from 'react-bootstrap/lib/FormControl'
-import Modal from 'react-bootstrap/lib/Modal'
 import Tooltip from 'react-bootstrap/lib/Tooltip'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-
 
 function setup() {
 	TablePanel.prototype.onQuickFilterText = sinon.spy()
@@ -23,73 +16,66 @@ function setup() {
 			messages: {},
 			CountActions: {},
 			ComponentActions: {
-				showEditModal: sinon.spy()
+				showEditModal: sinon.spy(),
+				showConfirmModal: sinon.spy(),
 			},
 			TranslationActions: {
 				loadTranslations: sinon.spy(),
-				updateTranslation: sinon.spy()
+				updateTranslation: sinon.spy(),
 			}
 		},
-		context = {
-			config: config
-		},
-		wrapper = shallow(
-			<TablePanel {...props}/>,
-			{context: context}
-		),
-		wrapper2 = mount(
-			<TablePanel {...props}/>,
-			{context: context}
-		);
+		wrapper = shallow(<TablePanel {...props}/>),
+		wrapper2 = mount(<TablePanel {...props}/>);
 
 	return {
 		props,
-		context,
 		wrapper,
 		wrapper2
 	}
 }
 
 describe('(component) TablePanel', () => {
-	it('should render as a <div>', () => {
+	it('should be wrapped by React.Fragment', () => {
 		const { wrapper } = setup()
-		expect(wrapper.type()).to.eql('div');
+		expect(wrapper.type()).to.eql(React.Fragment);
 	});
 
-	it('should have an InputGroup, a ConfirmModal, and a Mask', () => {
+	it('should have an InputGroup and a Mask', () => {
 		const { wrapper } = setup()
 		expect(wrapper.find('InputGroup')).to.have.length(1);
-		expect(wrapper.find('ConfirmModal')).to.have.length(1);
 		expect(wrapper.find('Mask')).to.have.length(1);
 	});
 
-	it('should have a BootstrapTable and several TableHeaderColumns', () => {
-		const { wrapper, context } = setup(),
-			locales = context.config.locales;
-		expect(wrapper.find('BootstrapTable')).to.have.length(1);
-		expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 5);
+	it('should have a Table with several columns', () => {
+		const { wrapper } = setup();
+		expect(wrapper.find('ReactTable')).to.have.length(1);
+		expect(wrapper.find('ReactTable').prop('columns').length)
+			.to.eql(configUtil.getLocales().length + 4);
 	});
 
 	it('should call loadTranslations() when component is mounted', () => {
 		const props = {
-				translations: [],
+				translations: [{
+					"_id": "56d7037a0b70e760104ddf10",
+					"en-US": "Edit",
+					"key": "ui.common.edit",
+					"project": ["p1"],
+					"zh-TW": "編輯"
+				}],
 				messages: {},
 				CountActions: {
-					loadCounts: sinon.spy()
+					loadCounts: sinon.spy(),
 				},
-				ComponentActions: {},
+				ComponentActions: {
+					showEditModal: sinon.spy(),
+					showConfirmModal: sinon.spy(),
+				},
 				TranslationActions: {
+					loadTranslations: sinon.spy(),
 					updateTranslation: sinon.spy(),
-					loadTranslations: sinon.spy()
 				}
 			},
-			context = {
-				config: config
-			},
-			wrapper = mount(
-				<TablePanel {...props}/>,
-				{context: context}
-			);
+			wrapper = mount(<TablePanel {...props}/>);
 
 		expect(props.TranslationActions.loadTranslations).calledOnce;
 
@@ -103,22 +89,6 @@ describe('(component) TablePanel', () => {
 			const { wrapper } = setup()
 			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: "test" } });
 			expect(TablePanel.prototype.onQuickFilterText).calledOnce;
-		});
-	});
-
-	describe('child: OverlayTrigger', () => {
-		it('should have a Tooltip with required id "tooltip-locales" as a overlay', () => {
-			const { wrapper2 } = setup();
-			const overlay = wrapper2.find('OverlayTrigger').props().overlay;
-			expect(overlay.type).to.eql(Tooltip);
-			expect(overlay.props.id).to.eql('tooltip-locales');
-		});
-
-		it('should contain a iconic font', () => {
-			const { wrapper } = setup();
-			expect(wrapper.find('OverlayTrigger').contains(
-				<i className="fa fa-info-circle text-primary"/>
-			)).to.be.true;
 		});
 	});
 });

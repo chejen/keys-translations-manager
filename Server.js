@@ -7,6 +7,7 @@ import path from 'path'
 import compression from 'compression'
 import webpack from 'webpack'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
+import database from './db.config'
 import config from './ktm.config'
 import { LANGUAGES } from './src/constants/Languages'
 import TranslationController from './src/controllers/TranslationController'
@@ -24,7 +25,8 @@ let webpackConfig,
 	compiler;
 
 mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
-mongoose.connect(config.database, {
+mongoose.connect(database, {
+	useNewUrlParser: true,
 	socketTimeoutMS: 90000,
 	connectTimeoutMS: 90000
 }).then(
@@ -66,6 +68,7 @@ app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
 if (process.env.NODE_ENV === 'development') {
 	webpackConfig = require('./webpack.config.dev');

@@ -2,10 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
-import ConfigContext from '../../context/ConfigContext'
 import FormPanel from './FormPanel'
 import AlertPanel from './AlertPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import configUtil from '../../configUtil'
+
+const locales = configUtil.getLocales()
 
 export default class EditModal extends React.PureComponent {
 	static propTypes = {
@@ -18,12 +20,17 @@ export default class EditModal extends React.PureComponent {
 		clearErrors: PropTypes.func.isRequired
 	};
 
+	constructor() {
+		super();
+		this.updateTranslation = this.updateTranslation.bind(this);
+		this.close = this.close.bind(this);
+	}
+
 	/* istanbul ignore next */
-	updateTranslation(config) {
+	updateTranslation() {
 		const el = this.refFormPanel.getFormElements(),
 			projects = el["project[]"],
 			lenProjects = projects.length,
-			locales = config.locales,
 			lenLocales = locales.length;
 		let i, v, locale,
 			project = [],
@@ -45,13 +52,13 @@ export default class EditModal extends React.PureComponent {
 				project.push(projects[i].value);
 			}
 		}
-		if ( project.length > 0 ) {
+		if (project.length > 0) {
 			data.project = project
 		} else {
 			emptyFields.push(localeUtil.getMsg("ui.common.applyto"))
 		}
 
-		if ( emptyFields.length > 0 ) {
+		if (emptyFields.length > 0) {
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "u",
@@ -71,32 +78,28 @@ export default class EditModal extends React.PureComponent {
 		const { data, errors, clearErrors } = this.props;
 
 		return (
-			<ConfigContext.Consumer>
-				{config => (
-					<Modal show={this.props.showeditmodal} onHide={this.close.bind(this)}>
-						<Modal.Header>
-							<Modal.Title>
-								{localeUtil.getMsg("ui.common.edit")}
-							</Modal.Title>
-						</Modal.Header>
-						<Modal.Body>
-							<AlertPanel errors={errors} clearErrors={clearErrors} action="u"/>
-							<FormPanel
-								ref={cmp => { this.refFormPanel = cmp; }}
-								action="u" data={data} config={config}
-							/>
-						</Modal.Body>
-						<Modal.Footer>
-							<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation.bind(this, config)}>
-								{localeUtil.getMsg("ui.common.update")}
-							</Button>
-							<Button bsSize="small" onClick={this.close.bind(this)}>
-								{localeUtil.getMsg("ui.common.cancel")}
-							</Button>
-						</Modal.Footer>
-					</Modal>
-				)}
-			</ConfigContext.Consumer>
+			<Modal show={this.props.showeditmodal} onHide={this.close}>
+				<Modal.Header>
+					<Modal.Title>
+						{localeUtil.getMsg("ui.common.edit")}
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<AlertPanel errors={errors} clearErrors={clearErrors} action="u"/>
+					<FormPanel
+						ref={cmp => { this.refFormPanel = cmp; }}
+						action="u" data={data}
+					/>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation}>
+						{localeUtil.getMsg("ui.common.update")}
+					</Button>
+					<Button bsSize="small" onClick={this.close}>
+						{localeUtil.getMsg("ui.common.cancel")}
+					</Button>
+				</Modal.Footer>
+			</Modal>
 		);
 	}
 }

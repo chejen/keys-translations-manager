@@ -29,6 +29,16 @@
 		"coverage": "cross-env NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover node_modules/mocha/bin/_mocha tests/**/*.js --report lcovonly -- -R spec",
 		"codecov": "cat ./coverage/lcov.info | codecov"
 	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged && npm run test"
+		}
+	},
+	"lint-staged": {
+		"src/**/*.js": [
+			"eslint"
+		]
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/chejen/keys-translations-manager"
@@ -37,7 +47,6 @@
 		"node": ">=6"
 	},
 	"dependencies": {
-		"@babel/node": "^7.0.0-beta.53",
 		"ag-grid": "18.1.1",
 		"ag-grid-react": "18.1.0",
 		"archiver": "^2.1.0",
@@ -64,6 +73,7 @@
 		"react-redux": "^5.0.6",
 		"react-router": "^4.2.0",
 		"react-router-dom": "^4.2.2",
+		"react-table": "^6.8.6",
 		"redux": "^4.0.0",
 		"redux-thunk": "^2.2.0",
 		"socket.io": "^2.0.3",
@@ -84,7 +94,7 @@
 		"clean-css-cli": "^4.1.10",
 		"codecov": "^3.0.0",
 		"compression": "^1.7.1",
-		"css-loader": "^1.0.0",
+		"css-loader": "^0.28.7",
 		"ejs": "^2.5.7",
 		"enzyme": "^3.1.0",
 		"enzyme-adapter-react-16": "^1.0.2",

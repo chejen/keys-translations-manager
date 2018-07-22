@@ -4,20 +4,20 @@ import PropTypes from 'prop-types'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import TextField from './TextField'
+import configUtil from '../../configUtil'
+
+const locales = configUtil.getLocales();
+const projects = configUtil.getProjects();
 
 export default class FormPanel extends React.PureComponent {
 	static propTypes = {
-		config: PropTypes.object,
 		data: PropTypes.object,
 	};
 
 	constructor(props) {
 		super(props);
 
-		const config = props.config,
-			data = props.data,
-			locales = config.locales,
-			projects = config.projects;
+		const { data } = props;
 		let lenLocales = locales.length,
 			lenProjects = projects.length,
 			locale,
@@ -68,9 +68,7 @@ export default class FormPanel extends React.PureComponent {
 	}
 
 	render() {
-		const { config, data } = this.props,
-			locales = config.locales,
-			projects = config.projects,
+		const { data } = this.props,
 			lenLocales = locales.length,
 			lenProjects = projects.length,
 			getLabel = (key, text) => <div key={"label-" + key} className="app-input-label"><span className="app-input-asterisk">*</span> {text}:</div>
@@ -78,14 +76,16 @@ export default class FormPanel extends React.PureComponent {
 			projectGroup = [],
 			localeGroup = [];
 
-		for (i=0; i<lenLocales; i++) {
+		for (i = 0; i < lenLocales; i++) {
 			locale = locales[i]
 			localeGroup.push(
-				<TextField key={locale} label={localeUtil.getMsg("ui.common.locale") + " / " + locale}
-					name={locale} defaultValue={this.state[locale]} required/>
+				<TextField key={locale}
+					label={localeUtil.getMsg("ui.common.locale") + " / " + locale}
+					name={locale} defaultValue={this.state[locale]} required
+				/>
 			)
 		}
-		for (i=0; i<lenProjects; i++) {
+		for (i = 0; i < lenProjects; i++) {
 			p = projects[i];
 			projectGroup.push(
 				<Checkbox key={i} name="project[]" value={p.id} checked={this.state[p.id]}

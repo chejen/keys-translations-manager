@@ -13,17 +13,10 @@ function setup() {
 			alertErrors: sinon.spy(),
 			clearErrors: sinon.spy()
 		},
-		context = {
-			config: config
-		},
-		wrapper = shallow(
-			<ImportModal {...props}/>,
-			{context: context}
-		);
+		wrapper = shallow(<ImportModal {...props}/>);
 
 	return {
 		props,
-		context,
 		wrapper
 	}
 }
@@ -41,7 +34,7 @@ describe('(component) ImportModal', () => {
 
 	it('should contain <Dropzone>', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('Dropzone')).to.have.length(1);
+		expect(wrapper.find('.app-dropzone')).to.have.length(1);
 	});
 
 	it('should have 2 radio groups', () => {

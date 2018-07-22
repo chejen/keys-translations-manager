@@ -56,6 +56,13 @@
       "match": "以下這些 key 將會被合併:",
       "nomatch": "無符合合併條件的資料"
     },
+    "pagination": {
+      "next": "下一頁",
+      "of": "/",
+      "page": "頁",
+      "previous": "上一頁",
+      "rows": "筆"
+    },
     "tip": {
       "dataChanged": "資料已經被其他人異動過",
       "iconflicts": "(例) 在解析成 JSON 格式時，ui.common.add 會與 ui、ui.common、ui.common.add.* 等 key 發生衝突。",

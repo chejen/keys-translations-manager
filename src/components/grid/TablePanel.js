@@ -1,21 +1,15 @@
-import 'ag-grid/dist/styles/ag-grid.css'
-import 'ag-grid/dist/styles/ag-theme-dark.css'
-
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
 import Button from 'react-bootstrap/lib/Button'
 import InputGroup from 'react-bootstrap/lib/InputGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
-import { AgGridReact } from 'ag-grid-react'
+import ReactTable from "react-table"
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-import ConfigContext from '../../context/ConfigContext'
 import ActionCellRenderer from './ActionCellRenderer'
 import Mask from '../layout/Mask'
-import { getHost, getProjectName } from '../../configUtil'
+import { getLocales, getProjectName } from '../../configUtil'
 
-let ActionCellRendererHoc
+const locales = getLocales()
 
 export default class TablePanel extends React.PureComponent {
 	static propTypes = {
@@ -30,14 +24,8 @@ export default class TablePanel extends React.PureComponent {
 	constructor(props) {
 		super(props);
 
-		ActionCellRendererHoc = connect(
-			null,
-			dispatch => ({
-				ComponentActions: bindActionCreators(props.ComponentActions, dispatch),
-			})
-		)(ActionCellRenderer);
-
 		this.state = {
+			quickFilterText: null,
 			windowHeight: 0
 		};
 
@@ -79,45 +67,44 @@ export default class TablePanel extends React.PureComponent {
 	}
 
 	onQuickFilterText(event) {
-		this.refTable.handleSearch(event.target.value);
+		this.setState({
+			quickFilterText: event.target.value
+		});
 	}
 
 	downloadCsv() {
-		let url = getHost() + "/api/download/csv"
+		let url = '/api/download/csv'
 
 		/* istanbul ignore next */
 		location.href = url;
 	}
 
-	getColumnDefs(locales) {
-		// localeUtil.getMsg("ui.grid.empty")
+	getColumnDefs() {
 		return [
 			{
-				headerName: localeUtil.getMsg("ui.common.action"),
-				field: '_id',
-				cellRendererFramework: ActionCellRendererHoc,
-				width: 90,
-				pinned: 'left',
+				Header: localeUtil.getMsg("ui.common.action"),
+				accessor: '_id',
+				headerClassName: 'app-grid-header',
+				width: 85,
+				Cell: c => <ActionCellRenderer data={c.original} ComponentActions={this.props.ComponentActions} />
 			}, {
-				headerName: localeUtil.getMsg("ui.common.applyto"),
-				field: 'project',
-				valueFormatter: params => params.value.map(e => getProjectName(e)).join(', '),
-				pinned: 'left',
+				Header: localeUtil.getMsg("ui.common.applyto"),
+				accessor: 'project',
+				headerClassName: 'app-grid-header',
+				Cell: c => c.value.map(e => getProjectName(e)).join(', '),
 			}, {
-				headerName: 'Key',
-				field: 'key',
-				pinned: 'left',
-			}, {
-				headerName: `${localeUtil.getMsg("ui.common.locales")} (${localeUtil.getMsg("ui.grid.edit")})`,
-				children: locales.map(locale => ({
-					headerName: locale,
-					field: locale,
-					editable: true,
-				})),
-			}, {
-				headerName: localeUtil.getMsg("ui.common.desc"),
-				field: 'description',
-			},
+				Header: 'Key',
+				accessor: 'key',
+				headerClassName: 'app-grid-header',
+			}, ...locales.map(locale => ({
+				Header: `${localeUtil.getMsg("ui.common.locale")} / ${locale}`,
+				accessor: locale,
+				headerClassName: 'app-grid-header',
+			})), {
+				Header: localeUtil.getMsg("ui.common.desc"),
+				accessor: 'description',
+				headerClassName: 'app-grid-header',
+			}
 		];
 	}
 
@@ -128,41 +115,38 @@ export default class TablePanel extends React.PureComponent {
 						(typeof window === "undefined" ? minHeight + top : window.innerHeight);
 
 		return (
-			<ConfigContext.Consumer>
-				{config => (
-				<Fragment>
-					<InputGroup>
-						<InputGroup.Addon className="app-search-icon">
-							<i className="fa fa-search"/>
-						</InputGroup.Addon>
-						<FormControl type="text" className="app-search-bar"
-							placeholder={localeUtil.getMsg("ui.grid.search")}
-							onChange={this.onQuickFilterText}/>
-						<InputGroup.Button style={{"paddingLeft": "5px"}}>
-							<Button onClick={this.downloadCsv}>
-								<i className="fa fa-file-text-o"/> CSV
-							</Button>
-						</InputGroup.Button>
-					</InputGroup>
-					<div
-						className="ag-theme-dark"
-						style={{
-							marginTop: '3px',
-							height: `${(windowHeight < (minHeight + top) ? minHeight : windowHeight - top)}px`
-						}}
-					>
-						<AgGridReact
-							columnDefs={this.getColumnDefs(config.locales)}
-							rowData={this.props.translations || []}
-							enableColResize={true}
-							onCellEditingStopped={event => {
-								this.props.TranslationActions.updateTranslation(event.data);
-							}}
-						/>
-					</div>
-					<Mask show={!this.props.translations}/>
-				</Fragment>)}
-			</ConfigContext.Consumer>
+			<Fragment>
+				<InputGroup>
+					<InputGroup.Addon className="app-search-icon">
+						<i className="fa fa-search"/>
+					</InputGroup.Addon>
+					<FormControl type="text" className="app-search-bar"
+						placeholder={localeUtil.getMsg("ui.grid.search")}
+						onChange={this.onQuickFilterText}/>
+					<InputGroup.Button style={{"paddingLeft": "5px"}}>
+						<Button onClick={this.downloadCsv}>
+							<i className="fa fa-file-text-o"/> CSV
+						</Button>
+					</InputGroup.Button>
+				</InputGroup>
+				<ReactTable
+					data={this.props.translations || []}
+					columns={this.getColumnDefs()}
+					defaultPageSize={100}
+					previousText={localeUtil.getMsg("ui.pagination.previous")}
+					nextText={localeUtil.getMsg("ui.pagination.next")}
+					// loadingText: 'Loading...',
+					noDataText={localeUtil.getMsg("ui.grid.empty")}
+					pageText={localeUtil.getMsg("ui.pagination.page")}
+					ofText={localeUtil.getMsg("ui.pagination.of")}
+					rowsText={localeUtil.getMsg("ui.pagination.rows")}
+					style={{
+						height: `${(windowHeight < (minHeight + top) ? minHeight : windowHeight - top)}px`
+					}}
+					className='-striped -highlight'
+				/>
+				<Mask show={!this.props.translations}/>
+			</Fragment>
 		);
 	}
 }

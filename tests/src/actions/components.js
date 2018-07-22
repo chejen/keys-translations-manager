@@ -29,6 +29,25 @@ describe('(action) components', () => {
 		})
 	})
 
+	describe('showConfirmModal', () => {
+		it('should create an action to show EditModal', () => {
+			expect(actions.showConfirmModal(record))
+				.to.deep.equal({
+					type: 'SHOW_CONFIRMMODAL',
+					record
+				})
+		})
+	})
+
+	describe('closeConfirmModal', () => {
+		it('should create an action to close EditModal', () => {
+			expect(actions.closeConfirmModal())
+				.to.deep.equal({
+					type: 'CLOSE_CONFIRMMODAL'
+				})
+		})
+	})
+
 	describe('closeMergeModal', () => {
 		it('should create an action to close MergeModal', () => {
 			expect(actions.closeMergeModal())

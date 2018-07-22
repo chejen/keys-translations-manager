@@ -4,9 +4,9 @@
 @middle-color: #333;
 @light-color: #fff;
 @default-space: 10px;
-@dark-yellow: #f0ad4e;
+@dark-yellow: #fdb91a;
 @middle-yellow: #FDD11A;
-@light-yellow: #fef16d;
+@light-yellow: #ffffad;
 @light-blue: #d5edf8;
 @tip-color: rgba(0, 0, 0, 0.6);
 
@@ -67,12 +67,11 @@
 	height: auto;
 }
 .app-search-icon {
-	border: 1px solid @dark-yellow;
-	background-color: @middle-yellow;
-	color: @dark-color;
+	border: 1px solid @middle-color;
+	color: @middle-color;
 }
 .app-search-bar {
-	border: 1px solid @dark-yellow;
+	border: 1px solid @middle-color;
 }
 
 
@@ -125,10 +124,29 @@
 	left: -20px;
 }
 
+.app-grid-header {
+	background: @middle-color;
+	color: @light-color;
+	font-weight: 700;
+}
 
-.ag-header {
-	color: @middle-yellow !important;
-	font-weight: 700 !important;
+
+/* override */
+.ReactTable {
+	border: 1px solid @middle-color;
+}
+.ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
+	background: @light-yellow;
+}
+.ReactTable.-striped .rt-tr.-odd {
+	background: #ddd;
+}
+.btn-default {
+	border: 1px solid @middle-color;
+}
+.well {
+	background: #ddd;
+	border: 1px solid @middle-color;
 }
 
 
@@ -156,6 +174,9 @@ body {
 .panel-count {
 	border-color: @dark-yellow;
 	color: @middle-color;
+	a {
+		color: #000;
+	}
 }
 .panel-count .panel-heading {
 	background-color: @middle-yellow;
