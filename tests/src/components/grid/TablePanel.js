@@ -1,8 +1,7 @@
 import TablePanel from '../../../../src/components/grid/TablePanel'
-import Tooltip from 'react-bootstrap/lib/Tooltip'
 
 function setup() {
-	TablePanel.prototype.onQuickFilterText = sinon.spy()
+	window.removeEventListener = sinon.spy()
 	TablePanel.prototype.showEditModal = sinon.spy()
 
 	const props = {
@@ -12,6 +11,12 @@ function setup() {
 				"key": "ui.common.edit",
 				"project": ["p1"],
 				"zh-TW": "編輯"
+			}, {
+				"_id": "56d7037a0b70e760104ddf11",
+				"en-US": "Delete",
+				"key": "ui.common.delete",
+				"project": ["p1"],
+				"zh-TW": "刪除"
 			}],
 			messages: {},
 			CountActions: {},
@@ -84,11 +89,33 @@ describe('(component) TablePanel', () => {
 		expect(props.CountActions.loadCounts).calledOnce;
 	});
 
+	it('should remove listener when the component is about to unmount', () => {
+		const { wrapper } = setup()
+		wrapper.unmount();
+		expect(window.removeEventListener).calledOnce;
+	});
+
 	describe('child: InputGroup', () => {
 		it('should call onQuickFilterText() if input value changed', () => {
 			const { wrapper } = setup()
-			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: "test" } });
-			expect(TablePanel.prototype.onQuickFilterText).calledOnce;
+			const inputValue = 'test'
+			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: inputValue } });
+
+			expect(wrapper.state('quickFilterText')).not.to.eql(inputValue);
+			setTimeout(() => {
+				expect(wrapper.state('quickFilterText')).to.eql(inputValue);
+			}, 300);
+		});
+
+		it('should filter data if input value changed', () => {
+			const { wrapper } = setup()
+			const inputValue = 'delete'
+			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: inputValue } });
+
+			expect(wrapper.find('ReactTable').prop('data')).to.have.length(2);
+			setTimeout(() => {
+				expect(wrapper.find('ReactTable').prop('data')).to.have.length(1);
+			}, 300);
 		});
 	});
 });

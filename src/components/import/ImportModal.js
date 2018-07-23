@@ -60,13 +60,13 @@ export default class ImportModal extends React.PureComponent {
 	}
 
 	setProject(project) {
+		console.log('project', project);
 		this.setState({
 			selectedProject: project
 		})
 	}
 
-	/* istanbul ignore next */
-	onDrop(files) {
+	onDrop /* istanbul ignore next */ (files) {
 		const re = new RegExp("\\.(" + this.acceptTypes.join("|") + ")"),
 			file = files[0],
 			me = this;

@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/lib/Button'
 import InputGroup from 'react-bootstrap/lib/InputGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import ReactTable from "react-table"
+import debounce from 'lodash/debounce';
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import ActionCellRenderer from './ActionCellRenderer'
 import Mask from '../layout/Mask'
@@ -31,11 +32,13 @@ export default class TablePanel extends React.PureComponent {
 
 		//https://gist.github.com/Restuta/e400a555ba24daa396cc
 		this.handleResize = this.handleResize.bind(this);
+		this.debounceResize = debounce(this.handleResize, 150);
 		this.onQuickFilterText = this.onQuickFilterText.bind(this);
+		this.debounceFilter = debounce(this.handleFilter, 150);
 	}
 
 	componentDidMount() {
-		window.addEventListener('resize', this.handleResize);
+		window.addEventListener('resize', this.debounceResize);
 		this.loadData();
 	}
 
@@ -52,24 +55,27 @@ export default class TablePanel extends React.PureComponent {
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('resize', this.handleResize);
+		window.removeEventListener('resize', this.debounceResize);
 	}
 
 	loadData() {
 		this.props.TranslationActions.loadTranslations();
 	}
 
-	/* istanbul ignore next */
 	handleResize() {
 		this.setState({
 			windowHeight: window.innerHeight
 		});
 	}
 
-	onQuickFilterText(event) {
+	handleFilter(quickFilterText) {
 		this.setState({
-			quickFilterText: event.target.value
+			quickFilterText
 		});
+	}
+
+	onQuickFilterText(event) {
+		this.debounceFilter(event.target.value);
 	}
 
 	downloadCsv() {
@@ -111,8 +117,12 @@ export default class TablePanel extends React.PureComponent {
 	render() {
 		const minHeight = 200,
 			top = 370,
+			translations = this.props.translations || [],
+			data = this.state.quickFilterText
+					? translations.filter(e => JSON.stringify(e).indexOf(this.state.quickFilterText) >= 0)
+					: translations,
 			windowHeight = this.state.windowHeight ||
-						(typeof window === "undefined" ? minHeight + top : window.innerHeight);
+					(typeof window === "undefined" ? minHeight + top : window.innerHeight);
 
 		return (
 			<Fragment>
@@ -130,7 +140,7 @@ export default class TablePanel extends React.PureComponent {
 					</InputGroup.Button>
 				</InputGroup>
 				<ReactTable
-					data={this.props.translations || []}
+					data={data}
 					columns={this.getColumnDefs()}
 					defaultPageSize={100}
 					previousText={localeUtil.getMsg("ui.pagination.previous")}
