@@ -18,7 +18,7 @@
 	"author": "chejen",
 	"scripts": {
 		"postinstall": "npm run build",
-		"lint": "eslint \"src/**/*.js\"",
+		"lint": "eslint --ext .js,.jsx src/**",
 		"dev": "cross-env NODE_ENV=development nodemon --exec babel-node -- ./Server.js",
 		"start": "cross-env NODE_ENV=production babel-node ./Server.js",
 		"build": "npm run build:css && npm run build:js",
@@ -35,7 +35,7 @@
 		}
 	},
 	"lint-staged": {
-		"src/**/*.js": [
+		"src/**/*.{js,jsx}": [
 			"eslint"
 		]
 	},
