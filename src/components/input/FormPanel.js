@@ -98,7 +98,7 @@ export default class FormPanel extends React.PureComponent {
 		return(
 			<form ref={cmp => { this.refForm = cmp; }}>
 				{(this.state.action === "u")
-					? <TextField name="key" label="Key" value={data.key} readOnly required/>
+					? <TextField name="key" label="Key" defaultValue={data.key} required/>
 					: <TextField name="key" label="Key" required/>
 				}
 

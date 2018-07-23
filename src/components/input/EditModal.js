@@ -31,11 +31,21 @@ export default class EditModal extends React.PureComponent {
 		const el = this.refFormPanel.getFormElements(),
 			projects = el["project[]"],
 			lenProjects = projects.length,
-			lenLocales = locales.length;
-		let i, v, locale,
+			lenLocales = locales.length,
 			project = [],
 			emptyFields = [],
-			data = Object.assign({}, this.props.data, {description: el.description.value.trim()});
+			data = {
+				...this.props.data,
+				description: el.description.value.trim()
+			};
+		let k, i, v, locale;
+
+		k = el.key.value.trim()
+		if (k) {
+			data.key = k
+		} else {
+			emptyFields.push("Key")
+		}
 
 		for (i = 0; i < lenLocales; i++) {
 			locale = locales[i]
@@ -75,10 +85,10 @@ export default class EditModal extends React.PureComponent {
 	}
 
 	render() {
-		const { data, errors, clearErrors } = this.props;
+		const { showeditmodal, data, errors, clearErrors } = this.props;
 
 		return (
-			<Modal show={this.props.showeditmodal} onHide={this.close}>
+			<Modal show={showeditmodal} onHide={this.close} bsSize='lg'>
 				<Modal.Header>
 					<Modal.Title>
 						{localeUtil.getMsg("ui.common.edit")}
