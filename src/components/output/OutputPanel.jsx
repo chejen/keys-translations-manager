@@ -66,6 +66,13 @@ export default class OutputPanel extends React.PureComponent {
 		return(
 			<Well>
 				<Row>
+					{fileTypeList.map(e => (
+						<FileTypeCol key={e.value} value={e.value} label={e.label}
+							fileType={me.state.fileType}
+							onChange={me.setFileType.bind(me, e.value)} />
+					))}
+				</Row>
+				<Row>
 					{configUtil.getProjects().map(e => (
 						<CountCol key={e.id}
 							onClick={me.download.bind(me, e)}
@@ -73,13 +80,6 @@ export default class OutputPanel extends React.PureComponent {
 							desc={(projectCounts && projectCounts[e.id] === 1) ? "key" : "keys"}
 							count={projectCounts ? (projectCounts[e.id] || 0) : 0}
 						/>
-					))}
-				</Row>
-				<Row>
-					{fileTypeList.map(e => (
-						<FileTypeCol key={e.value} value={e.value} label={e.label}
-							fileType={me.state.fileType}
-							onChange={me.setFileType.bind(me, e.value)} />
 					))}
 				</Row>
 			</Well>

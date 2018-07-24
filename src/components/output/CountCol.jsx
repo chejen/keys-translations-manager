@@ -2,19 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Col from 'react-bootstrap/lib/Col'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 const CountCol = ({ projectId, header, onClick, count, desc }) => (
 	<Col lg={2} md={3} sm={4}>
-		<div className="panel panel-count">
+		<div className="panel panel-container">
 			<div className="panel-heading">
 				<div className="panel-title app-ellipsis" title={header}>
 					{header}
 				</div>
 				<div className="panel-glyph">
-					<Glyphicon
-						glyph="download-alt"
+					<i
+						className="fas fa-arrow-circle-down fa-lg"
 						title={localeUtil.getMsg("ui.common.download")}
 						style={{cursor:"pointer"}}
 						onClick={onClick}
@@ -22,7 +21,7 @@ const CountCol = ({ projectId, header, onClick, count, desc }) => (
 				</div>
 			</div>
 			<div className="row">
-				<div className="huge text-center">
+				<div className="panel-count text-center">
 					<b>
 					{count ? <Link to={`/vis/${projectId}`}>{count}</Link> : count}
 					</b>

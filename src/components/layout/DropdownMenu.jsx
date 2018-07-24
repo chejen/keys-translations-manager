@@ -18,7 +18,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 					}
 					showImportModal();
 				}}>
-					<i className="fa fa-cloud-upload fa-fw fa-lg"/>
+					<i className="fa fa-file-import fa-fw fa-lg"/>
 				</a>
 			</li>
 			<li className="dropdown" title={localeUtil.getMsg("ui.common.merge")}>
@@ -28,12 +28,13 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 					}
 					findMergeable();
 				}}>
-					<i className="fa fa-code-fork fa-flip-vertical fa-fw fa-lg"/>
+					<i className="fas fa-share-alt fa-flip-horizontal fa-fw fa-lg"/>
 				</a>
 			</li>
 			<li className="dropdown" title={localeUtil.getMsg("ui.common.language")}>
 				<a className="dropdown-toggle" data-toggle="dropdown" href="#">
-					<i className="fa fa-language fa-fw fa-lg"/>
+					<i className="fas fa-globe fa-fw fa-lg"/>
+					{' '}
 					<i className="fa fa-caret-down"/>
 				</a>
 				<ul className="dropdown-menu dropdown-user">
@@ -43,7 +44,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 							}
 							loadMsg("en-US");
 						}}>
-						<i className="fa fa-language fa-fw"/> English (en-US)
+						<i className="fas fa-globe-americas fa-fw"/> English (en-US)
 					</a></li>
 					<li><a href="#" onClick={event => {
 							if (event) {
@@ -51,7 +52,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 							}
 							loadMsg("zh-TW");
 						}}>
-						<i className="fa fa-language fa-fw"/> 繁體中文 (zh-TW)
+						<i className="fas fa-globe-asia fa-fw"/> 繁體中文 (zh-TW)
 					</a></li>
 				</ul>
 			</li>

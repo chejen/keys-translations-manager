@@ -128,14 +128,14 @@ export default class TablePanel extends React.PureComponent {
 			<Fragment>
 				<InputGroup>
 					<InputGroup.Addon className="app-search-icon">
-						<i className="fa fa-search"/>
+						<i className="fas fa-search"/>
 					</InputGroup.Addon>
 					<FormControl type="text" className="app-search-bar"
 						placeholder={localeUtil.getMsg("ui.grid.search")}
 						onChange={this.onQuickFilterText}/>
 					<InputGroup.Button style={{"paddingLeft": "5px"}}>
 						<Button onClick={this.downloadCsv}>
-							<i className="fa fa-file-text-o"/> CSV
+							<i className="fas fa-file-export"/> CSV
 						</Button>
 					</InputGroup.Button>
 				</InputGroup>

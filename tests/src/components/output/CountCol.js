@@ -35,10 +35,10 @@ describe('(component) CountCol', () => {
 			expect(wrapper.find('.panel-heading').find('.app-ellipsis').props().children).to.be.equal('header');
 		});
 
-		describe('child: Glyphicon', () => {
+		describe('child: icon', () => {
 			it('should call onClick() if it is clicked', () => {
 				const { props, wrapper } = setup()
-				wrapper.find('.panel-heading').find('Glyphicon').simulate('click');
+				wrapper.find('.panel-heading').find('i').simulate('click');
 				expect(props.onClick).calledOnce;
 			});
 		});
@@ -60,7 +60,7 @@ describe('(component) CountCol', () => {
 				},
 				wrapper = shallow(<CountCol {...props}/>);
 
-			expect(wrapper.find('.huge').contains(
+			expect(wrapper.find('.panel-count').contains(
 				<b>{props.count}</b>
 			)).to.be.true;
 		});
@@ -68,7 +68,7 @@ describe('(component) CountCol', () => {
 		it('should show count with Link if count is larger than 0', () => {
 			const { props, wrapper } = setup()
 			const { projectId, count } = props
-			expect(wrapper.find('.huge').contains(
+			expect(wrapper.find('.panel-count').contains(
 				<b><Link to={`/vis/${projectId}`}>{count}</Link></b>
 			)).to.be.true;
 		});
