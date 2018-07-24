@@ -1,6 +1,7 @@
 import io from 'socket.io-client'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { hot } from 'react-hot-loader'
 import { Route } from 'react-router-dom'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import AlertPanel from './components/input/AlertPanel'
@@ -20,7 +21,7 @@ import VisContainer from './containers/VisContainer'
 import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
 
-export default class App extends React.PureComponent {
+class App extends React.PureComponent {
 	static propTypes = {
 		children: PropTypes.node,
 		lang: PropTypes.string.isRequired,
@@ -178,3 +179,5 @@ export default class App extends React.PureComponent {
 		);
 	}
 }
+
+export default hot(module)(App)
