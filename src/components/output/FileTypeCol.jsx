@@ -11,7 +11,8 @@ const FileTypeCol = ({ value, fileType, label, onChange }) => (
 			checked={fileType === value}
 			onChange={onChange}
 		/>
-		{` ${label}`}
+		{' '}
+		<b>{label}</b>
 	</Col>
 );
 

@@ -9,7 +9,6 @@ import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Button from 'react-bootstrap/lib/Button'
 import Label from 'react-bootstrap/lib/Label'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import Mask from '../layout/Mask'
 import Tooltip from './Tooltip'
 
@@ -365,12 +364,14 @@ export default class Tree extends React.PureComponent {
 					{desc && <div className="app-tooltip-desc">{desc}</div>}
 					<div className="app-tooltip-content">{content}</div>
 					<div className="app-tooltip-footer">
-						<Glyphicon glyph="edit" className="app-action-icon"
+						<i className="fas fa-pen app-action-icon"
 							title={localeUtil.getMsg("ui.common.edit")}
-							onClick={this.showEditModal.bind(this, data)}/>
-						{data && <Glyphicon glyph="trash" className="app-action-icon"
+							onClick={this.showEditModal.bind(this, data)}
+						/>
+						{data && <i className="far fa-trash-alt app-action-icon"
 							title={localeUtil.getMsg("ui.common.delete")}
-							onClick={this.showConfirmModal.bind(this, data)}/>}
+							onClick={this.showConfirmModal.bind(this, data)}
+						/>}
 					</div>
 				</Tooltip>
 				<Mask show={!this.props.treedata}/>

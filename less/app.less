@@ -1,14 +1,16 @@
 /* variables */
-@warning-color: #F92672;
+@warning-color: #f92672;
 @dark-color: #000;
 @middle-color: #333;
 @light-color: #fff;
-@default-space: 10px;
+@middle-gray: #ddd;
+@light-gray: #f0f0f0;
 @dark-yellow: #fdb91a;
-@middle-yellow: #FDD11A;
-@light-yellow: #ffffad;
+@middle-yellow: #fdd11a;
+@light-yellow: #fcf8e3;
 @light-blue: #d5edf8;
 @tip-color: rgba(0, 0, 0, 0.6);
+@default-space: 10px;
 
 /* styles */
 .app-input-asterisk {
@@ -136,20 +138,20 @@
 
 /* override */
 .ReactTable {
-	border: 1px solid @middle-color;
+	border: 1px solid @middle-gray;
 }
 .ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
 	background: @light-yellow;
 }
 .ReactTable.-striped .rt-tr.-odd {
-	background: #ddd;
+	background: @light-gray;
 }
 .btn-default {
-	border: 1px solid @middle-color;
+	border: 1px solid @middle-gray;
 }
 .well {
-	background: #ddd;
-	border: 1px solid @middle-color;
+	background: @light-gray;
+	border: 1px solid @middle-gray;
 }
 
 

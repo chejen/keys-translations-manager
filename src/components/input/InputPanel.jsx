@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import FormPanel from './FormPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
@@ -73,7 +72,9 @@ export default class InputPanel extends React.PureComponent {
 				/>
 				<div className="app-input-btn-add pull-right">
 					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation.bind(this)}>
-						<Glyphicon glyph="plus"/> {localeUtil.getMsg("ui.common.add")}
+						<i className="fas fa-plus-circle fa-lg" />
+						{' '}
+						{localeUtil.getMsg("ui.common.add")}
 					</Button>
 				</div>
 			</Fragment>

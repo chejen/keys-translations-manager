@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/lib/Alert'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
 import Tooltip from 'react-bootstrap/lib/Tooltip'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -74,7 +73,7 @@ const AlertPanel = ({ clearErrors, errors, action }) => {
 	}
 
 	return (errMsg.length > 0) ? (<Alert bsStyle="danger" onDismiss={clearErrors}>
-			{errMsg.map(e => <p key={counter++}><Glyphicon glyph="alert"/> {e}</p>)}
+			{errMsg.map(e => <p key={counter++}><i className="fas fa-exclamation-triangle fa-lg"/> {e}</p>)}
 		</Alert>) : (action === "c" ? <br/> : null);
 }
 

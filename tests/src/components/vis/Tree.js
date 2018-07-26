@@ -71,28 +71,28 @@ describe('(component) Tree', () => {
 			expect(wrapper.find('.app-tooltip-desc')).to.have.length(1);
 		});
 
-		it('should contain "trash" Glyphicon if state.data exists', () => {
+		it('should contain "trash" icon if state.data exists', () => {
 			const { wrapper } = setup()
-			expect(wrapper.find('Glyphicon[glyph="edit"]')).to.have.length(1);
-			expect(wrapper.find('Glyphicon[glyph="trash"]')).to.have.length(0);
+			expect(wrapper.find('i[className="fas fa-pen app-action-icon"]')).to.have.length(1);
+			expect(wrapper.find('i[className="far fa-trash-alt app-action-icon"]')).to.have.length(0);
 
 			wrapper.setState({ "data": {} });
-			expect(wrapper.find('Glyphicon[glyph="trash"]')).to.have.length(1);
+			expect(wrapper.find('i[className="far fa-trash-alt app-action-icon"]')).to.have.length(1);
 		});
 
-		describe('child: "edit" Glyphicon', () => {
+		describe('child: "edit" icon', () => {
 			it('should call showEditModal() if clicked', () => {
 				const { props, wrapper } = setup()
-				wrapper.find('Glyphicon[glyph="edit"]').first().simulate('click');
+				wrapper.find('i[className="fas fa-pen app-action-icon"]').first().simulate('click');
 				expect(props.ComponentActions.showEditModal).calledOnce;
 			});
 		});
 
-		describe('child: "trash" Glyphicon', () => {
+		describe('child: "trash" icon', () => {
 			it('should call showConfirmModal() if clicked', () => {
 				const { wrapper } = setup();
 				wrapper.setState({ "data": {} });
-				wrapper.find('Glyphicon[glyph="trash"]').first().simulate('click');
+				wrapper.find('i[className="far fa-trash-alt app-action-icon"]').first().simulate('click');
 				expect(Tree.prototype.showConfirmModal).calledOnce;
 			});
 		});

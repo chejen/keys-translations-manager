@@ -51,7 +51,6 @@
 		"ag-grid-react": "18.1.0",
 		"archiver": "^2.1.0",
 		"body-parser": "^1.18.2",
-		"bootstrap": "~3.3.7",
 		"cross-env": "^5.2.0",
 		"d3-hierarchy": "^1.1.5",
 		"d3-selection": "^1.1.0",

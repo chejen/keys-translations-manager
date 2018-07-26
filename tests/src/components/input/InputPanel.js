@@ -22,7 +22,7 @@ describe('(component) InputPanel', () => {
 
 	it('should contain an Add button', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('Button').find('Glyphicon').props().glyph).to.eql('plus');
+		expect(wrapper.find('Button').find('i').hasClass('fa-plus-circle')).to.eql(true);
 	});
 
 	describe('child: Button', () => {
