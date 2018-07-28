@@ -30,7 +30,7 @@ describe('(action) components', () => {
 	})
 
 	describe('showConfirmModal', () => {
-		it('should create an action to show EditModal', () => {
+		it('should create an action to show ConfirmModal', () => {
 			expect(actions.showConfirmModal(record))
 				.to.deep.equal({
 					type: 'SHOW_CONFIRMMODAL',
@@ -40,10 +40,29 @@ describe('(action) components', () => {
 	})
 
 	describe('closeConfirmModal', () => {
-		it('should create an action to close EditModal', () => {
+		it('should create an action to close ConfirmModal', () => {
 			expect(actions.closeConfirmModal())
 				.to.deep.equal({
 					type: 'CLOSE_CONFIRMMODAL'
+				})
+		})
+	})
+
+	describe('showHistoryModal', () => {
+		it('should create an action to show HistoryModal', () => {
+			expect(actions.showHistoryModal('whateverid'))
+				.to.deep.equal({
+					type: 'SHOW_HISTORYMODAL',
+					translationId: 'whateverid'
+				})
+		})
+	})
+
+	describe('closeHistoryModal', () => {
+		it('should create an action to close HistoryModal', () => {
+			expect(actions.closeHistoryModal())
+				.to.deep.equal({
+					type: 'CLOSE_HISTORYMODAL'
 				})
 		})
 	})

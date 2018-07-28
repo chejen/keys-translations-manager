@@ -12,6 +12,7 @@ import MainPanel from './components/layout/MainPanel'
 import SideBar from './components/layout/SideBar'
 import MessagePopup from './components/layout/MessagePopup'
 import OutputPanel from './components/output/OutputPanel'
+import HistoryModal from './components/history/HistoryModal'
 import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
 import ImportModal from './components/import/ImportModal'
@@ -29,6 +30,7 @@ class App extends React.PureComponent {
 		counts: PropTypes.object.isRequired,
 		errors: PropTypes.array.isRequired,
 		translations: PropTypes.array,
+		showhistorymodal: PropTypes.bool.isRequired,
 		showeditmodal: PropTypes.bool.isRequired,
 		showconfirmmodal: PropTypes.bool.isRequired,
 		showmergemodal: PropTypes.bool.isRequired,
@@ -37,12 +39,16 @@ class App extends React.PureComponent {
 		emitdatachange: PropTypes.bool.isRequired,
 		reloaddata: PropTypes.bool.isRequired,
 		editrecord: PropTypes.object.isRequired,
+		history: PropTypes.array.isRequired,
+		historystatus: PropTypes.string.isRequired,
+		translationId: PropTypes.string.isRequired,
 		keys: PropTypes.object.isRequired,
 		mergeable: PropTypes.array.isRequired,
 
 		MessageActions: PropTypes.object.isRequired,
 		CountActions: PropTypes.object.isRequired,
 		TranslationActions: PropTypes.object.isRequired,
+		HistoryActions: PropTypes.object.isRequired,
 		KeyActions: PropTypes.object.isRequired,
 		ErrorActions: PropTypes.object.isRequired,
 		SocketActions: PropTypes.object.isRequired,
@@ -95,10 +101,11 @@ class App extends React.PureComponent {
 	render() {
 		const {
 			MessageActions, TranslationActions, CountActions,
-			KeyActions, ErrorActions, ComponentActions,
-			lang, messages, counts, errors,
-			translations, showeditmodal, editrecord, reloaddata,
-			showconfirmmodal, showmergemodal, keys, mergeable,
+			HistoryActions, KeyActions, ErrorActions, ComponentActions,
+			lang, messages, counts, errors, translations,
+			showeditmodal, showconfirmmodal, editrecord, reloaddata,
+			showhistorymodal, translationId, history, historystatus,
+			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
 
 		localeUtil.setMessages(messages);
@@ -142,6 +149,14 @@ class App extends React.PureComponent {
 							showconfirmmodal={showconfirmmodal}
 							closeConfirmModal={ComponentActions.closeConfirmModal}
 							removeTranslation={TranslationActions.removeTranslation}
+						/>
+						<HistoryModal
+							translationId={translationId}
+							showhistorymodal={showhistorymodal}
+							history={history}
+							historystatus={historystatus}
+							closeHistoryModal={ComponentActions.closeHistoryModal}
+							loadHistory={HistoryActions.loadHistory}
 						/>
 						<Route exact path="/" render={() => (
 							<TablePanel messages={messages}

@@ -45,7 +45,7 @@ const MergeModal = ({
 					</Button>
 				</Modal.Footer> :
 				<Modal.Footer>
-					<Button bsSize="small" bsStyle="primary" onClick={closeMergeModal}>
+					<Button bsSize="small" onClick={closeMergeModal}>
 						{localeUtil.getMsg("ui.common.close")}
 					</Button>
 				</Modal.Footer>

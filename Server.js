@@ -11,6 +11,7 @@ import database from './db.config'
 import config from './ktm.config'
 import { LANGUAGES } from './src/constants/Languages'
 import TranslationController from './src/controllers/TranslationController'
+import HistoryController from './src/controllers/HistoryController'
 import KeyController from './src/controllers/KeyController'
 import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
@@ -86,7 +87,7 @@ if (process.env.NODE_ENV === 'development') {
 	})).use(require('webpack-hot-middleware')(compiler));
 	app.get(['/', '/vis/*'], function(req, res) {
 		const markup = ['<div style="color:orange;text-align:center">',
-							'<i class="fa fa-spinner fa-pulse fa-2x"></i>',
+							'<i class="fas fa-spinner fa-spin fa-2x"></i>',
 						'</div>'].join("")
 		const css = ''
 		const vendor = ''
@@ -137,6 +138,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use("/api/translation", TranslationController);
+app.use("/api/history", HistoryController);
 app.use("/api/key", KeyController);
 app.use("/api/count", CountController);
 app.use("/api/download", DownloadController);

@@ -26,6 +26,19 @@ export function closeConfirmModal() {
 	}
 }
 
+export function showHistoryModal(translationId) {
+	return {
+		type: ActionTypes.SHOW_HISTORYMODAL,
+		translationId,
+	}
+}
+
+export function closeHistoryModal() {
+	return {
+		type: ActionTypes.CLOSE_HISTORYMODAL
+	}
+}
+
 export function closeMergeModal() {
 	return {
 		type: ActionTypes.CLOSE_MERGEMODAL

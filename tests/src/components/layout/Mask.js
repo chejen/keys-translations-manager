@@ -26,8 +26,8 @@ describe('(component) Mask', () => {
 	});
 
 	it('should have one icon font', () => {
-		const { props, wrapper } = setup()
-		expect(wrapper.find('i')).to.have.length(1);
+		const { wrapper } = setup()
+		expect(wrapper.find('Spinner')).to.have.length(1);
 	});
 
 });

@@ -19,10 +19,13 @@ function setup() {
 				"zh-TW": "刪除"
 			}],
 			messages: {},
-			CountActions: {},
+			CountActions: {
+				loadCounts: sinon.spy(),
+			},
 			ComponentActions: {
 				showEditModal: sinon.spy(),
 				showConfirmModal: sinon.spy(),
+				showHistoryModal: sinon.spy(),
 			},
 			TranslationActions: {
 				loadTranslations: sinon.spy(),
@@ -59,28 +62,11 @@ describe('(component) TablePanel', () => {
 	});
 
 	it('should call loadTranslations() when component is mounted', () => {
-		const props = {
-				translations: [{
-					"_id": "56d7037a0b70e760104ddf10",
-					"en-US": "Edit",
-					"key": "ui.common.edit",
-					"project": ["p1"],
-					"zh-TW": "編輯"
-				}],
-				messages: {},
-				CountActions: {
-					loadCounts: sinon.spy(),
-				},
-				ComponentActions: {
-					showEditModal: sinon.spy(),
-					showConfirmModal: sinon.spy(),
-				},
-				TranslationActions: {
-					loadTranslations: sinon.spy(),
-					updateTranslation: sinon.spy(),
-				}
-			},
-			wrapper = mount(<TablePanel {...props}/>);
+		const { props } = setup();
+		props.TranslationActions.loadTranslations.resetHistory();
+		props.CountActions.loadCounts.resetHistory();
+
+		const wrapper = mount(<TablePanel {...props}/>);
 
 		expect(props.TranslationActions.loadTranslations).calledOnce;
 

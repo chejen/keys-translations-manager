@@ -12,6 +12,10 @@ const ActionCellRenderer = ({ data, ComponentActions }) => (
 			title={localeUtil.getMsg("ui.common.delete")}
 			onClick={ComponentActions.showConfirmModal.bind(ComponentActions, data)}
 		/>
+		<i className="fas fa-list-ul app-action-icon"
+			title={localeUtil.getMsg("ui.common.history")}
+			onClick={ComponentActions.showHistoryModal.bind(ComponentActions, data._id)}
+		/>
 	</Fragment>
 )
 

@@ -142,7 +142,7 @@ export default class TablePanel extends React.PureComponent {
 				<ReactTable
 					data={data}
 					columns={this.getColumnDefs()}
-					defaultPageSize={100}
+					defaultPageSize={25}
 					previousText={localeUtil.getMsg("ui.pagination.previous")}
 					nextText={localeUtil.getMsg("ui.pagination.next")}
 					// loadingText: 'Loading...',

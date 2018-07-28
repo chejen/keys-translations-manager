@@ -60,7 +60,6 @@ export default class ImportModal extends React.PureComponent {
 	}
 
 	setProject(project) {
-		console.log('project', project);
 		this.setState({
 			selectedProject: project
 		})
@@ -101,7 +100,7 @@ export default class ImportModal extends React.PureComponent {
 			}
 		}
 
-		if ( emptyFields.length > 0 ) {
+		if (emptyFields.length > 0) {
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "i",
@@ -119,10 +118,14 @@ export default class ImportModal extends React.PureComponent {
 
 	render() {
 		const me = this,
-			{ errors, clearErrors } = this.props;
+			{
+				showimportmodal,
+				errors,
+				clearErrors
+			} = this.props;
 
 		return (
-			<Modal show={this.props.showimportmodal} onHide={this.close}>
+			<Modal show={showimportmodal} onHide={this.close}>
 				<Modal.Header>
 					<Modal.Title>
 						{localeUtil.getMsg("ui.common.import")}

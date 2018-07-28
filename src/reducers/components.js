@@ -52,6 +52,17 @@ export default function components(state = INIT_COMPONENTS, action) {
 				...state,
 				showeditmodal: false
 			};
+		case ActionTypes.SHOW_HISTORYMODAL:
+			return {
+				...state,
+				showhistorymodal: true,
+				translationId: action.translationId,
+			};
+		case ActionTypes.CLOSE_HISTORYMODAL:
+			return {
+				...state,
+				showhistorymodal: false
+			};
 		case ActionTypes.SHOW_CONFIRMMODAL:
 			return {
 				...state,

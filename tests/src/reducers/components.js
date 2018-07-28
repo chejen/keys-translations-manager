@@ -304,6 +304,39 @@ describe('(reducer) components', function() {
 			.to.deep.equal(record);
 	})
 
+	it('should handle SHOW_HISTORYMODAL', () => {
+		expect(
+			reducer(INIT_COMPONENTS, {
+				type: 'SHOW_HISTORYMODAL',
+				translationId: 'testId',
+			})
+		).to.be.an('object')
+		.to.have.property('showhistorymodal')
+			.that.is.true
+
+		expect(
+			reducer(undefined, {
+				type: 'SHOW_HISTORYMODAL',
+				translationId: 'testId'
+			})
+		).to.have.property('translationId')
+			.that.is.an('string')
+			.to.eql('testId');
+	})
+
+	it('should handle CLOSE_HISTORYMODAL', () => {
+		expect(
+			reducer({
+				showhistorymodal: true,
+				translationId: 'testId',
+			}, {
+				type: 'CLOSE_HISTORYMODAL'
+			})
+		).to.be.an('object')
+		.to.have.property('showhistorymodal')
+			.that.is.false
+	})
+
 	it('should handle RELOAD_DATA', () => {
 		expect(
 			reducer(INIT_COMPONENTS, {
