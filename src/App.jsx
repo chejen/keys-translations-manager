@@ -39,7 +39,7 @@ class App extends React.PureComponent {
 		emitdatachange: PropTypes.bool.isRequired,
 		reloaddata: PropTypes.bool.isRequired,
 		editrecord: PropTypes.object.isRequired,
-		history: PropTypes.array.isRequired,
+		historylog: PropTypes.array.isRequired,
 		historystatus: PropTypes.string.isRequired,
 		translationId: PropTypes.string.isRequired,
 		keys: PropTypes.object.isRequired,
@@ -104,7 +104,7 @@ class App extends React.PureComponent {
 			HistoryActions, KeyActions, ErrorActions, ComponentActions,
 			lang, messages, counts, errors, translations,
 			showeditmodal, showconfirmmodal, editrecord, reloaddata,
-			showhistorymodal, translationId, history, historystatus,
+			showhistorymodal, translationId, historylog, historystatus,
 			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
 
@@ -153,7 +153,7 @@ class App extends React.PureComponent {
 						<HistoryModal
 							translationId={translationId}
 							showhistorymodal={showhistorymodal}
-							history={history}
+							historylog={historylog}
 							historystatus={historystatus}
 							closeHistoryModal={ComponentActions.closeHistoryModal}
 							loadHistory={HistoryActions.loadHistory}

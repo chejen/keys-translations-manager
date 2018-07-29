@@ -1,15 +1,8 @@
 module.exports = {
 	findMergeable: function(translations, locales) {
-		if (!translations || !locales) {
-			return {
-				keys: {},
-				mergeable: []
-			};
-		}
-
 		var translation,
-			l = translations.length,
-			lenLocales = locales.length,
+			l,
+			lenLocales,
 			keyHash = {},
 			keyCollision,
 			translationHash,
@@ -17,6 +10,16 @@ module.exports = {
 			translationSet,
 			keys = {},
 			mergeable = [];
+
+		if (!translations || !locales) {
+			return {
+				keys: {},
+				mergeable: []
+			};
+		}
+
+		l = translations.length;
+		lenLocales = locales.length;
 
 		while(l--){
 			translation = translations[l];
@@ -35,7 +38,7 @@ module.exports = {
 				for (var j=0, kc; j < keyCollision.length; j++) {
 					translationSet = "";
 					kc = keyCollision[j];
-					
+
 					for (var i=0; i < lenLocales; i++) {
 						translationSet += (kc[ locales[i] ] ? kc[ locales[i] ] : "");
 					}
@@ -47,7 +50,7 @@ module.exports = {
 						translationHash[translationSet] = [kc];
 					}
 				}
-				
+
 				for (var innerKey in translationHash) {
 					if (translationHash[innerKey].length >= 2) {
 						keys[key] = true;

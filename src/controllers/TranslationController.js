@@ -59,8 +59,8 @@ const getUniqueElements = (ary) => {
 							const log = {
 								time: +new Date(),
 								action: action === 'u' ? 'EDIT' : 'ADD',
-								user: 'system',
-								diff: translation,
+								// user: 'system',
+								translation,
 							};
 
 							if (history) {
@@ -236,16 +236,47 @@ router.route('/:id')
 				});
 		})
 		.delete(function(req, res) {
+			const translationId = req.params.id
 			Translations.remove({
-				_id: req.params.id
+				_id: translationId
 			}, function(err, count) {
 				if (err) {
 					res.status(500).send(err);
 				}
-				res.json({
-					id: req.params.id,
-					count: count
-				});
+
+				getHistoryByTranslationId(translationId)
+					.then(history => {
+						const log = {
+							time: +new Date(),
+							action: 'DELETE',
+							// user: 'system',
+							translation: null,
+						};
+
+						if (history) {
+							history.isDeleted = true
+							history.logs = [...history.logs, log]
+						} else {
+							history = new History({
+								translationId: translationId,
+								isDeleted: true,
+								logs: [log]
+							});
+						}
+
+						history.save(() => {
+							if (err) {
+								res.status(500).send(err);
+							}
+							res.json({
+								id: translationId,
+								count: count
+							});
+						})
+					})
+					.catch(err => {
+						res.status(500).send(err);
+					});
 			});
 		});
 

@@ -4,7 +4,7 @@
 @middle-color: #333;
 @light-color: #fff;
 @middle-gray: #ddd;
-@light-gray: #f0f0f0;
+@light-gray: #eee;
 @dark-yellow: #fdb91a;
 @middle-yellow: #fdd11a;
 @light-yellow: #fcf8e3;
@@ -79,6 +79,55 @@
 	border: 1px solid @middle-color;
 }
 
+.app-diff-container {
+	border: 1px solid @dark-yellow;
+	border-radius: 3px;
+	padding: 5px;
+	margin-bottom: 20px;
+}
+.app-diff-title {
+	display: flex;
+	padding: 5px 0;
+}
+.app-diff-collapse {
+	margin: 2px 15px 0 5px;
+	cursor: pointer;
+	color: #337ab7;
+}
+.app-diff-table {
+	td {
+		padding: 3px 7px 0;
+	}
+	.app-diff-row-ori, .app-diff-row-del, .app-diff-row-add {
+		td {
+			&:first-child {
+				display: inline-block;
+				width: 90px;
+				white-space: nowrap;
+			}
+			&:last-child {
+				width: 100%;
+			}
+		}
+	}
+	.app-diff-row-ori {
+		td:first-child {
+			background: @light-gray;
+		}
+	}
+	.app-diff-row-del {
+		background: #ffdce0;
+		td:first-child {
+			background: #fdaeb7;
+		}
+	}
+	.app-diff-row-add {
+		background: #ddffe8;
+		td:first-child {
+			background: #bef5cb;
+		}
+	}
+}
 
 .app-ellipsis {
 	white-space: nowrap;

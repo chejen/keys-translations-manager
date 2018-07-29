@@ -6,6 +6,10 @@ var mongoose = require('mongoose'),
 			unique: true,
 			index: true,
 		},
+		isDeleted: {
+			type: Boolean,
+			default: false,
+		},
 		logs: [{
 			time: {
 				type: Number,
@@ -18,7 +22,7 @@ var mongoose = require('mongoose'),
 				type: String,
 				trim: true,
 			},
-			diff: {
+			translation: {
 				type: Object,
 			}
 		}],

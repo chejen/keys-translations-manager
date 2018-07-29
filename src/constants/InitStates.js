@@ -27,7 +27,7 @@ export const INIT_MESSAGES = {
 };
 export const INIT_TRANSLATIONS = null;
 export const INIT_HISTORY = {
-	history: [],
+	historylog: [],
 	historystatus: Status.STATUS_FETCHED,
 };
 export const INIT_VIS = {

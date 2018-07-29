@@ -2,10 +2,10 @@ import { LOAD_HISTORY } from '../constants/ActionTypes'
 import * as Status from '../constants/Status'
 import configUtil from '../configUtil'
 
-const setHistory = (status, history) => ({
+const setHistory = (status, historylog) => ({
 	type: LOAD_HISTORY,
 	status,
-	history,
+	historylog,
   });
 
 export function loadHistory(translationId) {
