@@ -49,6 +49,15 @@
       "empty": "無資料",
       "search": "關鍵字搜尋"
     },
+    "history": {
+      "add": "新增",
+      "at": "於",
+      "delete": "刪除",
+      "edit": "編輯",
+      "import": "匯入",
+      "merge": "合併",
+      "none": "無此翻譯的歷史記錄。"
+    },
     "json": {
       "format": "格式化",
       "mini": "最小化"

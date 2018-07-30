@@ -49,6 +49,15 @@
       "empty": "No data",
       "search": "Search"
     },
+    "history": {
+      "add": "Added",
+      "at": "at",
+      "delete": "Deleted",
+      "edit": "Edited",
+      "import": "Imported",
+      "merge": "Merged",
+      "none": "No translation history found."
+    },
     "json": {
       "format": "formatted",
       "mini": "minimized"

@@ -50,10 +50,10 @@ describe('(action) components', () => {
 
 	describe('showHistoryModal', () => {
 		it('should create an action to show HistoryModal', () => {
-			expect(actions.showHistoryModal('whateverid'))
+			expect(actions.showHistoryModal(record))
 				.to.deep.equal({
 					type: 'SHOW_HISTORYMODAL',
-					translationId: 'whateverid'
+					record,
 				})
 		})
 	})

@@ -308,7 +308,7 @@ describe('(reducer) components', function() {
 		expect(
 			reducer(INIT_COMPONENTS, {
 				type: 'SHOW_HISTORYMODAL',
-				translationId: 'testId',
+				record,
 			})
 		).to.be.an('object')
 		.to.have.property('showhistorymodal')
@@ -317,18 +317,18 @@ describe('(reducer) components', function() {
 		expect(
 			reducer(undefined, {
 				type: 'SHOW_HISTORYMODAL',
-				translationId: 'testId'
+				record,
 			})
-		).to.have.property('translationId')
-			.that.is.an('string')
-			.to.eql('testId');
+		).to.have.property('editrecord')
+			.that.is.an('object')
+			.to.eql(record);
 	})
 
 	it('should handle CLOSE_HISTORYMODAL', () => {
 		expect(
 			reducer({
 				showhistorymodal: true,
-				translationId: 'testId',
+				record,
 			}, {
 				type: 'CLOSE_HISTORYMODAL'
 			})

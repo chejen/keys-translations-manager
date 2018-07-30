@@ -13,9 +13,9 @@ export default class HistoryModal extends React.PureComponent {
 		showhistorymodal: PropTypes.bool.isRequired,
 		closeHistoryModal: PropTypes.func.isRequired,
 		loadHistory: PropTypes.func.isRequired,
+		translation: PropTypes.object.isRequired,
 		historylog: PropTypes.array.isRequired,
 		historystatus: PropTypes.string.isRequired,
-		translationId: PropTypes.string.isRequired,
 	};
 
 	constructor() {
@@ -26,15 +26,15 @@ export default class HistoryModal extends React.PureComponent {
 	componentDidUpdate(prevProps) {
 		const {
 			showhistorymodal,
-			translationId,
+			translation,
 			loadHistory,
 		} = this.props;
 
 		if (
-			showhistorymodal && translationId &&
+			showhistorymodal && translation && translation._id &&
 			showhistorymodal !== prevProps.showhistorymodal
 		) {
-			loadHistory(translationId);
+			loadHistory(translation._id);
 		}
 	}
 
@@ -45,26 +45,34 @@ export default class HistoryModal extends React.PureComponent {
 	render() {
 		const {
 			showhistorymodal,
-			translationId,
+			translation,
 			historylog,
 			historystatus,
 		} = this.props;
 		const logs = [];
 		let len = historylog ? historylog.length : 0,
 			i = len - 1,
+			diff,
 			prev;
 
 		for (; i >= 0; i--) {
-			prev = i === 0 ? null : historylog[i - 1].translation;
-			historylog[i].diff = historyUtil.differentiate(prev, historylog[i].translation);
-			logs.push(historylog[i]);
+			if (i === 0) {
+				prev = historylog[0].action === 'ADD' ? null : translation;
+			} else {
+				prev = historylog[i - 1].translation;
+			}
+			diff = historyUtil.differentiate(prev, historylog[i].translation);
+			if (diff) {
+				historylog[i].diff = diff;
+				logs.push(historylog[i]);
+			}
 		}
 
 		return (
 			<Modal show={showhistorymodal} bsSize="lg" onHide={this.close}>
 				<Modal.Header>
 					<Modal.Title>
-						{`${localeUtil.getMsg('ui.common.history')} (ID: ${translationId})`}
+						{`${localeUtil.getMsg('ui.common.history')} (ID: ${translation._id})`}
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>

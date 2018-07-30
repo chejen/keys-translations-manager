@@ -8,6 +8,7 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
 
 const locales = configUtil.getLocales()
+const lenProjects = configUtil.getProjects().length
 
 export default class EditModal extends React.PureComponent {
 	static propTypes = {
@@ -30,7 +31,6 @@ export default class EditModal extends React.PureComponent {
 	updateTranslation() {
 		const el = this.refFormPanel.getFormElements(),
 			projects = el["project[]"],
-			lenProjects = projects.length,
 			lenLocales = locales.length,
 			project = [],
 			emptyFields = [],
@@ -57,9 +57,15 @@ export default class EditModal extends React.PureComponent {
 			}
 		}
 
-		for (i = 0; i < lenProjects; i++) {
-			if (projects[i].checked) {
-				project.push(projects[i].value);
+		if (lenProjects === 1) { // projects would be an object, not an array
+			if (projects.checked) {
+				project.push(projects.value);
+			}
+		} else {
+			for (i = 0; i < lenProjects; i++) {
+				if (projects[i] && projects[i].checked) {
+					project.push(projects[i].value);
+				}
 			}
 		}
 		if (project.length > 0) {

@@ -30,7 +30,6 @@ function mapStateToProps(state) {
 		keys: state.components.keys,
 		mergeable: state.components.mergeable,
 		editrecord: state.components.editrecord,
-		translationId: state.components.translationId,
 		...state.messages,
 		...state.history,
 	}

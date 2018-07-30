@@ -5,6 +5,8 @@ import FormPanel from './FormPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import configUtil from '../../configUtil'
 
+const lenProjects = configUtil.getProjects().length
+
 export default class InputPanel extends React.PureComponent {
 	static propTypes = {
 		messages: PropTypes.object.isRequired,
@@ -15,7 +17,6 @@ export default class InputPanel extends React.PureComponent {
 	addTranslation() {
 		const el = this.refFormPanel.getFormElements(),
 				projects = el["project[]"],
-				lenProjects = projects.length,
 				locales = configUtil.getLocales(),
 				lenLocales = locales.length;
 
@@ -39,9 +40,15 @@ export default class InputPanel extends React.PureComponent {
 			}
 		}
 
-		for (i = 0; i < lenProjects; i++) {
-			if (projects[i].checked) {
-				project.push(projects[i].value);
+		if (lenProjects === 1) { // projects would be an object, not an array
+			if (projects.checked) {
+				project.push(projects.value);
+			}
+		} else {
+			for (i = 0; i < lenProjects; i++) {
+				if (projects[i] && projects[i].checked) {
+					project.push(projects[i].value);
+				}
 			}
 		}
 		if (project.length > 0) {

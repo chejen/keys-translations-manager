@@ -56,7 +56,7 @@ export default function components(state = INIT_COMPONENTS, action) {
 			return {
 				...state,
 				showhistorymodal: true,
-				translationId: action.translationId,
+				editrecord: action.record,
 			};
 		case ActionTypes.CLOSE_HISTORYMODAL:
 			return {

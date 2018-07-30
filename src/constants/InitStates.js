@@ -14,7 +14,6 @@ export const INIT_COMPONENTS = {
 	keys: {},
 	mergeable: [],
 	editrecord: {},
-	translationId: '',
 };
 export const INIT_SOCKET = {
 	emitdatachange: false

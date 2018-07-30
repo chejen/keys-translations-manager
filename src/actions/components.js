@@ -26,10 +26,10 @@ export function closeConfirmModal() {
 	}
 }
 
-export function showHistoryModal(translationId) {
+export function showHistoryModal(record) {
 	return {
 		type: ActionTypes.SHOW_HISTORYMODAL,
-		translationId,
+		record,
 	}
 }
 

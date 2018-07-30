@@ -5,28 +5,28 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 const locales = getLocales()
 
+function addLeadingZeros(value) {
+	return ('0' + value).slice(-2)
+}
+
 function formatDateTime(timestamp) {
 	const d = new Date(timestamp)
-	const formattedDate = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
-	const formattedTime = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
-	return `${formattedDate}, ${formattedTime} `
+	const MM = addLeadingZeros(d.getMonth() + 1)
+	const dd = addLeadingZeros(d.getDate())
+	const HH = addLeadingZeros(d.getHours())
+	const mm = addLeadingZeros(d.getMinutes())
+	const ss = addLeadingZeros(d.getSeconds())
+	const formattedDate = `${d.getFullYear()}-${MM}-${dd}`
+	const formattedTime = `${HH}:${mm}:${ss}`
+	return `${formattedDate} ${formattedTime} `
 }
 
 function getActionName(action) {
-	switch (action) {
-		case 'ADD':
-			return localeUtil.getMsg('ui.common.add');
-		case 'EDIT':
-			return localeUtil.getMsg('ui.common.edit');
-		case 'DELETE':
-			return localeUtil.getMsg('ui.common.delete');
-		case 'IMPORT':
-			return localeUtil.getMsg('ui.common.import');
-		case 'MERGE':
-			return localeUtil.getMsg('ui.common.merge');
-		default:
-			return action;
+	if (['ADD', 'EDIT', 'DELETE', 'IMPORT', 'MERGE'].indexOf(action) >= 0) {
+		const a = action.toLowerCase()
+		return localeUtil.getMsg(`ui.history.${a}`);
 	}
+	return action;
 }
 
 function getProjectNames(projects) {
@@ -111,14 +111,12 @@ export default class DiffPanel extends React.PureComponent {
 					/>
 					<div>
 						<b>{getActionName(action)}</b>
-						{' at '}
+						{` ${localeUtil.getMsg('ui.history.at')} `}
 						<b>{formatDateTime(time)}</b>
 
 						{user && (
-							<span>
-								{' by '}
-								{user}
-								jkporqwenpobnqepoihqerhourgnopbobhpghqre@gmail.com
+							<span style={{ color: 'gray' }}>
+								{` (${localeUtil.getMsg('ui.history.modifier')}: ${user})`}
 							</span>
 						)}
 					</div>

@@ -14,7 +14,7 @@ const ActionCellRenderer = ({ data, ComponentActions }) => (
 		/>
 		<i className="fas fa-list-ul app-action-icon"
 			title={localeUtil.getMsg("ui.common.history")}
-			onClick={ComponentActions.showHistoryModal.bind(ComponentActions, data._id)}
+			onClick={ComponentActions.showHistoryModal.bind(ComponentActions, data)}
 		/>
 	</Fragment>
 )
