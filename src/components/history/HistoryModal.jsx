@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
-import historyUtil from 'keys-translations-manager-core/lib/historyUtil'
+
+// import historyUtil from 'keys-translations-manager-core/lib/historyUtil'
+import historyUtil from '../../../packages/keys-translations-manager-core/lib/historyUtil'
+
 import * as Status from '../../constants/Status'
 import Spinner from '../layout/Spinner'
 import DiffPanel from './DiffPanel'

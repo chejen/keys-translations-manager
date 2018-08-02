@@ -22,6 +22,20 @@ export default class ImportModal extends React.PureComponent {
 		clearErrors: PropTypes.func.isRequired
 	};
 
+	constructor() {
+		super();
+		this.close = this.close.bind(this);
+		this.onDrop = this.onDrop.bind(this);
+		this.submit = this.submit.bind(this);
+		this.state = {
+			pervShowimportmodal: false,
+			selectedFile: null,
+			selectedLocale: null,
+			selectedProject: null
+		}
+		this.acceptTypes = ["json", "properties"];
+	}
+
 	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.showimportmodal && !prevState.pervShowimportmodal) {
 			return {
@@ -37,20 +51,6 @@ export default class ImportModal extends React.PureComponent {
 			}
 		}
 		return null;
-	}
-
-	constructor() {
-		super();
-		this.close = this.close.bind(this);
-		this.onDrop = this.onDrop.bind(this);
-		this.submit = this.submit.bind(this);
-		this.state = {
-			pervShowimportmodal: false,
-			selectedFile: null,
-			selectedLocale: null,
-			selectedProject: null
-		}
-		this.acceptTypes = ["json", "properties"];
 	}
 
 	setLocale(locale) {
