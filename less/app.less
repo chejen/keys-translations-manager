@@ -186,8 +186,14 @@
 
 
 /* override */
+input[type="search"] {
+    -webkit-appearance: searchfield;
+}
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
 .ReactTable {
-	border: 1px solid @middle-gray;
+    border: 1px solid @middle-color;
 }
 .ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
 	background: @light-yellow;

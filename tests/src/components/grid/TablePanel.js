@@ -82,25 +82,14 @@ describe('(component) TablePanel', () => {
 	});
 
 	describe('child: InputGroup', () => {
-		it('should call onQuickFilterText() if input value changed', () => {
+		it('should call onQuickFilterText() if input value changed', done => {
 			const { wrapper } = setup()
 			const inputValue = 'test'
 			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: inputValue } });
 
-			expect(wrapper.state('quickFilterText')).not.to.eql(inputValue);
 			setTimeout(() => {
 				expect(wrapper.state('quickFilterText')).to.eql(inputValue);
-			}, 300);
-		});
-
-		it('should filter data if input value changed', () => {
-			const { wrapper } = setup()
-			const inputValue = 'delete'
-			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: inputValue } });
-
-			expect(wrapper.find('ReactTable').prop('data')).to.have.length(2);
-			setTimeout(() => {
-				expect(wrapper.find('ReactTable').prop('data')).to.have.length(1);
+				done();
 			}, 300);
 		});
 	});

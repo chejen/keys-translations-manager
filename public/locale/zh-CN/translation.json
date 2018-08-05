@@ -1,0 +1,82 @@
+{
+  "ui": {
+    "common": {
+      "action": "动作",
+      "add": "新增",
+      "applyto": "套用至",
+      "cancel": "取消",
+      "close": "关闭",
+      "delete": "删除",
+      "desc": "描述",
+      "download": "下载",
+      "edit": "编辑",
+      "file": "档案",
+      "goBack": "返回",
+      "history": "检视历史记录",
+      "import": "导入",
+      "language": "语言",
+      "locale": "语言环境",
+      "locales": "语言环境",
+      "merge": "合并",
+      "or": "或",
+      "others": "和其他 {0} 个",
+      "reload": "重载",
+      "reset": "还原",
+      "update": "更新"
+    },
+    "confirm": {
+      "continue": "您确定要继续吗 ?",
+      "delete": "您确定要删除 \"{0}\" 吗?",
+      "header": "确认",
+      "no": "否",
+      "yes": "是"
+    },
+    "err": {
+      "belongsTo": "【JSON::ParserError】\"{0}\" 与 {1}* 在 {2} 冲突",
+      "contains": "【JSON::ParserError】\"{0}\" 与 \"{1}\" 在 {2} 冲突",
+      "emptyfield": "以下字段为必填: {0}",
+      "equals": "\"{0}\" 已经存在于以下项目: {1}",
+      "iconflicts": "以下这些 key 会在解析 JSON 时发生错误:",
+      "iequals": "以下这些 key 会覆盖掉已经存在的翻译:"
+    },
+    "file": {
+      "accept": "仅接受 {0} 的文件格式。",
+      "select": "请将您的语言环境档拖曳至此，或点击此区以选取要导入的档案。",
+      "selected": "您选取的档案:"
+    },
+    "grid": {
+      "edit": "双击单元格可进行编辑；键入 Enter 以送出更新",
+      "empty": "无数据",
+      "search": "关键词搜寻"
+    },
+    "history": {
+      "add": "新增",
+      "at": "于",
+      "delete": "删除",
+      "edit": "编辑",
+      "import": "汇入",
+      "merge": "合并",
+      "none": "无此翻译的历史记录。"
+    },
+    "json": {
+      "format": "格式化",
+      "mini": "最小化"
+    },
+    "merge": {
+      "match": "以下这些 key 将会被合并:",
+      "nomatch": "无符合合并条件的数据"
+    },
+    "pagination": {
+      "next": "下一页",
+      "of": "/",
+      "page": "页",
+      "previous": "上一页",
+      "rows": "笔"
+    },
+    "tip": {
+      "dataChanged": "数据已经被其他人异动过",
+      "iconflicts": "(例) 在解析成 JSON 格式时，ui.common.add 会与 ui、ui.common、ui.common.add.* 等 key 发生冲突。",
+      "iequals": "出现这个错误表示，这些 key 在您选取的项目中已经存在，而且选取的语言环境也已经有对应的翻译。"
+    }
+  }
+}

@@ -44,7 +44,15 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 							}
 							loadMsg("en-US");
 						}}>
-						<i className="fas fa-globe-americas fa-fw"/> English (en-US)
+						<i className="fas fa-globe-americas fa-fw"/> English
+					</a></li>
+					<li><a href="#" onClick={event => {
+							if (event) {
+								event.preventDefault();
+							}
+							loadMsg("zh-CN");
+						}}>
+						<i className="fas fa-globe-asia fa-fw"/> 简体中文
 					</a></li>
 					<li><a href="#" onClick={event => {
 							if (event) {
@@ -52,7 +60,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 							}
 							loadMsg("zh-TW");
 						}}>
-						<i className="fas fa-globe-asia fa-fw"/> 繁體中文 (zh-TW)
+						<i className="fas fa-globe-asia fa-fw"/> 繁體中文
 					</a></li>
 				</ul>
 			</li>
