@@ -26,7 +26,7 @@ export default class OutputPanel extends React.PureComponent {
 	}
 
 	download(project) {
-		let url = configUtil.getHost() + '/api/download/'
+		let url = '/api/download/'
 
 		/* istanbul ignore next */
 		if (this.state.fileType === 'njf' || this.state.fileType === 'fjf') {

@@ -23,6 +23,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 			</li>
 			<li className="dropdown" title={localeUtil.getMsg("ui.common.merge")}>
 				<a className="dropdown-toggle" href="#" onClick={event => {
+					/* istanbul ignore next */
 					if (event) {
 						event.preventDefault();
 					}
@@ -39,6 +40,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 				</a>
 				<ul className="dropdown-menu dropdown-user">
 					<li><a href="#" onClick={event => {
+							/* istanbul ignore next */
 							if (event) {
 								event.preventDefault();
 							}
@@ -47,6 +49,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 						<i className="fas fa-globe-americas fa-fw"/> English
 					</a></li>
 					<li><a href="#" onClick={event => {
+							/* istanbul ignore next */
 							if (event) {
 								event.preventDefault();
 							}
@@ -55,6 +58,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 						<i className="fas fa-globe-asia fa-fw"/> 简体中文
 					</a></li>
 					<li><a href="#" onClick={event => {
+							/* istanbul ignore next */
 							if (event) {
 								event.preventDefault();
 							}

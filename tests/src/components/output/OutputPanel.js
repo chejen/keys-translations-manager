@@ -2,7 +2,6 @@ import OutputPanel from '../../../../src/components/output/OutputPanel'
 
 function setup() {
 	OutputPanel.prototype.download = sinon.spy()
-	OutputPanel.prototype.setFileType = sinon.spy()
 
 	const props = {
 			projectCounts: {
@@ -46,7 +45,7 @@ describe('(component) OutputPanel', () => {
 		it('should call setFileType() when changed', () => {
 			const { wrapper } = setup()
 			wrapper.find('FileTypeCol').get(0).props.onChange();
-			expect(OutputPanel.prototype.setFileType).calledOnce;
+			expect(wrapper.state('fileType')).to.eql('nj');
 		});
 	});
 });
