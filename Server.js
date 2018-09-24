@@ -6,7 +6,6 @@ import mongoose from 'mongoose'
 import path from 'path'
 import compression from 'compression'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
-import database from './db.config'
 import config from './ktm.config'
 import { LANGUAGES } from './src/constants/Languages'
 import TranslationController from './src/controllers/TranslationController'
@@ -26,7 +25,7 @@ let webpackConfig,
 	compiler;
 
 mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
-mongoose.connect(process.env.DB || database, {
+mongoose.connect(process.env.DB || require('./db.config'), {
 	useNewUrlParser: true,
 	socketTimeoutMS: 90000,
 	connectTimeoutMS: 90000
