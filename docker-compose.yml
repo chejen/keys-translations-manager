@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  ktm-web:
+    image: ktm/express
+    container_name: ktm-web
+    build: .
+    environment:
+      - DB=mongodb://ktm-db:27017/translationdb
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ktm-db
+  ktm-db:
+    image: mongo
+    container_name: ktm-db
+    volumes:
+      - /data/db:/data/db
+    ports:
+      - "27017:27017"
