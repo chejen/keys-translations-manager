@@ -1,3 +1,4 @@
+exports.historyUtil = require('./lib/historyUtil');
 exports.importUtil = require('./lib/importUtil');
 exports.localeUtil = require('./lib/localeUtil');
 exports.logUtil = require('./lib/logUtil');

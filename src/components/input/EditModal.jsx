@@ -5,6 +5,10 @@ import Modal from 'react-bootstrap/lib/Modal'
 import FormPanel from './FormPanel'
 import AlertPanel from './AlertPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import configUtil from '../../configUtil'
+
+const locales = configUtil.getLocales()
+const lenProjects = configUtil.getProjects().length
 
 export default class EditModal extends React.PureComponent {
 	static propTypes = {
@@ -16,22 +20,32 @@ export default class EditModal extends React.PureComponent {
 		alertErrors: PropTypes.func.isRequired,
 		clearErrors: PropTypes.func.isRequired
 	};
-	static contextTypes = {
-		config: PropTypes.object
-	};
+
+	constructor() {
+		super();
+		this.updateTranslation = this.updateTranslation.bind(this);
+		this.close = this.close.bind(this);
+	}
 
 	/* istanbul ignore next */
 	updateTranslation() {
-		const config = this.context.config,
-			el = this.refFormPanel.getFormElements(),
+		const el = this.refFormPanel.getFormElements(),
 			projects = el["project[]"],
-			lenProjects = projects.length,
-			locales = config.locales,
-			lenLocales = locales.length;
-		let i, v, locale,
+			lenLocales = locales.length,
 			project = [],
 			emptyFields = [],
-			data = Object.assign({}, this.props.data, {description: el.description.value.trim()});
+			data = {
+				...this.props.data,
+				description: el.description.value.trim()
+			};
+		let k, i, v, locale;
+
+		k = el.key.value.trim()
+		if (k) {
+			data.key = k
+		} else {
+			emptyFields.push("Key")
+		}
 
 		for (i = 0; i < lenLocales; i++) {
 			locale = locales[i]
@@ -43,18 +57,24 @@ export default class EditModal extends React.PureComponent {
 			}
 		}
 
-		for (i = 0; i < lenProjects; i++) {
-			if (projects[i].checked) {
-				project.push(projects[i].value);
+		if (lenProjects === 1) { // projects would be an object, not an array
+			if (projects.checked) {
+				project.push(projects.value);
+			}
+		} else {
+			for (i = 0; i < lenProjects; i++) {
+				if (projects[i] && projects[i].checked) {
+					project.push(projects[i].value);
+				}
 			}
 		}
-		if ( project.length > 0 ) {
+		if (project.length > 0) {
 			data.project = project
 		} else {
 			emptyFields.push(localeUtil.getMsg("ui.common.applyto"))
 		}
 
-		if ( emptyFields.length > 0 ) {
+		if (emptyFields.length > 0) {
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "u",
@@ -71,10 +91,10 @@ export default class EditModal extends React.PureComponent {
 	}
 
 	render() {
-		const { data, errors, clearErrors } = this.props;
+		const { showeditmodal, data, errors, clearErrors } = this.props;
 
 		return (
-			<Modal show={this.props.showeditmodal} onHide={this.close.bind(this)}>
+			<Modal show={showeditmodal} onHide={this.close} bsSize='lg'>
 				<Modal.Header>
 					<Modal.Title>
 						{localeUtil.getMsg("ui.common.edit")}
@@ -82,13 +102,16 @@ export default class EditModal extends React.PureComponent {
 				</Modal.Header>
 				<Modal.Body>
 					<AlertPanel errors={errors} clearErrors={clearErrors} action="u"/>
-					<FormPanel ref={cmp => { this.refFormPanel = cmp; }} action="u" data={data}/>
+					<FormPanel
+						ref={cmp => { this.refFormPanel = cmp; }}
+						action="u" data={data}
+					/>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation.bind(this)}>
+					<Button bsSize="small" bsStyle="primary" onClick={this.updateTranslation}>
 						{localeUtil.getMsg("ui.common.update")}
 					</Button>
-					<Button bsSize="small" onClick={this.close.bind(this)}>
+					<Button bsSize="small" onClick={this.close}>
 						{localeUtil.getMsg("ui.common.cancel")}
 					</Button>
 				</Modal.Footer>

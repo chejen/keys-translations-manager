@@ -19,7 +19,13 @@ function setup() {
 }
 
 describe('(component) MessagePopup', () => {
-	it('should render as a <div> with "app-message-popup" class', () => {
+	it('should not display if showmessagepopup is false', () => {
+		const { wrapper } = setup()
+		wrapper.setProps({ showmessagepopup: false });
+		expect(wrapper.prop('style')).to.eql({ display: 'none' });
+	});
+
+	it('should render as a <div>', () => {
 		const { wrapper } = setup()
 		expect(wrapper.type()).to.eql('div');
 		expect(wrapper.prop('className')).to.eql('app-message-popup');

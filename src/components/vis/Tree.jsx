@@ -9,8 +9,6 @@ import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
 import Button from 'react-bootstrap/lib/Button'
 import Label from 'react-bootstrap/lib/Label'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
-import ConfirmModal from '../grid/ConfirmModal'
 import Mask from '../layout/Mask'
 import Tooltip from './Tooltip'
 
@@ -94,19 +92,19 @@ export default class Tree extends React.PureComponent {
 	}
 
 	/* istanbul ignore next */
-	componentWillReceiveProps(nextProps) {
+	componentDidUpdate(prevProps) {
 		const me = this,
-			{treedata, translations, reloaddata, match, CountActions} = nextProps;
+			{treedata, translations, reloaddata, match, CountActions} = this.props;
 		let data;
 
 		if (reloaddata || //socket
-				translations !== this.props.translations || //add/update/...
-				match.params.projectId !== this.props.match.params.projectId) { //change project
+				translations !== prevProps.translations || //add/update/...
+				match.params.projectId !== prevProps.match.params.projectId) { //change project
 			this.loadData(match.params.projectId);
 		}
 
 		if (treedata && treedata.length &&
-			treedata !== this.props.treedata) {
+			treedata !== prevProps.treedata) {
 
 			CountActions.loadCounts();
 
@@ -323,12 +321,8 @@ export default class Tree extends React.PureComponent {
 		this.props.ComponentActions.showEditModal(data);
 	}
 
-	showConfirmModal(value, data) {
-		this.refConfirmModal.open(
-			localeUtil.getMsg("ui.common.delete"),
-			localeUtil.getMsg("ui.confirm.delete", data.key),
-			this.removeTranslation.bind(this, value)
-		);
+	showConfirmModal(data) {
+		this.props.ComponentActions.showConfirmModal(data);
 	}
 
 	/* istanbul ignore next */
@@ -370,15 +364,16 @@ export default class Tree extends React.PureComponent {
 					{desc && <div className="app-tooltip-desc">{desc}</div>}
 					<div className="app-tooltip-content">{content}</div>
 					<div className="app-tooltip-footer">
-						<Glyphicon glyph="edit" className="app-action-icon"
+						<i className="fas fa-pen app-action-icon"
 							title={localeUtil.getMsg("ui.common.edit")}
-							onClick={this.showEditModal.bind(this, data)}/>
-						{data && <Glyphicon glyph="trash" className="app-action-icon"
+							onClick={this.showEditModal.bind(this, data)}
+						/>
+						{data && <i className="far fa-trash-alt app-action-icon"
 							title={localeUtil.getMsg("ui.common.delete")}
-							onClick={this.showConfirmModal.bind(this, data._id, data)}/>}
+							onClick={this.showConfirmModal.bind(this, data)}
+						/>}
 					</div>
 				</Tooltip>
-				<ConfirmModal ref={cmp => { this.refConfirmModal = cmp; }} />
 				<Mask show={!this.props.treedata}/>
 
 				<ButtonGroup>

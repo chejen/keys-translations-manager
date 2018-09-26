@@ -12,6 +12,7 @@
       "edit": "Edit",
       "file": "File",
       "goBack": "Go back",
+      "history": "History",
       "import": "Import",
       "language": "Language",
       "locale": "Locale",
@@ -48,6 +49,15 @@
       "empty": "No data",
       "search": "Search"
     },
+    "history": {
+      "add": "Added",
+      "at": "at",
+      "delete": "Deleted",
+      "edit": "Edited",
+      "import": "Imported",
+      "merge": "Merged",
+      "none": "No translation history found."
+    },
     "json": {
       "format": "formatted",
       "mini": "minimized"
@@ -55,6 +65,13 @@
     "merge": {
       "match": "The following key(s) will be merged:",
       "nomatch": "No keys need to be merged."
+    },
+    "pagination": {
+      "next": "Next",
+      "of": "of",
+      "page": "Page",
+      "previous": "Previous",
+      "rows": "rows"
     },
     "tip": {
       "dataChanged": "Data has been changed by others.",

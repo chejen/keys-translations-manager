@@ -15,7 +15,7 @@ export default function Header() {
 				<span className="icon-bar"/>
 			</button>
 			<a className="navbar-brand" href="https://github.com/chejen/keys-translations-manager">
-				<i className="fa fa-github fa-fw fa-lg"/>
+				<i className="fab fa-github fa-fw"/>
 				{' '}
 				Keys-Translations Manager
 			</a>

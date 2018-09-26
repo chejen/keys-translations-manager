@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/lib/Alert'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
 import Tooltip from 'react-bootstrap/lib/Tooltip'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
@@ -11,10 +10,9 @@ const getProjectName = configUtil.getProjectName
 const num = 3
 
 const AlertPanel = ({ clearErrors, errors, action }) => {
-	const len = errors.length;
+	const len = errors.length,
+		errMsg = [];
 	let err,
-		errMsg = [],
-		cmp,
 		i,
 		counter = 0;
 
@@ -27,38 +25,28 @@ const AlertPanel = ({ clearErrors, errors, action }) => {
 		switch (err.type) {
 			case 'equals':
 				errMsg.push(localeUtil.getMsg("ui.err.equals", err.params.key,
-					err.match.map(function(e){
-						return `"${getProjectName(e)}"`
-					}).join(", ")
+					err.match.map(e => `"${getProjectName(e)}"`).join(", ")
 				));
 				break;
 			case 'contains':
 				errMsg.push(localeUtil.getMsg("ui.err.contains", err.params.key, err.key,
-					err.match.map(function(e){
-						return `"${getProjectName(e)}"`
-					}).join(", ")
+					err.match.map(e => `"${getProjectName(e)}"`).join(", ")
 				));
 				break;
 			case 'belongsTo':
 				errMsg.push(localeUtil.getMsg("ui.err.belongsTo", err.params.key, err.key,
-					err.match.map(function(e){
-						return `"${getProjectName(e)}"`
-					}).join(", ")
+					err.match.map(e => `"${getProjectName(e)}"`).join(", ")
 				));
 				break;
 			case 'emptyfield':
 				errMsg.push(localeUtil.getMsg("ui.err.emptyfield",
-					err.match.map(function(e){
-						return `"${e}"`
-					}).join(", ")
+					err.match.map(e => `"${e}"`).join(", ")
 				));
 				break;
 			case 'accept':
 				errMsg.push(
-					localeUtil.getMsg("ui.file.accept",
-						err.match.map(function(e){
-						return `*.${e}`
-					}).join(` ${localeUtil.getMsg("ui.common.or")} `)
+					localeUtil.getMsg("ui.file.accept", err.match.map(e => `*.${e}`)
+						.join(` ${localeUtil.getMsg("ui.common.or")} `)
 				));
 				break;
 			case 'iequals':
@@ -84,13 +72,9 @@ const AlertPanel = ({ clearErrors, errors, action }) => {
 		}
 	}
 
-	cmp = (errMsg.length > 0) ? (<Alert bsStyle="danger" onDismiss={clearErrors}>
-			{errMsg.map(function(e){
-				return <p key={counter++}><Glyphicon glyph="alert"/> {e}</p>
-			})}
+	return (errMsg.length > 0) ? (<Alert bsStyle="danger" onDismiss={clearErrors}>
+			{errMsg.map(e => <p key={counter++}><i className="fas fa-exclamation-triangle fa-lg"/> {e}</p>)}
 		</Alert>) : (action === "c" ? <br/> : null);
-
-	return cmp;
 }
 
 AlertPanel.propTypes = {

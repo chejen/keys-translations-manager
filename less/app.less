@@ -1,14 +1,16 @@
 /* variables */
-@warning-color: #F92672;
+@warning-color: #f92672;
 @dark-color: #000;
 @middle-color: #333;
 @light-color: #fff;
-@default-space: 10px;
-@dark-yellow: #f0ad4e;
-@middle-yellow: #FDD11A;
-@light-yellow: #fef16d;
+@middle-gray: #ddd;
+@light-gray: #eee;
+@dark-yellow: #fdb91a;
+@middle-yellow: #fdd11a;
+@light-yellow: #fcf8e3;
 @light-blue: #d5edf8;
 @tip-color: rgba(0, 0, 0, 0.6);
+@default-space: 10px;
 
 /* styles */
 .app-input-asterisk {
@@ -20,6 +22,9 @@
 .app-input-label {
 	margin-bottom: 7px;
 	font-weight: bold;
+}
+.app-input-btn-add {
+	margin: 20px 0;
 }
 .app-checkbox-options {
 	color: @light-color;
@@ -67,14 +72,62 @@
 	height: auto;
 }
 .app-search-icon {
-	border: 1px solid @dark-yellow;
-	background-color: @middle-yellow;
-	color: @dark-color;
+	border: 1px solid @middle-color;
+	color: @middle-color;
 }
 .app-search-bar {
-	border: 1px solid @dark-yellow;
+	border: 1px solid @middle-color;
 }
 
+.app-diff-container {
+	border: 1px solid @middle-color;
+	border-radius: 3px;
+	padding: 5px;
+	margin-bottom: 20px;
+}
+.app-diff-title {
+	display: flex;
+	padding: 5px 0;
+}
+.app-diff-collapse {
+	margin: 2px 15px 0 5px;
+	cursor: pointer;
+	color: #337ab7;
+}
+.app-diff-table {
+	td {
+		padding: 3px 7px 0;
+	}
+	.app-diff-row-ori, .app-diff-row-del, .app-diff-row-add {
+		td {
+			&:first-child {
+				display: inline-block;
+				width: 90px;
+				white-space: nowrap;
+			}
+			&:last-child {
+				width: 100%;
+			}
+		}
+	}
+	.app-diff-row-ori {
+		td:first-child {
+			background: @light-gray;
+		}
+	}
+	.app-diff-row-del {
+		background: #ffdce0;
+		td:first-child {
+			background: #fdaeb7;
+		}
+	}
+	.app-diff-row-add {
+		background: #ddffe8;
+		td:first-child {
+			background: #bef5cb;
+		}
+	}
+}
 
 .app-ellipsis {
 	white-space: nowrap;
@@ -125,18 +178,35 @@
 	left: -20px;
 }
 
+.app-grid-header {
+	background: @middle-color;
+	color: @light-color;
+	font-weight: 700;
+}
 
-.react-bs-table {
-	margin: 5px 0;
+
+/* override */
+input[type="search"] {
+    -webkit-appearance: searchfield;
 }
-.react-bs-container-header {
-	background-color: #eee;
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
 }
-.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-	background-color: #f6f6f6;
+.ReactTable {
+    border: 1px solid @middle-color;
 }
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-	background-color: @light-blue;
+.ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
+	background: @light-yellow;
+}
+.ReactTable.-striped .rt-tr.-odd {
+	background: @light-gray;
+}
+.btn-default {
+	border: 1px solid @middle-gray;
+}
+.well {
+	background: @light-gray;
+	border: 1px solid @middle-gray;
 }
 
 
@@ -161,14 +231,18 @@ body {
 .sidebar ul li {
     border-bottom: 0;
 }
-.panel-count {
+.panel-container {
+	margin: 10px 0 0;
 	border-color: @dark-yellow;
 	color: @middle-color;
+	a {
+		color: #000;
+	}
 }
-.panel-count .panel-heading {
+.panel-container .panel-heading {
 	background-color: @middle-yellow;
 	color: @dark-color;
-	padding: 10px 15px 0 15px;
+	padding: 12px 15px 0 15px;
 }
 .panel-title {
 	display: inline-block;
@@ -179,6 +253,11 @@ body {
 	display: inline-block;
 	position: absolute;
 	right: 30px;
+}
+.panel-count {
+	margin: 20px 0 8px;
+	font-size: 40px;
+	line-height: 40px;
 }
 .panel-desc {
 	color: @dark-yellow;

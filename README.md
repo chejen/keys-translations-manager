@@ -24,80 +24,95 @@
 # Keys-Translations Manager
 
 [Demo](#demo) |
-[Prerequisites](#prerequisites) |
+[Key Features](#key-features) |
 [Getting Started](#getting-started) |
 [Custom](#custom) |
-[Import](#import) |
-[Export](#export) |
-[Merge](#merge) |
-[Visualization](#visualization) |
 [Technologies](#technologies) |
 [License](#license) |
 [Questions?](#questions)
 
 > Keys-Translations Manager, a web application scaffolded with MERN stack, aims to facilitate locale management. With this application, you can:
 > * control and manage locales in one place,
-> * import locales from JSON (both nested/flat are supported) or Properties files,
-> * export locales to JSON (both nested/flat are supported) or Properties files,
+> * import locales from nested/flat JSON or Properties files,
+> * export locales to nested/flat JSON or Properties files,
+> * view revision history of every single key,
 > * get data validation for input/import, and
 > * get real-time notifications if data has been changed by the other users.
 
 
 ## Demo
-![demo](https://cloud.githubusercontent.com/assets/14872888/15989888/44701a84-30b7-11e6-814d-d13686b0e433.gif)
+![demo](https://user-images.githubusercontent.com/14872888/46092875-6f60fa00-c1e8-11e8-94f8-4de1134e6a63.gif)
 
 
-## Prerequisites
-* Download [Node.js](https://nodejs.org/en/) (v6+ is required) and [MongoDB](https://www.mongodb.org/), and then get them installed.
-* Start [mongod](https://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/) process and make sure it's running normally.
+## Key Features
+#### Import locales
+Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [instructions][16])
+
+#### Export locales
+Not only can you download locales directly from the web, but you can also get them via [CLI][15] or [REST API][17].
+
+#### Merge translations
+Keys-Translations Manager can help you to merge the same keys that have the same translations for each locale but sit in different projects. (See [instructions][18])
+
+#### View revision history
+See the [demo][19]
+
+#### Visualization
+See the [demo][20]
 
 
 ## Getting Started
-Checkout this repo (or directly download the stable releases from [here](https://github.com/chejen/keys-translations-manager/releases)), install dependencies, then start the web server:
+#### Method 1:
+* Download [Node.js](https://nodejs.org/en/) (v6+ is required) and [MongoDB](https://www.mongodb.org/), and then get them installed.
+* Start [mongod](https://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/) process and make sure it's running normally.
+* Checkout this repo (or directly download the stable releases from [here](https://github.com/chejen/keys-translations-manager/releases)), install dependencies, then start the web server:
 ```sh
 $ git clone https://github.com/chejen/keys-translations-manager
 $ cd keys-translations-manager
 $ npm install (or yarn install)
 $ npm start (or yarn start)
 ```
+
+Open http://localhost:3000/ and enjoy it.
+
+#### Method 2:
+Alternatively, if you have Docker and docker-compose installed:
+```sh
+$ git clone https://github.com/chejen/keys-translations-manager
+$ cd keys-translations-manager
+$ docker-compose up -d
+```
+
 Open http://localhost:3000/ and enjoy it.
 
 
 ## Custom
-There are some settings (in [ktm.config.js](./ktm.config.js)) you can configure. The table below lists the available ones:
+There are several environment variables you can configure:
+
+| **Variable** | **Description** |**Default**|
+|----------|-------|---|
+|  PORT  |   Web server's port    | ```3000```  |
+|  DB  |   MongoDB connection URI    | ```mongodb://localhost:27017/translationdb```  |
+
+There are some other settings (in [ktm.config.js](./ktm.config.js)) you can configure. The table below lists the available ones:
 
 | **Setting** | **Description** |**Default**|
 |----------|-------|---|
-|  server  |   Web server's hostname and port    | ```{ hostname: 'localhost', port: 3000 }```  |
-|  database  |   MongoDB connection URI    | ```'mongodb://localhost:27017/translationdb'```  |
 |  locales  |   The locales need to be managed. (You can add or remove locales arbitrarily.)    | ```['en-US', 'zh-TW']```  |
 |  projects  |   The projects need to be localized. (You can add or remove projects arbitrarily.)    | ```[ {id:'p1', name:'project A'}, {id:'p2', name:'project B'} ]```  |
 |  enableNotifications  |   Push real-time notifications to users    | ```true```  |
 
+> Note:
 > Rebuild the code (```npm run build``` or ```yarn build```) and restart the server if you change any of these configurations.
-
-
-## Import
-Transfer your locales from separate files to Keys-Translations Manager to make them easy to read, convenient to collaborate, and maintainable. (See [instructions][16])
-
-
-## Export
-Not only can you download locales directly from the web, but you can also get them via [CLI][15] or [REST API][17].
-
-
-## Merge
-Keys-Translations Manager can help you to merge the same keys that have the same translations for each locale but sit in different projects. (See [instructions][18])
-
-
-## Visualization
-See the [demo][20]
+> Or, if you run the app in containers, run ```docker-compose build``` and then ```docker-compose up -d```.
 
 
 ## Technologies
 * Scaffolded with [MongoDB][1], [Express][2], [React][3], and [Node.js][4]
-* Styled with [Bootstrap][5] (theme: [SB Admin 2][7]) and [Less][6]
-* Visualization: [D3][19]
+* Styled with [Bootstrap][5] (theme: [SB Admin 2][6]) and [Less][7]
+* Visualization: [D3][8]
 * Real-Time Notifications: [Socket.IO][21]
+* Virtualization: [Docker][22]
 * Module Bundler: [webpack][9]
 * Unit Testing: [Mocha][10], [Chai][11] and [Enzyme][12]
 * Miscellaneous: [Babel][13], [ESLint][14]
@@ -116,9 +131,9 @@ Please don't hesitate to [open an issue](https://github.com/chejen/keys-translat
 [3]: https://facebook.github.io/react/
 [4]: https://nodejs.org/en/
 [5]: http://getbootstrap.com/
-[6]: http://lesscss.org/
-[7]: http://startbootstrap.com/template-overviews/sb-admin-2/
-[8]: http://formatjs.io/react/
+[6]: http://startbootstrap.com/template-overviews/sb-admin-2/
+[7]: http://lesscss.org/
+[8]: https://d3js.org/
 [9]: https://webpack.github.io/
 [10]: https://mochajs.org/
 [11]: http://chaijs.com/
@@ -129,6 +144,7 @@ Please don't hesitate to [open an issue](https://github.com/chejen/keys-translat
 [16]: https://github.com/chejen/keys-translations-manager/blob/master/docs/import.md
 [17]: https://github.com/chejen/keys-translations-manager/blob/master/docs/rest-api.md
 [18]: https://github.com/chejen/keys-translations-manager/blob/master/docs/merge.md
-[19]: https://d3js.org/
+[19]: https://github.com/chejen/keys-translations-manager/blob/master/docs/history.md
 [20]: https://github.com/chejen/keys-translations-manager/blob/master/docs/vis.md
 [21]: http://socket.io/
+[22]: https://www.docker.com/

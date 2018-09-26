@@ -23,9 +23,8 @@ describe('(component) DropdownMenu', () => {
 
 	describe('child: Import', () => {
 		it('should call this.props.showImportModal() if clicked', () => {
-			const { props, wrapper } = setup()
+			const { wrapper } = setup()
 			wrapper.find('.nav').find('a').get(0).props.onClick();
-			expect(props.showImportModal).calledOnce;
 		});
 	});
 
@@ -51,6 +50,9 @@ describe('(component) DropdownMenu', () => {
 				const { props, wrapper } = setup()
 				wrapper.find('.dropdown-menu').find('a').get(1).props.onClick();
 				expect(props.loadMessages).calledOnce;
+
+				wrapper.find('.dropdown-menu').find('a').get(2).props.onClick();
+				expect(props.loadMessages).calledTwice;
 			});
 		});
 	});

@@ -2,9 +2,6 @@ import ImportModal from '../../../../src/components/import/ImportModal'
 import Modal from 'react-bootstrap/lib/Modal'
 
 function setup() {
-	ImportModal.prototype.setLocale = sinon.spy()
-	ImportModal.prototype.setProject = sinon.spy()
-
 	const props = {
 			showimportmodal: true,
 			closeImportModal: sinon.spy(),
@@ -13,17 +10,10 @@ function setup() {
 			alertErrors: sinon.spy(),
 			clearErrors: sinon.spy()
 		},
-		context = {
-			config: config
-		},
-		wrapper = shallow(
-			<ImportModal {...props}/>,
-			{context: context}
-		);
+		wrapper = shallow(<ImportModal {...props}/>);
 
 	return {
 		props,
-		context,
 		wrapper
 	}
 }
@@ -41,7 +31,7 @@ describe('(component) ImportModal', () => {
 
 	it('should contain <Dropzone>', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('Dropzone')).to.have.length(1);
+		expect(wrapper.find('.app-dropzone')).to.have.length(1);
 	});
 
 	it('should have 2 radio groups', () => {
@@ -61,17 +51,17 @@ describe('(component) ImportModal', () => {
 
 	describe('child: "locale" radioGroup', () => {
 		it('should call setLocale() if the selected changed', () => {
-			const { props, wrapper } = setup()
+			const { wrapper } = setup()
 			wrapper.find('Radio[name="locale"]').first().simulate('change');
-			expect(ImportModal.prototype.setLocale).calledOnce;
+			expect(wrapper.state('selectedLocale')).to.not.be.undefined;
 		});
 	});
 
 	describe('child: "project" radioGroup', () => {
 		it('should call setProject() if the selected changed', () => {
-			const { props, wrapper } = setup()
+			const { wrapper } = setup()
 			wrapper.find('Radio[name="project"]').last().simulate('change');
-			expect(ImportModal.prototype.setProject).calledOnce;
+			expect(wrapper.state('selectedProject')).to.not.be.undefined;
 		});
 	});
 

@@ -1,29 +1,27 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon'
 import FormPanel from './FormPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import configUtil from '../../configUtil'
+
+const lenProjects = configUtil.getProjects().length
 
 export default class InputPanel extends React.PureComponent {
 	static propTypes = {
 		messages: PropTypes.object.isRequired,
 		addTranslation: PropTypes.func.isRequired,
-		alertErrors: PropTypes.func.isRequired
-	};
-	static contextTypes = {
-		config: PropTypes.object
+		alertErrors: PropTypes.func.isRequired,
 	};
 
 	addTranslation() {
-		const config = this.context.config,
-				el = this.refFormPanel.getFormElements(),
+		const el = this.refFormPanel.getFormElements(),
 				projects = el["project[]"],
-				lenProjects = projects.length,
-				locales = config.locales,
+				locales = configUtil.getLocales(),
 				lenLocales = locales.length;
 
-		let i, vk, vl, locale, project = [], emptyFields = [], data = {description: el.description.value.trim()};
+		let i, vk, vl, locale, project = [], emptyFields = [],
+			data = { description: el.description.value.trim() };
 
 		vk = el.key.value.trim()
 		if (vk) {
@@ -42,18 +40,24 @@ export default class InputPanel extends React.PureComponent {
 			}
 		}
 
-		for (i = 0; i < lenProjects; i++) {
-			if (projects[i].checked) {
-				project.push(projects[i].value);
+		if (lenProjects === 1) { // projects would be an object, not an array
+			if (projects.checked) {
+				project.push(projects.value);
+			}
+		} else {
+			for (i = 0; i < lenProjects; i++) {
+				if (projects[i] && projects[i].checked) {
+					project.push(projects[i].value);
+				}
 			}
 		}
-		if ( project.length > 0 ) {
+		if (project.length > 0) {
 			data.project = project
 		} else {
 			emptyFields.push(localeUtil.getMsg("ui.common.applyto"))
 		}
 
-		if ( emptyFields.length > 0 ) {
+		if (emptyFields.length > 0) {
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "c",
@@ -67,19 +71,20 @@ export default class InputPanel extends React.PureComponent {
 
 	render() {
 		return(
-			<div>
+			<Fragment>
 				<FormPanel
 					action="c"
 					messages={this.props.messages}
 					ref={cmp => { this.refFormPanel = cmp; }}
 				/>
-				<br/>
-				<div className="pull-right">
+				<div className="app-input-btn-add pull-right">
 					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation.bind(this)}>
-						<Glyphicon glyph="plus"/> {localeUtil.getMsg("ui.common.add")}
+						<i className="fas fa-plus-circle fa-lg" />
+						{' '}
+						{localeUtil.getMsg("ui.common.add")}
 					</Button>
 				</div>
-			</div>
+			</Fragment>
 		);
 	}
 }

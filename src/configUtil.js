@@ -1,16 +1,26 @@
 'use strict';
 const config = require('../ktm.config'),
-	host = "http://" + config.server.hostname + ":" + config.server.port;
-let projectIdList = [], projectNames = {};
+	{ locales, projects } = config,
+	projectIdList = [],
+	projectNames = {};
 
-config.projects.map(function(e) {
+projects.map(e => {
 	projectIdList.push(e.id);
 	projectNames[e.id] = e.name;
 });
 
 module.exports = {
 	getHost() {
-		return host;
+		if (process.env.NODE_ENV === 'test') {
+			return `http://localhost:${process.env.PORT || 3000}`;
+		}
+		return '';
+	},
+	getLocales() {
+		return locales;
+	},
+	getProjects() {
+		return projects;
 	},
 	getProjectIdList() {
 		return projectIdList;

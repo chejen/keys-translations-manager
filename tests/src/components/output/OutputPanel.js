@@ -1,10 +1,7 @@
 import OutputPanel from '../../../../src/components/output/OutputPanel'
-import CountCol from '../../../../src/components/output/CountCol'
-import FileTypeCol from '../../../../src/components/output/FileTypeCol'
 
 function setup() {
 	OutputPanel.prototype.download = sinon.spy()
-	OutputPanel.prototype.setFileType = sinon.spy()
 
 	const props = {
 			projectCounts: {
@@ -12,17 +9,10 @@ function setup() {
 				p2: 5
 			}
 		},
-		context = {
-			config: config
-		},
-		wrapper = shallow(
-			<OutputPanel {...props}/>,
-			{context: context}
-		);
+		wrapper = shallow(<OutputPanel {...props}/>);
 
 	return {
 		props,
-		config,
 		wrapper
 	}
 }
@@ -34,8 +24,8 @@ describe('(component) OutputPanel', () => {
 	});
 
 	it('should have CountCol(s)', () => {
-		const { wrapper, config } = setup()
-		expect(wrapper.find('CountCol')).to.have.length(config.projects.length);
+		const { wrapper } = setup()
+		expect(wrapper.find('CountCol')).to.have.length(configUtil.getProjects().length);
 	});
 
 	it('should have 5 FileTypeCols', () => {
@@ -55,7 +45,7 @@ describe('(component) OutputPanel', () => {
 		it('should call setFileType() when changed', () => {
 			const { wrapper } = setup()
 			wrapper.find('FileTypeCol').get(0).props.onChange();
-			expect(OutputPanel.prototype.setFileType).calledOnce;
+			expect(wrapper.state('fileType')).to.eql('nj');
 		});
 	});
 });

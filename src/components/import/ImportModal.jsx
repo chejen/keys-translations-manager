@@ -7,6 +7,10 @@ import Radio from 'react-bootstrap/lib/Radio'
 import Modal from 'react-bootstrap/lib/Modal'
 import AlertPanel from '../input/AlertPanel'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
+import configUtil from '../../configUtil'
+
+const locales = configUtil.getLocales()
+const projects = configUtil.getProjects()
 
 export default class ImportModal extends React.PureComponent {
 	static propTypes = {
@@ -17,16 +21,14 @@ export default class ImportModal extends React.PureComponent {
 		alertErrors: PropTypes.func.isRequired,
 		clearErrors: PropTypes.func.isRequired
 	};
-	static contextTypes = {
-		config: PropTypes.object
-	};
 
-	constructor(props, context) {
-		super(props, context);
+	constructor() {
+		super();
 		this.close = this.close.bind(this);
 		this.onDrop = this.onDrop.bind(this);
 		this.submit = this.submit.bind(this);
 		this.state = {
+			pervShowimportmodal: false,
 			selectedFile: null,
 			selectedLocale: null,
 			selectedProject: null
@@ -34,14 +36,21 @@ export default class ImportModal extends React.PureComponent {
 		this.acceptTypes = ["json", "properties"];
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.showimportmodal && !this.props.showimportmodal) {
-			this.setState({
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.showimportmodal && !prevState.pervShowimportmodal) {
+			return {
+				pervShowimportmodal: true,
 				selectedFile: null,
 				selectedLocale: null,
 				selectedProject: null
-			});
+			};
 		}
+		if (!nextProps.showimportmodal && prevState.pervShowimportmodal) {
+			return {
+				pervShowimportmodal: false,
+			}
+		}
+		return null;
 	}
 
 	setLocale(locale) {
@@ -56,8 +65,7 @@ export default class ImportModal extends React.PureComponent {
 		})
 	}
 
-	/* istanbul ignore next */
-	onDrop(files) {
+	onDrop /* istanbul ignore next */ (files) {
 		const re = new RegExp("\\.(" + this.acceptTypes.join("|") + ")"),
 			file = files[0],
 			me = this;
@@ -92,7 +100,7 @@ export default class ImportModal extends React.PureComponent {
 			}
 		}
 
-		if ( emptyFields.length > 0 ) {
+		if (emptyFields.length > 0) {
 			this.props.alertErrors([{
 				type: 'emptyfield',
 				action: "i",
@@ -110,11 +118,14 @@ export default class ImportModal extends React.PureComponent {
 
 	render() {
 		const me = this,
-			{ errors, clearErrors } = this.props,
-			config = this.context.config;
+			{
+				showimportmodal,
+				errors,
+				clearErrors
+			} = this.props;
 
 		return (
-			<Modal show={this.props.showimportmodal} onHide={this.close}>
+			<Modal show={showimportmodal} onHide={this.close}>
 				<Modal.Header>
 					<Modal.Title>
 						{localeUtil.getMsg("ui.common.import")}
@@ -157,7 +168,7 @@ export default class ImportModal extends React.PureComponent {
 							<span className="app-input-asterisk">* </span>
 							<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.locale")}:</span>
 						</ControlLabel>
-						{config.locales.map(function(e){
+						{locales.map(function(e){
 							return (
 								<Radio inline key={e} name="locale" value={e}
 									checked={me.state.selectedLocale===e}
@@ -171,7 +182,7 @@ export default class ImportModal extends React.PureComponent {
 							<span className="app-input-asterisk">* </span>
 							<span style={{marginRight: 20}}>{localeUtil.getMsg("ui.common.applyto")}:</span>
 						</ControlLabel>
-						{config.projects.map(function(e){
+						{projects.map(function(e){
 							let {id, name} = e
 							return (
 								<Radio inline key={id} name="project" value={id}
@@ -180,7 +191,6 @@ export default class ImportModal extends React.PureComponent {
 							);
 						})}
 					</div>
-
 				</Modal.Body>
 				<Modal.Footer>
 					<Button bsSize="small" bsStyle="primary" onClick={this.submit}>

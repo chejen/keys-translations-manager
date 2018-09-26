@@ -1,6 +1,7 @@
 import io from 'socket.io-client'
 import React from 'react'
 import PropTypes from 'prop-types'
+import { hot } from 'react-hot-loader'
 import { Route } from 'react-router-dom'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import AlertPanel from './components/input/AlertPanel'
@@ -11,15 +12,17 @@ import MainPanel from './components/layout/MainPanel'
 import SideBar from './components/layout/SideBar'
 import MessagePopup from './components/layout/MessagePopup'
 import OutputPanel from './components/output/OutputPanel'
+import HistoryModal from './components/history/HistoryModal'
 import EditModal from './components/input/EditModal'
 import MergeModal from './components/merge/MergeModal'
 import ImportModal from './components/import/ImportModal'
 import TablePanel from './components/grid/TablePanel'
+import ConfirmModal from './components/grid/ConfirmModal'
 import VisContainer from './containers/VisContainer'
 import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
 
-export default class App extends React.PureComponent {
+class App extends React.PureComponent {
 	static propTypes = {
 		children: PropTypes.node,
 		lang: PropTypes.string.isRequired,
@@ -27,43 +30,36 @@ export default class App extends React.PureComponent {
 		counts: PropTypes.object.isRequired,
 		errors: PropTypes.array.isRequired,
 		translations: PropTypes.array,
+		showhistorymodal: PropTypes.bool.isRequired,
 		showeditmodal: PropTypes.bool.isRequired,
+		showconfirmmodal: PropTypes.bool.isRequired,
 		showmergemodal: PropTypes.bool.isRequired,
 		showimportmodal: PropTypes.bool.isRequired,
 		showmessagepopup: PropTypes.bool.isRequired,
 		emitdatachange: PropTypes.bool.isRequired,
 		reloaddata: PropTypes.bool.isRequired,
 		editrecord: PropTypes.object.isRequired,
+		historylog: PropTypes.array.isRequired,
+		historystatus: PropTypes.string.isRequired,
 		keys: PropTypes.object.isRequired,
 		mergeable: PropTypes.array.isRequired,
 
 		MessageActions: PropTypes.object.isRequired,
 		CountActions: PropTypes.object.isRequired,
 		TranslationActions: PropTypes.object.isRequired,
+		HistoryActions: PropTypes.object.isRequired,
 		KeyActions: PropTypes.object.isRequired,
 		ErrorActions: PropTypes.object.isRequired,
 		SocketActions: PropTypes.object.isRequired,
 		ComponentActions: PropTypes.object.isRequired
 	}
 
-	static childContextTypes = {
-		config: PropTypes.object,
-		socket: PropTypes.object
-	}
-
 	constructor(props) {
 		super(props);
-		this.state = { socket: null }
-	}
-
-	getChildContext() {
-		return { config, socket: this.state.socket }
-	}
-
-	componentWillMount() {
-		if (this.props.lang) {
-			localeUtil.setMessages(this.props.messages);
+		if (props.lang) {
+			localeUtil.setMessages(props.messages);
 		}
+		this.state = { socket: null }
 	}
 
 	componentDidMount() {//Invoked once, only on the client
@@ -78,11 +74,8 @@ export default class App extends React.PureComponent {
 		}
 	}
 
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.lang !== this.props.lang) {
-			localeUtil.setMessages(nextProps.messages);
-		}
-		if (nextProps.emitdatachange && config.enableNotifications && this.state.socket) {
+	componentDidUpdate() {
+		if (this.props.emitdatachange && config.enableNotifications && this.state.socket) {
 			this.state.socket.emit('ktm', { action: 'datachanged' });
 			this.props.SocketActions.endDataChange();
 		}
@@ -107,11 +100,14 @@ export default class App extends React.PureComponent {
 	render() {
 		const {
 			MessageActions, TranslationActions, CountActions,
-			KeyActions, ErrorActions, ComponentActions,
-			lang, messages, counts, errors,
-			translations, showeditmodal, editrecord, reloaddata,
+			HistoryActions, KeyActions, ErrorActions, ComponentActions,
+			lang, messages, counts, errors, translations,
+			showeditmodal, showconfirmmodal, editrecord, reloaddata,
+			showhistorymodal, historylog, historystatus,
 			showmergemodal, keys, mergeable,
 			showimportmodal, showmessagepopup } = this.props
+
+		localeUtil.setMessages(messages);
 
 		return (
 			<div id="wrapper">
@@ -148,6 +144,18 @@ export default class App extends React.PureComponent {
 							updateTranslation={TranslationActions.updateTranslation}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}/>
+						<ConfirmModal data={editrecord}
+							showconfirmmodal={showconfirmmodal}
+							closeConfirmModal={ComponentActions.closeConfirmModal}
+							removeTranslation={TranslationActions.removeTranslation}
+						/>
+						<HistoryModal translation={editrecord}
+							showhistorymodal={showhistorymodal}
+							historylog={historylog}
+							historystatus={historystatus}
+							closeHistoryModal={ComponentActions.closeHistoryModal}
+							loadHistory={HistoryActions.loadHistory}
+						/>
 						<Route exact path="/" render={() => (
 							<TablePanel messages={messages}
 								translations={translations}
@@ -167,9 +175,10 @@ export default class App extends React.PureComponent {
 					</MainPanel>
 				</div>
 				<MessagePopup messages={messages}
-						msg={localeUtil.getMsg("ui.tip.dataChanged")}
-						closeMessagePopup={ComponentActions.closeMessagePopup}
-						showmessagepopup={showmessagepopup}>
+					msg={localeUtil.getMsg("ui.tip.dataChanged")}
+					closeMessagePopup={ComponentActions.closeMessagePopup}
+					showmessagepopup={showmessagepopup}
+				>
 					<b><u>
 						<a href="#" onClick={(event) => {
 							if (event) {
@@ -183,3 +192,5 @@ export default class App extends React.PureComponent {
 		);
 	}
 }
+
+export default hot(module)(App)

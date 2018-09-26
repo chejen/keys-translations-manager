@@ -13,6 +13,32 @@ export function closeEditModal() {
 	}
 }
 
+export function showConfirmModal(record) {
+	return {
+		type: ActionTypes.SHOW_CONFIRMMODAL,
+		record,
+	}
+}
+
+export function closeConfirmModal() {
+	return {
+		type: ActionTypes.CLOSE_CONFIRMMODAL
+	}
+}
+
+export function showHistoryModal(record) {
+	return {
+		type: ActionTypes.SHOW_HISTORYMODAL,
+		record,
+	}
+}
+
+export function closeHistoryModal() {
+	return {
+		type: ActionTypes.CLOSE_HISTORYMODAL
+	}
+}
+
 export function closeMergeModal() {
 	return {
 		type: ActionTypes.CLOSE_MERGEMODAL

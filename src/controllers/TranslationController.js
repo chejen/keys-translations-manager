@@ -1,5 +1,6 @@
 import express from 'express'
 import Translations from '../models/TranslationModel'
+import History from '../models/HistoryModel'
 const router = express.Router()
 const getUniqueElements = (ary) => {
 		let o = {};
@@ -18,6 +19,16 @@ const getUniqueElements = (ary) => {
 					reject(err);
 				}
 				resolve(translation);
+			});
+		});
+	},
+	getHistoryByTranslationId = translationId => {
+		return new Promise((resolve, reject) => {
+			History.findOne({ translationId }, (err, history) => {
+				if (err) {
+					reject(err);
+				}
+				resolve(history);
 			});
 		});
 	},
@@ -42,12 +53,40 @@ const getUniqueElements = (ary) => {
 					if (err) {
 						reject(err);
 					}
-					resolve({
-						action: action,
-						success: true,
-						data: translation,
-						errors: []
-					});
+
+					getHistoryByTranslationId(translation._id)
+						.then(history => {
+							const log = {
+								time: +new Date(),
+								action: action === 'u' ? 'EDIT' : 'ADD',
+								// user: 'system',
+								translation,
+							};
+
+							if (history) {
+								history.logs = [...history.logs, log]
+							} else {
+								history = new History({
+									translationId: translation._id,
+									logs: [log]
+								});
+							}
+
+							history.save(() => {
+								if (err) {
+									reject(err);
+								}
+								resolve({
+									action: action,
+									success: true,
+									data: translation,
+									errors: []
+								});
+							})
+						})
+						.catch(err => {
+							reject(err);
+						});
 				});
 			}
 		});
@@ -197,16 +236,47 @@ router.route('/:id')
 				});
 		})
 		.delete(function(req, res) {
+			const translationId = req.params.id
 			Translations.remove({
-				_id: req.params.id
+				_id: translationId
 			}, function(err, count) {
 				if (err) {
 					res.status(500).send(err);
 				}
-				res.json({
-					id: req.params.id,
-					count: count
-				});
+
+				getHistoryByTranslationId(translationId)
+					.then(history => {
+						const log = {
+							time: +new Date(),
+							action: 'DELETE',
+							// user: 'system',
+							translation: null,
+						};
+
+						if (history) {
+							history.isDeleted = true
+							history.logs = [...history.logs, log]
+						} else {
+							history = new History({
+								translationId: translationId,
+								isDeleted: true,
+								logs: [log]
+							});
+						}
+
+						history.save(() => {
+							if (err) {
+								res.status(500).send(err);
+							}
+							res.json({
+								id: translationId,
+								count: count
+							});
+						})
+					})
+					.catch(err => {
+						res.status(500).send(err);
+					});
 			});
 		});
 

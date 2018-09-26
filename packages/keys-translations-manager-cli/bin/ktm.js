@@ -66,12 +66,13 @@ if (!cfg) {
 }
 
 mongoose.Promise = global.Promise;
-mongoose.connect(cfg.database, { useMongoClient: true }, function(err) {
-	if (err) {
-		log('error', 'Failed to connect database !');
-		log('error', err);
-		process.exit(1);
-	} else {
+
+mongoose.connect(cfg.database, {
+	useNewUrlParser: true,
+	socketTimeoutMS: 90000,
+	connectTimeoutMS: 90000
+}).then(
+	() => {
 		while(lenOutputs--){
 			var output = outputs[lenOutputs],
 				locales = output.locales,
@@ -159,5 +160,10 @@ mongoose.connect(cfg.database, { useMongoClient: true }, function(err) {
 				}); //query.exec
 			}); //locales.forEach
 		}
+	},
+	err => {
+		log('error', 'Failed to connect database');
+		log('error', err);
+		process.exit(1);
 	}
-}); //mongoose.connect
+);

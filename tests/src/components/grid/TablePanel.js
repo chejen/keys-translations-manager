@@ -1,15 +1,7 @@
 import TablePanel from '../../../../src/components/grid/TablePanel'
-import ConfirmModal from '../../../../src/components/grid/ConfirmModal'
-import Mask from '../../../../src/components/layout/Mask'
-import InputGroup from 'react-bootstrap/lib/InputGroup'
-import FormControl from 'react-bootstrap/lib/FormControl'
-import Modal from 'react-bootstrap/lib/Modal'
-import Tooltip from 'react-bootstrap/lib/Tooltip'
-import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-
 
 function setup() {
-	TablePanel.prototype.onQuickFilterText = sinon.spy()
+	window.removeEventListener = sinon.spy()
 	TablePanel.prototype.showEditModal = sinon.spy()
 
 	const props = {
@@ -19,77 +11,62 @@ function setup() {
 				"key": "ui.common.edit",
 				"project": ["p1"],
 				"zh-TW": "編輯"
+			}, {
+				"_id": "56d7037a0b70e760104ddf11",
+				"en-US": "Delete",
+				"key": "ui.common.delete",
+				"project": ["p1"],
+				"zh-TW": "刪除"
 			}],
 			messages: {},
-			CountActions: {},
+			CountActions: {
+				loadCounts: sinon.spy(),
+			},
 			ComponentActions: {
-				showEditModal: sinon.spy()
+				showEditModal: sinon.spy(),
+				showConfirmModal: sinon.spy(),
+				showHistoryModal: sinon.spy(),
 			},
 			TranslationActions: {
 				loadTranslations: sinon.spy(),
-				updateTranslation: sinon.spy()
+				updateTranslation: sinon.spy(),
 			}
 		},
-		context = {
-			config: config
-		},
-		wrapper = shallow(
-			<TablePanel {...props}/>,
-			{context: context}
-		),
-		wrapper2 = mount(
-			<TablePanel {...props}/>,
-			{context: context}
-		);
+		wrapper = shallow(<TablePanel {...props}/>),
+		wrapper2 = mount(<TablePanel {...props}/>);
 
 	return {
 		props,
-		context,
 		wrapper,
 		wrapper2
 	}
 }
 
 describe('(component) TablePanel', () => {
-	it('should render as a <div>', () => {
+	it('should be wrapped by React.Fragment', () => {
 		const { wrapper } = setup()
-		expect(wrapper.type()).to.eql('div');
+		expect(wrapper.type()).to.eql(React.Fragment);
 	});
 
-	it('should have an InputGroup, a ConfirmModal, and a Mask', () => {
+	it('should have an InputGroup and a Mask', () => {
 		const { wrapper } = setup()
 		expect(wrapper.find('InputGroup')).to.have.length(1);
-		expect(wrapper.find('ConfirmModal')).to.have.length(1);
 		expect(wrapper.find('Mask')).to.have.length(1);
 	});
 
-	it('should have a BootstrapTable and several TableHeaderColumns', () => {
-		const { wrapper, context } = setup(),
-			locales = context.config.locales;
-		expect(wrapper.find('BootstrapTable')).to.have.length(1);
-		expect(wrapper.find('TableHeaderColumn')).to.have.length(locales.length + 5);
+	it('should have a Table with several columns', () => {
+		const { wrapper } = setup();
+		expect(wrapper.find('ReactTable')).to.have.length(1);
+		expect(wrapper.find('ReactTable').prop('columns').length)
+			.to.eql(configUtil.getLocales().length + 4);
 	});
 
 	it('should call loadTranslations() when component is mounted', () => {
-		const props = {
-				translations: [],
-				messages: {},
-				CountActions: {
-					loadCounts: sinon.spy()
-				},
-				ComponentActions: {},
-				TranslationActions: {
-					updateTranslation: sinon.spy(),
-					loadTranslations: sinon.spy()
-				}
-			},
-			context = {
-				config: config
-			},
-			wrapper = mount(
-				<TablePanel {...props}/>,
-				{context: context}
-			);
+		const { props } = setup();
+		props.TranslationActions.loadTranslations.resetHistory();
+		props.CountActions.loadCounts.resetHistory();
+
+		const wrapper = mount(<TablePanel {...props}/>);
 
 		expect(props.TranslationActions.loadTranslations).calledOnce;
 
@@ -98,27 +75,22 @@ describe('(component) TablePanel', () => {
 		expect(props.CountActions.loadCounts).calledOnce;
 	});
 
-	describe('child: InputGroup', () => {
-		it('should call onQuickFilterText() if input value changed', () => {
-			const { wrapper } = setup()
-			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: "test" } });
-			expect(TablePanel.prototype.onQuickFilterText).calledOnce;
-		});
+	it('should remove listener when the component is about to unmount', () => {
+		const { wrapper } = setup()
+		wrapper.unmount();
+		expect(window.removeEventListener).calledOnce;
 	});
 
-	describe('child: OverlayTrigger', () => {
-		it('should have a Tooltip with required id "tooltip-locales" as a overlay', () => {
-			const { wrapper2 } = setup();
-			const overlay = wrapper2.find('OverlayTrigger').props().overlay;
-			expect(overlay.type).to.eql(Tooltip);
-			expect(overlay.props.id).to.eql('tooltip-locales');
-		});
+	describe('child: InputGroup', () => {
+		it('should call onQuickFilterText() if input value changed', done => {
+			const { wrapper } = setup()
+			const inputValue = 'test'
+			wrapper.find('InputGroup').find('FormControl').first().simulate('change',{ target: { value: inputValue } });
 
-		it('should contain a iconic font', () => {
-			const { wrapper } = setup();
-			expect(wrapper.find('OverlayTrigger').contains(
-				<i className="fa fa-info-circle text-primary"/>
-			)).to.be.true;
+			setTimeout(() => {
+				expect(wrapper.state('quickFilterText')).to.eql(inputValue);
+				done();
+			}, 300);
 		});
 	});
 });

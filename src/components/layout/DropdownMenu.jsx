@@ -18,40 +18,53 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 					}
 					showImportModal();
 				}}>
-					<i className="fa fa-cloud-upload fa-fw fa-lg"/>
+					<i className="fa fa-file-import fa-fw fa-lg"/>
 				</a>
 			</li>
 			<li className="dropdown" title={localeUtil.getMsg("ui.common.merge")}>
 				<a className="dropdown-toggle" href="#" onClick={event => {
+					/* istanbul ignore next */
 					if (event) {
 						event.preventDefault();
 					}
 					findMergeable();
 				}}>
-					<i className="fa fa-code-fork fa-flip-vertical fa-fw fa-lg"/>
+					<i className="fas fa-share-alt fa-flip-horizontal fa-fw fa-lg"/>
 				</a>
 			</li>
 			<li className="dropdown" title={localeUtil.getMsg("ui.common.language")}>
 				<a className="dropdown-toggle" data-toggle="dropdown" href="#">
-					<i className="fa fa-language fa-fw fa-lg"/>
+					<i className="fas fa-globe fa-fw fa-lg"/>
+					{' '}
 					<i className="fa fa-caret-down"/>
 				</a>
 				<ul className="dropdown-menu dropdown-user">
 					<li><a href="#" onClick={event => {
+							/* istanbul ignore next */
 							if (event) {
 								event.preventDefault();
 							}
 							loadMsg("en-US");
 						}}>
-						<i className="fa fa-language fa-fw"/> English (en-US)
+						<i className="fas fa-globe-americas fa-fw"/> English
 					</a></li>
 					<li><a href="#" onClick={event => {
+							/* istanbul ignore next */
+							if (event) {
+								event.preventDefault();
+							}
+							loadMsg("zh-CN");
+						}}>
+						<i className="fas fa-globe-asia fa-fw"/> 简体中文
+					</a></li>
+					<li><a href="#" onClick={event => {
+							/* istanbul ignore next */
 							if (event) {
 								event.preventDefault();
 							}
 							loadMsg("zh-TW");
 						}}>
-						<i className="fa fa-language fa-fw"/> 繁體中文 (zh-TW)
+						<i className="fas fa-globe-asia fa-fw"/> 繁體中文
 					</a></li>
 				</ul>
 			</li>

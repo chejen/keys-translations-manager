@@ -6,39 +6,29 @@ function setup() {
 			addTranslation: sinon.spy(),
 			alertErrors: sinon.spy()
 		},
-		context = {
-			config: config
-		},
-		wrapper = shallow(
-			<InputPanel {...props}/>,
-			{context: context}
-		);
+		wrapper = shallow(<InputPanel {...props}/>);
 
 	return {
 		props,
-		context,
 		wrapper
 	}
 }
 
 describe('(component) InputPanel', () => {
-	it('should render as a <div>', () => {
+	it('should be wrapped by React.Fragment', () => {
 		const { wrapper } = setup()
-		expect(wrapper.type()).to.eql('div');
+		expect(wrapper.type()).to.eql(React.Fragment);
 	});
 
 	it('should contain an Add button', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('Button').find('Glyphicon').props().glyph).to.eql('plus');
+		expect(wrapper.find('Button').find('i').hasClass('fa-plus-circle')).to.eql(true);
 	});
 
 	describe('child: Button', () => {
 		it('should call props.alertErrors() if required fields are empty', () => {
-			const { props, context } = setup()
-			const wrapper = mount(
-				<InputPanel {...props}/>,
-				{context: context}
-			);
+			const { props } = setup()
+			const wrapper = mount(<InputPanel {...props}/>);
 			wrapper.find('Button').simulate('click');
 			expect(props.alertErrors).calledOnce;
 			expect(props.addTranslation.callCount).to.eql(0);
