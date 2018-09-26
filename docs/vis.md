@@ -1,16 +1,16 @@
 ## Visualization Demonstration
 
 * Click the counter to navigate to visualization.
-![step1](https://cloud.githubusercontent.com/assets/14872888/17220533/46e68070-5522-11e6-9ae9-67deea61702c.png)
+![step1](https://user-images.githubusercontent.com/14872888/46031572-cc4aaa80-c12b-11e8-838e-37a11da88dcd.png)
 
 * Visualization displays the keys and the translations with D3 tree layout. (By default, the tree expands only level one nodes.)
-![step2](https://cloud.githubusercontent.com/assets/14872888/17220534/46e7ccb4-5522-11e6-9b82-71e7443f7c10.png)
+![step2](https://user-images.githubusercontent.com/14872888/46030562-0a929a80-c129-11e8-9c3d-68dcbe9af84f.png)
 
-* Click the solid circle to expand its child nodes.
-![step3](https://cloud.githubusercontent.com/assets/14872888/17220535/46e9477e-5522-11e6-8388-38264981ca81.png)
+* Click a solid circle to expand its child nodes.
+![step3](https://user-images.githubusercontent.com/14872888/46030559-09fa0400-c129-11e8-89b9-bf98e251fac1.png)
 
-* Zoom in and out using the mouse wheel and reset zoom by clicking the "Reset" button.
-![step4](https://cloud.githubusercontent.com/assets/14872888/17220537/46ef3d32-5522-11e6-9143-7eb300bca64d.png)
+* Zoom in and out using the mouse wheel; reset zoom by clicking the "Reset" button.
+![step4](https://user-images.githubusercontent.com/14872888/46030560-0a929a80-c129-11e8-86be-2ffb23c0e6d9.png)
 
 * Hover over the hollow-circle leaf to show translations.
-![step5](https://cloud.githubusercontent.com/assets/14872888/17220538/46f3e990-5522-11e6-8421-27e4596aac4d.png)
+![step5](https://user-images.githubusercontent.com/14872888/46030561-0a929a80-c129-11e8-851d-01f8628ecfc0.png)

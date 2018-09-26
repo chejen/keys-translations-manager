@@ -1,10 +1,10 @@
 ## Merge Instructions
 
-> MERGE functionality would merge the same keys that have the same translations for each locale but sit in different projects.
+> MERGE functionality merges the same keys that sit in different projects but have translations all the same in every locale.
 
 * Step 1: Click the merge button on the upper-right corner to open a popup.
 
-![step1](https://cloud.githubusercontent.com/assets/14872888/17220527/46a75332-5522-11e6-9185-e1f0aa2041ed.png)
+![step1](https://user-images.githubusercontent.com/14872888/46032131-5cd5ba80-c12d-11e8-8757-b58715ea19d1.png)
 
 * Step 2: Confirm if you want to merge these keys. If so, hit the '**Yes**' button.
 
@@ -12,4 +12,4 @@
 
 * Step3: The keys are merged.
 
-![step3](https://cloud.githubusercontent.com/assets/14872888/17220528/46aa30de-5522-11e6-8072-e3f45dbebb2b.png)
+![step3](https://user-images.githubusercontent.com/14872888/46032134-5cd5ba80-c12d-11e8-81bf-954e10edb0a0.png)

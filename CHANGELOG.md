@@ -1,3 +1,19 @@
+# **v1.5.0** (Sep 27, 2018)
+
+### BREAKING CHANGES:
+* Alter a couple of custom settings (Set ```PORT``` and ```DB``` via environment variables instead of the file ktm.config.js).
+
+### Features:
+* Take **Docker Compose** as an alternative local development tool.
+* Make the 'Key' field editable.
+* Added the functionality to view detailed revision history of every single key and their tranlations.
+
+### Other Changes:
+* Dropped parts of React lifecycles that are about to be deprecated.
+* Replaced react-bootstrap-table to get better performance.
+* Integrated with **Heroku** to automatically build and release.
+
+
 # **v1.4.1** (Oct 21, 2017)
 
 * Upgraded React to 16 and updated all of the dependencies and devDependencies.
