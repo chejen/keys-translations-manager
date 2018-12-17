@@ -3,7 +3,9 @@ FROM node:alpine
 WORKDIR /app
 
 COPY . /app
-RUN yarn install
+RUN apk update
+RUN apk add nano
+RUN yarn
 RUN npm run build
 
 EXPOSE 3000

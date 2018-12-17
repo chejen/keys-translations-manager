@@ -4,6 +4,7 @@ services:
   ktm-web:
     image: ktm/express
     container_name: ktm-web
+    restart: always
     build: .
     environment:
       - DB=mongodb://ktm-db:27017/translationdb
@@ -14,6 +15,7 @@ services:
   ktm-db:
     image: mongo
     container_name: ktm-db
+    restart: always
     volumes:
       - /data/db:/data/db
     ports:
