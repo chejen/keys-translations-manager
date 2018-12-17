@@ -67,7 +67,7 @@
 		"lodash": "^4.17.11",
 		"mongoose": "^5.2.17",
 		"multiparty": "^4.2.1",
-		"nodemon": "^1.18.4",
+		"nodemon": "^1.18.9",
 		"prop-types": "~15.6.2",
 		"react": "~16.5.2",
 		"react-bootstrap": "~0.32.4",
