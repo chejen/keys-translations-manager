@@ -11,7 +11,7 @@ let form,
 	project,
 	query,
 	queryParam,
-	bulk,
+	translationOps,
 	doc,
 	key,
 	error = {},
@@ -71,8 +71,7 @@ router.route('/')
 							});
 						} else {
 							// [pass] batch update (or insert)
-							bulk = Translations.collection.initializeUnorderedBulkOp();
-
+							translationOps = []
 							for (key in data) {
 								/*eslint guard-for-in: 0*/
 								// if (data.hasOwnProperty(key)) { // temporarily removed to support Node v6
@@ -82,13 +81,19 @@ router.route('/')
 									};
 									doc = {};
 									doc[locale] = data[key];
-									bulk.find(query).upsert().updateOne({
-										$set: doc
+									translationOps.push({
+										updateOne: {
+											upsert: true,
+											filter: query,
+											update: {
+												$set: doc
+											}
+										}
 									});
 								// }
 							}
 
-							bulk.execute(function(){
+							Translations.bulkWrite(translationOps).then(() => {
 								Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
 									if (err) {
 										res.status(500).send(err);
