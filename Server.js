@@ -156,6 +156,6 @@ app.use("/api/translation", TranslationController);
 app.use("/api/history", HistoryController);
 app.use("/api/key", KeyController);
 app.use("/api/count", CountController);
-app.use("/api/download", DownloadController);
+app.use(/\/api\/(rest|download)/, DownloadController);
 app.use("/api/import", ImportController);
 app.use("/api/vis", VisController);

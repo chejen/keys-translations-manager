@@ -41,12 +41,18 @@ router.route('/:outputType/:fileType/:project/:locale')
 
 				if (fileType === "json" || fileType === "flat") {
 					res.set({
-						"Content-Disposition": "attachment; filename=\"translation.json\"",
+						...(req.baseUrl === '/api/rest'
+							? {}
+							: { "Content-Disposition": "attachment; filename=\"translation.json\"" }
+						),
 						"Content-Type": "application/json; charset=utf-8"
 					});
 				} else if (fileType === "properties") {
 					res.set({
-						"Content-Disposition": "attachment; filename=\"translation.properties\"",
+						...(req.baseUrl === '/api/rest'
+							? {}
+							: { "Content-Disposition": "attachment; filename=\"translation.properties\"" }
+						),
 						"Content-Type": "text/x-java-properties; charset=utf-8"
 					});
 				}
