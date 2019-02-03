@@ -1,5 +1,6 @@
 import bodyParser from 'body-parser'
 import express from 'express'
+import cors from 'cors'
 import favicon from 'serve-favicon'
 import fs from 'fs'
 import mongoose from 'mongoose'
@@ -7,6 +8,7 @@ import path from 'path'
 import compression from 'compression'
 import logUtil from 'keys-translations-manager-core/lib/logUtil'
 import config from './ktm.config'
+import serverConfig from './ktm.server.config'
 import { LANGUAGES } from './src/constants/Languages'
 import TranslationController from './src/controllers/TranslationController'
 import HistoryController from './src/controllers/HistoryController'
@@ -64,6 +66,20 @@ if (config.enableNotifications) {
 }
 
 app.set('view engine', 'ejs');
+const { corsWhitelist } = serverConfig;
+if (corsWhitelist && corsWhitelist.length) {
+	app.use(cors((req, callback) => {
+		const corsOptions = { origin: false };
+		let len = corsWhitelist.length
+		while (len--) {
+			if (new RegExp(corsWhitelist[len], 'i').test(req.header('Origin'))) {
+				corsOptions.origin = true;
+				break;
+			}
+		}
+		callback(null, corsOptions);
+	}))
+}
 app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
