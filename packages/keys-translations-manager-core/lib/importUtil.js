@@ -7,6 +7,11 @@ module.exports = {
 			if (err) {
 				callback(err);
 			} else {
+				// Remove byte order marker. This catches EF BB BF (the UTF-8 BOM)
+				if (data.charCodeAt(0) === 0xFEFF) {
+					data = data.slice(1);  
+				}
+
 				if (filename.search(/\.json$/i) >= 0) {
 					data = JSON.parse(data);
 					callback(null, 'json', data);
