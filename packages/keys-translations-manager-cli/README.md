@@ -63,7 +63,9 @@ Add `.ktmrc` to your home directory (or add `.ktmrc` into your project if you in
 ```
 ktm <command>
 ```
-* So far, `export` is the only command.
+<command> can be one of the following:
+* `export`: Export locales to specified paths.
+* `reset`: Drop the database used in KTM.
 
 
 ## Example
