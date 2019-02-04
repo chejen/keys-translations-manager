@@ -58,7 +58,7 @@ export default class HistoryModal extends React.PureComponent {
 
 		for (; i >= 0; i--) {
 			if (i === 0) {
-				prev = historylog[0].action === 'ADD' ? null : translation;
+				prev = ['ADD', 'IMPORT'].includes(historylog[0].action) ? null : translation;
 			} else {
 				prev = historylog[i - 1].translation;
 			}
