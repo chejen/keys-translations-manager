@@ -1,6 +1,15 @@
 {
-	"presets": ["env", "react", "stage-0"],
+	"presets": [
+		"@babel/preset-env",
+		"@babel/preset-react"
+	],
+	"plugins": [
+		"@babel/plugin-proposal-class-properties"
+	],
 	"env": {
+		"test": {
+			"plugins": ["istanbul"]
+		},
 		"development": {
 			"plugins": ["react-hot-loader/babel"]
 		}

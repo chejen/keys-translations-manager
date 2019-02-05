@@ -1,3 +1,4 @@
+.nyc_output
 coverage
 logs
 node_modules
@@ -6,3 +7,4 @@ app.css
 *.map
 *.bat
 *.log
+*.bak
