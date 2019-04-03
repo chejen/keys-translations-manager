@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackStrip = require('webpack-strip');
 var dir = {
 	src: path.join(__dirname, 'src'),
@@ -28,6 +29,7 @@ var config = {
 		}
 	},
 	plugins: [
+		new CleanWebpackPlugin('./public/js'),
 		new webpack.DefinePlugin({
 			'__DEV__': false
 		})
