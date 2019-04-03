@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
-const MessagePopup = ({
+const MessagePopup = memo(({
 	children, msg, showmessagepopup, closeMessagePopup
 }) => {
 	const style = {
@@ -18,7 +18,7 @@ const MessagePopup = ({
 			</div>
 		</div>
 	);
-};
+});
 
 MessagePopup.propTypes = {
 	children: PropTypes.node,

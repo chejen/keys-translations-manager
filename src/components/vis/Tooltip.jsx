@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import timingUtil from 'keys-translations-manager-core/lib/timingUtil'
 
-const Tooltip = ({ children, display, top, left, ComponentActions }) => {
+const Tooltip = memo(({ children, display, top, left, ComponentActions }) => {
 	const style = { display, top, left }
 	const onMouseOver = () => {
 		clearInterval(timingUtil.getTimeoutId());
@@ -25,7 +25,7 @@ const Tooltip = ({ children, display, top, left, ComponentActions }) => {
 			{children}
 		</span>
 	);
-};
+});
 
 Tooltip.propTypes = {
 	children: PropTypes.node,

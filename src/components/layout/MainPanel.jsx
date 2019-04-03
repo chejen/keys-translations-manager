@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col'
 
-const MainPanel = props => (
+const MainPanel = memo(props => (
 	<Row>
 		<Col lg={12}>
 			{/*<div className="panel panel-default">
@@ -12,7 +12,7 @@ const MainPanel = props => (
 			{props.children}
 		</Col>
 	</Row>
-);
+));
 
 MainPanel.propTypes = {
 	children: PropTypes.node

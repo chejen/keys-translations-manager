@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, memo } from 'react'
 import PropTypes from 'prop-types'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-const ActionCellRenderer = ({ data, ComponentActions }) => (
+const ActionCellRenderer = memo(({ data, ComponentActions }) => (
 	<Fragment>
 		<i className="fas fa-pen app-action-icon"
 			title={localeUtil.getMsg("ui.common.edit")}
@@ -17,7 +17,7 @@ const ActionCellRenderer = ({ data, ComponentActions }) => (
 			onClick={ComponentActions.showHistoryModal.bind(ComponentActions, data)}
 		/>
 	</Fragment>
-)
+));
 
 ActionCellRenderer.propTypes = {
 	data: PropTypes.object,

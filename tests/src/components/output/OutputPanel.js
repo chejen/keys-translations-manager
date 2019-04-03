@@ -1,4 +1,6 @@
 import OutputPanel from '../../../../src/components/output/OutputPanel'
+import CountCol from '../../../../src/components/output/CountCol'
+import FileTypeCol from '../../../../src/components/output/FileTypeCol'
 
 function setup() {
 	OutputPanel.prototype.download = sinon.spy()
@@ -25,18 +27,18 @@ describe('(component) OutputPanel', () => {
 
 	it('should have CountCol(s)', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('CountCol')).to.have.length(configUtil.getProjects().length);
+		expect(wrapper.find(CountCol)).to.have.length(configUtil.getProjects().length);
 	});
 
 	it('should have 5 FileTypeCols', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('FileTypeCol')).to.have.length(5);
+		expect(wrapper.find(FileTypeCol)).to.have.length(5);
 	});
 
 	describe('child: CountCol', () => {
 		it('should call download() when clicked', () => {
 			const { wrapper } = setup()
-			wrapper.find('CountCol').get(0).props.onClick();
+			wrapper.find(CountCol).get(0).props.onClick();
 			expect(OutputPanel.prototype.download).calledOnce;
 		});
 	});
@@ -44,7 +46,7 @@ describe('(component) OutputPanel', () => {
 	describe('child: FileTypeCol', () => {
 		it('should call setFileType() when changed', () => {
 			const { wrapper } = setup()
-			wrapper.find('FileTypeCol').get(0).props.onChange();
+			wrapper.find(FileTypeCol).get(0).props.onChange();
 			expect(wrapper.state('fileType')).to.eql('nj');
 		});
 	});

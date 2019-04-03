@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-const ConfirmModal = ({
+const ConfirmModal = memo(({
 	showconfirmmodal,
 	closeConfirmModal,
 	data,
@@ -31,7 +31,7 @@ const ConfirmModal = ({
 			</Button>
 		</Modal.Footer>
 	</Modal>
-)
+));
 
 ConfirmModal.propTypes = {
 	data: PropTypes.object.isRequired,

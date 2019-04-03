@@ -27,7 +27,7 @@ describe('(component) ImportModal', () => {
 
 	it('should contain <AlertPanel>', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('AlertPanel')).to.have.length(1);
+		expect(wrapper.find('[clearErrors]')).to.have.length(1);
 	});
 
 	it('should contain <Dropzone>', () => {
@@ -59,7 +59,6 @@ describe('(component) ImportModal', () => {
 			expect(wrapper.find('ul')).to.have.length(0);
 		});
 	});
-	// wrapper.setState({ name: 'bar' });
 
 	describe('child: "locale" radioGroup', () => {
 		it('should call setLocale() if the selected changed', () => {
