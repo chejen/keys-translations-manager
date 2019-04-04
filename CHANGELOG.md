@@ -1,3 +1,27 @@
+# **v1.6.0** (Apr 4, 2019)
+
+### BREAKING CHANGES:
+* Node v8+ is now required (because of react-dropzone).
+
+### Features:
+* Remove BOM when importing files.
+* Keep track of the **import** and **merge** history.
+* Enable CORS requests if `corsWhitelist` is given.
+* Support case-insensitive comparison in filters.
+
+### Docs:
+* Added the `reset` command to [CLI](https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli).
+* Adjuested [REST APIs](https://github.com/chejen/keys-translations-manager/blob/master/docs/rest-api.md).
+
+### Other Changes:
+* Dependencies:
+  * Upgraded React.js to v16.8.
+  * Upgraded Babel to v7.
+  * Upgraded webpack to v4.
+* Components:
+  * Applied React.memo to functional components.
+
+
 # **v1.5.0** (Sep 27, 2018)
 
 ### BREAKING CHANGES:
