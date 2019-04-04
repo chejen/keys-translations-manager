@@ -119,7 +119,7 @@ export default class TablePanel extends React.PureComponent {
 			top = 370,
 			translations = this.props.translations || [],
 			data = this.state.quickFilterText
-					? translations.filter(e => JSON.stringify(e).indexOf(this.state.quickFilterText) >= 0)
+					? translations.filter(e => new RegExp(this.state.quickFilterText, 'i').test(JSON.stringify(e)))
 					: translations,
 			windowHeight = this.state.windowHeight ||
 					(typeof window === "undefined" ? minHeight + top : window.innerHeight);

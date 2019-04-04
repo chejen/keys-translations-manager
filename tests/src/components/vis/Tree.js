@@ -1,4 +1,6 @@
 import Tree from '../../../../src/components/vis/Tree'
+import Tooltip from '../../../../src/components/vis/Tooltip'
+import Mask from '../../../../src/components/layout/Mask'
 
 function setup() {
 	Tree.prototype.showConfirmModal = sinon.spy();
@@ -43,8 +45,8 @@ describe('(component) Tree', () => {
 
 	it('should have a Tooltip, a Mask, and a ButtonGroup', () => {
 		const { wrapper } = setup();
-		expect(wrapper.find('Tooltip')).to.have.length(1);
-		expect(wrapper.find('Mask')).to.have.length(1);
+		expect(wrapper.find(Tooltip)).to.have.length(1);
+		expect(wrapper.find(Mask)).to.have.length(1);
 		expect(wrapper.find('ButtonGroup')).to.have.length(1);
 	});
 

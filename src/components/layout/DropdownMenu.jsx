@@ -1,9 +1,9 @@
 /*eslint i18n/no-chinese-character: 0*/
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) => {
+const DropdownMenu = memo(({ lang, loadMessages, showImportModal, findMergeable }) => {
 	const loadMsg = ln => {
 		if (ln !== lang) {
 			loadMessages(ln);
@@ -70,7 +70,7 @@ const DropdownMenu = ({ lang, loadMessages, showImportModal, findMergeable }) =>
 			</li>
 		</ul>
 	);
-};
+});
 
 DropdownMenu.propTypes = {
 	lang: PropTypes.string.isRequired,

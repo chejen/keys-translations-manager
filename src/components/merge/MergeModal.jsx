@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
 import Modal from 'react-bootstrap/lib/Modal'
@@ -6,7 +6,7 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
 const num = 10
 
-const MergeModal = ({
+const MergeModal = memo(({
 	keys, mergeable, showmergemodal, closeMergeModal, mergeTranslations
 }) => {
 	const k = Object.keys(keys).map(key => key)
@@ -52,7 +52,7 @@ const MergeModal = ({
 			}
 		</Modal>
 	);
-};
+});
 
 MergeModal.propTypes = {
 	keys: PropTypes.object.isRequired,

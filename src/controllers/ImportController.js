@@ -1,6 +1,7 @@
 import express from 'express'
 import multiparty from 'multiparty'
 import Translations from '../models/TranslationModel'
+import History from '../models/HistoryModel'
 import importUtil from 'keys-translations-manager-core/lib/importUtil'
 import transformationUtil from 'keys-translations-manager-core/lib/transformationUtil'
 const router = express.Router()
@@ -11,13 +12,30 @@ let form,
 	project,
 	query,
 	queryParam,
-	bulk,
+	translationOps,
+	historyOps,
 	doc,
 	key,
 	error = {},
 	errors, //needs to reset every time
 	action = "i";
 
+function afterImport(historyOps, res) {
+	History.bulkWrite(historyOps).then(() => {
+		Translations.find({}, null, { sort: { '_id': -1 } }, (err, translations) => {
+			if (err) {
+				res.status(500).send(err);
+			}
+			res.json({
+				action,
+				success: true,
+				data: translations,
+				errors: []
+			});
+		});
+	})
+}
+	
 router.route('/')
 		.post(function(req, res) {
 			form = new multiparty.Form(); //needs to new the form every time
@@ -71,35 +89,97 @@ router.route('/')
 							});
 						} else {
 							// [pass] batch update (or insert)
-							bulk = Translations.collection.initializeUnorderedBulkOp();
+							const time = +new Date()
+							const keys = []
+							translationOps = []
+							historyOps = []
 
 							for (key in data) {
-								/*eslint guard-for-in: 0*/
-								// if (data.hasOwnProperty(key)) { // temporarily removed to support Node v6
+								if (data.hasOwnProperty(key)) {
+									keys.push(key)
 									query = {
 										key: key,
 										project: project
 									};
 									doc = {};
 									doc[locale] = data[key];
-									bulk.find(query).upsert().updateOne({
-										$set: doc
+									translationOps.push({
+										updateOne: {
+											upsert: true,
+											filter: query,
+											update: {
+												$set: doc
+											}
+										}
 									});
-								// }
+								}
 							}
 
-							bulk.execute(function(){
-								Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
-									if (err) {
-										res.status(500).send(err);
+							Translations.bulkWrite(translationOps).then(result => {
+								if (result.upsertedCount) { // add
+									query = {
+										_id: {
+											$in: Object.keys(result.upsertedIds).map(k => result.upsertedIds[k])
+										}
 									}
-									res.json({
-										action: action,
-										success: true,
-										data: translations,
-										errors: []
-									});
-								});
+
+									Translations.find(query, (err, translations) => {
+										if (err) {
+											res.status(500).send(err);
+										}
+
+										translations.forEach(translation => {
+											historyOps.push({
+												insertOne: {
+													document: {
+														translationId: translation._id,
+														logs: [{
+															time,
+															action: 'IMPORT',
+															// user: 'system',
+															translation
+														}]
+													}
+												}
+											});
+										})
+
+										afterImport(historyOps, res)
+									})
+								} else { // update
+									query = {
+										key: { $in: keys },
+										project
+									}
+
+									Translations.find(query, (err, translations) => {
+										if (err) {
+											res.status(500).send(err);
+										}
+
+										translations.forEach(translation => {
+											historyOps.push({
+												updateOne: {
+													filter: {
+														translationId: translation._id
+													},
+													update: {
+														$push: {
+															logs: {
+																time,
+																action: 'IMPORT',
+																// user: 'system',
+																translation,
+															}
+														}
+													}
+												}
+											});
+										})
+
+										afterImport(historyOps, res)
+									})
+								}
 							});
 						}
 					}); //Translations.find

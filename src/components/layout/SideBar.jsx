@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 
-const SideBar = props => (
+const SideBar = memo(props => (
 	<div className="navbar-default sidebar" role="navigation">
 		<div className="sidebar-nav navbar-collapse nav">
 			<ul className="nav" id="side-menu">
@@ -17,7 +17,7 @@ const SideBar = props => (
 			</ul>
 		</div>
 	</div>
-);
+));
 
 SideBar.propTypes = {
 	children: PropTypes.node

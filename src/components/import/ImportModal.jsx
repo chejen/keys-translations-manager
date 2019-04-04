@@ -65,11 +65,12 @@ export default class ImportModal extends React.PureComponent {
 		})
 	}
 
-	onDrop /* istanbul ignore next */ (files) {
+	onDrop /* istanbul ignore next */ (appected, rejected) {
 		const re = new RegExp("\\.(" + this.acceptTypes.join("|") + ")"),
-			file = files[0],
+			file = appected.length ? appected[0] : rejected[0],
 			me = this;
 		if ( re.test(file.name) ) {
+			this.props.alertErrors([]);
 			this.setState({
 				selectedFile: file
 			})
@@ -80,6 +81,9 @@ export default class ImportModal extends React.PureComponent {
 				params: file,
 				match: me.acceptTypes
 			}]);
+			this.setState({
+				selectedFile: null
+			})
 		}
 	}
 
@@ -137,30 +141,38 @@ export default class ImportModal extends React.PureComponent {
 						<span className="app-input-asterisk">* </span>
 						<span>{localeUtil.getMsg("ui.common.file")}:</span>
 					</ControlLabel>
-					<Dropzone accept=".json,.properties"
-							className="app-dropzone"
-							activeClassName="app-dropzone-enter"
-							rejectClassName="app-dropzone-enter"
-							multiple={false} disablePreview
-							onDrop={this.onDrop}>
-
-						{this.state.selectedFile
-							? (<span>
-								<span>{localeUtil.getMsg("ui.file.selected")} </span>
-								<span style={{color:"#F92672"}}>{this.state.selectedFile.name}</span>
-							</span>)
-							: (<ul>
-								<li className="text-primary">{localeUtil.getMsg("ui.file.select")}</li>
-								<li className="text-primary">
-								{localeUtil.getMsg(
-									"ui.file.accept",
-									this.acceptTypes.map(function(e){
-										return `*.${e}`
-									}).join(` ${localeUtil.getMsg("ui.common.or")} `)
-								)}
-								</li>
-							</ul>)
-						}
+					<Dropzone
+						multiple={false}
+						onDrop={this.onDrop}
+					>
+					{({ getRootProps, getInputProps, isDragActive }) => {
+						const classEnter = isDragActive ? ' app-dropzone-enter' : ''
+						return (
+							<div
+								{...getRootProps()}
+								className={`app-dropzone${classEnter}`}
+							>
+								<input {...getInputProps()} />
+								{this.state.selectedFile
+									? (<span>
+										<span>{localeUtil.getMsg("ui.file.selected")} </span>
+										<span style={{color:"#F92672"}}>{this.state.selectedFile.name}</span>
+									</span>)
+									: (<ul>
+										<li className="text-primary">{localeUtil.getMsg("ui.file.select")}</li>
+										<li className="text-primary">
+										{localeUtil.getMsg(
+											"ui.file.accept",
+											this.acceptTypes
+												.map(e => `*.${e}`)
+												.join(` ${localeUtil.getMsg("ui.common.or")} `)
+										)}
+										</li>
+									</ul>)
+								}
+							</div>
+						)
+					}}
 					</Dropzone>
 
 					<div className="app-radio-group">

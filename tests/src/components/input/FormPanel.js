@@ -17,8 +17,8 @@ describe('(component) FormPanel', () => {
 	it('should contain TextFields and checkboxes', () => {
 		const { props } = setup()
 		const wrapper = shallow(<FormPanel {...props}/>)
-		expect(wrapper.find('TextField[required]')).to.have.length(configUtil.getLocales().length + 1);
-		expect(wrapper.find('TextField[componentClass="textarea"]')).to.have.length(1);
+		expect(wrapper.find('[required]')).to.have.length(configUtil.getLocales().length + 1);
+		expect(wrapper.find('[componentClass="textarea"]')).to.have.length(1);
 		expect(wrapper.find('Checkbox')).to.have.length(configUtil.getProjects().length);
 	});
 
@@ -31,10 +31,10 @@ describe('(component) FormPanel', () => {
 	it("should have no value set in create mode", () => {
 		const { props } = setup()
 		const wrapper = shallow(<FormPanel {...props}/>)
-		expect(wrapper.find('TextField[name="key"]').prop("value")).to.be.undefined;
-		expect(wrapper.find('TextField[name="en-US"]').prop("defaultValue")).to.be.empty;
-		expect(wrapper.find('TextField[name="zh-TW"]').prop("defaultValue")).to.be.empty;
-		expect(wrapper.find('TextField[name="description"]').prop("defaultValue")).to.be.undefined;
+		expect(wrapper.find('[name="key"]').prop("value")).to.be.undefined;
+		expect(wrapper.find('[name="en-US"]').prop("defaultValue")).to.be.empty;
+		expect(wrapper.find('[name="zh-TW"]').prop("defaultValue")).to.be.empty;
+		expect(wrapper.find('[name="description"]').prop("defaultValue")).to.be.undefined;
 		expect(wrapper.find('Checkbox[value="p1"]').prop("checked")).to.be.false;
 	});
 
@@ -61,10 +61,10 @@ describe('(component) FormPanel', () => {
 			"zh-TW": "編輯"
 		}
 		const wrapper = shallow(<FormPanel data={data}/>)
-		expect(wrapper.find('TextField[name="key"]').prop("defaultValue")).to.be.eql("ui.common.edit");
-		expect(wrapper.find('TextField[name="en-US"]').prop("defaultValue")).to.be.eql("Edit");
-		expect(wrapper.find('TextField[name="zh-TW"]').prop("defaultValue")).to.be.eql("編輯");
-		expect(wrapper.find('TextField[name="description"]').prop("defaultValue")).to.be.eql("some description");
+		expect(wrapper.find('[name="key"]').prop("defaultValue")).to.be.eql("ui.common.edit");
+		expect(wrapper.find('[name="en-US"]').prop("defaultValue")).to.be.eql("Edit");
+		expect(wrapper.find('[name="zh-TW"]').prop("defaultValue")).to.be.eql("編輯");
+		expect(wrapper.find('[name="description"]').prop("defaultValue")).to.be.eql("some description");
 		expect(wrapper.find('Checkbox[value="p1"]').prop("checked")).to.be.false;
 	});
 

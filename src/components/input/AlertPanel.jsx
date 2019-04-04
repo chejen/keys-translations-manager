@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/lib/Alert'
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
@@ -9,7 +9,7 @@ import configUtil from '../../configUtil'
 const getProjectName = configUtil.getProjectName
 const num = 3
 
-const AlertPanel = ({ clearErrors, errors, action }) => {
+const AlertPanel = memo(({ clearErrors, errors, action }) => {
 	const len = errors.length,
 		errMsg = [];
 	let err,
@@ -74,8 +74,8 @@ const AlertPanel = ({ clearErrors, errors, action }) => {
 
 	return (errMsg.length > 0) ? (<Alert bsStyle="danger" onDismiss={clearErrors}>
 			{errMsg.map(e => <p key={counter++}><i className="fas fa-exclamation-triangle fa-lg"/> {e}</p>)}
-		</Alert>) : (action === "c" ? <br/> : null);
-}
+		</Alert>) : (action === "c" ? <br/> : <div/>);
+});
 
 AlertPanel.propTypes = {
 	clearErrors: PropTypes.func.isRequired,

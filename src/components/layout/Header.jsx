@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { memo } from 'react';
 
-export default function Header() {
+export default memo(function Header() {
 	return (
 		<div className="navbar-header">
 			<button
@@ -21,4 +21,4 @@ export default function Header() {
 			</a>
 		</div>
 	);
-}
+});

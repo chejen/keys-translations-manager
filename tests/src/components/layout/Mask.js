@@ -1,4 +1,5 @@
 import Mask from '../../../../src/components/layout/Mask'
+import Spinner from '../../../../src/components/layout/Spinner'
 import Modal from 'react-bootstrap/lib/Modal'
 
 function setup() {
@@ -27,7 +28,7 @@ describe('(component) Mask', () => {
 
 	it('should have one icon font', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('Spinner')).to.have.length(1);
+		expect(wrapper.find(Spinner)).to.have.length(1);
 	});
 
 });

@@ -6,7 +6,6 @@
 [![MIT Licensed][license-image]][license-url]
 [![Build Status (Windows)][appveyor-image]][appveyor-url]
 [![Build Status (Linux)][travis-image]][travis-url]
-[![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 [![Coverage Status][codecov-image]][codecov-url]
 
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
@@ -15,8 +14,6 @@
 [appveyor-url]: https://ci.appveyor.com/project/chejen/keys-translations-manager
 [travis-image]: https://img.shields.io/travis/chejen/keys-translations-manager/master.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2aWV3Qm94PSItMTQyLjUgLTE0Mi41IDI4NSAyODUiPjxjaXJjbGUgcj0iMTQxLjciIGZpbGw9IiNERDQ4MTQiLz48ZyBpZD0iYSIgZmlsbD0iI0ZGRiI%2BPGNpcmNsZSBjeD0iLTk2LjQiIHI9IjE4LjkiLz48cGF0aCBkPSJNLTQ1LjYgNjguNGMtMTYuNi0xMS0yOS0yOC0zNC00Ny44IDYtNSA5LjgtMTIuMyA5LjgtMjAuNnMtMy44LTE1LjctOS44LTIwLjZjNS0xOS44IDE3LjQtMzYuNyAzNC00Ny44bDEzLjggMjMuMkMtNDYtMzUuMi01NS4zLTE4LjctNTUuMyAwYzAgMTguNyA5LjMgMzUuMiAyMy41IDQ1LjJ6Ii8%2BPC9nPjx1c2UgeGxpbms6aHJlZj0iI2EiIHRyYW5zZm9ybT0icm90YXRlKDEyMCkiLz48dXNlIHhsaW5rOmhyZWY9IiNhIiB0cmFuc2Zvcm09InJvdGF0ZSgyNDApIi8%2BPC9zdmc%2B
 [travis-url]: https://travis-ci.org/chejen/keys-translations-manager
-[npm-downloads-image]: https://img.shields.io/npm/dt/keys-translations-manager-core.svg
-[npm-downloads-url]: https://www.npmjs.com/package/keys-translations-manager-core
 [codecov-image]: https://codecov.io/github/chejen/keys-translations-manager/coverage.svg?branch=master
 [codecov-url]: https://codecov.io/github/chejen/keys-translations-manager?branch=master
 
@@ -63,7 +60,7 @@ See the [demo][20]
 
 ## Getting Started
 #### Method 1:
-* Download [Node.js](https://nodejs.org/en/) (v6+ is required) and [MongoDB](https://www.mongodb.org/), and then get them installed.
+* Download [Node.js](https://nodejs.org/en/) (v8+ is required) and [MongoDB](https://www.mongodb.org/), and then get them installed.
 * Start [mongod](https://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/) process and make sure it's running normally.
 * Checkout this repo (or directly download the stable releases from [here](https://github.com/chejen/keys-translations-manager/releases)), install dependencies, then start the web server:
 ```sh

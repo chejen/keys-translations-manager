@@ -1,5 +1,6 @@
 import ImportModal from '../../../../src/components/import/ImportModal'
 import Modal from 'react-bootstrap/lib/Modal'
+import Dropzone from 'react-dropzone'
 
 function setup() {
 	const props = {
@@ -26,12 +27,12 @@ describe('(component) ImportModal', () => {
 
 	it('should contain <AlertPanel>', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('AlertPanel')).to.have.length(1);
+		expect(wrapper.find('[clearErrors]')).to.have.length(1);
 	});
 
 	it('should contain <Dropzone>', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('.app-dropzone')).to.have.length(1);
+		expect(wrapper.find(Dropzone)).to.have.length(1);
 	});
 
 	it('should have 2 radio groups', () => {
@@ -47,6 +48,16 @@ describe('(component) ImportModal', () => {
 	it('should contain a Dismiss button with "default" class', () => {
 		const { wrapper } = setup()
 		expect(wrapper.find('Button').last().props().bsStyle).to.eql('default');
+	});
+
+	describe('child: Dropzone', () => {
+		it('should contain "ul" if there is no selected file', () => {
+			const { props } = setup();
+			const wrapper = mount(<ImportModal {...props}/>);
+			expect(wrapper.find('ul')).to.have.length(1);
+			wrapper.setState({ selectedFile: { name: 'bar' } });
+			expect(wrapper.find('ul')).to.have.length(0);
+		});
 	});
 
 	describe('child: "locale" radioGroup', () => {

@@ -51,6 +51,12 @@
 .app-dropzone-enter {
 	background-color: @light-yellow;
 }
+.app-dropzone-accept {
+	background-color: @light-yellow;
+}
+.app-dropzone-reject {
+	background-color: @warning-color;
+}
 
 .app-message-popup {
 	position: fixed;
@@ -73,10 +79,13 @@
 }
 .app-search-icon {
 	border: 1px solid @middle-color;
+	border-bottom: 0;
+	border-bottom-left-radius: 0;
 	color: @middle-color;
 }
 .app-search-bar {
 	border: 1px solid @middle-color;
+	border-bottom: 0;
 }
 
 .app-diff-container {

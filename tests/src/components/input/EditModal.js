@@ -34,7 +34,8 @@ describe('(component) EditModal', () => {
 
 	it('should contain <AlertPanel>', () => {
 		const { wrapper } = setup()
-		expect(wrapper.find('AlertPanel')).to.have.length(1);
+		console.log(wrapper.debug())
+		expect(wrapper.find('[clearErrors]')).to.have.length(1);
 	});
 
 	it('should contain <FormPanel>', () => {

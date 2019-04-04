@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Col from 'react-bootstrap/lib/Col'
 import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 
-const CountCol = ({ projectId, header, onClick, count, desc }) => (
+const CountCol = memo(({ projectId, header, onClick, count, desc }) => (
 	<Col lg={2} md={3} sm={4}>
 		<div className="panel panel-container">
 			<div className="panel-heading">
@@ -32,7 +32,7 @@ const CountCol = ({ projectId, header, onClick, count, desc }) => (
 			</div>
 		</div>
 	</Col>
-);
+));
 
 CountCol.propTypes = {
 	projectId: PropTypes.string.isRequired,

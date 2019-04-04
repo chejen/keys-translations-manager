@@ -1,4 +1,5 @@
 import TablePanel from '../../../../src/components/grid/TablePanel'
+import Mask from '../../../../src/components/layout/Mask'
 
 function setup() {
 	window.removeEventListener = sinon.spy()
@@ -51,7 +52,7 @@ describe('(component) TablePanel', () => {
 	it('should have an InputGroup and a Mask', () => {
 		const { wrapper } = setup()
 		expect(wrapper.find('InputGroup')).to.have.length(1);
-		expect(wrapper.find('Mask')).to.have.length(1);
+		expect(wrapper.find(Mask)).to.have.length(1);
 	});
 
 	it('should have a Table with several columns', () => {
