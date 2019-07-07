@@ -1,30 +1,36 @@
 {
-	"name": "keys-translations-manager-cli",
-	"version": "1.6.0",
-	"description": "keys-translations-manager's command line.",
-	"keywords": [
-		"i18n",
-		"internationalization",
-		"lang",
-		"language",
-		"l10n",
-		"locale",
-		"localization",
-		"multilingual",
-		"translation",
-		"MERN"
-	],
-	"author": "chejen",
-	"license": "MIT",
-	"repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
-	"dependencies": {
-		"keys-translations-manager-core": "^1.6.0",
-		"inquirer": "^6.2.2",
-		"yargs": "^13.2.2",
-		"node-fs": "0.1.7",
-		"mongoose": "^5.4.21"
-	},
-	"bin": {
-		"ktm": "./bin/ktm.js"
-	}
+  "name": "keys-translations-manager-cli",
+  "version": "1.6.0",
+  "description": "keys-translations-manager's command line.",
+  "keywords": [
+    "i18n",
+    "internationalization",
+    "lang",
+    "language",
+    "l10n",
+    "locale",
+    "localization",
+    "multilingual",
+    "translation",
+    "MERN"
+  ],
+  "author": "chejen",
+  "license": "MIT",
+  "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
+  "dependencies": {
+    "keys-translations-manager-core": "^1.6.0",
+    "inquirer": "^6.2.2",
+    "yargs": "^13.2.2",
+    "node-fs": "0.1.7",
+    "mongoose": "^5.4.21",
+    "snyk": "^1.189.0"
+  },
+  "bin": {
+    "ktm": "./bin/ktm.js"
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
