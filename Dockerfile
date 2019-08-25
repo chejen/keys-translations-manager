@@ -6,8 +6,8 @@ COPY . /app
 RUN apk update
 RUN apk add nano
 RUN yarn
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["yarn", "start"]
