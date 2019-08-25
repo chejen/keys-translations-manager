@@ -27,9 +27,7 @@
     "test": "cross-env NODE_ENV=test mocha -R spec --require @babel/register  --require ./tests/testHelper.js tests/**/*.js",
     "test:watch": "npm test -- --watch",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text mocha tests/**/*.js",
-    "codecov": "cat ./coverage/lcov.info | codecov",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "codecov": "cat ./coverage/lcov.info | codecov"
   },
   "husky": {
     "hooks": {
@@ -78,7 +76,7 @@
     "react-dom": "~16.8.6",
     "react-dropzone": "^10.1.0",
     "react-hot-loader": "^4.6.5",
-    "react-redux": "^6.0.1",
+    "react-redux": "^7.1.0",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-table": "^6.9.2",
@@ -86,8 +84,7 @@
     "redux-thunk": "^2.3.0",
     "serve-favicon": "^2.5.0",
     "socket.io": "^2.2.0",
-    "socket.io-client": "^2.2.0",
-    "snyk": "^1.189.0"
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -100,36 +97,35 @@
     "chai": "^4.2.0",
     "clean-css-cli": "^4.2.1",
     "codecov": "^3.2.0",
-    "css-loader": "^2.1.1",
+    "css-loader": "^3.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
-    "eslint": "^5.16.0",
+    "eslint": "^6.2.2",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-i18n": "^1.2.1",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-react": "^7.12.4",
     "eventsource-polyfill": "~0.9.6",
-    "husky": "^1.3.1",
-    "jsdom": "^14.0.0",
+    "husky": "^3.0.4",
+    "jsdom": "^15.1.1",
     "less": "^3.9.0",
-    "less-loader": "^4.1.0",
-    "lint-staged": "^8.1.5",
+    "less-loader": "^5.0.0",
+    "lint-staged": "^9.2.3",
     "mocha": "^6.0.2",
     "nock": "^10.0.6",
-    "nyc": "^13.3.0",
+    "nyc": "^14.1.1",
     "react-test-renderer": "~16.8.6",
     "redux-mock-store": "^1.5.3",
     "rename": "^1.0.4",
     "sinon": "^7.3.1",
     "sinon-chai": "^3.3.0",
-    "style-loader": "~0.23.1",
+    "style-loader": "1.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-middleware": "^3.6.1",
     "webpack-hot-middleware": "^2.24.3",
     "webpack-strip": "~0.1.0"
   },
-  "license": "MIT",
-  "snyk": true
+  "license": "MIT"
 }

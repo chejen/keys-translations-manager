@@ -11,7 +11,7 @@ const MessagePopup = memo(({
 	return (
 		<div className="app-message-popup" style={style}>
 			<div className="app-message-bar">
-				<i className="app-action-icon fa fa-close fa-fw" onClick={closeMessagePopup} />
+				<i className="app-action-icon fas fa-times" onClick={closeMessagePopup} />
 				{msg}
 				{' '}
 				{children}
