@@ -69,7 +69,7 @@
     "isomorphic-fetch": "^2.2.1",
     "keys-translations-manager-core": "^1.6.0",
     "lodash": "^4.17.11",
-    "mongoose": "^5.4.21",
+    "mongoose": "^5.7.5",
     "multiparty": "^4.2.1",
     "nodemon": "^1.18.10",
     "prop-types": "~15.6.2",
