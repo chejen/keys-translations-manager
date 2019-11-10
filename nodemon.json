@@ -1,6 +1,9 @@
 {
 	"verbose": true,
+	"ext": "*",
 	"ignore": [
+		".git",
+		"node_modules/**/node_modules",
 		"docs/",
 		"public/",
 		"src/actions/",

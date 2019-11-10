@@ -28,6 +28,7 @@ let webpackConfig,
 
 mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
 mongoose.connect(process.env.DB || require('./db.config'), {
+	useUnifiedTopology: true,
 	useNewUrlParser: true,
 	socketTimeoutMS: 90000,
 	connectTimeoutMS: 90000
