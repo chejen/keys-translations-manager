@@ -27,6 +27,9 @@ module.exports = {
 	devtool: 'cheap-module-eval-source-map',
 	resolve: {
 		extensions: ['.js', '.jsx'],
+		alias: {
+      'react-dom': '@hot-loader/react-dom'
+    },
 	},
 	module: {
 		rules: [{
