@@ -60,7 +60,7 @@ See the [demo][20]
 
 ## Getting Started
 #### Method 1:
-* Download [Node.js](https://nodejs.org/en/) (v8+ is required) and [MongoDB](https://www.mongodb.org/), and then get them installed.
+* Download [Node.js](https://nodejs.org/en/) (v10+ is required) and [MongoDB](https://www.mongodb.org/), and then get them installed.
 * Start [mongod](https://docs.mongodb.org/manual/tutorial/manage-mongodb-processes/) process and make sure it's running normally.
 * Checkout this repo (or directly download the stable releases from [here](https://github.com/chejen/keys-translations-manager/releases)), install dependencies, then start the web server:
 ```sh
