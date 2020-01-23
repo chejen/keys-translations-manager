@@ -67,6 +67,7 @@ See the [demo][20]
 $ git clone https://github.com/chejen/keys-translations-manager
 $ cd keys-translations-manager
 $ npm install (or yarn install)
+$ npm run build (or yarn build)
 $ npm start (or yarn start)
 ```
 
