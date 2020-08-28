@@ -68,7 +68,7 @@
     "history": "^4.9.0",
     "isomorphic-fetch": "^2.2.1",
     "keys-translations-manager-core": "^1.6.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.17",
     "mongoose": "^5.4.21",
     "multiparty": "^4.2.1",
     "nodemon": "^1.18.10",
