@@ -1,3 +1,6 @@
 {
+  "exclude": [
+    "src/components/vis/Tree.jsx"
+  ],
   "extends": "@istanbuljs/nyc-config-babel"
 }

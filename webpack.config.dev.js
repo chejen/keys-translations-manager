@@ -28,8 +28,8 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx'],
 		alias: {
-      'react-dom': '@hot-loader/react-dom'
-    },
+			'react-dom': '@hot-loader/react-dom'
+		},
 	},
 	module: {
 		rules: [{
