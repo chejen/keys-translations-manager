@@ -95,7 +95,7 @@ router.route('/')
 							historyOps = []
 
 							for (key in data) {
-								if (data.hasOwnProperty(key)) {
+								if (Object.prototype.hasOwnProperty.call(data, key)) {
 									keys.push(key)
 									query = {
 										key: key,

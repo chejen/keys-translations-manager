@@ -5,7 +5,7 @@ const router = express.Router()
 const getUniqueElements = (ary) => {
 		let o = {};
 		return ary.filter(e => {
-			if (o.hasOwnProperty(e)) {
+			if (Object.prototype.hasOwnProperty.call(o, e)) {
 				return false;
 			}
 			o[e] = true;
@@ -44,7 +44,7 @@ const getUniqueElements = (ary) => {
 			} else {
 				if (action === "u") {
 					for (let key in data) {
-						if (data.hasOwnProperty(key)) {
+						if (Object.prototype.hasOwnProperty.call(data, key)) {
 							translation[key] = data[key];
 						}
 					}
