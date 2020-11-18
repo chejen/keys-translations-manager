@@ -20,7 +20,7 @@
   "dependencies": {
     "keys-translations-manager-core": "^1.6.0",
     "inquirer": "^6.2.2",
-    "yargs": "^13.2.2",
+    "yargs": "^16.0.0",
     "node-fs": "0.1.7",
     "mongoose": "^5.4.21",
     "snyk": "^1.192.3"
