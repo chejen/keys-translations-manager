@@ -77,8 +77,13 @@ export default class InputPanel extends React.PureComponent {
 					messages={this.props.messages}
 					ref={cmp => { this.refFormPanel = cmp; }}
 				/>
-				<div className="app-input-btn-add pull-right">
-					<Button bsStyle='default' bsSize="small" onClick={this.addTranslation.bind(this)}>
+				<div className="app-input-btn-add">
+					<Button 
+						bsStyle='default'
+						bsSize="small"
+						onClick={this.addTranslation.bind(this)}
+						style={{ width: '100%' }}
+					>
 						<i className="fas fa-plus-circle fa-lg" />
 						{' '}
 						{localeUtil.getMsg("ui.common.add")}

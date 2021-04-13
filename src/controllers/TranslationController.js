@@ -1,7 +1,8 @@
 import express from 'express'
-import Translations from '../models/TranslationModel'
+import getTranslationModel from '../models/TranslationModel'
 import History from '../models/HistoryModel'
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
+
 const getUniqueElements = (ary) => {
 		let o = {};
 		return ary.filter(e => {
@@ -11,8 +12,10 @@ const getUniqueElements = (ary) => {
 			o[e] = true;
 			return true;
 		});
-	},
-	getTranslationById = id => {
+	}
+
+const getTranslationById = (version, id) => {
+		const Translations = getTranslationModel(version)
 		return new Promise((resolve, reject) => {
 			Translations.findById(id, (err, translation) => {
 				if (err) {
@@ -21,8 +24,9 @@ const getUniqueElements = (ary) => {
 				resolve(translation);
 			});
 		});
-	},
-	getHistoryByTranslationId = translationId => {
+	}
+
+const getHistoryByTranslationId = translationId => {
 		return new Promise((resolve, reject) => {
 			History.findOne({ translationId }, (err, history) => {
 				if (err) {
@@ -31,8 +35,9 @@ const getUniqueElements = (ary) => {
 				resolve(history);
 			});
 		});
-	},
-	getResponse = (data, translation, errors, action) => {
+	}
+
+const getResponse = (data, translation, errors, action) => {
 		return new Promise((resolve, reject) => {
 			if (errors.length > 0) {
 				resolve({
@@ -90,8 +95,10 @@ const getUniqueElements = (ary) => {
 				});
 			}
 		});
-	},
-	validate = (data, origin, res, action) => {
+	}
+
+const validate = (version, data, origin, res, action) => {
+		const Translations = getTranslationModel(version)
 		return new Promise((resolve, reject) => {
 			const key = data.key,
 				segment = key.split("."),
@@ -181,6 +188,7 @@ const getUniqueElements = (ary) => {
 
 router.route('/')
 		.get(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			Translations.find({}, null, {sort: {'_id': -1}}, function(err, translations) {
 				if (err) {
 					res.status(500).send(err);
@@ -189,11 +197,12 @@ router.route('/')
 			});
 		})
 		.post(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			const data = req.body,
 				action = "c",
 				translation = new Translations(data);
 
-			validate(data, null, res, action)
+			validate(req.params.version, data, null, res, action)
 				.then(errors => {
 					return getResponse(data, translation, errors, action);
 				})
@@ -207,7 +216,7 @@ router.route('/')
 
 router.route('/:id')
 		.get(function(req, res) {
-			getTranslationById(req.params.id)
+			getTranslationById(req.params.version, req.params.id)
 				.then(translation => {
 					res.json(translation);
 				})
@@ -220,10 +229,10 @@ router.route('/:id')
 			const data = req.body,
 				action = "u";
 
-			getTranslationById(req.params.id)
+			getTranslationById(req.params.version, req.params.id)
 				.then(translation => {
 					_translation = translation;
-					return validate(data, translation, res, action);
+					return validate(req.params.version, data, translation, res, action);
 				})
 				.then(errors => {
 					return getResponse(data, _translation, errors, action);
@@ -236,6 +245,7 @@ router.route('/:id')
 				});
 		})
 		.delete(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			const translationId = req.params.id
 			Translations.remove({
 				_id: translationId

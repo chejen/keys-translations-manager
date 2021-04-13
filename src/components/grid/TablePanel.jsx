@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/lib/Button'
-import InputGroup from 'react-bootstrap/lib/InputGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import ReactTable from "react-table"
 import debounce from 'lodash/debounce';
@@ -9,9 +8,9 @@ import localeUtil from 'keys-translations-manager-core/lib/localeUtil'
 import ActionCellRenderer from './ActionCellRenderer'
 import Mask from '../layout/Mask'
 import { getLocales, getProjectName } from '../../configUtil'
+import ProjectFilter from './ProjectFilter'
 
 const locales = getLocales()
-
 export default class TablePanel extends React.PureComponent {
 	static propTypes = {
 		reloaddata: PropTypes.bool,
@@ -19,7 +18,8 @@ export default class TablePanel extends React.PureComponent {
 		CountActions: PropTypes.object.isRequired,
 		TranslationActions: PropTypes.object.isRequired,
 		ComponentActions: PropTypes.object.isRequired,
-		translations: PropTypes.array
+		translations: PropTypes.array,
+		currentRelease: PropTypes.string.isRequired
 	};
 
 	constructor(props) {
@@ -27,6 +27,7 @@ export default class TablePanel extends React.PureComponent {
 
 		this.state = {
 			quickFilterText: null,
+			projectFilter: [],
 			windowHeight: 0
 		};
 
@@ -34,6 +35,7 @@ export default class TablePanel extends React.PureComponent {
 		this.handleResize = this.handleResize.bind(this);
 		this.debounceResize = debounce(this.handleResize, 150);
 		this.onQuickFilterText = this.onQuickFilterText.bind(this);
+		this.onSelectProejct = this.onSelectProejct.bind(this);
 		this.debounceFilter = debounce(this.handleFilter, 150);
 	}
 
@@ -78,8 +80,13 @@ export default class TablePanel extends React.PureComponent {
 		this.debounceFilter(event.target.value);
 	}
 
+	onSelectProejct(selectedList) {
+		const projectFilter = selectedList ? selectedList.map(el => el.value) : [];
+		this.setState({ projectFilter })
+	}
+
 	downloadCsv() {
-		let url = '/api/download/csv'
+		let url = `/api/${this.props.currentRelease}/download/csv`
 
 		/* istanbul ignore next */
 		location.href = url;
@@ -118,27 +125,36 @@ export default class TablePanel extends React.PureComponent {
 		const minHeight = 200,
 			top = 370,
 			translations = this.props.translations || [],
-			data = this.state.quickFilterText
-					? translations.filter(e => new RegExp(this.state.quickFilterText, 'i').test(JSON.stringify(e)))
-					: translations,
 			windowHeight = this.state.windowHeight ||
 					(typeof window === "undefined" ? minHeight + top : window.innerHeight);
+		
+		const filterByProject = this.state.projectFilter.length
+							? translations.filter(e => e.project.some(p => this.state.projectFilter.includes(p)))
+							: translations;
 
+		const data = this.state.quickFilterText
+					? filterByProject.filter(e => new RegExp(this.state.quickFilterText, 'i').test(JSON.stringify(e)))
+					: filterByProject;
 		return (
 			<Fragment>
-				<InputGroup>
-					<InputGroup.Addon className="app-search-icon">
-						<i className="fas fa-search"/>
-					</InputGroup.Addon>
-					<FormControl type="text" className="app-search-bar"
-						placeholder={localeUtil.getMsg("ui.grid.search")}
-						onChange={this.onQuickFilterText}/>
-					<InputGroup.Button style={{"paddingLeft": "5px"}}>
-						<Button onClick={this.downloadCsv}>
-							<i className="fas fa-file-export"/> CSV
-						</Button>
-					</InputGroup.Button>
-				</InputGroup>
+				<div className="app-toolbar">
+					<div style={{flex: 2, marginRight: 4}}>
+						<FormControl
+							type="text"
+							className="app-search-bar"
+							placeholder={localeUtil.getMsg("ui.grid.search")}
+							onChange={this.onQuickFilterText}
+						/>
+					</div>
+					<div style={{flex: 2}}>
+						<ProjectFilter onChange={this.onSelectProejct} />
+					</div>
+					<Button onClick={this.downloadCsv}>
+						<i className="fas fa-download"/> CSV
+					</Button>
+				</div>
+
+
 				<ReactTable
 					data={data}
 					columns={this.getColumnDefs()}

@@ -10,6 +10,7 @@
       "desc": "描述",
       "download": "下载",
       "edit": "编辑",
+      "exportType": "汇出档案类型",
       "file": "档案",
       "goBack": "返回",
       "history": "检视历史记录",
@@ -18,11 +19,15 @@
       "locale": "语言环境",
       "locales": "语言环境",
       "merge": "合并",
+      "ok": "确定",
       "or": "或",
       "others": "和其他 {0} 个",
+      "pleaseSelect": "请选择",
+      "release": "版本发布",
       "reload": "重载",
       "reset": "还原",
-      "update": "更新"
+      "update": "更新",
+      "version": "版本"
     },
     "confirm": {
       "continue": "您确定要继续吗 ?",
@@ -47,6 +52,7 @@
     "grid": {
       "edit": "双击单元格可进行编辑；键入 Enter 以送出更新",
       "empty": "无数据",
+      "projectFilter": "过滤专案",
       "search": "关键词搜寻"
     },
     "history": {

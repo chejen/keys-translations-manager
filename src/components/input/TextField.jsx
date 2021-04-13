@@ -4,9 +4,9 @@ import FormGroup from 'react-bootstrap/lib/FormGroup'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 import FormControl from 'react-bootstrap/lib/FormControl'
 
-const TextField = memo(({ required, label, value, ...restProps }) => {
+const TextField = memo(({ required, label, value, style = {}, ...restProps }) => {
 	// restProps: name, defaultValue, onChange, readOnly, className, placeholder
-	const style = value ? { backgroundColor: "#e7e7e7" } : {}
+	const custStyle = value ? { backgroundColor: "#e7e7e7", ...style } : style
 	return(
 		<FormGroup bsSize="small">
 			{label &&
@@ -17,12 +17,13 @@ const TextField = memo(({ required, label, value, ...restProps }) => {
 					{label}:
 				</ControlLabel>)
 			}
-			<FormControl style={style} value={value} {...restProps}/>
+			<FormControl style={custStyle} value={value} {...restProps}/>
 		</FormGroup>
 	)
 });
 
 TextField.propTypes = {
+	style: PropTypes.object,
 	required: PropTypes.bool,
 	readOnly: PropTypes.bool,
 	label: PropTypes.string,

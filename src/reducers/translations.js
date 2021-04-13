@@ -31,7 +31,6 @@ export default function translations(state = INIT_TRANSLATIONS, action) {
 			return [...state.slice(0, index),
 					action.data,
 					...state.slice(index + 1)];
-
 		default:
 			return state;
 	}

@@ -1,13 +1,13 @@
 /* variables */
 @warning-color: #f92672;
-@dark-color: #000;
-@middle-color: #333;
+@dark-color: #000000;
+@middle-color: #444;
 @light-color: #fff;
 @middle-gray: #ddd;
 @light-gray: #eee;
-@dark-yellow: #fdb91a;
-@middle-yellow: #fdd11a;
-@light-yellow: #fcf8e3;
+@dark-yellow: #f77f00;
+@middle-yellow: #fcbf49;
+@light-yellow: #f1faee;
 @light-blue: #d5edf8;
 @tip-color: rgba(0, 0, 0, 0.6);
 @default-space: 10px;
@@ -24,6 +24,7 @@
 	font-weight: bold;
 }
 .app-input-btn-add {
+	width: 100%;
 	margin: 20px 0;
 }
 .app-checkbox-options {
@@ -37,7 +38,12 @@
 .app-radio-group {
 	margin: 5px 0;
 }
-
+.app-release-selector {
+	width: 150px;
+	float: left;
+	top: 8px;
+	position: relative;
+}
 .app-dropzone {
 	margin-bottom: 20px;
 	height: 70px;
@@ -79,13 +85,17 @@
 }
 .app-search-icon {
 	border: 1px solid @middle-color;
-	border-bottom: 0;
-	border-bottom-left-radius: 0;
 	color: @middle-color;
 }
 .app-search-bar {
 	border: 1px solid @middle-color;
-	border-bottom: 0;
+	&:focus {
+		border-color: @dark-yellow;
+		box-shadow: none;
+	}
+}
+.app-toolbar { 
+	display: flex;
 }
 
 .app-diff-container {
@@ -244,7 +254,7 @@ body {
 	border-color: @dark-yellow;
 	color: @middle-color;
 	a {
-		color: #000;
+		color: @dark-color;
 	}
 }
 .panel-container .panel-heading {
@@ -275,7 +285,7 @@ body {
 #vis_tree {
 	.node {
 		circle {
-			fill: #000;
+			fill: @dark-color;
 			stroke: @dark-yellow;
 			stroke-width: 2px;
 		}

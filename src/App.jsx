@@ -21,6 +21,9 @@ import ConfirmModal from './components/grid/ConfirmModal'
 import VisContainer from './containers/VisContainer'
 import { LANGUAGES } from './constants/Languages'
 import config from '../ktm.config'
+import ReleaseModal from './components/input/ReleaseModal'
+import ReleaseSelector from './components/layout/ReleaseSelector'
+import Mask from './components/layout/Mask'
 
 class App extends React.PureComponent {
 	static propTypes = {
@@ -30,6 +33,7 @@ class App extends React.PureComponent {
 		counts: PropTypes.object.isRequired,
 		errors: PropTypes.array.isRequired,
 		translations: PropTypes.array,
+		showreleasemodal: PropTypes.bool.isRequired,
 		showhistorymodal: PropTypes.bool.isRequired,
 		showeditmodal: PropTypes.bool.isRequired,
 		showconfirmmodal: PropTypes.bool.isRequired,
@@ -43,6 +47,10 @@ class App extends React.PureComponent {
 		historystatus: PropTypes.string.isRequired,
 		keys: PropTypes.object.isRequired,
 		mergeable: PropTypes.array.isRequired,
+		showMask:PropTypes.bool.isRequired,
+		releaseLoading:PropTypes.bool.isRequired,
+		releases:PropTypes.array.isRequired,
+		currentRelease:PropTypes.string.isRequired,
 
 		MessageActions: PropTypes.object.isRequired,
 		CountActions: PropTypes.object.isRequired,
@@ -51,7 +59,8 @@ class App extends React.PureComponent {
 		KeyActions: PropTypes.object.isRequired,
 		ErrorActions: PropTypes.object.isRequired,
 		SocketActions: PropTypes.object.isRequired,
-		ComponentActions: PropTypes.object.isRequired
+		ComponentActions: PropTypes.object.isRequired,
+		ReleaseActions: PropTypes.object.isRequired
 	}
 
 	constructor(props) {
@@ -72,6 +81,7 @@ class App extends React.PureComponent {
 			lang = (LANGUAGES.indexOf(lang) === -1) ? "en-US" : lang;
 			this.loadMessages(lang);
 		}
+		this.props.ReleaseActions.getReleases();
 	}
 
 	componentDidUpdate() {
@@ -99,12 +109,12 @@ class App extends React.PureComponent {
 
 	render() {
 		const {
-			MessageActions, TranslationActions, CountActions,
+			MessageActions, TranslationActions, CountActions, ReleaseActions,
 			HistoryActions, KeyActions, ErrorActions, ComponentActions,
 			lang, messages, counts, errors, translations,
 			showeditmodal, showconfirmmodal, editrecord, reloaddata,
-			showhistorymodal, historylog, historystatus,
-			showmergemodal, keys, mergeable,
+			showhistorymodal, showreleasemodal, historylog, historystatus,
+			showmergemodal, keys, mergeable, currentRelease, releases, releaseLoading, showMask,
 			showimportmodal, showmessagepopup } = this.props
 
 		localeUtil.setMessages(messages);
@@ -113,10 +123,16 @@ class App extends React.PureComponent {
 			<div id="wrapper">
 				<nav className="navbar navbar-default navbar-static-top" role="navigation" style={{"marginBottom": 0}}>
 					<Header/>
+					<ReleaseSelector
+						selectRelease={ReleaseActions.selectRelease}
+						currentRelease={currentRelease}
+						releaseLoading={releaseLoading}
+						releases={releases} />
 					<DropdownMenu lang={lang} messages={messages}
 						loadMessages={MessageActions.loadMessages}
 						findMergeable={KeyActions.findMergeable}
-						showImportModal={ComponentActions.showImportModal}/>
+						showImportModal={ComponentActions.showImportModal}
+						showReleaseModal={ComponentActions.showReleaseModal}/>
 					<SideBar>
 						<InputPanel messages={messages}
 							alertErrors={ErrorActions.alertErrors}
@@ -125,8 +141,14 @@ class App extends React.PureComponent {
 				</nav>
 				<div id="page-wrapper">
 					<AlertPanel errors={errors} clearErrors={ErrorActions.clearErrors} action="c"/>
-					<OutputPanel projectCounts={counts} messages={messages}/>
+					<OutputPanel currentRelease={currentRelease} projectCounts={counts} messages={messages}/>
 					<MainPanel>
+						<ReleaseModal errors={errors}
+							currentRelease={currentRelease}
+							showreleasemodal={showreleasemodal}
+							closeReleaseModal={ComponentActions.closeReleaseModal}
+							newRelease={ReleaseActions.newRelease}
+							showMask={ComponentActions.showMask} />
 						<ImportModal errors={errors}
 							alertErrors={ErrorActions.alertErrors}
 							clearErrors={ErrorActions.clearErrors}
@@ -162,7 +184,8 @@ class App extends React.PureComponent {
 								reloaddata={reloaddata}
 								TranslationActions={TranslationActions}
 								ComponentActions={ComponentActions}
-								CountActions={CountActions}/>
+								CountActions={CountActions}
+								currentRelease={currentRelease} />
 						)}/>
 						<Route path="/vis/:projectId" render={props => (
 							<VisContainer {...props}
@@ -188,6 +211,7 @@ class App extends React.PureComponent {
 						}}>{localeUtil.getMsg("ui.common.reload")}</a>
 					</u></b>
 				</MessagePopup>
+				<Mask show={showMask} />
 			</div>
 		);
 	}

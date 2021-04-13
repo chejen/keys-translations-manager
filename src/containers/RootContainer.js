@@ -12,6 +12,7 @@ import * as KeyActions from '../actions/keys'
 import * as ErrorActions from '../actions/errors'
 import * as SocketActions from '../actions/socket'
 import * as ComponentActions from '../actions/components'
+import * as ReleaseActions from '../actions/releases'
 import App from '../App'
 
 function mapStateToProps(state) {
@@ -20,16 +21,19 @@ function mapStateToProps(state) {
 		errors: state.errors,
 		translations: state.translations,
 		emitdatachange: state.socket.emitdatachange,
+		showreleasemodal: state.components.showreleasemodal,
 		showeditmodal: state.components.showeditmodal,
 		showconfirmmodal: state.components.showconfirmmodal,
 		showhistorymodal: state.components.showhistorymodal,
 		showmergemodal: state.components.showmergemodal,
 		showimportmodal: state.components.showimportmodal,
 		showmessagepopup: state.components.showmessagepopup,
+		showMask: state.components.showMask,
 		reloaddata: state.components.reloaddata,
 		keys: state.components.keys,
 		mergeable: state.components.mergeable,
 		editrecord: state.components.editrecord,
+		...state.release,
 		...state.messages,
 		...state.history,
 	}
@@ -44,7 +48,8 @@ function mapDispatchToProps(dispatch) {
 		KeyActions: bindActionCreators(KeyActions, dispatch),
 		ErrorActions: bindActionCreators(ErrorActions, dispatch),
 		SocketActions: bindActionCreators(SocketActions, dispatch),
-		ComponentActions: bindActionCreators(ComponentActions, dispatch)
+		ComponentActions: bindActionCreators(ComponentActions, dispatch),
+		ReleaseActions: bindActionCreators(ReleaseActions, dispatch)
 	}
 }
 

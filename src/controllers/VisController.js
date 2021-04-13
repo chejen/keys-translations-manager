@@ -1,10 +1,11 @@
 import express from 'express'
 import transformationUtil from 'keys-translations-manager-core/lib/transformationUtil'
-import Translations from '../models/TranslationModel'
-const router = express.Router()
+import getTranslationModel from '../models/TranslationModel'
+const router = express.Router({ mergeParams: true })
 
 router.route('/:visType/:project')
 		.get(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			const visType = req.params.visType,
 				project = req.params.project,
 				criteria = { "project": project };

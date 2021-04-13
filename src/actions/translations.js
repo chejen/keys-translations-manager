@@ -2,8 +2,9 @@ import * as ActionTypes from '../constants/ActionTypes'
 import configUtil from '../configUtil'
 
 export function addTranslation(params) {
-	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation', {
+	return (dispatch, getState) => {
+		const { currentRelease } = getState().release;
+		return fetch(configUtil.getHost() + `/api/${currentRelease}/translation`, {
 			headers: {
 				'Accept': 'application/json; charset=utf-8',
 				'Content-Type': 'application/json; charset=utf-8'
@@ -34,8 +35,14 @@ export function addTranslation(params) {
 }
 
 export function loadTranslations() {
-	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation?t=' + +new Date())
+	return (dispatch, getState) => {
+		// for showing mask
+		dispatch({
+			type: ActionTypes.LOAD_TRANSLATIONS,
+			data: null
+		})
+		const { currentRelease } = getState().release;
+		return fetch(configUtil.getHost() + `/api/${currentRelease}/translation?t=` + +new Date())
 			.then(res => {
 				if (res.status >= 400) {
 					throw new Error(res.status + ", " + res.statusText);
@@ -52,8 +59,9 @@ export function loadTranslations() {
 }
 
 export function removeTranslation(id) {
-	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation/' + id, {
+	return (dispatch, getState) => {
+		const { currentRelease } = getState().release;
+		return fetch(configUtil.getHost() + `/api/${currentRelease}/translation/` + id, {
 					method: 'DELETE'
 				})
 				.then(res => {
@@ -72,8 +80,9 @@ export function removeTranslation(id) {
 }
 
 export function updateTranslation(params) {
-	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/translation/' + params._id, {
+	return (dispatch, getState) => {
+		const { currentRelease } = getState().release;
+		return fetch(configUtil.getHost() + `/api/${currentRelease}/translation/` + params._id, {
 			headers: {
 				'Accept': 'application/json; charset=utf-8',
 				'Content-Type': 'application/json; charset=utf-8'
@@ -110,8 +119,9 @@ export function importLocale(params) {
 	data.append('locale', params.locale)
 	data.append('project', params.applyto)
 
-	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/import', {
+	return (dispatch, getState) => {
+		const { currentRelease } = getState().release;
+		return fetch(configUtil.getHost() + `/api/${currentRelease}/import`, {
 			method: 'POST',
 			body: data
 		})
@@ -138,8 +148,9 @@ export function importLocale(params) {
 }
 
 export function mergeTranslations(params) {
-	return dispatch => {
-		return fetch(configUtil.getHost() + '/api/key', {
+	return (dispatch, getState) => {
+		const { currentRelease } = getState().release;
+		return fetch(configUtil.getHost() + `/api/${currentRelease}/key`, {
 			headers: {
 				'Accept': 'application/json; charset=utf-8',
 				'Content-Type': 'application/json; charset=utf-8'

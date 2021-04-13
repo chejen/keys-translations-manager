@@ -1,10 +1,10 @@
 import express from 'express'
 import multiparty from 'multiparty'
-import Translations from '../models/TranslationModel'
+import getTranslationModel from '../models/TranslationModel'
 import History from '../models/HistoryModel'
 import importUtil from 'keys-translations-manager-core/lib/importUtil'
 import transformationUtil from 'keys-translations-manager-core/lib/transformationUtil'
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 const json2Properties = transformationUtil.json2Properties
 
 let form,
@@ -20,7 +20,8 @@ let form,
 	errors, //needs to reset every time
 	action = "i";
 
-function afterImport(historyOps, res) {
+function afterImport(historyOps, req, res) {
+	const Translations = getTranslationModel(req.params.version)
 	History.bulkWrite(historyOps).then(() => {
 		Translations.find({}, null, { sort: { '_id': -1 } }, (err, translations) => {
 			if (err) {
@@ -38,6 +39,7 @@ function afterImport(historyOps, res) {
 	
 router.route('/')
 		.post(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			form = new multiparty.Form(); //needs to new the form every time
 			form.parse(req, function(err, fields, files) {
 				importUtil.read(files.file[0].path, function(err, fileType, data){
@@ -144,7 +146,7 @@ router.route('/')
 											});
 										})
 
-										afterImport(historyOps, res)
+										afterImport(historyOps, req, res)
 									})
 								} else { // update
 									query = {
@@ -177,7 +179,7 @@ router.route('/')
 											});
 										})
 
-										afterImport(historyOps, res)
+										afterImport(historyOps, req, res)
 									})
 								}
 							});

@@ -1,16 +1,17 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import mergeUtil from 'keys-translations-manager-core/lib/mergeUtil'
-import Translations from '../models/TranslationModel'
+import getTranslationModel from '../models/TranslationModel'
 import History from '../models/HistoryModel'
 import config from '../../ktm.config'
 const locales = config.locales
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 const findMergeable = mergeUtil.findMergeable
 let bulk, doc, bulkHistory, docHistory
 
 router.route('/')
 		.get(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			Translations.find(function(err, translations) {
 				if (err) {
 					res.status(500).send(err);
@@ -19,6 +20,7 @@ router.route('/')
 			});
 		})
 		.post(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			const mergeable = req.body;
 			let len = mergeable.length,
 				l,

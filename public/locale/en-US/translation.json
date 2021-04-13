@@ -10,6 +10,7 @@
       "desc": "Description",
       "download": "Download",
       "edit": "Edit",
+      "exportType": "Export File Type",
       "file": "File",
       "goBack": "Go back",
       "history": "History",
@@ -18,11 +19,15 @@
       "locale": "Locale",
       "locales": "Locales",
       "merge": "Merge",
+      "ok": "Ok",
       "or": "or",
       "others": "and {0} others",
+      "pleaseSelect": "Please Select",
+      "release": "Release Version",
       "reload": "Reload",
       "reset": "Reset",
-      "update": "Update"
+      "update": "Update",
+      "version": "Version"
     },
     "confirm": {
       "continue": "Are you sure you want to continue?",
@@ -47,6 +52,7 @@
     "grid": {
       "edit": "Double-click the cell to edit. Press Enter to commit.",
       "empty": "No data",
+      "projectFilter": "Project Filter",
       "search": "Search"
     },
     "history": {

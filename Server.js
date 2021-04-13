@@ -17,7 +17,9 @@ import CountController from './src/controllers/CountController'
 import DownloadController from './src/controllers/DownloadController'
 import ImportController from './src/controllers/ImportController'
 import VisController from './src/controllers/VisController'
+import ReleaseController from './src/controllers/ReleaseController'
 
+const database = process.env.DB || require('./db.config');
 const log = logUtil.log,
 	port = process.env.PORT || 3000,
 	app = express(),
@@ -26,8 +28,10 @@ const log = logUtil.log,
 let webpackConfig,
 	compiler;
 
+logUtil.log('info', `connecting database ${database} ...`)
+logUtil.log('info', `expose port ${port} ...`)
 mongoose.Promise = global.Promise; //mpromise (mongoose's default promise library) is deprecated
-mongoose.connect(process.env.DB || require('./db.config'), {
+mongoose.connect(database, {
 	useUnifiedTopology: true,
 	useNewUrlParser: true,
 	socketTimeoutMS: 90000,
@@ -84,7 +88,7 @@ if (corsWhitelist && corsWhitelist.length) {
 app.use(compression());
 app.use(favicon(path.join(__dirname, 'public', 'image', 'favicon.ico')));
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
 app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
 
 if (process.env.NODE_ENV === 'development') {
@@ -153,10 +157,13 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use("/api/translation", TranslationController);
+app.use("/api/:version/translation", TranslationController);
 app.use("/api/history", HistoryController);
-app.use("/api/key", KeyController);
-app.use("/api/count", CountController);
-app.use(/\/api\/(rest|download)/, DownloadController);
-app.use("/api/import", ImportController);
-app.use("/api/vis", VisController);
+app.use("/api/:version/key", KeyController);
+app.use("/api/:version/count", CountController);
+app.use("/api/:version/rest/", DownloadController);
+app.use("/api/:version/download/", DownloadController);
+// app.use(/\/api\/(rest|download)/, DownloadController);
+app.use("/api/:version/import", ImportController);
+app.use("/api/:version/vis", VisController);
+app.use("/api/releases", ReleaseController);

@@ -10,6 +10,7 @@
       "desc": "描述",
       "download": "下載",
       "edit": "編輯",
+      "exportType": "匯出檔案類型",
       "file": "檔案",
       "goBack": "返回",
       "history": "檢視歷史記錄",
@@ -18,11 +19,15 @@
       "locale": "語系",
       "locales": "語系",
       "merge": "合併",
+      "ok": "確定",
       "or": "或",
       "others": "和其他 {0} 個",
+      "pleaseSelect": "請選擇",
+      "release": "版本發布",
       "reload": "重新載入",
       "reset": "還原",
-      "update": "更新"
+      "update": "更新",
+      "version": "版本"
     },
     "confirm": {
       "continue": "您確定要繼續嗎 ?",
@@ -47,6 +52,7 @@
     "grid": {
       "edit": "雙擊儲存格可進行編輯；鍵入 Enter 以送出更新",
       "empty": "無資料",
+      "projectFilter": "過濾專案",
       "search": "關鍵字搜尋"
     },
     "history": {

@@ -21,6 +21,16 @@ export default function components(state = INIT_COMPONENTS, action) {
 				...state,
 				showimportmodal: true
 			};
+		case ActionTypes.SHOW_RELEASEMODAL:
+			return {
+				...state,
+				showreleasemodal: true
+			};
+		case ActionTypes.CLOSE_RELEASEMODAL:
+			return {
+				...state,
+				showreleasemodal: false
+			};
 		case ActionTypes.IMPORT_LOCALE:
 		case ActionTypes.CLOSE_IMPORTMODAL:
 			return {
@@ -91,6 +101,11 @@ export default function components(state = INIT_COMPONENTS, action) {
 			return {
 				...state,
 				showtooltip: false
+			};
+		case ActionTypes.SHOW_MASK:
+			return {
+				...state,
+				showMask: action.payload
 			};
 		default:
 			return state;

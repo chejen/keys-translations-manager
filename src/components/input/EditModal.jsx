@@ -94,7 +94,7 @@ export default class EditModal extends React.PureComponent {
 		const { showeditmodal, data, errors, clearErrors } = this.props;
 
 		return (
-			<Modal show={showeditmodal} onHide={this.close} bsSize='lg'>
+			<Modal show={showeditmodal} onHide={this.close} bsSize='lg' backdrop="static">
 				<Modal.Header>
 					<Modal.Title>
 						{localeUtil.getMsg("ui.common.edit")}

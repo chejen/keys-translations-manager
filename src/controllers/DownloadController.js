@@ -1,15 +1,17 @@
 import express from 'express'
 import archiver from 'archiver'
 import transformationUtil from 'keys-translations-manager-core/lib/transformationUtil'
-import Translations from '../models/TranslationModel'
+import getTranslationModel from '../models/TranslationModel'
 import config from '../../ktm.config'
 const locales = config.locales
 const lenLocales = locales.length
-const router = express.Router()
+const router = express.Router({ mergeParams: true })
 const document2FileContent = transformationUtil.document2FileContent
 
 router.route('/:outputType/:fileType/:project/:locale')
 		.get(function(req, res) {
+			const version = req.params.version
+			const Translations = getTranslationModel(version)
 			// outputType (f: format, n: none)
 			// fileType (json, flat, properties)
 			const { outputType, fileType, project, locale } = req.params
@@ -41,7 +43,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 
 				if (fileType === "json" || fileType === "flat") {
 					res.set({
-						...(req.baseUrl === '/api/rest'
+						...(req.baseUrl === `/api/${version}/rest`
 							? {}
 							: { "Content-Disposition": "attachment; filename=\"translation.json\"" }
 						),
@@ -49,7 +51,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 					});
 				} else if (fileType === "properties") {
 					res.set({
-						...(req.baseUrl === '/api/rest'
+						...(req.baseUrl === `/api/${version}/rest`
 							? {}
 							: { "Content-Disposition": "attachment; filename=\"translation.properties\"" }
 						),
@@ -63,6 +65,7 @@ router.route('/:outputType/:fileType/:project/:locale')
 
 router.route('/:outputType/:fileType/:project')
 		.get(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			// outputType (f: format, n: none)
 			// fileType (json, flat, properties)
 			const { outputType, fileType, project } = req.params,
@@ -116,6 +119,7 @@ router.route('/:outputType/:fileType/:project')
 
 router.route('/csv')
 		.get(function(req, res) {
+			const Translations = getTranslationModel(req.params.version)
 			Translations.find({}, null, {sort: {'_id': 1}}, function(err, translations) {
 				const delimiter = "\t"
 				let len = translations.length,

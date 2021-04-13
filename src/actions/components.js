@@ -20,6 +20,19 @@ export function showConfirmModal(record) {
 	}
 }
 
+export function showReleaseModal(record) {
+	return {
+		type: ActionTypes.SHOW_RELEASEMODAL,
+		record,
+	}
+}
+
+export function closeReleaseModal() {
+	return {
+		type: ActionTypes.CLOSE_RELEASEMODAL
+	}
+}
+
 export function closeConfirmModal() {
 	return {
 		type: ActionTypes.CLOSE_CONFIRMMODAL
@@ -86,5 +99,12 @@ export function showTooltip(top, left) {
 export function hideTooltip() {
 	return {
 		type: ActionTypes.HIDE_TOOLTIP
+	}
+}
+
+export function showMask(payload) {
+	return {
+		type: ActionTypes.SHOW_MASK,
+		payload
 	}
 }

@@ -13,7 +13,7 @@ const CountCol = memo(({ projectId, header, onClick, count, desc }) => (
 				</div>
 				<div className="panel-glyph">
 					<i
-						className="fas fa-arrow-circle-down fa-lg"
+						className="fas fa-download"
 						title={localeUtil.getMsg("ui.common.download")}
 						style={{cursor:"pointer"}}
 						onClick={onClick}
