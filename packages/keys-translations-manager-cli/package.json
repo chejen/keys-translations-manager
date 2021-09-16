@@ -19,8 +19,8 @@
   "repository": "https://github.com/chejen/keys-translations-manager/tree/master/packages/keys-translations-manager-cli",
   "dependencies": {
     "keys-translations-manager-core": "^1.6.0",
-    "inquirer": "^6.2.2",
-    "yargs": "^13.2.2",
+    "inquirer": "^7.0.5",
+    "yargs": "^15.0.1",
     "node-fs": "0.1.7",
     "mongoose": "^5.4.21",
     "snyk": "^1.192.3"
