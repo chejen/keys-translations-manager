@@ -47,10 +47,10 @@
   },
   "dependencies": {
     "@babel/node": "^7.10.5",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
-    "archiver": "^5.0.2",
+    "archiver": "^7.0.0",
     "body-parser": "^1.19.0",
     "clean-webpack-plugin": "^3.0.0",
     "compression": "^1.7.4",
@@ -58,7 +58,7 @@
     "cross-env": "^7.0.2",
     "d3-hierarchy": "^1.1.9",
     "d3-selection": "^1.4.1",
-    "d3-zoom": "^1.8.3",
+    "d3-zoom": "^3.0.0",
     "ejs": "^3.1.5",
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
@@ -82,7 +82,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "serve-favicon": "^2.5.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^4.8.0",
     "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
